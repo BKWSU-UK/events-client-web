@@ -1,13 +1,105 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+#pagerNumberField {
+    max-width: 50px
+}
+
+.modal-dialog.modal-90w {
+    width: 90%
+}
+
+.simple-overlay {
+    position: fixed; /* Sit on top of the page content */
+    width: 100%; /* Full width (cover the whole page) */
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 20px;
+    background-color: white; /* Black background with opacity */
+    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    overflow-y: auto;
+}
+
+.formio-form {
+    background-color: #dde8f5;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+@media (min-width: 576px) {
+  .modal-dialog {
+    max-width: none !important;
+  }
+}
+
+.calendarWidget {
+    width: 200px;
+    margin: 10px 0 0 20px
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .calendarWidget {
+        width: 150px;
+    }
+}
+
+.calendarWidget > .weekday {
+    background: #ffeb3b;
+    color: black;
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.calendarWidget > .month, .calendarWidget > .day {
+    background: #f0e68c;
+    color: black;
+    font-size: 3rem;
+    padding: 0 10px;
+    margin: 0 0 0 0;
+    text-align: center;
+}
+
+.calendarWidget > .day {
+    margin: -10px 0 0 0;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .fromNow {
+    margin-top: 3px
+}
+
+.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod {
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.calendarWidget > .simpleTimePeriod, .calendarWidget > .fromNow {
+    text-align: center;
+}
+
+.calendarWidget .extendedTimePeriod {
+    text-align: center;
+}
+
+.calendarWidget .fromNow {
+    font-size: 0.9rem;
+    text-align: center;
+    font-family: monospace;
 }

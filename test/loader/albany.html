@@ -1,0 +1,45 @@
+<html>
+<head>
+    <title>Loader Test</title>
+</head>
+<body>
+<script>
+
+//    Event Types
+
+//    id |         name         |                                   description                                   | periodical
+//    ----+----------------------+---------------------------------------------------------------------------------+------------
+//    1 | lecture              | Lecture with a lecturer.                                                         | f
+//    2 | seminar              | Seminar witch interactive participation                                          | f
+//    3 | course               | Course with more than one lesson                                                 | t
+//    4 | conference           | Conference with multiple participants                                            | f
+//    5 | retreat              | Meeting of participants for an extended period of time with multiple activities  | f
+//    6 | workshop             | Programme with active member participation                                       | f
+//    7 | panel discussion     | Public discussion with a limited number of participants                          | f
+//    8 | special events       | Special events                                                                   | f
+//    9 | meditation           | Meditation programmes                                                            | t
+//    10 | misc                 | miscellaneous events                                                            | f
+//    11 | training             | Training for BKs or other type of training                                      | f
+//    12 | power and protection | power and protection                                                            | f
+//    14 | private              | Private events not to be displayed on public websites                           | f
+//    13 | group session        | Regular get together                                                            | t
+//    15 | online activity      | Online Activities                                                               | f
+//    16 | internal_event       | Internal or BK Events                                                           | f
+
+//    Organisations
+
+//    114| Peace Village
+//    827| Albany
+
+    window.eventsConfig = {
+        scrolltop: true,
+        orgId: 827,
+        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13"
+    }
+</script>
+<div id="root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/loader.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,220 @@
+h3 {
+  margin-top: 0. rem;
+  margin-bottom: 0.9rem;
+  font-weight: 500;
+  line-height: 1.2;
+  font-size: 1.75rem;
+  padding-bottom: 0.75rem
+}
+
+h3, h4 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+h4 {
+  margin-bottom: 0.5rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+p.lead, .col-sm-2, .col-sm-12, .col-sm-12 p, .col-sm-12 p > span {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+}
+
+p {
+  margin: 0
+}
+
+td .col-sm-12 {
+  margin-top: 1rem !important
+}
+
+p.lead {
+  margin-top: -0px;
+  margin-bottom: 15px;
+  font-size: 1.5rem
+}
+
+.simple-overlay p.lead {
+  margin-top: -10px;
+}
+
+.formio-form {
+  margin-left: 30px
+}
+
+input.form-control, input.form-control-sm, .dropdown, textarea, select {
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 1px solid #aaaaaa;
+  border-radius: 5px
+}
+input.form-control-sm, select.d-lg-inline {
+  padding: 6px 12px;
+}
+
+input.form-control, textarea {
+  width: 100%;
+}
+
+input.formio-day-component-day, input.formio-day-component-year {
+  width: 150px;
+  margin-left: 3px;
+}
+
+.formio-component-ArrivalDate .row, .formio-component-DepartureDate .row {
+  display: flex
+}
+
+.control-label--hidden {
+  display: none
+}
+
+.wsite-section-content .dropdown {
+  background-color: white
+}
+
+.col-sm-12 {
+  font-size: 18px;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 10px;
+  line-height: 1.5;
+}
+
+.card .row {
+  display: flex
+}
+
+.card .row .col-md-3 {
+  width: 25%
+}
+
+.card {
+  background-repeat: no-repeat;
+  background-color: #f8f9fa !important;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.5rem;
+  margin-bottom: 1rem !important;
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+.btn {
+  padding: 0.375rem 0.75rem;
+  padding-top: 0.375rem;
+  padding-right: 0.75rem;
+  padding-bottom: 0.375rem;
+  padding-left: 0.75rem;
+}
+
+button.close {
+  font-size: 2.5rem;
+  border: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  background: none;
+  padding-top: 0px;
+  margin-top: -10px
+}
+
+button.close:hover {
+  background-color: #efefefef;
+  border-radius: 40px;
+}
+
+.close {
+  float: right
+}
+
+.thead-dark {
+  display: none
+}
+
+.col-4.text-success {
+  margin-top: -5px !important;
+  color: #3fb618!important;
+  font-size: 1rem
+}
+
+/* Calendar */
+
+.calendarWidget {
+    width: 220px;
+    margin: 0 0 0 auto;
+    margin: 10px 0 0 20px;
+}
+
+@media only screen and (max-width: 768px) {
+    /* For mobile phones: */
+    .calendarWidget {
+        width: 150px;
+    }
+}
+
+.calendarWidget > .weekday {
+    background: #ffeb3b;
+    color: black;
+    font-size: 1.5rem;
+    padding: 5px 10px;
+    text-align: center;
+}
+
+.calendarWidget > .month, .calendarWidget > .day {
+    background: #f0e68c;
+    color: black;
+    font-size: 3rem;
+    padding: 0 10px;
+    margin: 0 0 0 0;
+    text-align: center;
+}
+
+.calendarWidget > .day {
+    margin: -10px 0 0 0;
+    padding-bottom: 10px;
+    text-align: center;
+    font-size: 2.5rem;
+}
+
+.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .fromNow {
+    margin-top: 3px
+}
+
+.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod {
+    font-weight: bold;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.calendarWidget > .simpleTimePeriod, .calendarWidget > .fromNow {
+    text-align: center;
+}
+
+.calendarWidget .extendedTimePeriod {
+    text-align: center;
+}
+
+.calendarWidget .fromNow {
+    font-size: 0.9rem;
+    text-align: center;
+    font-family: monospace;
+}
+
+
+
+/* Bootstrap */
+
+.row {
+    display: flex
+}
+
+/* Search */
+
+.row.mt-1.mb-1.ml-1, .form-group.row.mb-0 {
+    display: block !important;
+}
