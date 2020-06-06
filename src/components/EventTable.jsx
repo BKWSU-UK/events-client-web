@@ -29,7 +29,6 @@ function EventTableStruct({columns, data, setEvents, params, show}) {
         nextPage,
         previousPage,
         setPageSize,
-        preGlobalFilteredRows,
         setGlobalFilter,
         state: {pageIndex, pageSize}
     } = useTable({
@@ -139,6 +138,12 @@ export function EventTable(props) {
                                       setDateList={setDateList} setDisplayForm={setDisplayForm}
                                       setEventTableVisible={setEventTableVisible}/>
                     );
+                }
+            },
+            {
+                Header: 'Venue', /* This is a hidden column. Used to allow search to find this data. */
+                accessor: (props) => {
+                    return `${props.venue.locality} ${props.venue.country}`
                 }
             },
             {

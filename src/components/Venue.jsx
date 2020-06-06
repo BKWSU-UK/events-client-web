@@ -20,10 +20,10 @@ function venuePostalCodeDisplay(venuePostalCode) {
     }
 }
 
-function venuePostalCodeLocality(venuePostalCode, venueLocality) {
+function venuePostalCodeLocality(venuePostalCode, venueLocality, venue) {
     return (
         <div>
-            {venuePostalCodeDisplay(venuePostalCode)} {venueLocality}
+            {venuePostalCodeDisplay(venuePostalCode)} {venueLocality} ({venue.country})
         </div>
     );
 }
@@ -53,7 +53,7 @@ export default function Venue({venue, venueName, venueAddress, venuePostalCode, 
         <div className="card card-body bg-light">
             {venueNameDisplay(venueName)}
             <div>{venueAddress}</div>
-            {venuePostalCodeLocality(venuePostalCode, venueLocality)}
+            {venuePostalCodeLocality(venuePostalCode, venueLocality, venue)}
             {venueEmail(venue)}
             {venuePhone(venue)}
         </div>

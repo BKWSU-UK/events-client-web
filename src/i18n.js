@@ -19,6 +19,7 @@ export const langResources = {
             "show": "Show",
             "back-to-events": "Back to events",
             "upcoming-dates": "Upcoming Dates",
+            "add-google-calendar": "Add to Google calendar",
 
             "Lecture": "Lecture",
             "Seminar": "Seminar",
@@ -56,6 +57,7 @@ export const langResources = {
             "show": "Show",
             "back-to-events": "Back to events",
             "upcoming-dates": "Upcoming Dates",
+            "add-google-calendar": "Add to Google calendar",
 
             "Lecture": "Lecture",
             "Seminar": "Seminar",
@@ -93,6 +95,7 @@ export const langResources = {
             "show": "Mostrar",
             "back-to-events": "Volver a los eventos",
             "upcoming-dates": "Fechas siguientes",
+            "add-google-calendar": "Agregar al calendario de Google",
 
             "Lecture": "Conferencia",
             "Seminar": "Seminario",

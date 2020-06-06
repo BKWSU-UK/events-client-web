@@ -5,8 +5,7 @@
 <body>
 <script>
 
-//    Event Types
-
+// Event types
 //    id |         name         |                                   description                                   | periodical
 //    ----+----------------------+---------------------------------------------------------------------------------+------------
 //    1 | lecture              | Lecture with a lecturer.                                                         | f
@@ -26,23 +25,60 @@
 //    15 | online activity      | Online Activities                                                               | f
 //    16 | internal_event       | Internal or BK Events                                                           | f
 
-//    Organisations
+// Organisations
+// id  |                   name
+// ----+-------------------------------------------
+// 827 | Albany
+// 114 | Anubhuti Retreat Center
+// 435 | Chicago Meditation Center
+// 431 | Cinnaminson Center
+// 816 | Dallas
+// 438 | Delray Beach
+// 432 | Edison Center
+// 372 | Eugene
+// 382 | Fresno
+// 410 | Global Harmony House (Great Neck)
+// 437 | Hollywood
+// 828 | Hudson Valley
+// 383 | Livermore
+// 384 | Los Angeles
+// 428 | Margate
+// 412 | Meditation Center and Gallery (Manhattan)
+// 427 | Miami
+// 442 | Michigan
+// 385 | Milpitas
+// 738 | Mountain House
+// 439 | New Hampshire
+// 713 | Ocala
+// 443 | Ohio
+// 429 | Orlando
+// 486 | Peace Village
+// 829 | Peace Village Online
+// 371 | Portland
+// 755 | PV Special Events
+// 411 | Queens Meditation Center
+// 440 | Rhode Island
+// 386 | Sacramento
+// 381 | San Francisco
+// 387 | Seal Beach
+// 441 | Shrewsbury
+// 433 | South Tampa Center
+// 434 | Tampa - Minds Eye
+// 625 | Washington DC
+// 430 | Watertown (Main Center)
 
-//    114| Peace Village
-//    827| Albany
-//    829| Peace Village Online
 
     window.eventsConfig = {
-        useBodyHiddenOverflow: false,
-        scrolltop: true,
-        orgId: 829,
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13",
+        useBodyHiddenOverflow: true,
+        useSimpleLayout: false,
+        orgId: [486,829], // Peace Village and Peace village Online
+        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
         language: "en-US" // "es" for Spanish also supported now
     }
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.2.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.2.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/loader.js"></script>
 
 </body>
 </html>

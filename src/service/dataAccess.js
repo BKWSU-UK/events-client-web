@@ -11,7 +11,8 @@ export function fetchEventList(setEvents, events, params) {
     if (events.length > 0) {
         return;
     }
-    const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgId}&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=10000&mimeType=application/json`;
+    const orgIdStr = Array.isArray(orgId) ? orgId.join(",") : orgId;
+    const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=10000&mimeType=application/json`;
     fetch(targetUrl)
         .then((response) => response.json())
         .then((json) => {

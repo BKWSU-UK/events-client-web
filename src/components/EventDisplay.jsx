@@ -46,9 +46,11 @@ function displayFooterSimple(footerInfo) {
         setDisplayForm, setEventTableVisible, t} = footerInfo;
     return (
         <>
-            <Venue venue={original.venue} venueName={original.venue.name}
-                   venueAddress={original.venue.address} venuePostalCode={original.venue.postalCode}
-                   venueLocality={original.venue.locality}/>
+            <Venue venue={original.venue}
+                   venueName={original.venue.name}
+                   venueAddress={original.venue.address}
+                   venuePostalCode={original.venue.postalCode}
+                   venueLocality={original.venue.locality} />
             <div className="row">
                 <div className="col-md-6 mt-3 mb-1">
                     <button type="button" className="btn btn-info" onClick={() => {

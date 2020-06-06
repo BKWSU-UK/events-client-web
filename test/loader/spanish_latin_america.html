@@ -1,0 +1,45 @@
+
+
+<html>
+<head>
+
+</head>
+<body>
+<script>
+
+    //    id |         name         |                                   description                                   | periodical
+    //    ----+----------------------+---------------------------------------------------------------------------------+------------
+    //    1 | lecture              | Lecture with a lecturer.                                                         | f
+    //    2 | seminar              | Seminar witch interactive participation                                          | f
+    //    3 | course               | Course with more than one lesson                                                 | t
+    //    4 | conference           | Conference with multiple participants                                            | f
+    //    5 | retreat              | Meeting of participants for an extended period of time with multiple activities  | f
+    //    6 | workshop             | Programme with active member participation                                       | f
+    //    7 | panel discussion     | Public discussion with a limited number of participants                          | f
+    //    8 | special events       | Special events                                                                   | f
+    //    9 | meditation           | Meditation programmes                                                            | t
+    //    10 | misc                 | miscellaneous events                                                            | f
+    //    11 | training             | Training for BKs or other type of training                                      | f
+    //    12 | power and protection | power and protection                                                            | f
+    //    14 | private              | Private events not to be displayed on public websites                           | f
+    //    13 | group session        | Regular get together                                                            | t
+    //    15 | online activity      | Online Activities                                                               | f
+    //    16 | internal_event       | Internal or BK Events                                                           | f
+
+    window.eventsConfig = {
+        useBodyHiddenOverflow: true,
+        useSimpleLayout: false,
+        orgId: [
+            420,425,422,423,421,426,424,806,805, //Argentina
+            604,615,464,609,617,461,607,460,610,511,581,580,579,615,604,464, //Colo
+            91,721,91,739,93,101,94,108,95,96,104,97,98,109,107,106,110,99,100,102,103,//España
+        ],
+        eventTypeIds: "15",
+        language: "es" // "es" for Spanish also supported now
+    }
+</script>
+<div id="root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/loader.js"></script>
+</body>
+</html>

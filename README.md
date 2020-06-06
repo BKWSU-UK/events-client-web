@@ -1,68 +1,289 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# BK Event Management Web Plugin
 
-## Available Scripts
+The Brahma Kumaris Event Management Web plugin allows you to retrieve event information for the centres of the 
+Brahma Kumaris and display these on a web page. It also capable of rendering and submitting registration forms associated
+to these events so that end users can book specific events. 
 
-In the project directory, you can run:
+It can be used on any CMS's that support integration of HTML, CSS and Javascript and offers a fron-end based integration. 
+You will have to simply create a HTML page on the CMS you use and paste some HTML and CSS code 
+so that you can render an event list with this plugin.
 
-### `yarn start`
+## Pre-requisites
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+#### <a name="org_ids"></a>Organisation Id
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+In order to list events for a Brahma Kumaris organisation you will need to know its id. This information is available
+here:
 
-### `yarn test`
+[Organisation Browser](https://events.brahmakumaris.org/bkregistration/templateChooser/eventBrowser.html)
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+or 
 
-### `yarn build`
+[Organisation List](http://events.brahmakumaris.org/bkregistration_legacy/jsp/orgs.jsp)
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Typically the number for an organisation is an integer like e.g:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+    2 - London Willesden Green
+    
+#### <a name="event_types">Event Types
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Then you must be also know which event types you want to display, like e.g: *course*, *lecture*, etc. The available
+event types on the system are:
 
-### `yarn eject`
+| id |         name         |                                   description                                   |
+|---:|---------------------:|---------------------------------------------------------------------------------|
+|  4 | conference           | Conference with multiple participants                                           |
+|  3 | course               | Course with more than one lesson                                                |
+| 13 | group session        | Regular get together                                                            |
+| 16 | internal_event       | Internal or BK Events                                                           |
+|  1 | lecture              | Lecture with a lecturer.                                                        |
+|  9 | meditation           | Meditation programmes                                                           |
+| 10 | misc                 | miscellaneous events                                                            |
+| 15 | online activity      | Online Activities                                                               |
+|  7 | panel discussion     | Public discussion with a limited number of participants                         |
+| 12 | power and protection | power and protection                                                            |
+| 14 | private              | Private events not to be displayed on public websites                           |
+|  5 | retreat              | Meeting of participants for an extended period of time with multiple activities |
+|  2 | seminar              | Seminar witch interactive participation                                         |
+|  8 | special events       | Special events                                                                  |
+| 11 | training             | Training for BKs or other type of training                                      |
+|  6 | workshop             | Programme with active member participation                                      |
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Please note: that the event types *14* and *16* are typically not to be used by this plugin.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Webpage Integration
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+Once you know your organisation id (it can also by multiple id's) and the event types you want to display
+you have most of the needed information to start configuring your plugin.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Example
 
-## Learn More
+Here is an example of the HTML that you need to create a page with a list of the combined events of multiple 
+centres of the Brahma Kumaris:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```html
+<script>
+    window.eventsConfig = {
+        useBodyHiddenOverflow: false,
+        useSimpleLayout: false,
+        orgId: [420,615,610,604,814,579,812,815],
+        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+        language: "en-GB"
+    }
+</script>
+<div id="root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/loader.js"></script>
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+### Configuration parameters and static parts
 
-### Code Splitting
+The above script has some parts that cannot be changed and some other parts where you can change the parameters.
+Let us start with the **static parts**:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+```html
+<div id="root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/loader.js"></script>
+```
 
-### Analyzing the Bundle Size
+Typically you will not need to configure the above HTML. The only thing that might change is the version of 
+the plugin which is embedded in the URL of the Javascript files, i.e. *v0.3.0*. If there is a plugin upgrade
+the authors of the plugin might ask you to change this part of the URL.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+The configuration parameters of this plugin are contained in the initial script of the HTML pasted above:
 
-### Making a Progressive Web App
+```html
+<script>
+    window.eventsConfig = {
+        useBodyHiddenOverflow: false,
+        useSimpleLayout: false,
+        orgId: [420,615,610,604,814,579,812,815],
+        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+        language: "en-GB"
+    }
+</script>
+```
+Please note that the code depicted above is Javascript and so must be syntactically correct.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
+|         name          |                                   description                                                                                                          |
+|----------------------:|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| useBodyHiddenOverflow | boolean value that switches off or on the vertical scrollbar when the event detail or registration form are displayed. Default is *false*              |
+| useSimpleLayout       | boolean value which determines if the event description contains HTML or is simple text. *false* means HTML is used                                    |
+| orgId                 | The organisation ID as a Javascript array. You must have at least one. Please see the  [Organisation Id](#org_ids) chapter on this page                |
+| eventTypeIds          | The id's of the event types you want to display. Please see the  [Event Types](#event_types) chapter on this page                                      |
+| language              | The language of the user interface. Currently only three codes are supported: *en-GB* (British English), *en-US* (American English) and *es* (Spanish) |
 
-### Advanced Configuration
+### CSS Styling
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
+The most involved integration work will be definitely related to adapting the CSS styles to your page. The first 
+question that arises is where can you insert the modified styles? You have two options:
 
-### Deployment
+* Either you enter the CSS styles directly on the page using the ```style``` tag. See example below to get an idea on how this can be done.
+* You create a separate CSS file and insert the CSS styles there using the CSS  ```link tag``. This option is generally 
+the preferred one, but it is up to you to decide.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
+We used [Bootstrap 4](https://getbootstrap.com/docs/4.5/getting-started/introduction/) in the plugin development 
+and therefore we follow the conventions of this framework.
 
-### `yarn build` fails to minify
+#### Inline CSS Example
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+```html
+<style type="text/css">
+    #root {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #root h3 {
+        font-size: 1.4em;
+        font-family: "Lato", Helvetica, sans-serif !important;
+    }
+
+    #eventDisplayName {
+        font-size: 1.4em !important;
+        margin-left: 15px;
+        font-family: "Lato", Helvetica, sans-serif !important;
+    }
+
+    .col-4.text-success {
+        font-size: 0.8em;
+        color: #999999 !important
+    }
+
+    .btn.btn-light {
+        background-color: #999;
+        padding: 0 10px;
+        height: 30px;
+        margin: -2px 0;
+    }
+
+    .table .btn.btn-info, .simple-overlay .btn.btn-info {
+        margin: 0 0 0px 0px;
+        line-height: 7px;
+    }
+
+    .simple-overlay .btn.btn-info {
+        margin: -25px 0 0px 15px;
+    }
+
+    .table .col-md-6.mt-3.mb-1 {
+        padding-left: 0px
+    }
+
+    .table td {
+        border: 0 !important
+    }
+
+    #pagerNumberField {
+        height: 27px;
+        font-size: 1em;
+        padding: 4px 10px;
+    }
+
+    .d-none.d-lg-inline {
+        padding: 4px;
+        font-size: 0.9em;
+    }
+
+    span.d-none.d-lg-inline {
+        padding: 4px 0 4px 4px;
+    }
+
+    .col-md-6.col-sm-12.text-right {
+        font-size: 1em;
+    }
+
+    .weekday {
+        font-size: 1.5em !important;
+    }
+
+    .simpleTimePeriod {
+        font-size: 1em !important;
+    }
+
+    .fromNow {
+        margin-top: -2px !important;
+        font-size: 0.9em !important;
+    }
+
+    .table.table-hover, .row.mt-1.mb-1.ml-1, .simple-overlay {
+        margin-left: -5px;
+    }
+
+    .simple-overlay {
+        margin-right: -17px;
+    }
+
+    /* Calendar */
+
+    .calendarWidget {
+        width: 220px;
+        margin: 0 0 0 auto;
+        margin: 10px 0 0 20px;
+    }
+
+    @media only screen and (max-width: 768px) {
+        /* For mobile phones: */
+        .calendarWidget {
+            width: 150px;
+        }
+    }
+
+    .calendarWidget > .weekday {
+        background: #c5bb9b;
+        color: white;
+        font-size: 1.5rem;
+        padding: 5px 10px;
+        text-align: center;
+    }
+
+    .calendarWidget > .month, .calendarWidget > .day {
+        background: #a9e4f8;
+        color: black;
+        font-size: 3rem;
+        padding: 0 10px;
+        margin: 0 0 0 0;
+        text-align: center;
+    }
+
+    .calendarWidget > .day {
+        margin: -10px 0 0 0;
+        padding-bottom: 10px;
+        text-align: center;
+        font-size: 2.5rem;
+    }
+
+    .calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .fromNow {
+        margin-top: 3px
+    }
+
+    .calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod {
+        font-weight: bold;
+        font-family: monospace;
+        font-size: 1rem;
+    }
+
+    .calendarWidget > .simpleTimePeriod, .calendarWidget > .fromNow {
+        text-align: center;
+    }
+
+    .calendarWidget .extendedTimePeriod {
+        text-align: center;
+    }
+
+    .calendarWidget .fromNow {
+        font-size: 0.9rem;
+        text-align: center;
+        font-family: monospace;
+    }
+
+</style>
+```
+
+### Main CSS selectors
+
+Here are the main CSS selectors highlighted on one of the current implementations. For more and extensive information 
+about the selectors please use the developers tools provided by Chrome.
+
+![CSS Selectors](docs/css_selectors.png)
