@@ -120,7 +120,7 @@ function EventDisplay({
                 <div className="col-sm-12">
                     <h3 title={t(eventMap[original.eventTypeId])}>{original.name}</h3>
                     <div className="pull-right">
-                        <DateWidget startDate={startDate} endDate={endDate}/>
+                        <DateWidget startDate={startDate} endDate={endDate} timezone={original.timezone}/>
                     </div>
                     {simple ? displaySimple(original) : displayFull(original)}
 

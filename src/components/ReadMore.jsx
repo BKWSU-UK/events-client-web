@@ -1,7 +1,7 @@
 import React from "react";
 import EventType from "./EventType";
 import Venue from "./Venue";
-import moment from "moment";
+import moment from 'moment-timezone/index';
 import makeModal from "./simpleModal/makeModal";
 import {createForm, EventForm} from "./forms/FormModal";
 import {useTranslation} from "../i18n";
@@ -48,6 +48,7 @@ function RenderUpcomingDates({dateList, currentEvent}) {
             </h4>
             <div className="card card-body bg-light">
                 {Array.isArray(dateList) ? dateList.map(date => {
+                    console.log('date', date);
                     return (
                         <div className="row" key={date.eventDateId}>
                             <div className="col-md-3">

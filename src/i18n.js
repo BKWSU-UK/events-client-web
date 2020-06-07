@@ -36,7 +36,8 @@ export const langResources = {
             "Private": "Private",
             "Group session": "Group session",
             "Online activity": "Online activity",
-            "BK Event": "BK Event"
+            "BK Event": "BK Event",
+            "Your time": "Your time"
         }
     },
     "en-US": {
@@ -74,7 +75,8 @@ export const langResources = {
             "Private": "Private",
             "Group session": "Group session",
             "Online activity": "Online activity",
-            "BK Event": "BK Event"
+            "BK Event": "BK Event",
+            "Your time": "Your time"
         }
     },
     es: {
@@ -112,7 +114,8 @@ export const langResources = {
             "Private": "Privado",
             "Group session": "Sesión grupal",
             "Online activity": "Actividad en línea",
-            "BK Event": "Evento BK"
+            "BK Event": "Evento BK",
+            "Your time": "Tu tiempo"
         }
     }
 };

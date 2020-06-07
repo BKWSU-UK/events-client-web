@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.yourTime {
+  text-align: center;
+  background-color: #dddddd;
+  padding-bottom: 5px;
+}
+
+.yourTime .small {
+  padding-top: 5px;
+  margin-bottom: -3px;
+}

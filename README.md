@@ -287,3 +287,20 @@ Here are the main CSS selectors highlighted on one of the current implementation
 about the selectors please use the developers tools provided by Chrome.
 
 ![CSS Selectors](docs/css_selectors.png)
+
+
+### Available implementations of the plugin
+
+Here are the available implementations of the EMS as of 2020 June 06th:
+
+https://www.peacevillageretreat.org/back-up-retreat-schedule.html
+
+https://www.agendas.lam.brahmakumaris.org/agenda-regional-latina/
+
+### Contacting for support
+
+Please feel free to contact us in case you find bugs or need help integrating this plugin.
+
+This is the contact of the main developer:
+
+<a href="mailto:gil.fernandes@bkconnect.net">gil.fernandes@bkconnect.net</a>
