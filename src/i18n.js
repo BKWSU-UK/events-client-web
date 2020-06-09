@@ -37,7 +37,8 @@ export const langResources = {
             "Group session": "Group session",
             "Online activity": "Online activity",
             "BK Event": "BK Event",
-            "Your time": "Your time"
+            "Your time": "Your time",
+            "Open webcast URL": "Open webcast URL"
         }
     },
     "en-US": {
@@ -76,7 +77,8 @@ export const langResources = {
             "Group session": "Group session",
             "Online activity": "Online activity",
             "BK Event": "BK Event",
-            "Your time": "Your time"
+            "Your time": "Your time",
+            "Open webcast URL": "Open webcast URL"
         }
     },
     es: {
@@ -115,7 +117,8 @@ export const langResources = {
             "Group session": "Sesión grupal",
             "Online activity": "Actividad en línea",
             "BK Event": "Evento BK",
-            "Your time": "Tu tiempo"
+            "Your time": "Tu tiempo",
+            "Open webcast URL": "Abrir URL de webcast"
         }
     }
 };

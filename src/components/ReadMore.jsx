@@ -5,6 +5,7 @@ import moment from 'moment-timezone/index';
 import makeModal from "./simpleModal/makeModal";
 import {createForm, EventForm} from "./forms/FormModal";
 import {useTranslation} from "../i18n";
+import WebcastButton from "./WebcastButton";
 
 function convertIsoToGoogleCal(dateStr) {
     return moment(dateStr, "YYYY-MM-DD'T'hh:mm:ss").format("YYYYMMDDTHHmmss");
@@ -83,6 +84,10 @@ function ReadMore({currentEvent, dateList}) {
                     <div className={currentEvent.requiresRegistration ? 'col-md-6' : 'col-md-12'}>
                         <EventType eventTypeInt={currentEvent.eventTypeId}/>
                         <p dangerouslySetInnerHTML={{__html: currentEvent.description}}/>
+                        <div className="row">
+                            <div className="col-md-12 webcastButton"><WebcastButton original={currentEvent} t={t}/></div>
+                        </div>
+
                         <Venue venue={currentEvent.venue} venueName={currentEvent.venue.name}
                                venueAddress={currentEvent.venue.address} venuePostalCode={currentEvent.venue.postalCode}
                                venueLocality={currentEvent.venue.locality}/>
@@ -90,7 +95,6 @@ function ReadMore({currentEvent, dateList}) {
                     </div>
                     {includeForm(currentEvent)}
                 </div>
-
             </>
         );
     } else {

@@ -5,6 +5,8 @@ import {fetchEventDateList} from "../service/dataAccess";
 import {topFunction} from "../utils/scrolling";
 import DateWidget from "./DateWidget";
 import {useTranslation} from "../i18n";
+import {openInNewTab} from "../utils/urlUtils";
+import WebcastButton from "./WebcastButton";
 
 
 function displayImage1(original) {
@@ -41,35 +43,47 @@ function gotoTop() {
     topFunction();
 }
 
+function renderButtons(footerInfo) {
+    const {
+        original, setDisplayMoreAbout, setCurrentEvent, setDateList,
+        setDisplayForm, setEventTableVisible, t
+    } = footerInfo;
+    return (
+        <div className="row">
+            <div className="col-md-6 mt-3 mb-1">
+                <button type="button" className="btn btn-info" onClick={() => {
+                    setDisplayMoreAbout(true);
+                    setCurrentEvent(original);
+                    setEventTableVisible(false);
+                    fetchEventDateList(setDateList, original.id);
+                    gotoTop();
+                }}>{t('read-more')} {original.requiresRegistration ? ' ' + t('and-book') : ''}</button>
+                {' '}
+                {original.requiresRegistration ? (
+                    <button type="button" className="btn btn-info" onClick={() => {
+                        setCurrentEvent(original);
+                        setDisplayForm(true);
+                        setEventTableVisible(false);
+                        gotoTop();
+                    }}>{t('book-only')}
+                    </button>) : ''}
+                {' '}
+                <WebcastButton original={original} t={t}/>
+            </div>
+        </div>
+    )
+}
+
 function displayFooterSimple(footerInfo) {
-    const {original, setDisplayMoreAbout, setCurrentEvent, setDateList,
-        setDisplayForm, setEventTableVisible, t} = footerInfo;
+    const {original} = footerInfo;
     return (
         <>
             <Venue venue={original.venue}
                    venueName={original.venue.name}
                    venueAddress={original.venue.address}
                    venuePostalCode={original.venue.postalCode}
-                   venueLocality={original.venue.locality} />
-            <div className="row">
-                <div className="col-md-6 mt-3 mb-1">
-                    <button type="button" className="btn btn-info" onClick={() => {
-                        setDisplayMoreAbout(true);
-                        setCurrentEvent(original);
-                        setEventTableVisible(false);
-                        fetchEventDateList(setDateList, original.id);
-                        gotoTop();
-                    }}>{t('read-more')} {original.requiresRegistration ? ' ' + t('and-book') : ''}</button>
-                    {' '}
-                    {original.requiresRegistration ? <button type="button" className="btn btn-info" onClick={() => {
-                        setCurrentEvent(original);
-                        setDisplayForm(true);
-                        setEventTableVisible(false);
-                        gotoTop();
-                    }}>{t('book-only')}</button> : ''}
-
-                </div>
-            </div>
+                   venueLocality={original.venue.locality}/>
+            {renderButtons(footerInfo)}
         </>
     );
 }
@@ -113,7 +127,7 @@ function EventDisplay({
                       }) {
     const startDate = '' + original.startTimestamp;
     const endDate = '' + original.endTimestamp;
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     return (
         <>
             <div className="row">
@@ -126,8 +140,10 @@ function EventDisplay({
 
                 </div>
             </div>
-            {displayFooterSimple({original, setDisplayMoreAbout,
-                setCurrentEvent, setDateList, setDisplayForm, setEventTableVisible, t})}
+            {displayFooterSimple({
+                original, setDisplayMoreAbout,
+                setCurrentEvent, setDateList, setDisplayForm, setEventTableVisible, t
+            })}
         </>
     );
 }

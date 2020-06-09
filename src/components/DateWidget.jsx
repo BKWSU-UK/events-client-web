@@ -6,7 +6,7 @@ import {useTranslation} from "../i18n";
 
 function guessTimezone() {
     const guess = moment.tz.guess(true);
-    if(!guess) {
+    if (!guess) {
         console.warn('Guess undefined');
     }
     return guess || Intl.DateTimeFormat().resolvedOptions().timeZone || "Europe/London";
@@ -16,9 +16,9 @@ function formatTime(mom, format, timezone) {
     return timezone ? mom.tz(guessTimezone()).format(format) : mom.format(format);
 }
 
-function showLocalTime(localIsRemote, defaultFormat, timeParams) {
+function showLocalTimeFull(localIsRemote, defaultFormat, timeParams) {
     const {baseMoment, baseEndMoment, timezone, t} = timeParams;
-    if(!localIsRemote && window.eventsConfig.showLocalTime) {
+    if (!localIsRemote && window.eventsConfig.showLocalTime) {
         return (
             <div className="yourTime">
                 <div className="small">{t('Your time')}</div>
@@ -33,14 +33,36 @@ function showLocalTime(localIsRemote, defaultFormat, timeParams) {
     }
 }
 
+function showLocalTimeSimple(localIsRemote, defaultFormat, timeParams) {
+    const {baseMoment, baseEndMoment, timezone, t} = timeParams;
+    if (!localIsRemote && window.eventsConfig.showLocalTime) {
+        return (
+            <div className="yourTime">
+                <div className="small">{t('Your time')}</div>
+                <div className="simpleTimePeriod">
+                    {formatTime(baseMoment, "h:mm a", timezone)} -{' '}
+                    {formatTime(baseEndMoment, "h:mm a", timezone)}
+                </div>
+            </div>
+        )
+    } else {
+        return (
+            <></>
+        )
+    }
+}
+
 function displayTimes(timeParams) {
     const {baseMoment, baseEndMoment, timezone, t} = timeParams;
     const localIsRemote = baseMoment.format("h:mm a") === formatTime(baseMoment.clone(), "h:mm a", timezone);
     if (baseMoment.date() === baseEndMoment.date() && baseMoment.month() === baseEndMoment.month()) {
+        const timeFormat = "h:mm a";
         return (
             <>
-                <div className="simpleTimePeriod">{baseMoment.format("h:mm a")} - {baseEndMoment.format("h:mm a")}</div>
-                {!localIsRemote ? <div className="simpleTimePeriod">{formatTime(baseEndMoment, "h:mm a", timezone)} - {formatTime(baseEndMoment, "h:mm a", timezone)} (your time)</div> : ''}
+                <div
+                    className="simpleTimePeriod">{baseMoment.clone().format(timeFormat)} - {baseEndMoment.clone().format(timeFormat)}
+                    {showLocalTimeSimple(localIsRemote, timeFormat, timeParams)}
+                </div>
                 <div className="fromNow">({baseMoment.fromNow()})</div>
             </>
         )
@@ -50,7 +72,7 @@ function displayTimes(timeParams) {
             <div className="extendedPeriod">
                 <div className="extendedTimePeriod">{baseMoment.format(defaultFormat)}</div>
                 <div className="extendedTimePeriod">{baseEndMoment.format(defaultFormat)}</div>
-                {showLocalTime(localIsRemote, defaultFormat, timeParams)}
+                {showLocalTimeFull(localIsRemote, defaultFormat, timeParams)}
                 <div className="fromNow">({baseMoment.fromNow()})</div>
             </div>
         )
@@ -69,7 +91,7 @@ function momentFactory(dateExpr, timezone) {
  * @constructor
  */
 export default function DateWidget({startDate, endDate, timezone}) {
-    const { t } = useTranslation();
+    const {t} = useTranslation();
     moment.locale(window.eventsConfig.language);
     const baseMoment = momentFactory(startDate, timezone);
     const baseEndMoment = momentFactory(endDate, timezone);
