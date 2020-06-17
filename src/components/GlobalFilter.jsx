@@ -4,13 +4,25 @@
 import {isChrome} from "../utils/browserDetection";
 import React from "react";
 import {useTranslation} from "../i18n";
+import {extractParameter} from "../utils/paramExtraction";
 
+/**
+ * Renders the search text field.
+ * @param globalFilter
+ * @param setGlobalFilter
+ * @param rowsLength
+ * @returns {*}
+ * @constructor
+ */
 function GlobalFilter({
                           globalFilter,
                           setGlobalFilter,
                           rowsLength
                       }) {
     const { t, i18n } = useTranslation();
+    if(extractParameter(null, 'eventsLimit', 10000) < 2) {
+        return <></>;
+    }
     return (
         <div className="col-md-6 col-sm-12 ">
             <div className="form-group row mb-0">

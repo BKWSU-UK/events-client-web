@@ -1,3 +1,9 @@
+import {extractParameter} from "../utils/paramExtraction";
+
+const eventLimit = () => extractParameter(null, 'eventsLimit', 10000);
+
+const onlyWebcast = () => extractParameter(null, 'onlyWebcast', false);
+
 const range = len => {
     const arr = [];
     for (let i = 0; i < len; i++) {
@@ -12,7 +18,9 @@ export function fetchEventList(setEvents, events, params) {
         return;
     }
     const orgIdStr = Array.isArray(orgId) ? orgId.join(",") : orgId;
-    const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=10000&mimeType=application/json`;
+    const eventsLimit = eventLimit();
+    console.log('eventsLimit', eventsLimit);
+    const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json&onlyWebcast=${onlyWebcast()}`;
     fetch(targetUrl)
         .then((response) => response.json())
         .then((json) => {

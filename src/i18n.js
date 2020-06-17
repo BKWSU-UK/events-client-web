@@ -38,7 +38,7 @@ export const langResources = {
             "Online activity": "Online activity",
             "BK Event": "BK Event",
             "Your time": "Your time",
-            "Open webcast URL": "Open webcast URL"
+            "Open webcast URL": "Open webcast"
         }
     },
     "en-US": {
@@ -78,7 +78,7 @@ export const langResources = {
             "Online activity": "Online activity",
             "BK Event": "BK Event",
             "Your time": "Your time",
-            "Open webcast URL": "Open webcast URL"
+            "Open webcast URL": "Open webcast"
         }
     },
     es: {
