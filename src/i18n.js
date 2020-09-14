@@ -1,4 +1,5 @@
 import React from "react";
+import {extractParameterSimple} from "./utils/paramExtraction";
 
 export const langResources = {
     "en-GB": {
@@ -117,7 +118,7 @@ export const langResources = {
             "Group session": "Sesión grupal",
             "Online activity": "Actividad en línea",
             "BK Event": "Evento BK",
-            "Your time": "Tu tiempo",
+            "Your time": "Hora en su País",
             "Open webcast URL": "Abrir URL de webcast"
         }
     }
@@ -127,11 +128,13 @@ export function useTranslation() {
     return {
         t: function (key, extraObj) {
             if(arguments.length === 1) {
-                return langResources[window.eventsConfig.language].translations[key] || key;
+                return langResources[extractParameterSimple('language', 'en-US')]
+                    .translations[key] || key;
             }
             else {
                 // TODO: handle the extra object
-                return langResources[window.eventsConfig.language].translations[`${key}_plural`] || key;
+                return langResources[extractParameterSimple('language', 'en-US')]
+                    .translations[`${key}_plural`] || key;
             }
         }
     }

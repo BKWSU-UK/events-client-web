@@ -3,6 +3,7 @@ import 'moment/locale/es';
 
 import moment from "moment-timezone";
 import {useTranslation} from "../i18n";
+import {extractParameterSimple} from "../utils/paramExtraction";
 
 function guessTimezone() {
     const guess = moment.tz.guess(true);
@@ -53,21 +54,26 @@ function showLocalTimeSimple(localIsRemote, defaultFormat, timeParams) {
 }
 
 function displayTimes(timeParams) {
+
+    const hideTime = extractParameterSimple('hideTime', false);
     const {baseMoment, baseEndMoment, timezone, t} = timeParams;
     const localIsRemote = baseMoment.format("h:mm a") === formatTime(baseMoment.clone(), "h:mm a", timezone);
     if (baseMoment.date() === baseEndMoment.date() && baseMoment.month() === baseEndMoment.month()) {
+        if(hideTime) {
+            return <></>;
+        }
         const timeFormat = "h:mm a";
         return (
             <>
-                <div
-                    className="simpleTimePeriod">{baseMoment.clone().format(timeFormat)} - {baseEndMoment.clone().format(timeFormat)}
+                <div className="simpleTimePeriod">
+                    {baseMoment.clone().format(timeFormat)} - {baseEndMoment.clone().format(timeFormat)}
                     {showLocalTimeSimple(localIsRemote, timeFormat, timeParams)}
                 </div>
                 <div className="fromNow">({baseMoment.fromNow()})</div>
             </>
         )
     } else {
-        const defaultFormat = "ddd MMM DD, hh:mm a";
+        const defaultFormat = hideTime ? "ddd MMM DD" : "ddd MMM DD, hh:mm a";
         return (
             <div className="extendedPeriod">
                 <div className="extendedTimePeriod">{baseMoment.format(defaultFormat)}</div>
@@ -92,7 +98,7 @@ function momentFactory(dateExpr, timezone) {
  */
 export default function DateWidget({startDate, endDate, timezone}) {
     const {t} = useTranslation();
-    moment.locale(window.eventsConfig.language);
+    moment.locale(extractParameterSimple('language', 'en-US'));
     const baseMoment = momentFactory(startDate, timezone);
     const baseEndMoment = momentFactory(endDate, timezone);
     return (

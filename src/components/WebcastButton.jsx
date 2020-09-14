@@ -9,7 +9,7 @@ import {openInNewTab} from "../utils/urlUtils";
  * @constructor
  */
 export default function WebcastButton({original, t}) {
-    if(original.hasWebcast && window.eventsConfig.displayWebcastButton) {
+    if(original.hasWebcast && original.webcastUrl && window.eventsConfig.displayWebcastButton) {
         return (
             <button type="button" className="btn btn-info" onClick={() => openInNewTab(original.webcastUrl)}>
                 {t('Open webcast URL')}

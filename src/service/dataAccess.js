@@ -4,6 +4,8 @@ const eventLimit = () => extractParameter(null, 'eventsLimit', 10000);
 
 const onlyWebcast = () => extractParameter(null, 'onlyWebcast', false);
 
+const onlineOnly = () => extractParameter(null, 'onlineOnly', false);
+
 const range = len => {
     const arr = [];
     for (let i = 0; i < len; i++) {
@@ -11,6 +13,16 @@ const range = len => {
     }
     return arr
 };
+
+function processOnlineOnly(targetUrl) {
+    const isOnlineOnly = onlineOnly();
+    if (isOnlineOnly === "yes") {
+        targetUrl += `&onlineOnly=true`;
+    } else if (isOnlineOnly === "no") {
+        targetUrl += `&onlineOnly=false`;
+    }
+    return targetUrl;
+}
 
 export function fetchEventList(setEvents, events, params) {
     const {orgId, eventTypeIds} = params;
@@ -20,12 +32,17 @@ export function fetchEventList(setEvents, events, params) {
     const orgIdStr = Array.isArray(orgId) ? orgId.join(",") : orgId;
     const eventsLimit = eventLimit();
     console.log('eventsLimit', eventsLimit);
-    const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json&onlyWebcast=${onlyWebcast()}`;
+    let targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`;
+    const isOnlyWebcast = onlyWebcast()
+    if(isOnlyWebcast) {
+        targetUrl += `&onlyWebcast=${isOnlyWebcast}`;
+    }
+    targetUrl = processOnlineOnly(targetUrl);
     fetch(targetUrl)
         .then((response) => response.json())
         .then((json) => {
             const response = json.response;
-            console.log(response.totalCount);
+            console.log(response);
             setEvents(response.data);
         });
 
