@@ -106,6 +106,7 @@ export const Styles = styled.div`
 export function EventTable(props) {
     const orgId = extractParameter(props, 'orgId', 2);
     const eventTypeIds = extractParameter(props, 'eventTypeIds', "1,2,3,4,5,6,7,8,9,10,11,12,13,15");
+    const featured = extractParameter(props, 'featured', null);
     const [eventTableVisible, setEventTableVisible] = useState(true);
     const [events, setEvents] = useState([]);
     const [displayMoreAbout, setDisplayMoreAbout] = useState(false);
@@ -166,7 +167,7 @@ export function EventTable(props) {
                     columns={eventColumns}
                     data={events}
                     setEvents={setEvents}
-                    params={{orgId, eventTypeIds}}
+                    params={{orgId, eventTypeIds, featured}}
                     show={eventTableVisible}/>
             </Styles>
         </>

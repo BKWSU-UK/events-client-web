@@ -32,7 +32,11 @@ export function fetchEventList(setEvents, events, params) {
     const orgIdStr = Array.isArray(orgId) ? orgId.join(",") : orgId;
     const eventsLimit = eventLimit();
     console.log('eventsLimit', eventsLimit);
-    let targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`;
+    let targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
+    targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`;
+    if(params.featured) {
+        targetUrl += `&featured=true`;
+    }
     const isOnlyWebcast = onlyWebcast()
     if(isOnlyWebcast) {
         targetUrl += `&onlyWebcast=${isOnlyWebcast}`;

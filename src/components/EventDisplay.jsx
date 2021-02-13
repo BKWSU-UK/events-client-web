@@ -25,7 +25,7 @@ function displaySimple(original) {
         <>
             {displayImage1(original)}
             <EventType eventTypeInt={original.eventTypeId}/>
-            <div style={{textAlign: "justify"}}> {original.descriptionText}</div>
+            <div style={{textAlign: "justify"}}> {original.shortDescription || original.descriptionText}</div>
         </>
     )
 }

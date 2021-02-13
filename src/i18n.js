@@ -121,6 +121,46 @@ export const langResources = {
             "Your time": "Hora en su País",
             "Open webcast URL": "Abrir URL de webcast"
         }
+    },
+    "pt-BR": {
+        translations: {
+            "To get started, edit <1>src/App.js</1> and save to reload.":
+                "Para começar, edite <1>src/App.js</1> e salve para recarregar.",
+            "and-book": "e Inscrição",
+            "book-only": "Somente Inscrição",
+            description: "Descrição",
+            "enter-search": "Pesquisar ...",
+            "event": "evento",
+            "event_plural": "eventos",
+            "go-to-page": "Ir para a página",
+            "of": "de",
+            "page": "Página",
+            "read-more": "Leia Mais",
+            "search": "Pesquisa",
+            "show": "Mostrar",
+            "back-to-events": "Voltar para os Eventos",
+            "upcoming-dates": "Próximas Datas",
+            "add-google-calendar": "Adicionar ao Google Agenda",
+
+            "Lecture": "Palestra",
+            "Seminar": "Seminário",
+            "Course": "Curso",
+            "Conference": "Conferência",
+            "Retreat": "Retiro",
+            "Workshop": "Workshop",
+            "Panel discussion": "Painel",
+            "Special event": "Evento Especial",
+            "Meditation": "Meditação",
+            "Miscellaneous": "Outros",
+            "Training": "Treinamento",
+            "Power and protection": "Poder e proteção",
+            "Private": "Privado",
+            "Group session": "Sessão em grupo",
+            "Online activity": "Atividade Online",
+            "BK Event": "Event BK",
+            "Your time": "Seu tempo",
+            "Open webcast URL": "Acessar a transmissão"
+        }
     }
 };
 
