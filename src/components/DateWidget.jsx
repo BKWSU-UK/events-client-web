@@ -6,6 +6,14 @@ import moment from "moment-timezone";
 import {useTranslation} from "../i18n";
 import {extractParameterSimple} from "../utils/paramExtraction";
 
+const determineTimeFormat = () => {
+    const language = extractParameterSimple('language', 'en-US');
+    if(language.indexOf("en") === 0) {
+        return "h:mm a"
+    }
+    return "HH:mm"
+}
+
 function guessTimezone() {
     const guess = moment.tz.guess(true);
     if (!guess) {
@@ -37,13 +45,14 @@ function showLocalTimeFull(localIsRemote, defaultFormat, timeParams) {
 
 function showLocalTimeSimple(localIsRemote, defaultFormat, timeParams) {
     const {baseMoment, baseEndMoment, timezone, t} = timeParams;
+    const timeFormat = determineTimeFormat()
     if (!localIsRemote && window.eventsConfig.showLocalTime) {
         return (
             <div className="yourTime">
                 <div className="small">{t('Your time')}</div>
                 <div className="simpleTimePeriod">
-                    {formatTime(baseMoment, "h:mm a", timezone)} -{' '}
-                    {formatTime(baseEndMoment, "h:mm a", timezone)}
+                    {formatTime(baseMoment, timeFormat, timezone)} -{' '}
+                    {formatTime(baseEndMoment, timeFormat, timezone)}
                 </div>
             </div>
         )
@@ -58,12 +67,12 @@ function displayTimes(timeParams) {
 
     const hideTime = extractParameterSimple('hideTime', false);
     const {baseMoment, baseEndMoment, timezone, t} = timeParams;
-    const localIsRemote = baseMoment.format("h:mm a") === formatTime(baseMoment.clone(), "h:mm a", timezone);
+    const timeFormat = determineTimeFormat()
+    const localIsRemote = baseMoment.format(timeFormat) === formatTime(baseMoment.clone(), timeFormat, timezone);
     if (baseMoment.date() === baseEndMoment.date() && baseMoment.month() === baseEndMoment.month()) {
         if(hideTime) {
             return <></>;
         }
-        const timeFormat = "h:mm a";
         return (
             <>
                 <div className="simpleTimePeriod">
