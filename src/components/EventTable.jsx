@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useContext, useState } from 'react'
 import {useGlobalFilter, usePagination, useSortBy, useTable} from 'react-table';
 import styled from 'styled-components'
 import {fetchEventList} from "../service/dataAccess";
@@ -7,11 +7,13 @@ import {withRouter} from 'react-router-dom';
 import EventDisplay, {eventMap} from "./EventDisplay";
 import FormModal from "./forms/FormModal";
 import ReadMoreModal from "./ReadMore";
-import {extractParameter} from "../utils/paramExtraction";
 import GlobalFilter from "./GlobalFilter";
 import {useTranslation} from "../i18n";
+import EventContext, { extractEventListParameters } from '../context/EventContext'
 
-function EventTableStruct({columns, data, setEvents, params, show}) {
+function EventTableStruct({columns, params, show}) {
+    const {events, setEvents} = useContext(EventContext);
+    const data = events
     // Use the state and functions returned from useTable to build your UI
     const {
         getTableProps,
@@ -44,7 +46,6 @@ function EventTableStruct({columns, data, setEvents, params, show}) {
 
     // Render the UI for your table
     const showColumns = ['description'];
-    console.log('Event table show', show);
     return (
         <>
             <div className="row mt-1 mb-1 ml-1" style={{visibility: show ? 'visible' : 'hidden'}}>
@@ -104,11 +105,9 @@ export const Styles = styled.div`
         `;
 
 export function EventTable(props) {
-    const orgId = extractParameter(props, 'orgId', 2);
-    const eventTypeIds = extractParameter(props, 'eventTypeIds', "1,2,3,4,5,6,7,8,9,10,11,12,13,15");
-    const featured = extractParameter(props, 'featured', null);
+    const { orgId, eventTypeIds, featured } = extractEventListParameters(props)
     const [eventTableVisible, setEventTableVisible] = useState(true);
-    const [events, setEvents] = useState([]);
+    const {setEvents} = useContext(EventContext);
     const [displayMoreAbout, setDisplayMoreAbout] = useState(false);
     const [displayForm, setDisplayForm] = useState(false);
     const [currentEvent, setCurrentEvent] = useState({});
@@ -165,8 +164,6 @@ export function EventTable(props) {
             <Styles>
                 <EventTableStruct
                     columns={eventColumns}
-                    data={events}
-                    setEvents={setEvents}
                     params={{orgId, eventTypeIds, featured}}
                     show={eventTableVisible}/>
             </Styles>

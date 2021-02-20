@@ -39,7 +39,15 @@ export const langResources = {
             "Online activity": "Online activity",
             "BK Event": "BK Event",
             "Your time": "Your time",
-            "Open webcast URL": "Open webcast"
+            "Open webcast URL": "Open webcast",
+
+            "today": "Today",
+            "previous": "Previous",
+            "next": "Next",
+            "month": "Month",
+            "week": "Week",
+            "day": "Day",
+            "agenda": "Agenda"
         }
     },
     "en-US": {
@@ -79,7 +87,15 @@ export const langResources = {
             "Online activity": "Online activity",
             "BK Event": "BK Event",
             "Your time": "Your time",
-            "Open webcast URL": "Open webcast"
+            "Open webcast URL": "Open webcast",
+
+            "today": "Today",
+            "previous": "Previous",
+            "next": "Next",
+            "month": "Month",
+            "week": "Week",
+            "day": "Day",
+            "agenda": "Agenda"
         }
     },
     es: {
@@ -119,7 +135,15 @@ export const langResources = {
             "Online activity": "Actividad en línea",
             "BK Event": "Evento BK",
             "Your time": "Hora en su País",
-            "Open webcast URL": "Abrir URL de webcast"
+            "Open webcast URL": "Abrir URL de webcast",
+
+            "today": "Hoy",
+            "previous": "Anterior",
+            "next": "Seguinte",
+            "month": "Mes",
+            "week": "Semana",
+            "day": "Dia",
+            "agenda": "Agenda"
         }
     },
     "pt-BR": {
@@ -159,7 +183,15 @@ export const langResources = {
             "Online activity": "Atividade Online",
             "BK Event": "Event BK",
             "Your time": "Seu tempo",
-            "Open webcast URL": "Acessar a transmissão"
+            "Open webcast URL": "Acessar a transmissão",
+
+            "today": "Hoje",
+            "previous": "Anterior",
+            "next": "Seguinte",
+            "month": "Mês",
+            "week": "Semana",
+            "day": "Dia",
+            "agenda": "Agenda"
         }
     }
 };

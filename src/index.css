@@ -108,3 +108,8 @@ code {
     margin-bottom: 20px;
     text-align: right;
 }
+
+/** Calendar related */
+.rbc-month-row {
+    min-height: 100px;
+}
