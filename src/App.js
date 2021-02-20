@@ -1,10 +1,9 @@
-import React from 'react';
-import './App.css';
-import EventTable from "./components/EventTable";
-import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
-import About from "./components/About";
-import EventDetail from "./components/EventDetail";
-import {useTranslation} from "react-i18next";
+import React from 'react'
+import './App.css'
+import EventTable from './components/EventTable'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import About from './components/About'
+import EventDetail from './components/EventDetail'
 
 function App() {
 
@@ -19,6 +18,9 @@ function App() {
                 </Route>
                 <Route path="/event/:eventId">
                     <EventDetail/>
+                </Route>
+                <Route path="/calendar/:orgId">
+                    <EventTable/>
                 </Route>
                 <Route path="/">
                     <EventTable/>
