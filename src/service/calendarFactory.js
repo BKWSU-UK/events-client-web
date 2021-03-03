@@ -9,6 +9,7 @@ const convertToBigCalendar = (json) => {
             end: moment(event.endIso).toDate(),
             allDay: false,
             resource: event.webcastUrl || null,
+            original: event,
             description: event.description,
             descriptionText: event.descriptionText
         }

@@ -85,7 +85,7 @@ function ReadMore({currentEvent, dateList}) {
                         <EventType eventTypeInt={currentEvent.eventTypeId}/>
                         <p dangerouslySetInnerHTML={{__html: currentEvent.description}}/>
                         <div className="row">
-                            <div className="col-md-12 webcastButton"><WebcastButton original={currentEvent} t={t}/></div>
+                            <div className="col-md-12 webcastButton"><WebcastButton original={currentEvent} /></div>
                         </div>
 
                         <Venue venue={currentEvent.venue} venueName={currentEvent.venue.name}

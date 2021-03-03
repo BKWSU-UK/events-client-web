@@ -113,3 +113,12 @@ code {
 .rbc-month-row {
     min-height: 100px;
 }
+
+.modal-content {
+    margin: 0 auto !important;
+    width: 90% !important;
+}
+
+.modal {
+    overflow: scroll !important;
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import {openInNewTab} from "../utils/urlUtils";
+import { useTranslation } from '../i18n'
 
 /**
  * Displays a button which opens the webcast page.
@@ -8,7 +9,8 @@ import {openInNewTab} from "../utils/urlUtils";
  * @returns {*}
  * @constructor
  */
-export default function WebcastButton({original, t}) {
+export default function WebcastButton({original}) {
+    const {t} = useTranslation();
     if(original.hasWebcast && original.webcastUrl && window.eventsConfig.displayWebcastButton) {
         return (
             <button type="button" className="btn btn-info" onClick={() => openInNewTab(original.webcastUrl)}>

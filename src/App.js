@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
-import 'react-big-calendar/lib/sass/styles.scss';
-import 'react-big-calendar/lib/addons/dragAndDrop/styles.css'; // if using DnD
+import 'react-big-calendar/lib/sass/styles.scss'
+import 'react-big-calendar/lib/addons/dragAndDrop/styles.css' // if using DnD
 import EventTable from './components/EventTable'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import About from './components/About'
@@ -28,7 +28,8 @@ function App () {
                         <EventCalendar/>
                     </Route>
                     <Route path="/">
-                        <EventTable/>
+                        {window?.eventsConfig?.showCalendar ? <EventCalendar/> :
+                            <EventTable/>}
                     </Route>
                 </Switch>
             </Router>

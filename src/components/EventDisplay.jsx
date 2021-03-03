@@ -5,8 +5,8 @@ import {fetchEventDateList} from "../service/dataAccess";
 import {topFunction} from "../utils/scrolling";
 import DateWidget from "./DateWidget";
 import {useTranslation} from "../i18n";
-import {openInNewTab} from "../utils/urlUtils";
 import WebcastButton from "./WebcastButton";
+import linkifyHtml from 'linkifyjs/html';
 
 
 function displayImage1(original) {
@@ -18,14 +18,16 @@ function displayImage1(original) {
     }
 }
 
-const baseDateFormat = "YYYY-MM-DD hh:mm";
-
 function displaySimple(original) {
+    let description = original.shortDescription || original.descriptionText;
+    description = linkifyHtml(description, {
+        defaultProtocol: 'https'
+    });
     return (
         <>
             {displayImage1(original)}
             <EventType eventTypeInt={original.eventTypeId}/>
-            <div style={{textAlign: "justify"}}> {original.shortDescription || original.descriptionText}</div>
+            <div style={{textAlign: "justify"}} dangerouslySetInnerHTML={{ __html: description }} />
         </>
     )
 }
@@ -68,7 +70,7 @@ function renderButtons(footerInfo) {
                     }}>{t('book-only')}
                     </button>) : ''}
                 {' '}
-                <WebcastButton original={original} t={t}/>
+                <WebcastButton original={original} />
             </div>
         </div>
     )
@@ -121,31 +123,37 @@ export const eventMap = {
 };
 
 function EventDisplay({
-                          original, simple = true, props,
+                          original, simple = true,
                           setDisplayMoreAbout, setCurrentEvent, setDateList, setDisplayForm,
                           setEventTableVisible
                       }) {
-    const startDate = '' + original.startTimestamp;
-    const endDate = '' + original.endTimestamp;
     const {t} = useTranslation();
     return (
         <>
-            <div className="row">
-                <div className="col-sm-12">
-                    <h3 title={t(eventMap[original.eventTypeId])}>{original.name}</h3>
-                    <div className="pull-right">
-                        <DateWidget startDate={startDate} endDate={endDate} timezone={original.timezone}/>
-                    </div>
-                    {simple ? displaySimple(original) : displayFull(original)}
-
-                </div>
-            </div>
+            <EventDisplayBody original={original} simple={simple} />
             {displayFooterSimple({
                 original, setDisplayMoreAbout,
                 setCurrentEvent, setDateList, setDisplayForm, setEventTableVisible, t
             })}
         </>
     );
+}
+
+export const EventDisplayBody = ({ original, simple }) => {
+    const startDate = '' + original.startTimestamp;
+    const endDate = '' + original.endTimestamp;
+    const {t} = useTranslation();
+    return (
+        <div className="row">
+            <div className="col-sm-12">
+                <h3 title={t(eventMap[original.eventTypeId])}>{original.name}</h3>
+                <div className="pull-right">
+                    <DateWidget startDate={startDate} endDate={endDate} timezone={original.timezone}/>
+                </div>
+                {simple ? displaySimple(original) : displayFull(original)}
+            </div>
+        </div>
+    )
 }
 
 export default EventDisplay;
