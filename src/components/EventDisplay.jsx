@@ -18,6 +18,8 @@ function displayImage1(original) {
     }
 }
 
+const displaySubTitle = (original) => <h4 className="sub-title">{original.subTitle}</h4>
+
 function displaySimple(original) {
     let description = original.shortDescription || original.descriptionText;
     description = linkifyHtml(description, {
@@ -25,6 +27,7 @@ function displaySimple(original) {
     });
     return (
         <>
+            {displaySubTitle(original)}
             {displayImage1(original)}
             <EventType eventTypeInt={original.eventTypeId}/>
             <div style={{textAlign: "justify"}} dangerouslySetInnerHTML={{ __html: description }} />
@@ -35,6 +38,7 @@ function displaySimple(original) {
 function displayFull(original) {
     return (
         <>
+            {displaySubTitle(original)}
             <p className="lead">{original.eventTypeName}</p>
             <span dangerouslySetInnerHTML={{__html: original.description}}/>
         </>
