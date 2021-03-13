@@ -8,6 +8,7 @@ import {useTranslation} from "../i18n";
 import WebcastButton from "./WebcastButton";
 import linkifyHtml from 'linkifyjs/html';
 
+const EVENT_DATE_ID = '@@eventDateId@@'
 
 function displayImage1(original) {
     if (original.hasImage1) {
@@ -49,23 +50,35 @@ function gotoTop() {
     topFunction();
 }
 
-function renderButtons(footerInfo) {
+const processReadMore = (footerInfo) => {
     const {
         original, setDisplayMoreAbout, setCurrentEvent, setDateList,
+        setEventTableVisible, t
+    } = footerInfo;
+    setDisplayMoreAbout(true);
+    setCurrentEvent(original);
+    setEventTableVisible(false);
+    fetchEventDateList(setDateList, original.id);
+    gotoTop();
+}
+
+function renderButtons(footerInfo) {
+    const {
+        original, setCurrentEvent,
         setDisplayForm, setEventTableVisible, t
     } = footerInfo;
     return (
         <div className="row">
             <div className="col-md-6 mt-3 mb-1">
                 <button type="button" className="btn btn-info" onClick={() => {
-                    setDisplayMoreAbout(true);
-                    setCurrentEvent(original);
-                    setEventTableVisible(false);
-                    fetchEventDateList(setDateList, original.id);
-                    gotoTop();
+                    if(window.eventsConfig.singleEventUrlTemplate) {
+                        window.location.href = window.eventsConfig.singleEventUrlTemplate.replace(EVENT_DATE_ID, original.id)
+                    } else {
+                        processReadMore(footerInfo)
+                    }
                 }}>{t('read-more')} {original.requiresRegistration ? ' ' + t('and-book') : ''}</button>
                 {' '}
-                {original.requiresRegistration ? (
+                {original.requiresRegistration && !window.eventsConfig.suppressBookOnly ? (
                     <button type="button" className="btn btn-info" onClick={() => {
                         setCurrentEvent(original);
                         setDisplayForm(true);
