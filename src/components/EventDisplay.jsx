@@ -22,7 +22,7 @@ function displayImage1(original) {
 
 const displaySubTitle = (original) => <h4 className="sub-title">{original.subTitle}</h4>
 
-function displaySimple(original) {
+function displaySimple(original, footerInfo) {
     let description = original.shortDescription || original.descriptionText;
     description = linkifyHtml(description, {
         defaultProtocol: 'https'
@@ -33,6 +33,7 @@ function displaySimple(original) {
             {displayImage1(original)}
             <EventType eventTypeInt={original.eventTypeId}/>
             <div style={{textAlign: "justify"}} dangerouslySetInnerHTML={{ __html: description }} />
+            {window.eventsConfig.suppressVenue && <EventButtons footerInfo={footerInfo} />}
         </>
     )
 }
@@ -45,22 +46,6 @@ function displayFull(original) {
             <span dangerouslySetInnerHTML={{__html: original.description}}/>
         </>
     );
-}
-
-function gotoTop() {
-    topFunction();
-}
-
-const processReadMore = (footerInfo) => {
-    const {
-        original, setDisplayMoreAbout, setCurrentEvent, setDateList,
-        setEventTableVisible, t
-    } = footerInfo;
-    setDisplayMoreAbout(true);
-    setCurrentEvent(original);
-    setEventTableVisible(false);
-    fetchEventDateList(setDateList, original.id);
-    gotoTop();
 }
 
 function renderButtons(footerInfo) {
@@ -76,7 +61,7 @@ function renderButtons(footerInfo) {
 function displayFooterSimple(footerInfo) {
     const {original} = footerInfo;
     return (
-        <>
+        !window.eventsConfig.suppressVenue && <>
             <Venue venue={original.venue}
                    venueName={original.venue.name}
                    venueAddress={original.venue.address}
@@ -125,18 +110,19 @@ function EventDisplay({
                           setEventTableVisible
                       }) {
     const {t} = useTranslation();
+    const footerInfo = {
+        original, setDisplayMoreAbout,
+        setCurrentEvent, setDateList, setDisplayForm, setEventTableVisible, t
+    }
     return (
         <>
-            <EventDisplayBody original={original} simple={simple} />
-            {displayFooterSimple({
-                original, setDisplayMoreAbout,
-                setCurrentEvent, setDateList, setDisplayForm, setEventTableVisible, t
-            })}
+            <EventDisplayBody original={original} simple={simple} footerInfo={footerInfo}/>
+            {displayFooterSimple(footerInfo)}
         </>
     );
 }
 
-export const EventDisplayBody = ({ original, simple }) => {
+export const EventDisplayBody = ({ original, simple, footerInfo}) => {
     const startDate = '' + original.startTimestamp;
     const endDate = '' + original.endTimestamp;
     const {t} = useTranslation();
@@ -147,7 +133,7 @@ export const EventDisplayBody = ({ original, simple }) => {
                 <div className="pull-right">
                     <DateWidget startDate={startDate} endDate={endDate} timezone={original.timezone}/>
                 </div>
-                {simple ? displaySimple(original) : displayFull(original)}
+                {simple ? displaySimple(original, footerInfo) : displayFull(original)}
             </div>
         </div>
     )

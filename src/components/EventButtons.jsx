@@ -1,6 +1,8 @@
 import React from 'react'
 import WebcastButton from './WebcastButton'
 import { EVENT_DATE_ID } from './EventDisplay'
+import { fetchEventDateList } from '../service/dataAccess'
+import { topFunction } from '../utils/scrolling'
 
 /**
  * Displays the event buttons with show more, book only and webcast.
@@ -8,13 +10,14 @@ import { EVENT_DATE_ID } from './EventDisplay'
  * @returns {JSX.Element}
  * @constructor
  */
-const EventButtons = (footerInfo) => {
+const EventButtons = ({ footerInfo }) => {
     const {
         original, setCurrentEvent,
         setDisplayForm, setEventTableVisible, t
     } = footerInfo;
+
     return (
-        <>
+        <div className="event-buttons">
             <button type="button" className="btn btn-info" onClick={() => {
                 if(window.eventsConfig.singleEventUrlTemplate) {
                     window.location.href = window.eventsConfig.singleEventUrlTemplate.replace(EVENT_DATE_ID, original.id)
@@ -33,8 +36,24 @@ const EventButtons = (footerInfo) => {
                 </button>) : ''}
             {' '}
             <WebcastButton original={original} />
-        </>
+        </div>
     )
+}
+
+const processReadMore = (footerInfo) => {
+    const {
+        original, setDisplayMoreAbout, setCurrentEvent, setDateList,
+        setEventTableVisible, t
+    } = footerInfo;
+    setDisplayMoreAbout(true);
+    setCurrentEvent(original);
+    setEventTableVisible(false);
+    fetchEventDateList(setDateList, original.id);
+    gotoTop();
+}
+
+function gotoTop() {
+    topFunction();
 }
 
 export default EventButtons;
