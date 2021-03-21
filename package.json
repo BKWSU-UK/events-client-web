@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -29,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts examples",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
