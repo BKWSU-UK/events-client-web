@@ -39,7 +39,7 @@ export const langResources = {
             "Online activity": "Online activity",
             "BK Event": "BK Event",
             "Your time": "Your time",
-            "Open webcast URL": "Watch live",
+            "Open webcast URL": "Open webcast",
 
             "today": "Today",
             "previous": "Previous",
