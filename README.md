@@ -64,16 +64,23 @@ centres of the Brahma Kumaris:
 ```html
 <script>
     window.eventsConfig = {
-        useBodyHiddenOverflow: false,
-        useSimpleLayout: false,
-        orgId: [420,615,610,604,814,579,812,815],
+        useBodyHiddenOverflow: true,
+        useSimpleLayout: true,
+        orgId: [2], // GCH only
         eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        language: "en-GB"
+        language: "en-GB", // "es" for Spanish also supported now,
+        onlyWebcast: true, // show only webcast events
+        showLocalTime: true,
+        displayWebcastButton: true, // displays the webcast button
+        eventsLimit: 10, // show only one single event,
+        singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
+        suppressBookOnly: true, // Remove the book only button
+        suppressVenue: true // Hides the venue and add the buttons just right after the text. Works well in simple mode.
     }
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/loader.js"></script>
 ```
 
 ### Configuration parameters and static parts
@@ -83,8 +90,8 @@ Let us start with the **static parts**:
 
 ```html
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/loader.js"></script>
 ```
 
 Typically you will not need to configure the above HTML. The only thing that might change is the version of 
@@ -96,23 +103,37 @@ The configuration parameters of this plugin are contained in the initial script 
 ```html
 <script>
     window.eventsConfig = {
-        useBodyHiddenOverflow: false,
-        useSimpleLayout: false,
-        orgId: [420,615,610,604,814,579,812,815],
+        useBodyHiddenOverflow: true,
+        useSimpleLayout: true,
+        orgId: [2], // GCH only
         eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        language: "en-GB"
+        language: "en-GB", // "es" for Spanish also supported now,
+        onlyWebcast: true, // show only webcast events
+        showLocalTime: true,
+        displayWebcastButton: true, // displays the webcast button
+        eventsLimit: 10, // show only 10 events,
+        singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
+        suppressBookOnly: true, // Remove the book only button
+        suppressVenue: true // Hides the venue and add the buttons just right after the text. Works well in simple mode.
     }
 </script>
 ```
 Please note that the code depicted above is Javascript and so must be syntactically correct.
 
-|         name          |                                   description                                                                                                          |
-|----------------------:|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| useBodyHiddenOverflow | boolean value that switches off or on the vertical scrollbar when the event detail or registration form are displayed. Default is *false*              |
-| useSimpleLayout       | boolean value which determines if the event description contains HTML or is simple text. *false* means HTML is used                                    |
-| orgId                 | The organisation ID as a Javascript array. You must have at least one. Please see the  [Organisation Id](#org_ids) chapter on this page                |
-| eventTypeIds          | The id's of the event types you want to display. Please see the  [Event Types](#event_types) chapter on this page                                      |
-| language              | The language of the user interface. Currently only three codes are supported: *en-GB* (British English), *en-US* (American English) and *es* (Spanish) |
+|         name           |                                   description                                                                                                          |
+|-----------------------:|--------------------------------------------------------------------------------------------------------------------------------------------------------|
+| useBodyHiddenOverflow  | boolean value that switches off or on the vertical scrollbar when the event detail or registration form are displayed. Default is *false*              |
+| useSimpleLayout        | boolean value which determines if the event description contains HTML or is simple text. *false* means HTML is used                                    |
+| orgId                  | The organisation ID as a Javascript array. You must have at least one. Please see the [Organisation Id](#org_ids) chapter on this page                 |
+| eventTypeIds           | The id's of the event types you want to display. Please see the [Event Types](#event_types) chapter on this page                                       |
+| language               | The language of the user interface. Currently only three codes are supported: *en-GB* (British English), *en-US* (American English) and *es* (Spanish) |
+| onlyWebcast            | boolean value that allows to display only webcast events in case it is *true*. Else it displays all events                                             |
+| showLocalTime          | boolean value that controls whether the date is displayed in local time (*true*) or not (*false*)                                                      |
+| displayWebcastButton   | boolean value that controls whether webcast button is displayed (*true*) or not (*false*)                                                              |
+| eventsLimit            | integer value with the number of events which are to be displayed                                                                                      |
+| singleEventUrlTemplate | URL with the link template of the external single event page. This is an optional parameter, but must include the *@@eventDateId@@* token              |
+| suppressBookOnly       | boolean value which determines, whether the booking only value is hidden or not                                                                        |
+| suppressVenue          | boolean value which determines, whether the venue of the events is displayed or not                                                                    |
 
 ### CSS Styling
 
@@ -288,12 +309,11 @@ about the selectors please use the developers tools provided by Chrome.
 
 ![CSS Selectors](docs/css_selectors.png)
 
-
 ### Available implementations of the plugin
 
 Here are the available implementations of the EMS as of 2020 June 06th:
 
-https://www.peacevillageretreat.org/back-up-retreat-schedule.html
+https://globalcooperationhouse.org/
 
 https://www.agendas.lam.brahmakumaris.org/agenda-regional-latina/
 
