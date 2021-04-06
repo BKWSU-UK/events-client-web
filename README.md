@@ -114,7 +114,8 @@ The configuration parameters of this plugin are contained in the initial script 
         eventsLimit: 10, // show only 10 events,
         singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
         suppressBookOnly: true, // Remove the book only button
-        suppressVenue: true // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+        suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+        showCalendar: true // If true displays the calendar view instead of the list view
     }
 </script>
 ```
@@ -134,6 +135,7 @@ Please note that the code depicted above is Javascript and so must be syntactica
 | singleEventUrlTemplate | URL with the link template of the external single event page. This is an optional parameter, but must include the *@@eventDateId@@* token              |
 | suppressBookOnly       | boolean value which determines, whether the booking only value is hidden or not                                                                        |
 | suppressVenue          | boolean value which determines, whether the venue of the events is displayed or not                                                                    |
+| showCalendar           | boolean value which determines, whether calendar view is displayed or not                                                                              |
 
 ### CSS Styling
 
