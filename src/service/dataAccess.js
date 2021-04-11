@@ -25,7 +25,7 @@ function processOnlineOnly(targetUrl) {
 }
 
 export function fetchEventList(setEvents, events, params) {
-    const {orgId, eventTypeIds} = params;
+    const {orgId, eventTypeIds, eventsLang} = params;
     if (events.length > 0) {
         return;
     }
@@ -41,7 +41,11 @@ export function fetchEventList(setEvents, events, params) {
     if(isOnlyWebcast) {
         targetUrl += `&onlyWebcast=${isOnlyWebcast}`;
     }
+    if(eventsLang) {
+        targetUrl += `&lang=${eventsLang}`;
+    }
     targetUrl = processOnlineOnly(targetUrl);
+    console.log('targetUrl', targetUrl)
     fetch(targetUrl)
         .then((response) => response.json())
         .then((json) => {

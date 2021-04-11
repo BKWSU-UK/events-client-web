@@ -18,7 +18,8 @@ import { EventForm } from './forms/FormModal'
  */
 const EventCalendar = (props) => {
     const { t } = useTranslation()
-    const { orgId, eventTypeIds, featured } = extractEventListParameters(props)
+    const allParams = extractEventListParameters(props)
+    const { orgId } = allParams
     const { events, setEvents } = useContext(EventContext)
     const [showModal, setShowModal] = useState(false)
     const [selectedEvent, setSelectedEvent] = useState(false)
@@ -29,7 +30,7 @@ const EventCalendar = (props) => {
     const localizer = momentLocalizer(moment)
 
     useEffect(() => {
-        fetchEventList(setEvents, events, { orgId, eventTypeIds, featured })
+        fetchEventList(setEvents, events, allParams)
     }, [orgId])
 
     const onSelectEvent = (event, e) => {
