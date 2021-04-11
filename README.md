@@ -135,7 +135,8 @@ Please note that the code depicted above is Javascript and so must be syntactica
 | singleEventUrlTemplate | URL with the link template of the external single event page. This is an optional parameter, but must include the *@@eventDateId@@* token              |
 | suppressBookOnly       | boolean value which determines, whether the booking only value is hidden or not                                                                        |
 | suppressVenue          | boolean value which determines, whether the venue of the events is displayed or not                                                                    |
-| showCalendar           | boolean value which determines, whether the calendar view (*true*) is displayed or not                                                                          |
+| showCalendar           | boolean value which determines, whether the calendar view (*true*) is displayed or not                                                                 |
+| eventsLang             | Code used to filter events by language. Example *en*, *hi*, *es*. The codes follow the ISO 639-1 standard                                              |
 
 ### CSS Styling
 
