@@ -79,8 +79,8 @@ centres of the Brahma Kumaris:
     }
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/loader.js"></script>
 ```
 
 ### Configuration parameters and static parts
@@ -90,8 +90,8 @@ Let us start with the **static parts**:
 
 ```html
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.17.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/loader.js"></script>
 ```
 
 Typically you will not need to configure the above HTML. The only thing that might change is the version of 
@@ -319,6 +319,26 @@ Here are the available implementations of the EMS as of 2020 June 06th:
 https://globalcooperationhouse.org/
 
 https://www.agendas.lam.brahmakumaris.org/agenda-regional-latina/
+
+### Live demos
+
+Here are some links which allow to display events using different filters:
+
+* All events in Global Co-operation House:
+
+https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/?orgId=2
+
+* All events in Global Co-operation House in Portuguese:
+
+https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/?orgId=2&eventsLang=pt
+
+* All events in Global Co-operation House in Hindi:
+
+https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/?orgId=2&eventsLang=hi
+
+* All events in Global Co-operation House in Spanish:
+
+https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/?orgId=2&eventsLang=es
 
 ### Contacting for support
 

@@ -6,10 +6,6 @@ import React, {Component} from "react";
  */
 export default class LabelRenderer extends Component {
 
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="card bg-light pl-2 pt-1">
