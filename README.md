@@ -328,6 +328,10 @@ Here are some links which allow to display events using different filters:
 
 https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/?orgId=2
 
+* All events in Global Co-operation House in English:
+
+https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/?orgId=2&eventsLang=en
+
 * All events in Global Co-operation House in Portuguese:
 
 https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/?orgId=2&eventsLang=pt
