@@ -107,10 +107,9 @@ export const Styles = styled.div`
 export function EventTable(props) {
     const allParams = extractEventListParameters(props)
     const [eventTableVisible, setEventTableVisible] = useState(true);
-    const {setEvents} = useContext(EventContext);
     const [displayMoreAbout, setDisplayMoreAbout] = useState(false);
     const [displayForm, setDisplayForm] = useState(false);
-    const [currentEvent, setCurrentEvent] = useState({});
+    const { currentEvent, setCurrentEvent } = useContext(EventContext);
     const [dateList, setDateList] = useState({});
     const { t } = useTranslation();
 

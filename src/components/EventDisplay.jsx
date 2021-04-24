@@ -123,7 +123,6 @@ export const EventDisplayBody = ({ original, simple, footerInfo}) => {
     const startDate = '' + original.startTimestamp;
     const endDate = '' + original.endTimestamp;
     const {t} = useTranslation();
-    console.log('original.timezone', original.timezone)
     return (
         <div className="row">
             <div className="col-sm-12">

@@ -122,3 +122,7 @@ code {
 .modal {
     overflow: scroll !important;
 }
+
+.similar-title {
+    margin: 10px 0 -5px 0
+}

@@ -95,7 +95,7 @@ function displayTimes(timeParams) {
     }
 }
 
-function momentFactory(dateExpr, timezone) {
+export function momentFactory(dateExpr, timezone) {
     moment.tz.load(require('moment-timezone/data/packed/latest.json'));
     return timezone ? moment.tz(dateExpr, timezone) : moment(dateExpr);
 }
