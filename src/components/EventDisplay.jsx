@@ -1,12 +1,9 @@
-import React from 'react';
-import EventType from "./EventType";
-import Venue from "./Venue";
-import {fetchEventDateList} from "../service/dataAccess";
-import {topFunction} from "../utils/scrolling";
-import DateWidget from "./DateWidget";
-import {useTranslation} from "../i18n";
-import WebcastButton from "./WebcastButton";
-import linkifyHtml from 'linkifyjs/html';
+import React from 'react'
+import EventType from './EventType'
+import Venue from './Venue'
+import DateWidget from './DateWidget'
+import { useTranslation } from '../i18n'
+import linkifyHtml from 'linkifyjs/html'
 import EventButtons from './EventButtons'
 
 export const EVENT_DATE_ID = '@@eventDateId@@'
@@ -126,6 +123,7 @@ export const EventDisplayBody = ({ original, simple, footerInfo}) => {
     const startDate = '' + original.startTimestamp;
     const endDate = '' + original.endTimestamp;
     const {t} = useTranslation();
+    console.log('original.timezone', original.timezone)
     return (
         <div className="row">
             <div className="col-sm-12">

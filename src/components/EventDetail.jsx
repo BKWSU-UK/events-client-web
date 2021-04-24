@@ -1,11 +1,12 @@
-import React, {useState} from 'react';
+import React, {useContext} from 'react';
 import {withRouter} from "react-router-dom";
 import {fetchEvent} from "../service/dataAccess";
 import EventDisplay from "./EventDisplay";
+import EventContext from '../context/EventContext'
 
 function EventDetail(props) {
     const eventId = props.match.params.eventId;
-    const [event, setEvent] = useState({});
+    const [event, setEvent] = useContext(EventContext);
     React.useEffect(() => {
         fetchEvent(setEvent, eventId);
     }, [fetchEvent]);

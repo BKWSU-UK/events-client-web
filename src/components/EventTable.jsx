@@ -6,7 +6,7 @@ import {Pager} from "./Pager";
 import {withRouter} from 'react-router-dom';
 import EventDisplay, {eventMap} from "./EventDisplay";
 import FormModal from "./forms/FormModal";
-import ReadMoreModal from "./ReadMore";
+import ReadMoreModal from "./readMore/ReadMore";
 import GlobalFilter from "./GlobalFilter";
 import {useTranslation} from "../i18n";
 import EventContext, { extractEventListParameters } from '../context/EventContext'

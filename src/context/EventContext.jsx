@@ -24,9 +24,13 @@ const EventContext = createContext();
 
 export const EventContextProvider = (props) => {
     const [events, setEvents] = useState([]);
+    const [event, setEvent] = useState({});
+    const [similarEvents, setSimilarEvents] = useState([]);
     return (
         <EventContext.Provider value={{
-            events, setEvents
+            events, setEvents,
+            event, setEvent,
+            similarEvents, setSimilarEvents
         }}>
             {props.children}
         </EventContext.Provider>

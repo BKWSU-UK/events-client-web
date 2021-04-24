@@ -1,8 +1,12 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import WebcastButton from './WebcastButton'
 import { EVENT_DATE_ID } from './EventDisplay'
-import { fetchEventDateList } from '../service/dataAccess'
+import {
+    fetchEventDateList,
+    fetchSimilarEventList,
+} from '../service/dataAccess'
 import { topFunction } from '../utils/scrolling'
+import EventContext from '../context/EventContext'
 
 /**
  * Displays the event buttons with show more, book only and webcast.
@@ -11,20 +15,27 @@ import { topFunction } from '../utils/scrolling'
  * @constructor
  */
 const EventButtons = ({ footerInfo }) => {
+    const {setSimilarEvents} = useContext(EventContext);
     const {
         original, setCurrentEvent,
         setDisplayForm, setEventTableVisible, t
     } = footerInfo;
 
+    const processReadMoreClick = () => {
+        if (window.eventsConfig.singleEventUrlTemplate) {
+            const eventId = original.id
+            window.location.href = window.eventsConfig.singleEventUrlTemplate.replace(
+                EVENT_DATE_ID, eventId)
+        } else {
+            const eventDateId = original.eventDateId
+            fetchSimilarEventList(eventDateId, setSimilarEvents)
+            processReadMore(footerInfo)
+        }
+    }
+
     return (
         <div className="event-buttons">
-            <button type="button" className="btn btn-info" onClick={() => {
-                if(window.eventsConfig.singleEventUrlTemplate) {
-                    window.location.href = window.eventsConfig.singleEventUrlTemplate.replace(EVENT_DATE_ID, original.id)
-                } else {
-                    processReadMore(footerInfo)
-                }
-            }}>{t('read-more')} {original.requiresRegistration ? ' ' + t('and-book') : ''}</button>
+            <button type="button" className="btn btn-info" onClick={processReadMoreClick}>{t('read-more')} {original.requiresRegistration ? ' ' + t('and-book') : ''}</button>
             {' '}
             {original.requiresRegistration && !window.eventsConfig.suppressBookOnly ? (
                 <button type="button" className="btn btn-info" onClick={() => {

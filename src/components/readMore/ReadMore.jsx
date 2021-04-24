@@ -1,11 +1,12 @@
 import React from "react";
-import EventType from "./EventType";
-import Venue from "./Venue";
+import EventType from "../EventType";
+import Venue from "../Venue";
 import moment from 'moment-timezone/index';
-import makeModal from "./simpleModal/makeModal";
-import {createForm, EventForm} from "./forms/FormModal";
-import {useTranslation} from "../i18n";
-import WebcastButton from "./WebcastButton";
+import makeModal from "../simpleModal/makeModal";
+import {createForm, EventForm} from "../forms/FormModal";
+import {useTranslation} from "../../i18n";
+import WebcastButton from "../WebcastButton";
+import RenderSimilarEvents from './RenderSimilarEvents'
 
 function convertIsoToGoogleCal(dateStr) {
     return moment(dateStr, "YYYY-MM-DD'T'hh:mm:ss").format("YYYYMMDDTHHmmss");
@@ -49,7 +50,6 @@ function RenderUpcomingDates({dateList, currentEvent}) {
             </h4>
             <div className="card card-body bg-light">
                 {Array.isArray(dateList) ? dateList.map(date => {
-                    console.log('date', date);
                     return (
                         <div className="row" key={date.eventDateId}>
                             <div className="col-md-3">
@@ -92,6 +92,7 @@ function ReadMore({currentEvent, dateList}) {
                                venueAddress={currentEvent.venue.address} venuePostalCode={currentEvent.venue.postalCode}
                                venueLocality={currentEvent.venue.locality}/>
                         <RenderUpcomingDates dateList={dateList} currentEvent={currentEvent}/>
+                        <RenderSimilarEvents />
                     </div>
                     {includeForm(currentEvent)}
                 </div>
