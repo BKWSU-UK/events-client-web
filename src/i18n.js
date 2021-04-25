@@ -49,7 +49,8 @@ export const langResources = {
             "day": "Day",
             "agenda": "Agenda",
 
-            "Similar Events": "Similar Events"
+            "Similar Events": "Similar Events",
+            "Close": "Close"
         }
     },
     "en-US": {
@@ -99,7 +100,8 @@ export const langResources = {
             "day": "Day",
             "agenda": "Agenda",
 
-            "Similar Events": "Similar Events"
+            "Similar Events": "Similar Events",
+            "Close": "Close"
         }
     },
     es: {
@@ -149,7 +151,8 @@ export const langResources = {
             "day": "Dia",
             "agenda": "Agenda",
 
-            "Similar Events": "Eventos similares"
+            "Similar Events": "Eventos similares",
+            "Close": "Cerca"
         }
     },
     "pt-BR": {
@@ -199,7 +202,8 @@ export const langResources = {
             "day": "Dia",
             "agenda": "Agenda",
 
-            "Similar Events": "Eventos semelhantes"
+            "Similar Events": "Eventos semelhantes",
+            "Close": "Fechar"
         }
     }
 };

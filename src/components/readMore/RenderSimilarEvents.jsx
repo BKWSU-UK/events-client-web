@@ -3,7 +3,7 @@ import EventContext from '../../context/EventContext'
 import { extractParameter } from '../../utils/paramExtraction'
 import { useTranslation } from '../../i18n'
 import { eventMap } from '../EventDisplay'
-import { momentFactory } from '../DateWidget'
+import { determineTimeFormat, momentFactory } from '../DateWidget'
 import { fetchSimilarEventList } from '../../service/dataAccess'
 
 const createDateStr = (dateStr, time) => `${dateStr} ${time}`.replace(/:00$/, "")
@@ -30,7 +30,6 @@ const RenderSimilarEvents = () => {
         }
     }
 
-
     if (showSimilarEvents) {
         return (
             similarEvents && similarEvents.length > 0 &&
@@ -43,6 +42,7 @@ const RenderSimilarEvents = () => {
                         const timezone = event.timezone;
                         const baseMoment = momentFactory(startDate, timezone);
                         const baseEndMoment = momentFactory(endDate, timezone);
+                        const timeFormat = determineTimeFormat()
                         return (
                             <div className="row" key={i}>
                                 <div className="col-sm-12 similar-title">
@@ -52,7 +52,7 @@ const RenderSimilarEvents = () => {
                                     <h6>{t(eventMap[event.eventTypeId])}</h6>
                                 </div>
                                 <div className="col-sm-12">
-                                    &#x1f4c5; {baseMoment.format("ddd, Do MMM YYYY h:mm a")}
+                                    &#x1f4c5; {baseMoment.format(`ddd, Do MMM YYYY ${timeFormat}`)}
                                 </div>
                             </div>
                         )

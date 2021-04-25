@@ -67,6 +67,7 @@ const EventCalendar = (props) => {
 
 const CalendarModal = ({ showModal, setShowModal, selectedEvent }) => {
     const original = selectedEvent.original
+    const {t} = useTranslation();
 
     const escFunction = useCallback((event) => {
         if (event.keyCode === 27) {
@@ -106,8 +107,7 @@ const CalendarModal = ({ showModal, setShowModal, selectedEvent }) => {
                     <div className="modal-footer">
                         <button type="button" className="btn btn-secondary"
                                 data-dismiss="modal"
-                                onClick={() => setShowModal(!showModal)}>Close
-                        </button>
+                                onClick={() => setShowModal(!showModal)}>{t('Close')}</button>
                     </div>
                 </div>
             </div>

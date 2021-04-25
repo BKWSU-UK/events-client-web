@@ -6,7 +6,7 @@ import moment from "moment-timezone";
 import {useTranslation} from "../i18n";
 import {extractParameterSimple} from "../utils/paramExtraction";
 
-const determineTimeFormat = () => {
+export const determineTimeFormat = () => {
     const language = extractParameterSimple('language', 'en-US');
     if(language.indexOf("en") === 0) {
         return "h:mm a"
@@ -94,6 +94,7 @@ function displayTimes(timeParams) {
         )
     }
 }
+
 
 export function momentFactory(dateExpr, timezone) {
     moment.tz.load(require('moment-timezone/data/packed/latest.json'));

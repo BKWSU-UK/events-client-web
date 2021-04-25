@@ -7,6 +7,7 @@ import {createForm, EventForm} from "../forms/FormModal";
 import {useTranslation} from "../../i18n";
 import WebcastButton from "../WebcastButton";
 import RenderSimilarEvents from './RenderSimilarEvents'
+import { determineTimeFormat } from '../DateWidget'
 
 function convertIsoToGoogleCal(dateStr) {
     return moment(dateStr, "YYYY-MM-DD'T'hh:mm:ss").format("YYYYMMDDTHHmmss");
@@ -43,6 +44,7 @@ function RenderUpcomingDates({dateList, currentEvent}) {
             startIso: currentEvent.startIso
         })
     }
+    const timeFormat = determineTimeFormat()
     return (
         <>
             <h4>
@@ -53,7 +55,7 @@ function RenderUpcomingDates({dateList, currentEvent}) {
                     return (
                         <div className="row" key={date.eventDateId}>
                             <div className="col-md-3">
-                                &#x1f4c5; {moment(date.startIso, "YYYY-MM-DD'T'hh:mm:ss").format("Do MMM YYYY h:mm a")}
+                                &#x1f4c5; {moment(date.startIso, "YYYY-MM-DD'T'hh:mm:ss").format(`Do MMM YYYY ${timeFormat}`)}
                             </div>
                             <div className="col-md-3">
                                 ({moment(date.startIso, "YYYY-MM-DD'T'hh:mm:ss").fromNow()})
