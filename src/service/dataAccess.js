@@ -46,11 +46,17 @@ export const fetchEventList = (setEvents, events, params) => {
     }
     targetUrl = processOnlineOnly(targetUrl)
     console.log('targetUrl', targetUrl)
-    fetch(targetUrl).then((response) => response.json()).then((json) => {
-        const response = json.response
-        console.log(response)
-        setEvents(response.data)
-    })
+    fetch(targetUrl)
+        .then((response) => response.json())
+        .then((json) => {
+            const response = json.response
+            console.log('response.data', response.data)
+            if(isOnlyWebcast) {
+                response.data = response.data.filter(event => event.hasWebcast &&
+                    event.webcastUrl.match(/.+(webcast|watchlive).*/))
+            }
+            setEvents(response.data)
+        })
 
     return []
 }
@@ -60,13 +66,11 @@ function fetchSingleEvent (fun, eventId) {
         return
     }
     const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?simpleEventTemplate=jsonEvent.ftl&mimeType=application/json&eventIds=${eventId}`
-    fetch(targetUrl)
-        .then((response) => response.json())
-        .then((json) => {
-            const response = json.response
-            console.log(response)
-            fun(response)
-        })
+    fetch(targetUrl).then((response) => response.json()).then((json) => {
+        const response = json.response
+        console.log(response)
+        fun(response)
+    })
 }
 
 export function fetchEvent (setEvent, eventId) {
@@ -78,16 +82,15 @@ export function fetchEventDateList (setDateList, eventId) {
         eventId)
 }
 
-export const fetchSimilarEventList = (eventDateId, setSimilarEvents, limit = 3) => {
+export const fetchSimilarEventList = (
+    eventDateId, setSimilarEvents, limit = 3) => {
     if (!eventDateId) {
         return
     }
     const targetUrl = `https://events.brahmakumaris.org/registration/similarEvents.do?eventDateId=${eventDateId}&limit=${limit}`
     console.log('fetchSimilarEventList target', targetUrl)
-    fetch(targetUrl)
-        .then((response) => response.json())
-        .then((json) => {
-            console.log('similar events', json)
-            setSimilarEvents(json)
-        })
+    fetch(targetUrl).then((response) => response.json()).then((json) => {
+        console.log('similar events', json)
+        setSimilarEvents(json)
+    })
 }
