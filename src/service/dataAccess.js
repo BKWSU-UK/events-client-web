@@ -51,10 +51,6 @@ export const fetchEventList = (setEvents, events, params) => {
         .then((json) => {
             const response = json.response
             console.log('response.data', response.data)
-            if(isOnlyWebcast) {
-                response.data = response.data.filter(event => event.hasWebcast &&
-                    event.webcastUrl.match(/.+(webcast|watchlive).*/))
-            }
             setEvents(response.data)
         })
 
