@@ -1,7 +1,7 @@
 import React from "react";
 import {useTranslation} from "../i18n";
 
-function gotoPageElement(pageIndex, gotoPage, pageCount, t) {
+const gotoPageElement = (pageIndex, gotoPage, pageCount, t) => {
     if (pageCount > 1) {
         return (
             <span className="d-none d-lg-inline">
@@ -24,14 +24,14 @@ function gotoPageElement(pageIndex, gotoPage, pageCount, t) {
     }
 }
 
-function pageSelector(pageSize, setPageSize, pageCount, t) {
+const pageSelector = (pageSize, setPageSize, pageCount, t) => {
     if (pageCount > 1) {
         return <select
             value={pageSize}
             onChange={e => {
                 setPageSize(Number(e.target.value))
             }}
-            className="d-none d-lg-inline"
+            className="d-none d-lg-inline form-control-sm"
         >
             {[10, 20, 30, 40, 50].map(pageSize => (
                 <option key={pageSize} value={pageSize}>

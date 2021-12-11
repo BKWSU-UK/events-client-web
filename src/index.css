@@ -58,15 +58,15 @@ code {
 }
 
 .calendarWidget > .weekday {
-    background: #ffeb3b;
-    color: black;
+    background: #c5bb9b;
+    color: white;
     font-size: 1.5rem;
     padding: 5px 10px;
     text-align: center;
 }
 
 .calendarWidget > .month, .calendarWidget > .day {
-    background: #f0e68c;
+    background: #a9e4f8;
     color: black;
     font-size: 3rem;
     padding: 0 10px;

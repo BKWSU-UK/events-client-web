@@ -1,4 +1,5 @@
 import { extractParameter } from '../utils/paramExtraction'
+import { ALL_ORG_IDS } from '../context/EventContext'
 
 const eventLimit = () => extractParameter(null, 'eventsLimit', 10000)
 
@@ -25,11 +26,16 @@ function processOnlineOnly (targetUrl) {
 }
 
 export const fetchEventList = (setEvents, events, params) => {
-    const { orgId, eventTypeIds, eventsLang } = params
-    if (events.length > 0) {
-        return
+    const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
+
+    const orgIdStrFactory = () => {
+        if(parseInt(orgIdFilter) === ALL_ORG_IDS) {
+            return Array.isArray(orgId) ? orgId.join(',') : orgId
+        }
+        return orgIdFilter
     }
-    const orgIdStr = Array.isArray(orgId) ? orgId.join(',') : orgId
+
+    const orgIdStr = orgIdStrFactory()
     const eventsLimit = eventLimit()
     console.log('eventsLimit', eventsLimit)
     let targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
@@ -46,13 +52,11 @@ export const fetchEventList = (setEvents, events, params) => {
     }
     targetUrl = processOnlineOnly(targetUrl)
     console.log('targetUrl', targetUrl)
-    fetch(targetUrl)
-        .then((response) => response.json())
-        .then((json) => {
-            const response = json.response
-            console.log('response.data', response.data)
-            setEvents(response.data)
-        })
+    fetch(targetUrl).then((response) => response.json()).then((json) => {
+        const response = json.response
+        console.log('response.data', response.data)
+        setEvents(response.data)
+    })
 
     return []
 }
@@ -89,4 +93,11 @@ export const fetchSimilarEventList = (
         console.log('similar events', json)
         setSimilarEvents(json)
     })
+}
+
+export const fetchOrganisations = async (orgIds) => {
+    const orgList = orgIds.join(',')
+    const targetUrl = `https://events.brahmakumaris.org/registration/organisations/ids?ids=${orgList}`
+    const response = await fetch(targetUrl)
+    return response.json()
 }

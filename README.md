@@ -137,6 +137,7 @@ Please note that the code depicted above is Javascript and so must be syntactica
 | suppressVenue          | boolean value which determines, whether the venue of the events is displayed or not                                                                    |
 | showCalendar           | boolean value which determines, whether the calendar view (*true*) is displayed or not                                                                 |
 | eventsLang             | Code used to filter events by language. Example *en*, *hi*, *es*. The codes follow the ISO 639-1 standard                                              |
+| displayOrgFilter       | If *true* then the organisation filter is visible otherwise not                                                                                        |
 
 ### CSS Styling
 
@@ -343,6 +344,16 @@ https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/?orgId=2&eventsLang=hi
 * All events in Global Co-operation House in Spanish:
 
 https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/?orgId=2&eventsLang=es
+
+* Organisation Filter for multiple example (English)
+
+https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_uk_filter.html
+
+* Organisation Filter for multiple example (Portuguese)
+  
+https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html
+  
+
 
 ### Contacting for support
 

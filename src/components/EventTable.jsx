@@ -10,9 +10,11 @@ import ReadMoreModal from "./readMore/ReadMore";
 import GlobalFilter from "./GlobalFilter";
 import {useTranslation} from "../i18n";
 import EventContext, { extractEventListParameters } from '../context/EventContext'
+import CenterFilter from './CenterFilter'
 
 function EventTableStruct({columns, params, show}) {
     const {events, setEvents} = useContext(EventContext);
+    const {orgIdFilter} = useContext(EventContext);
     const data = events
     // Use the state and functions returned from useTable to build your UI
     const {
@@ -41,8 +43,8 @@ function EventTableStruct({columns, params, show}) {
 
     // When these table states change, fetch new data!
     React.useEffect(() => {
-        fetchEventList(setEvents, data, params);
-    }, [fetchEventList]);
+        fetchEventList(setEvents, data, { ...params, orgIdFilter });
+    }, [orgIdFilter]);
 
     // Render the UI for your table
     const showColumns = ['description'];
@@ -58,6 +60,7 @@ function EventTableStruct({columns, params, show}) {
                        previousPage={previousPage} nextPage={nextPage} canNextPage={canNextPage} pageCount={pageCount}
                        pageOptions={pageOptions} pageIndex={pageIndex} pageSize={pageSize} setPageSize={setPageSize}/>
             </div>
+            <CenterFilter />
             <table {...getTableProps()} className="table table-hover" style={{visibility: show ? 'visible' : 'hidden'}}>
                 <thead className="thead-dark">
                 {headerGroups.map(headerGroup => (
