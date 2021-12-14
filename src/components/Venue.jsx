@@ -50,7 +50,7 @@ function venuePhone(venue) {
 
 export default function Venue({venue, venueName, venueAddress, venuePostalCode, venueLocality}) {
     return (
-        <div className="card card-body bg-light">
+        <div className="card card-body bg-light venue-display">
             {venueNameDisplay(venueName)}
             <div>{venueAddress}</div>
             {venuePostalCodeLocality(venuePostalCode, venueLocality, venue)}
