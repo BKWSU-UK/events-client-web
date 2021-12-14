@@ -65,7 +65,7 @@ export function Pager({gotoPage, canPreviousPage, previousPage, nextPage, canNex
         )
     }
     return (
-        <div className="col-md-6 col-sm-12 text-right">
+        <div className="col-md-6 col-sm-12 text-right pager-box">
             <button type="button" className="btn btn-light" onClick={() => gotoPage(0)} disabled={!canPreviousPage}>
                 {'<<'}
             </button>

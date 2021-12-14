@@ -29,7 +29,7 @@ export const fetchEventList = (setEvents, events, params) => {
     const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
 
     const orgIdStrFactory = () => {
-        if(parseInt(orgIdFilter) === ALL_ORG_IDS) {
+        if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
             return Array.isArray(orgId) ? orgId.join(',') : orgId
         }
         return orgIdFilter
@@ -82,17 +82,17 @@ export function fetchEventDateList (setDateList, eventId) {
         eventId)
 }
 
-export const fetchSimilarEventList = (
+export const fetchSimilarEventList = async (
     eventDateId, setSimilarEvents, limit = 3) => {
     if (!eventDateId) {
         return
     }
     const targetUrl = `https://events.brahmakumaris.org/registration/similarEvents.do?eventDateId=${eventDateId}&limit=${limit}`
     console.log('fetchSimilarEventList target', targetUrl)
-    fetch(targetUrl).then((response) => response.json()).then((json) => {
-        console.log('similar events', json)
-        setSimilarEvents(json)
-    })
+    const response = await fetch(targetUrl)
+    const json = await response.json()
+    console.log('similar events', json)
+    setSimilarEvents(json)
 }
 
 export const fetchOrganisations = async (orgIds) => {

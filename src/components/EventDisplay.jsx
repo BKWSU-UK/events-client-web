@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import EventType from './EventType'
 import Venue from './Venue'
 import DateWidget from './DateWidget'
 import { useTranslation } from '../i18n'
 import linkifyHtml from 'linkifyjs/html'
-import EventButtons from './EventButtons'
+import EventButtons, { processReadMoreClick } from './EventButtons'
+import EventContext from '../context/EventContext'
 
 export const EVENT_DATE_ID = '@@eventDateId@@'
 
@@ -120,13 +121,17 @@ function EventDisplay({
 }
 
 export const EventDisplayBody = ({ original, simple, footerInfo}) => {
+    const { setSimilarEvents } = useContext(EventContext)
     const startDate = '' + original.startTimestamp;
     const endDate = '' + original.endTimestamp;
     const {t} = useTranslation();
     return (
         <div className="row">
             <div className="col-sm-12">
-                <h3 title={t(eventMap[original.eventTypeId])}>{original.name}</h3>
+                <h3 title={t(eventMap[original.eventTypeId])}><a href="#" onClick={async e => {
+                    e.preventDefault()
+                    await processReadMoreClick(footerInfo, setSimilarEvents);
+                }}>{original.name}</a></h3>
                 <div className="pull-right">
                     <DateWidget startDate={startDate} endDate={endDate} timezone={original.timezone}/>
                 </div>

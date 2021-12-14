@@ -29,12 +29,12 @@ const CenterFilter = () => {
     }
 
     return window.eventsConfig.displayOrgFilter && <div className="row mt-2 mb-2 center-filter">
-        <div className="col-md-1  offset-md-8"><label className="col-form-label float-right" for="centre-list">{t('Centre')}</label></div>
-        <div className="col-md-3">
+        <div className="col-md-12"><label className="col-form-label" htmlFor="centre-list">{t('Centre')}:</label></div>
+        <div className="col-md-12">
             <select id="centre-list" className="form-control" value={orgIdFilter} onChange={changeOrgIdFilter}>
-                <option key={ALL_ORG_IDS} value={ALL_ORG_IDS} title={orgInfo.map(e => e.name).join(", ")}>{t('All')}</option>
+                <option key={ALL_ORG_IDS} value={ALL_ORG_IDS} title={orgInfo.map(e => e.name).join(", ")}>{t('-- Select option --')}</option>
                 {orgInfo.map((org, i) => {
-                    return <option key={i} value={org.id}>{org.name}</option>
+                    return <option key={i} value={org.id}>{org.name} ({org.futureCount})</option>
                 })}
             </select>
         </div>

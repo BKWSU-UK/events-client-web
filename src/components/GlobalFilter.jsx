@@ -24,7 +24,7 @@ function GlobalFilter({
         return <></>;
     }
     return (
-        <div className="col-md-6 col-sm-12 ">
+        <div className="col-md-6 col-sm-12 search-box">
             <div className="form-group row mb-0">
                 <label htmlFor="searchInput" className="col-2 col-form-label text-right">{t('search')}</label>
                 <div className="col-6">

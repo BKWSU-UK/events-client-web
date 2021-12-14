@@ -52,7 +52,8 @@ export const langResources = {
             'Similar Events': 'Similar Events',
             'Close': 'Close',
             'Centre': 'Centre',
-            'All': 'All'
+            'All': 'All',
+            '-- Select option --': '-- Select option --'
         },
     },
     'en-US': {
@@ -105,7 +106,8 @@ export const langResources = {
             'Similar Events': 'Similar Events',
             'Close': 'Close',
             'Centre': 'Center',
-            'All': 'All'
+            'All': 'All',
+            '-- Select option --': '-- Select option --'
         },
     },
     es: {
@@ -158,7 +160,8 @@ export const langResources = {
             'Similar Events': 'Eventos similares',
             'Close': 'Cerca',
             'Centre': 'Centro',
-            'All': 'Todos'
+            'All': 'Todos',
+            '-- Select option --': '-- Seleccionar opción --'
         },
     },
     'pt-BR': {
@@ -210,8 +213,9 @@ export const langResources = {
 
             'Similar Events': 'Eventos semelhantes',
             'Close': 'Fechar',
-            'Centre': 'Centro',
-            'All': 'Todos'
+            'Centre': 'Escolha uma localidade',
+            'All': 'Todos',
+            '-- Select option --': '-- Selecione a opção --'
         },
     },
 }

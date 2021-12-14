@@ -43,7 +43,11 @@ function EventTableStruct({columns, params, show}) {
 
     // When these table states change, fetch new data!
     React.useEffect(() => {
-        fetchEventList(setEvents, data, { ...params, orgIdFilter });
+        if(window.eventsConfig.fetchEvents) {
+            fetchEventList(setEvents, data, { ...params, orgIdFilter });
+        } else {
+            window.eventsConfig.fetchEvents = true;
+        }
     }, [orgIdFilter]);
 
     // Render the UI for your table
