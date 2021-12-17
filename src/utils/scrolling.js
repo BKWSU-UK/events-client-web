@@ -2,7 +2,7 @@
 export function topFunction() {
     setTimeout(() => {
         console.log('topFunction called');
-        var elmnt = document.getElementById("eventDisplayName");
+        var elmnt = document.getElementById("closeTop");
         if (elmnt) {
             elmnt.scrollIntoView();
         } else {

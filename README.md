@@ -90,8 +90,8 @@ Let us start with the **static parts**:
 
 ```html
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/loader.js"></script>
 ```
 
 Typically you will not need to configure the above HTML. The only thing that might change is the version of 

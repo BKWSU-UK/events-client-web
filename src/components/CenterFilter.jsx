@@ -21,7 +21,7 @@ const CenterFilter = () => {
             setOrgInfo(orgInfoJson)
         }
         fetchOrgInfo()
-    })
+    }, [])
 
     const changeOrgIdFilter = (e) => {
         const value = e.target.value
