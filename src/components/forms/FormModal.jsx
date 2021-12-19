@@ -6,7 +6,7 @@ export function createForm (currentEvent) {
     const targetUrl = `https://events.brahmakumaris.org/bkregistration/FormIOGeneration.do?eventDateId=${currentEvent.eventDateId}&addSubmit=true`
     const formLanguage = window.eventsConfig.language || 'en-GB'
 
-    const form_Options = {
+    const formOptions = {
         language: formLanguage,
         i18n: {
             'en-GB': {
@@ -121,20 +121,22 @@ export function createForm (currentEvent) {
         },
     }
 
+    const formOptionsClone = JSON.parse(JSON.stringify(formOptions))
+
     const onFormLoad = () => {
         const submitButton = document.querySelector('button[type=\'submit\']')
-        console.log('formLanguage', formLanguage, submitButton, form_Options['i18n'])
+        console.log('formLanguage', formLanguage, submitButton, formOptionsClone['i18n'])
         // Hack to get the translation working.
-        if(!!submitButton && !!form_Options['i18n'][formLanguage]) {
-            console.log('form_Options[\'i18n\']', form_Options['i18n'])
-            submitButton.textContent = form_Options['i18n'][formLanguage]['translation']['Submit'];
+        if(!!submitButton && !!formOptionsClone['i18n'][formLanguage]) {
+            console.log('form_Options[\'i18n\']', formOptionsClone['i18n'])
+            submitButton.textContent = formOptionsClone['i18n'][formLanguage]['translation']['Submit'];
         }
     }
 
     return (
         <>
             <div id="formIOContainer"/>
-            <Form src={targetUrl} onFormLoad={onFormLoad} options={form_Options}/>
+            <Form src={targetUrl} onFormLoad={onFormLoad} options={formOptions}/>
         </>
     )
 // const targetUrl = `http://gil.brahmakumaris.org:8085/FormIOGeneration.do?eventDateId=${currentEvent.eventDateId}&addSubmit=true`;
