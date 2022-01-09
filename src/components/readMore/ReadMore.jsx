@@ -35,6 +35,8 @@ function includeForm(currentEvent) {
     }
 }
 
+const DEFAULT_UPCOMING_LIMIT = 10
+
 function RenderUpcomingDates({dateList, currentEvent}) {
     const {t} = useTranslation();
     if (dateList.length === 0) {
@@ -45,6 +47,11 @@ function RenderUpcomingDates({dateList, currentEvent}) {
         })
     }
     const timeFormat = determineTimeFormat()
+    const upcomingDateLimit = window.eventsConfig.upcomingDateLimit || DEFAULT_UPCOMING_LIMIT
+    if(upcomingDateLimit && Array.isArray(dateList)) {
+        console.log('type dateList', typeof dateList)
+        dateList = dateList.slice(0, upcomingDateLimit)
+    }
     return (
         <>
             <h4>

@@ -65,7 +65,10 @@ export function createForm (currentEvent) {
                 },
             }, 'pt-BR': {
                 translation: {
-                    complete: 'Submissão completa',
+                    complete: 'Agradecemos sua inscrição! ' +
+                        'Você agora receberá um email de confirmação. ' +
+                        'Saudações de Paz, ' +
+                        'Brahma Kumaris ',
                     error: 'Please fix the following errors before submitting.',
                     submitError: 'Please check the form and correct all errors before submitting.',
                     required: '{{field}} is required',
@@ -123,20 +126,25 @@ export function createForm (currentEvent) {
 
     const formOptionsClone = JSON.parse(JSON.stringify(formOptions))
 
-    const onFormLoad = () => {
-        const submitButton = document.querySelector('button[type=\'submit\']')
-        console.log('formLanguage', formLanguage, submitButton, formOptionsClone['i18n'])
+    const forceTranslate = (selector, translationKey) => {
+        const el = document.querySelector(selector)
         // Hack to get the translation working.
-        if(!!submitButton && !!formOptionsClone['i18n'][formLanguage]) {
-            console.log('form_Options[\'i18n\']', formOptionsClone['i18n'])
-            submitButton.textContent = formOptionsClone['i18n'][formLanguage]['translation']['Submit'];
+        if(!!el && !!formOptionsClone['i18n'][formLanguage]) {
+            el.textContent = formOptionsClone['i18n'][formLanguage]['translation'][translationKey];
         }
+    }
+
+    const onFormLoad = () => forceTranslate('button[type=\'submit\']', 'Submit')
+
+    const onSubmitDone = () => {
+        forceTranslate('div[role=\'alert\'] > p', 'complete')
+        setTimeout(() => forceTranslate('span[ref=\'buttonMessage\']', 'complete'), 1000)
     }
 
     return (
         <>
             <div id="formIOContainer"/>
-            <Form src={targetUrl} onFormLoad={onFormLoad} options={formOptions}/>
+            <Form src={targetUrl} onFormLoad={onFormLoad} options={formOptions} onSubmitDone={onSubmitDone}/>
         </>
     )
 // const targetUrl = `http://gil.brahmakumaris.org:8085/FormIOGeneration.do?eventDateId=${currentEvent.eventDateId}&addSubmit=true`;
