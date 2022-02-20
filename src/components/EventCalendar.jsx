@@ -9,6 +9,7 @@ import { useTranslation } from '../i18n'
 import { EventDisplayBody } from './EventDisplay'
 import WebcastButton from './WebcastButton'
 import { EventForm } from './forms/FormModal'
+import CenterFilter from './CenterFilter'
 
 /**
  * Used to display the events in a calendar format.
@@ -21,17 +22,21 @@ const EventCalendar = (props) => {
     const allParams = extractEventListParameters(props)
     const { orgId } = allParams
     const { events, setEvents } = useContext(EventContext)
+    const {orgIdFilter} = useContext(EventContext);
     const [showModal, setShowModal] = useState(false)
     const [selectedEvent, setSelectedEvent] = useState(false)
 
     const language = extractParameterSimple('language', 'en-US')
-    console.log('Calendar language', language)
     moment.locale(language)
     const localizer = momentLocalizer(moment)
 
     useEffect(() => {
-        fetchEventList(setEvents, events, allParams)
-    }, [orgId])
+        if(window.eventsConfig.fetchEvents) {
+            fetchEventList(setEvents, events, { ...allParams, orgIdFilter })
+        } else {
+            fetchEventList(setEvents, events, allParams)
+        }
+    }, [orgId, orgIdFilter])
 
     const onSelectEvent = (event, e) => {
         setShowModal(!showModal)
@@ -41,6 +46,7 @@ const EventCalendar = (props) => {
 
     return (
         <>
+            <CenterFilter />
             <Calendar
                 localizer={localizer}
                 events={convertToBigCalendar(events)}

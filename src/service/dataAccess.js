@@ -25,17 +25,25 @@ function processOnlineOnly (targetUrl) {
     return targetUrl
 }
 
+const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
+
+const orgIdStrFactory = (orgIdFilter, orgId) => {
+    if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
+        return joinIfArray(orgId)
+    }
+    return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
+}
+
+export const getEventList = async (events, params) => {
+    const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
+
+    const orgIdStr = orgIdStrFactory(orgIdFilter, orgId)
+}
+
 export const fetchEventList = (setEvents, events, params) => {
     const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
 
-    const orgIdStrFactory = () => {
-        if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
-            return Array.isArray(orgId) ? orgId.join(',') : orgId
-        }
-        return orgIdFilter
-    }
-
-    const orgIdStr = orgIdStrFactory()
+    const orgIdStr = orgIdStrFactory(orgIdFilter, orgId)
     const eventsLimit = eventLimit()
     console.log('eventsLimit', eventsLimit)
     let targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
@@ -53,9 +61,12 @@ export const fetchEventList = (setEvents, events, params) => {
     targetUrl = processOnlineOnly(targetUrl)
     console.log('targetUrl', targetUrl)
     fetch(targetUrl).then((response) => response.json()).then((json) => {
+        if(json?.response?.status !== 0) {
+            console.error('Error occurred whiles fetching events', json)
+        }
         const response = json.response
-        console.log('response.data', response.data)
-        setEvents(response.data)
+        console.log('response.data', json)
+        setEvents(response?.data)
     })
 
     return []
