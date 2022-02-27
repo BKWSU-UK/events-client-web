@@ -1,6 +1,7 @@
 <html lang="pt">
 <!-- https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html -->
 <head>
+    <meta name="viewport" content="width=device-width">
     <title>List de eventos com filtro</title>
 </head>
 <body>
@@ -8,26 +9,35 @@
     window.eventsConfig = {
         useBodyHiddenOverflow: true,
         useSimpleLayout: true,
-        orgId: [2,258,593], // GCH only
+        orgId: [2, 258, 229, 233], // GCH only
         // eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
         language: "pt-BR", // Portuguese Brasil
         onlyWebcast: false, // show only webcast events
         showLocalTime: true,
         displayWebcastButton: true,
-        showCalendar: false, // If true displays the calendar view instead of the list view
+        showCalendar: true, // If true displays the calendar view instead of the list view
         eventsLimit: 100, // show only one single event
         displayOrgFilter: true,
+        fetchEvents: true, // Prevents initial event fetching
         rootElement: 'emsRoot',
+        suppressVenue: false
     }
 </script>
-<div id="emsRoot" class="container-fluid"></div>
+<div id="emsRoot" className="container-fluid"></div>
 <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.22.0/starter.js"></script>
 <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.22.0/loader.js"></script>
 <!-- Incluir CSS aqui -->
 <style type="text/css">
+    body {
+        padding: 10px
+    }
     /** Esconde o local do evento, que de momento nao interessa */
     div.card.card-body.bg-light {
-        /*display: none !important;*/
+        display: none !important;
+    }
+    .formio-form {
+        margin-left: 0;
+        min-width: 250px;
     }
 </style>
 

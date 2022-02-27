@@ -1,21 +1,43 @@
 import React, { useContext, useState } from 'react'
-import {useGlobalFilter, usePagination, useSortBy, useTable} from 'react-table';
+import {
+    useGlobalFilter,
+    usePagination,
+    useSortBy,
+    useTable,
+} from 'react-table'
 import styled from 'styled-components'
-import {fetchEventList} from "../service/dataAccess";
-import {Pager} from "./Pager";
-import {withRouter} from 'react-router-dom';
-import EventDisplay, {eventMap} from "./EventDisplay";
-import FormModal from "./forms/FormModal";
-import ReadMoreModal from "./readMore/ReadMore";
-import GlobalFilter from "./GlobalFilter";
-import {useTranslation} from "../i18n";
+import { getEventList } from '../service/dataAccess'
+import { Pager } from './Pager'
+import { withRouter } from 'react-router-dom'
+import EventDisplay, { eventMap } from './EventDisplay'
+import FormModal from './forms/FormModal'
+import ReadMoreModal from './readMore/ReadMore'
+import GlobalFilter from './GlobalFilter'
+import { useTranslation } from '../i18n'
 import EventContext, { extractEventListParameters } from '../context/EventContext'
 import CenterFilter from './CenterFilter'
+import { useQuery } from 'react-query'
+import LoadingContainer from './loading/LoadingContainer'
 
-function EventTableStruct({columns, params, show}) {
-    const {events, setEvents} = useContext(EventContext);
-    const {orgIdFilter} = useContext(EventContext);
-    const data = events
+function EventTableStruct ({ columns, params, show }) {
+    const { events, setEvents } = useContext(EventContext)
+    const { orgIdFilter } = useContext(EventContext)
+
+    const { isLoading, error, data } = useQuery(
+        ['eventsTable', orgIdFilter], () => {
+            if (window.eventsConfig.fetchEvents) {
+                return getEventList({ ...params, orgIdFilter })
+            } else {
+                return getEventList(params)
+            }
+        })
+
+    if(!!data) {
+        setEvents(data)
+    }
+
+    console.log('events', events)
+
     // Use the state and functions returned from useTable to build your UI
     const {
         getTableProps,
@@ -34,72 +56,76 @@ function EventTableStruct({columns, params, show}) {
         previousPage,
         setPageSize,
         setGlobalFilter,
-        state: {pageIndex, pageSize}
+        state: { pageIndex, pageSize },
     } = useTable({
         columns,
-        data,
-        initialState: {pageIndex: 0}
-    }, useGlobalFilter, useSortBy, usePagination);
-
-    // When these table states change, fetch new data!
-    React.useEffect(() => {
-        if(window.eventsConfig.fetchEvents) {
-            fetchEventList(setEvents, data, { ...params, orgIdFilter });
-        } else {
-            window.eventsConfig.fetchEvents = true;
-        }
-    }, [orgIdFilter]);
+        data: events,
+        initialState: { pageIndex: 0 },
+    }, useGlobalFilter, useSortBy, usePagination)
 
     // Render the UI for your table
-    const showColumns = ['description'];
+    const showColumns = ['description']
     return (
         <>
-            <div className="row mt-1 mb-1 ml-1" style={{visibility: show ? 'visible' : 'hidden'}}>
+            <div className="row mt-1 mb-1 ml-1"
+                 style={{ visibility: show ? 'visible' : 'hidden' }}>
                 <GlobalFilter
                     globalFilter={state.globalFilter}
                     setGlobalFilter={setGlobalFilter}
                     rowsLength={rows.length}
                 />
                 <Pager gotoPage={gotoPage} canPreviousPage={canPreviousPage}
-                       previousPage={previousPage} nextPage={nextPage} canNextPage={canNextPage} pageCount={pageCount}
-                       pageOptions={pageOptions} pageIndex={pageIndex} pageSize={pageSize} setPageSize={setPageSize}/>
+                       previousPage={previousPage} nextPage={nextPage}
+                       canNextPage={canNextPage} pageCount={pageCount}
+                       pageOptions={pageOptions} pageIndex={pageIndex}
+                       pageSize={pageSize} setPageSize={setPageSize}/>
             </div>
-            <CenterFilter />
-            <table {...getTableProps()} className="table table-hover" style={{visibility: show ? 'visible' : 'hidden'}}>
-                <thead className="thead-dark">
-                {headerGroups.map(headerGroup => (
-                    <tr {...headerGroup.getHeaderGroupProps()}>
-                        {headerGroup.headers.filter(column => showColumns.includes(column.id)).map(column => {
-                                return (
-                                    // Add the sorting props to control sorting. For this example
-                                    // we can add them into the header props
+            <CenterFilter/>
+            <LoadingContainer data={data} isLoading={isLoading} error={error}>
+                <table {...getTableProps()} className="table table-hover"
+                       style={{ visibility: show ? 'visible' : 'hidden' }}>
+                    <thead className="thead-dark">
+                    {headerGroups.map(headerGroup => (
+                        <tr {...headerGroup.getHeaderGroupProps()}>
+                            {headerGroup.headers.filter(
+                                column => showColumns.includes(column.id)).
+                                map(column => {
+                                        return (
+                                            // Add the sorting props to control sorting. For this example
+                                            // we can add them into the header props
 
-                                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                                        {column.render('Header')}
-                                        {/* Add a sort direction indicator */}
-                                        <span>
-                                    {column.isSorted ? column.isSortedDesc ? ' 🔽' : ' 🔼' : ''}
+                                            <th {...column.getHeaderProps(
+                                                column.getSortByToggleProps())}>
+                                                {column.render('Header')}
+                                                {/* Add a sort direction indicator */}
+                                                <span>
+                                    {column.isSorted ? column.isSortedDesc
+                                        ? ' 🔽'
+                                        : ' 🔼' : ''}
                                 </span>
-                                    </th>
-                                )
-                            }
-                        )}
-                    </tr>
-                ))}
-                </thead>
-                <tbody {...getTableBodyProps()}>
-                {page.map((row, i) => {
-                    prepareRow(row);
-                    return (
-                        <tr {...row.getRowProps()}>
-                            {row.cells.filter(cell => showColumns.includes(cell.column.id)).map(cell => {
-                                return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
-                            })}
+                                            </th>
+                                        )
+                                    },
+                                )}
                         </tr>
-                    )
-                })}
-                </tbody>
-            </table>
+                    ))}
+                    </thead>
+                    <tbody {...getTableBodyProps()}>
+                    {page.map((row, i) => {
+                        prepareRow(row)
+                        return (
+                            <tr {...row.getRowProps()}>
+                                {row.cells.filter(cell => showColumns.includes(
+                                    cell.column.id)).map(cell => {
+                                    return <td {...cell.getCellProps()}>{cell.render(
+                                        'Cell')}</td>
+                                })}
+                            </tr>
+                        )
+                    })}
+                    </tbody>
+                </table>
+            </LoadingContainer>
         </>
     )
 }
@@ -109,64 +135,71 @@ export const Styles = styled.div`
         table {
             width: 100%;
         }
-        `;
+        `
 
-export function EventTable(props) {
+export function EventTable (props) {
     const allParams = extractEventListParameters(props)
-    const [eventTableVisible, setEventTableVisible] = useState(true);
-    const [displayMoreAbout, setDisplayMoreAbout] = useState(false);
-    const [displayForm, setDisplayForm] = useState(false);
-    const { currentEvent, setCurrentEvent } = useContext(EventContext);
-    const [dateList, setDateList] = useState({});
-    const { t } = useTranslation();
+    const [eventTableVisible, setEventTableVisible] = useState(true)
+    const [displayMoreAbout, setDisplayMoreAbout] = useState(false)
+    const [displayForm, setDisplayForm] = useState(false)
+    const { currentEvent, setCurrentEvent } = useContext(EventContext)
+    const [dateList, setDateList] = useState({})
+    const { t } = useTranslation()
 
     const eventColumns = React.useMemo(
         () => [
             {
                 Header: 'Name',
-                accessor: 'name' /* This is a hidden column */
+                accessor: 'name', /* This is a hidden column */
             },
             {
                 Header: 'Name', /* This is a hidden column */
                 accessor: (props) => {
-                    return eventMap["" + props.eventTypeId];
-                }
+                    return eventMap['' + props.eventTypeId]
+                },
             },
             {
                 Header: t('description'),
                 accessor: 'description',
                 Cell: (props) => {
-                    const original = props.row.original;
+                    const original = props.row.original
                     return (
                         <EventDisplay original={original}
-                                      simple={typeof window.eventsConfig.useSimpleLayout == "undefined" ? false : window.eventsConfig.useSimpleLayout} props={props}
-                                      setDisplayMoreAbout={setDisplayMoreAbout} setCurrentEvent={setCurrentEvent}
-                                      setDateList={setDateList} setDisplayForm={setDisplayForm}
+                                      simple={typeof window.eventsConfig.useSimpleLayout ==
+                                      'undefined'
+                                          ? false
+                                          : window.eventsConfig.useSimpleLayout}
+                                      props={props}
+                                      setDisplayMoreAbout={setDisplayMoreAbout}
+                                      setCurrentEvent={setCurrentEvent}
+                                      setDateList={setDateList}
+                                      setDisplayForm={setDisplayForm}
                                       setEventTableVisible={setEventTableVisible}/>
-                    );
-                }
+                    )
+                },
             },
             {
                 Header: 'Venue', /* This is a hidden column. Used to allow search to find this data. */
                 accessor: (props) => {
                     return `${props.venue.locality} ${props.venue.country}`
-                }
+                },
             },
             {
                 Header: 'Start Date',
-                accessor: 'startTimestamp' /* This is a hidden column */
-            }
+                accessor: 'startTimestamp', /* This is a hidden column */
+            },
         ],
-        []
+        [],
         )
-    ;
+
     return (
         <>
             <ReadMoreModal show={displayMoreAbout} setShow={setDisplayMoreAbout}
                            setEventTableVisible={setEventTableVisible}
                            currentEvent={currentEvent} dateList={dateList}/>
-            <FormModal show={displayForm} setShow={setDisplayForm} currentEvent={currentEvent}
-                       setEventTableVisible={setEventTableVisible} />
+            <FormModal show={displayForm} setShow={setDisplayForm}
+                       currentEvent={currentEvent}
+                       setEventTableVisible={setEventTableVisible}/>
             <Styles>
                 <EventTableStruct
                     columns={eventColumns}
@@ -174,7 +207,7 @@ export function EventTable(props) {
                     show={eventTableVisible}/>
             </Styles>
         </>
-    );
+    )
 }
 
-export default withRouter(EventTable);
+export default withRouter(EventTable)

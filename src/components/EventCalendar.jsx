@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react'
-import { fetchEventList } from '../service/dataAccess'
+import { fetchEventList, getEventList } from '../service/dataAccess'
 import EventContext, { extractEventListParameters } from '../context/EventContext'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import { convertToBigCalendar } from '../service/calendarFactory'
@@ -10,6 +10,9 @@ import { EventDisplayBody } from './EventDisplay'
 import WebcastButton from './WebcastButton'
 import { EventForm } from './forms/FormModal'
 import CenterFilter from './CenterFilter'
+import { useQuery } from 'react-query'
+import Loader from './loading/Loader'
+import LoadingContainer from './loading/LoadingContainer'
 
 /**
  * Used to display the events in a calendar format.
@@ -30,13 +33,15 @@ const EventCalendar = (props) => {
     moment.locale(language)
     const localizer = momentLocalizer(moment)
 
-    useEffect(() => {
+    const { isLoading, error, data } = useQuery(['eventsCalendar', orgId, orgIdFilter], () => {
         if(window.eventsConfig.fetchEvents) {
-            fetchEventList(setEvents, events, { ...allParams, orgIdFilter })
+            return getEventList({ ...allParams, orgIdFilter })
         } else {
-            fetchEventList(setEvents, events, allParams)
+            return getEventList(allParams)
         }
-    }, [orgId, orgIdFilter])
+    })
+
+    setEvents(data)
 
     const onSelectEvent = (event, e) => {
         setShowModal(!showModal)
@@ -47,23 +52,25 @@ const EventCalendar = (props) => {
     return (
         <>
             <CenterFilter />
-            <Calendar
-                localizer={localizer}
-                events={convertToBigCalendar(events)}
-                startAccessor="start"
-                endAccessor="end"
-                messages={{
-                    'today': t('today'),
-                    'previous': t('previous'),
-                    'next': t('next'),
-                    'month': t('month'),
-                    'week': t('week'),
-                    'day': t('day'),
-                    'agenda': t('agenda'),
-                    'more': t('More'),
-                }}
-                onSelectEvent={onSelectEvent}
-            />
+            <LoadingContainer data={data} isLoading={isLoading} error={error}>
+                <Calendar
+                    localizer={localizer}
+                    events={convertToBigCalendar(events)}
+                    startAccessor="start"
+                    endAccessor="end"
+                    messages={{
+                        'today': t('today'),
+                        'previous': t('previous'),
+                        'next': t('next'),
+                        'month': t('month'),
+                        'week': t('week'),
+                        'day': t('day'),
+                        'agenda': t('agenda'),
+                        'more': t('More'),
+                    }}
+                    onSelectEvent={onSelectEvent}
+                />
+            </LoadingContainer>
             <CalendarModal showModal={showModal}
                            setShowModal={setShowModal}
                            selectedEvent={selectedEvent}/>

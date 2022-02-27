@@ -34,21 +34,10 @@ const orgIdStrFactory = (orgIdFilter, orgId) => {
     return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
 }
 
-export const getEventList = async (events, params) => {
-    const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
-
-    const orgIdStr = orgIdStrFactory(orgIdFilter, orgId)
-}
-
-export const fetchEventList = (setEvents, events, params) => {
-    const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
-
-    const orgIdStr = orgIdStrFactory(orgIdFilter, orgId)
-    const eventsLimit = eventLimit()
-    console.log('eventsLimit', eventsLimit)
+const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured}) => {
     let targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
     targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
-    if (params.featured) {
+    if (featured) {
         targetUrl += `&featured=true`
     }
     const isOnlyWebcast = onlyWebcast()
@@ -60,6 +49,30 @@ export const fetchEventList = (setEvents, events, params) => {
     }
     targetUrl = processOnlineOnly(targetUrl)
     console.log('targetUrl', targetUrl)
+    return targetUrl
+}
+
+export const getEventList = async (params) => {
+    const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
+    const orgIdStr = orgIdStrFactory(orgIdFilter, orgId)
+    const eventsLimit = eventLimit()
+    const targetUrl = targetUrlFactory({orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured: params.featured})
+    const fetchResponse = await fetch(targetUrl)
+    const json = await fetchResponse.json()
+    if(json?.response?.status !== 0) {
+        console.error('Error occurred whiles fetching events', json)
+    }
+    const response = json.response
+    console.log('response.data', json)
+    return response?.data
+}
+
+export const fetchEventList = (setEvents, events, params) => {
+    const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
+
+    const orgIdStr = orgIdStrFactory(orgIdFilter, orgId)
+    const eventsLimit = eventLimit()
+    const targetUrl = targetUrlFactory({orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured: params.featured})
     fetch(targetUrl).then((response) => response.json()).then((json) => {
         if(json?.response?.status !== 0) {
             console.error('Error occurred whiles fetching events', json)

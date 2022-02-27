@@ -6,6 +6,7 @@ import { useTranslation } from '../i18n'
 import linkifyHtml from 'linkifyjs/html'
 import EventButtons, { processReadMoreClick } from './EventButtons'
 import EventContext from '../context/EventContext'
+import WebcastButton from './WebcastButton'
 
 export const EVENT_DATE_ID = '@@eventDateId@@'
 
@@ -21,17 +22,33 @@ function displayImage1(original) {
 const displaySubTitle = (original) => <h4 className="sub-title">{original.subTitle}</h4>
 
 function displaySimple(original, footerInfo) {
-    let description = original.shortDescription || original.descriptionText;
+    const showCalendar = window.eventsConfig.showCalendar
+    let description
+    if(showCalendar) {
+        description = original.description
+    } else {
+        description = original.shortDescription || original.descriptionText || original.description;
+    }
     description = linkifyHtml(description, {
         defaultProtocol: 'https'
     });
+    const showVenue = !window.eventsConfig.suppressVenue && showCalendar
+    console.log('showVenue', showVenue)
     return (
         <>
             {displaySubTitle(original)}
-            {displayImage1(original)}
+            {!showCalendar && displayImage1(original)}
             <EventType eventTypeInt={original.eventTypeId}/>
             <div style={{textAlign: "justify"}} dangerouslySetInnerHTML={{ __html: description }} />
-            {window.eventsConfig.suppressVenue && <EventButtons footerInfo={footerInfo} />}
+            {showVenue && (
+                <>
+                    <Venue venue={original.venue}
+                           venueName={original.venue.name}
+                           venueAddress={original.venue.address}
+                           venuePostalCode={original.venue.postalCode}
+                           venueLocality={original.venue.locality}/>
+                </>
+             )}
         </>
     )
 }
@@ -68,19 +85,6 @@ function displayFooterSimple(footerInfo) {
             {renderButtons(footerInfo)}
         </>
     );
-}
-
-function displayFooterFull(original, props) {
-    if (props.history) {
-        return (
-            <>
-                <Venue venue={original} venueName={original.venueName}
-                       venueAddress={original.venueAddress} venuePostalCode={original.venuePostCode}
-                       venueLocality={original.venueCity}/>
-                <button className="btn btn-secondary" onClick={props.history.goBack}>Back</button>
-            </>
-        );
-    }
 }
 
 export const eventMap = {
@@ -135,7 +139,7 @@ export const EventDisplayBody = ({ original, simple, footerInfo}) => {
                 <div className="pull-right">
                     <DateWidget startDate={startDate} endDate={endDate} timezone={original.timezone}/>
                 </div>
-                {simple ? displaySimple(original, footerInfo) : displayFull(original)}
+                {simple ? displaySimple(original, { t, ...footerInfo }) : displayFull(original)}
             </div>
         </div>
     )
