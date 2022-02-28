@@ -6,7 +6,6 @@ import { useTranslation } from '../i18n'
 import linkifyHtml from 'linkifyjs/html'
 import EventButtons, { processReadMoreClick } from './EventButtons'
 import EventContext from '../context/EventContext'
-import WebcastButton from './WebcastButton'
 
 export const EVENT_DATE_ID = '@@eventDateId@@'
 
