@@ -83,9 +83,9 @@ function RenderUpcomingDates({dateList, currentEvent}) {
  * @returns {*}
  * @constructor
  */
-function ReadMore({currentEvent, dateList}) {
+export function ReadMore({currentEvent, dateList}) {
     const {t} = useTranslation();
-    if (currentEvent.venue) {
+    if (currentEvent?.venue) {
         return (
             <>
                 <h2 id="eventDisplayName">{currentEvent.name}</h2>
@@ -100,7 +100,8 @@ function ReadMore({currentEvent, dateList}) {
                         <Venue venue={currentEvent.venue} venueName={currentEvent.venue.name}
                                venueAddress={currentEvent.venue.address} venuePostalCode={currentEvent.venue.postalCode}
                                venueLocality={currentEvent.venue.locality}/>
-                        <RenderUpcomingDates dateList={dateList} currentEvent={currentEvent}/>
+                        {dateList && <RenderUpcomingDates dateList={dateList}
+                                              currentEvent={currentEvent}/>}
                         <RenderSimilarEvents />
                     </div>
                     {includeForm(currentEvent)}

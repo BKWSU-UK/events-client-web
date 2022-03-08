@@ -33,9 +33,11 @@ function App () {
                             <EventCalendar/>
                         </Route>
                         <Route path="/">
-                            {window?.eventsConfig?.showCalendar ?
+                            {window?.eventsConfig?.showSingleEvent ? <EventDetail/> :
+                                window?.eventsConfig?.showCalendar ?
                                 <EventCalendar/> :
-                                <EventTable/>}
+                                <EventTable/>
+                            }
                         </Route>
                     </Switch>
                 </Router>

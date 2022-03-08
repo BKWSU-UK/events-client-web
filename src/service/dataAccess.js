@@ -92,13 +92,16 @@ function fetchSingleEvent (fun, eventId) {
     const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?simpleEventTemplate=jsonEvent.ftl&mimeType=application/json&eventIds=${eventId}`
     fetch(targetUrl).then((response) => response.json()).then((json) => {
         const response = json.response
-        console.log(response)
+        console.log(targetUrl, response)
         fun(response)
     })
 }
 
 export function fetchEvent (setEvent, eventId) {
-    fetchSingleEvent((response) => setEvent(response.data[0]), eventId)
+    console.log('fetchEvent', setEvent)
+    fetchSingleEvent((response) => {
+        setEvent(response.data[0])
+    }, eventId)
 }
 
 export function fetchEventDateList (setDateList, eventId) {

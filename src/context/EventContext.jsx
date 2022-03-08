@@ -25,7 +25,7 @@ const EventContext = createContext();
 
 export const EventContextProvider = (props) => {
     const [events, setEvents] = useState([]);
-    const [currentEvent, setCurrentEvent] = useState({});
+    const [currentEvent, setCurrentEvent] = useState(null);
     const [similarEvents, setSimilarEvents] = useState([]);
     const [orgIdFilter, setOrgIdFilter] = useState(ALL_ORG_IDS);
 
