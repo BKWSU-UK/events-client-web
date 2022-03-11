@@ -1,4 +1,7 @@
-import { extractParameter } from '../utils/paramExtraction'
+import {
+    extractParameter,
+    extractParameterSimple,
+} from '../utils/paramExtraction'
 import { ALL_ORG_IDS } from '../context/EventContext'
 
 const eventLimit = () => extractParameter(null, 'eventsLimit', 10000)
@@ -29,6 +32,10 @@ const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
 
 const orgIdStrFactory = (orgIdFilter, orgId) => {
     if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
+        const extractParameterSimple1 = extractParameterSimple('useAllOrgIds', false)
+        if(!extractParameterSimple1) {
+            return `${ALL_ORG_IDS}`
+        }
         return joinIfArray(orgId)
     }
     return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
@@ -55,6 +62,9 @@ const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, feat
 export const getEventList = async (params) => {
     const { orgId, eventTypeIds, eventsLang, orgIdFilter } = params
     const orgIdStr = orgIdStrFactory(orgIdFilter, orgId)
+    if(parseInt(orgIdStr) < 1) {
+        return []
+    }
     const eventsLimit = eventLimit()
     const targetUrl = targetUrlFactory({orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured: params.featured})
     const fetchResponse = await fetch(targetUrl)

@@ -1,54 +1,56 @@
-import React from "react";
-import EventType from "../EventType";
-import Venue from "../Venue";
-import moment from 'moment-timezone/index';
-import makeModal from "../simpleModal/makeModal";
-import {createForm, EventForm} from "../forms/FormModal";
-import {useTranslation} from "../../i18n";
-import WebcastButton from "../WebcastButton";
+import React from 'react'
+import EventType from '../EventType'
+import Venue from '../Venue'
+import moment from 'moment-timezone/index'
+import makeModal from '../simpleModal/makeModal'
+import { createForm } from '../forms/FormModal'
+import { useTranslation } from '../../i18n'
+import WebcastButton from '../WebcastButton'
 import RenderSimilarEvents from './RenderSimilarEvents'
 import { determineTimeFormat } from '../DateWidget'
 
-function convertIsoToGoogleCal(dateStr) {
-    return moment(dateStr, "YYYY-MM-DD'T'hh:mm:ss").format("YYYYMMDDTHHmmss");
+function convertIsoToGoogleCal (dateStr) {
+    return moment(dateStr, 'YYYY-MM-DD\'T\'hh:mm:ss').format('YYYYMMDDTHHmmss')
 }
 
-function renderAddToGoogleCalendar(event, date, t) {
-    const venue = event.venue;
+function renderAddToGoogleCalendar (event, date, t) {
+    const venue = event.venue
     return (
-        <a href={`http://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(event.name)}&dates=${convertIsoToGoogleCal(date.startIso)}Z/${convertIsoToGoogleCal(date.endIso)}Z&details=${encodeURI(event.descriptionText)}&location=${encodeURI(venue.address)}&trp=false&sf=true&output=xml`}
+        <a href={`http://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
+            event.name)}&dates=${convertIsoToGoogleCal(
+            date.startIso)}Z/${convertIsoToGoogleCal(
+            date.endIso)}Z&details=${encodeURI(
+            event.descriptionText)}&location=${encodeURI(
+            venue.address)}&trp=false&sf=true&output=xml`}
            target="_blank" rel="nofollow">{t('add-google-calendar')}</a>
     )
 }
 
-function includeForm(currentEvent) {
-    if (currentEvent.requiresRegistration) {
-        return (
-            <div className="col-md-6">
+function includeForm (currentEvent) {
+    return (
+        <>
+            {currentEvent.requiresRegistration && <div className="col-md-6">
                 {createForm(currentEvent)}
-            </div>
-        )
-    } else {
-        return (
-            <></>
-        )
-    }
+            </div>}
+        </>
+    )
 }
 
 const DEFAULT_UPCOMING_LIMIT = 10
 
-function RenderUpcomingDates({dateList, currentEvent}) {
-    const {t} = useTranslation();
+function RenderUpcomingDates ({ dateList, currentEvent }) {
+    const { t } = useTranslation()
     if (dateList.length === 0) {
         dateList.push({
             eventDateId: currentEvent.eventDateId,
             endIso: currentEvent.endIso,
-            startIso: currentEvent.startIso
+            startIso: currentEvent.startIso,
         })
     }
     const timeFormat = determineTimeFormat()
-    const upcomingDateLimit = window.eventsConfig.upcomingDateLimit || DEFAULT_UPCOMING_LIMIT
-    if(upcomingDateLimit && Array.isArray(dateList)) {
+    const upcomingDateLimit = window.eventsConfig.upcomingDateLimit ||
+        DEFAULT_UPCOMING_LIMIT
+    if (upcomingDateLimit && Array.isArray(dateList)) {
         console.log('type dateList', typeof dateList)
         dateList = dateList.slice(0, upcomingDateLimit)
     }
@@ -62,13 +64,17 @@ function RenderUpcomingDates({dateList, currentEvent}) {
                     return (
                         <div className="row" key={date.eventDateId}>
                             <div className="col-md-3">
-                                &#x1f4c5; {moment(date.startIso, "YYYY-MM-DD'T'hh:mm:ss").format(`Do MMM YYYY ${timeFormat}`)}
+                                &#x1f4c5; {moment(date.startIso,
+                                'YYYY-MM-DD\'T\'hh:mm:ss').
+                                format(`Do MMM YYYY ${timeFormat}`)}
                             </div>
                             <div className="col-md-3">
-                                ({moment(date.startIso, "YYYY-MM-DD'T'hh:mm:ss").fromNow()})
+                                ({moment(date.startIso,
+                                'YYYY-MM-DD\'T\'hh:mm:ss').fromNow()})
                             </div>
                             <div className="col-md-6">
-                                {renderAddToGoogleCalendar(currentEvent, date, t)}
+                                {renderAddToGoogleCalendar(currentEvent, date,
+                                    t)}
                             </div>
                         </div>
                     )
@@ -83,36 +89,41 @@ function RenderUpcomingDates({dateList, currentEvent}) {
  * @returns {*}
  * @constructor
  */
-export function ReadMore({currentEvent, dateList}) {
-    const {t} = useTranslation();
+export function ReadMore ({ currentEvent, dateList }) {
+    const { t } = useTranslation()
     if (currentEvent?.venue) {
         return (
             <>
                 <h2 id="eventDisplayName">{currentEvent.name}</h2>
                 <div className="row">
-                    <div className={currentEvent.requiresRegistration ? 'col-md-6' : 'col-md-12'}>
+                    <div className={currentEvent.requiresRegistration
+                        ? 'col-md-6'
+                        : 'col-md-12'}>
                         <EventType eventTypeInt={currentEvent.eventTypeId}/>
-                        <p dangerouslySetInnerHTML={{__html: currentEvent.description}}/>
+                        <p dangerouslySetInnerHTML={{ __html: currentEvent.description }}/>
                         <div className="row">
-                            <div className="col-md-12 webcastButton"><WebcastButton original={currentEvent} /></div>
+                            <div className="col-md-12 webcastButton">
+                                <WebcastButton original={currentEvent}/></div>
                         </div>
 
-                        <Venue venue={currentEvent.venue} venueName={currentEvent.venue.name}
-                               venueAddress={currentEvent.venue.address} venuePostalCode={currentEvent.venue.postalCode}
+                        <Venue venue={currentEvent.venue}
+                               venueName={currentEvent.venue.name}
+                               venueAddress={currentEvent.venue.address}
+                               venuePostalCode={currentEvent.venue.postalCode}
                                venueLocality={currentEvent.venue.locality}/>
                         {dateList && <RenderUpcomingDates dateList={dateList}
-                                              currentEvent={currentEvent}/>}
-                        <RenderSimilarEvents />
+                                                          currentEvent={currentEvent}/>}
+                        <RenderSimilarEvents/>
                     </div>
                     {includeForm(currentEvent)}
                 </div>
             </>
-        );
+        )
     } else {
         return <></>
     }
 }
 
-const ReadMoreModal = makeModal(ReadMore);
+const ReadMoreModal = makeModal(ReadMore)
 
-export default ReadMoreModal;
+export default ReadMoreModal

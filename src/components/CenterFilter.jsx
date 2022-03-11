@@ -20,7 +20,9 @@ const CenterFilter = () => {
             const orgInfoJson = window.eventsConfig.displayOrgFilter && await fetchOrganisations(window.eventsConfig.orgId) || []
             setOrgInfo(orgInfoJson)
         }
-        fetchOrgInfo()
+        fetchOrgInfo().catch((e) => {
+            console.error('Failed to fetch organisation information', e)
+        })
     }, [])
 
     const changeOrgIdFilter = (e) => {

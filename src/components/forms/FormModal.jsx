@@ -2,8 +2,15 @@ import React from 'react'
 import { Form } from 'react-formio'
 import makeModal from '../simpleModal/makeModal'
 
+const eventDateIdAdapter = (currentEvent) => {
+    console.log('extractEventDateId', currentEvent)
+    return !!currentEvent.eventDateId ? currentEvent.eventDateId :
+        !!currentEvent.dateList && currentEvent.dateList.length > 0 ? currentEvent.dateList[0].eventDateId  : -1
+}
+
 export function createForm (currentEvent) {
-    const targetUrl = `https://events.brahmakumaris.org/bkregistration/FormIOGeneration.do?eventDateId=${currentEvent.eventDateId}&addSubmit=true`
+    const targetUrl = `https://events.brahmakumaris.org/bkregistration/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(currentEvent)}&addSubmit=true`
+    console.log('form URL', targetUrl)
     const formLanguage = window.eventsConfig.language || 'en-GB'
 
     const formOptions = {

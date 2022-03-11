@@ -10,7 +10,6 @@ import Loader from './Loader'
  */
 const LoadingContainer = (props) => {
     const { t } = useTranslation()
-
     return !props.data || props.isLoading ? <Loader /> : props.error ? <div>{t('An error has occurred.')}</div> : props.children
 }
 

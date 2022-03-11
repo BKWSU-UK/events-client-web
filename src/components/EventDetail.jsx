@@ -4,6 +4,7 @@ import { fetchEvent } from '../service/dataAccess'
 import EventContext from '../context/EventContext'
 import { extractFromLocationQuery } from '../utils/urlUtils'
 import { ReadMore } from './readMore/ReadMore'
+import Loader from './loading/Loader'
 
 const venueFactory = (currentEvent) => {
     return {
@@ -33,13 +34,14 @@ function EventDetail(props) {
     }, [fetchEvent]);
 
 
-
     if (eventId) {
         return (
             <div className="container-fluid">
                 {!!currentEvent && <ReadMore currentEvent={venueFactory(currentEvent)} dateList={currentEvent.dateList}/>}
             </div>
         );
+    } else {
+        return <Loader />
     }
 }
 
