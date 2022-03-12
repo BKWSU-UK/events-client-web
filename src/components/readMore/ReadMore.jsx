@@ -8,6 +8,7 @@ import { useTranslation } from '../../i18n'
 import WebcastButton from '../WebcastButton'
 import RenderSimilarEvents from './RenderSimilarEvents'
 import { determineTimeFormat } from '../DateWidget'
+import { extractParameterSimple } from '../../utils/paramExtraction'
 
 function convertIsoToGoogleCal (dateStr) {
     return moment(dateStr, 'YYYY-MM-DD\'T\'hh:mm:ss').format('YYYYMMDDTHHmmss')
@@ -48,6 +49,7 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
         })
     }
     const timeFormat = determineTimeFormat()
+    moment.locale(extractParameterSimple('language', 'en-US'));
     const upcomingDateLimit = window.eventsConfig.upcomingDateLimit ||
         DEFAULT_UPCOMING_LIMIT
     if (upcomingDateLimit && Array.isArray(dateList)) {
@@ -63,16 +65,16 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
                 {Array.isArray(dateList) ? dateList.map(date => {
                     return (
                         <div className="row" key={date.eventDateId}>
-                            <div className="col-md-3">
+                            <div className="col-12 col-md-3">
                                 &#x1f4c5; {moment(date.startIso,
                                 'YYYY-MM-DD\'T\'hh:mm:ss').
                                 format(`Do MMM YYYY ${timeFormat}`)}
                             </div>
-                            <div className="col-md-3">
+                            <div className="col-12 col-md-3">
                                 ({moment(date.startIso,
                                 'YYYY-MM-DD\'T\'hh:mm:ss').fromNow()})
                             </div>
-                            <div className="col-md-6">
+                            <div className="col-12 col-md-6">
                                 {renderAddToGoogleCalendar(currentEvent, date,
                                     t)}
                             </div>

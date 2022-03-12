@@ -75,12 +75,13 @@ function renderButtons(footerInfo) {
 function displayFooterSimple(footerInfo) {
     const {original} = footerInfo;
     return (
-        !window.eventsConfig.suppressVenue && !!original.venue && <>
+        <>
+            {!window.eventsConfig.suppressVenue && !!original.venue &&
             <Venue venue={original.venue}
                    venueName={original.venue.name}
                    venueAddress={original.venue.address}
                    venuePostalCode={original.venue.postalCode}
-                   venueLocality={original.venue.locality}/>
+                   venueLocality={original.venue.locality}/>}
             {renderButtons(footerInfo)}
         </>
     );

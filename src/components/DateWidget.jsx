@@ -1,5 +1,6 @@
 import React from 'react';
 import 'moment/locale/es';
+import 'moment/locale/en-gb';
 import 'moment/locale/pt-br';
 
 import moment from "moment-timezone";
