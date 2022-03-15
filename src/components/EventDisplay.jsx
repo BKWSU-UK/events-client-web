@@ -32,7 +32,6 @@ function displaySimple(original, footerInfo) {
         defaultProtocol: 'https'
     });
     const showVenue = !window.eventsConfig.suppressVenue && showCalendar
-    console.log('showVenue', showVenue)
     return (
         <>
             {displaySubTitle(original)}
