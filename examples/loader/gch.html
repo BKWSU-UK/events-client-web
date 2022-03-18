@@ -5,191 +5,29 @@
 <body>
 <script>
     window.eventsConfig = {
-        useBodyHiddenOverflow: false,
+        useBodyHiddenOverflow: true,
         useSimpleLayout: true,
-        orgId: 2,
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        // onlyWebcast: true,
-        // onlineOnly: "no",
-        language: "en-GB",
+        orgId: [2], // GCH only
+        eventTypeIds: '1,2,4,5,6,7,8,9,10,13,15',
+        language: 'en-GB', // "es" for Spanish also supported now,
         showLocalTime: true,
-        displayWebcastButton: true,
-        eventsLimit: 1000,
-        // showCalendar: true,
-        // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
-        // singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
-        suppressBookOnly: true,
-        suppressVenue: false,
-        showSimilarEvents: true,
-        // eventsLang: "en", // Language filter,
-        rootElement: 'emsRoot'
+        featured: false, // Show only featured examples
+        displayWebcastButton: false, // displays the webcast button
+        eventsLimit: 200, // show only one single event
+        singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
+        suppressBookOnly: true, // Remove the book only button
+        suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+        rootElement: 'root'
     }
 </script>
-<div id="emsRoot" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/loader.js"></script>
+<div id="root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.24.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.24.0/loader.js"></script>
 <!--<link rel="stylesheet" href="styles.css">-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous">
 <style type="text/css">
-    #root {
-        padding-left: 0;
-        padding-right: 0;
-    }
-
-    #root h3 {
-        font-size: 1.4em;
-        font-family: "Lato", Helvetica, sans-serif !important;
-    }
-
-    #eventDisplayName {
-        font-size: 1.4em !important;
-        margin-left: 15px;
-        font-family: "Lato", Helvetica, sans-serif !important;
-    }
-
-    .col-4.text-success {
-        font-size: 0.8em;
-        color: #999999 !important
-    }
-
-    .btn.btn-light {
-        background-color: #999;
-        padding: 0 10px;
-        height: 30px;
-        margin: -2px 0;
-    }
-
-    .table .btn.btn-info, .simple-overlay .btn.btn-info {
-        margin: 0 -10px 0 20px;
-        line-height: 7px;
-    }
-
-    .simple-overlay .btn.btn-info {
-        margin: -25px 0 0 15px;
-    }
-
-    .table .col-md-6.mt-3.mb-1 {
-        padding-left: 0
-    }
-
-    .table td {
-        border: 0 !important
-    }
-
-    #pagerNumberField {
-        height: 27px;
-        font-size: 1em;
-        padding: 4px 10px;
-    }
-
-    .d-none.d-lg-inline {
-        padding: 4px;
-        font-size: 0.9em;
-    }
-
-    span.d-none.d-lg-inline {
-        padding: 4px 0 4px 4px;
-    }
-
-    .col-md-6.col-sm-12.text-right {
-        font-size: 1em;
-    }
-
-    .weekday {
-        font-size: 1.5em !important;
-    }
-
-    .simpleTimePeriod {
-        font-size: 1em !important;
-    }
-
-    .fromNow {
-        margin-top: -2px !important;
-        font-size: 0.9em !important;
-    }
-
-    .table.table-hover, .row.mt-1.mb-1.ml-1, .simple-overlay {
-        margin-left: -5px;
-    }
-
-    .simple-overlay {
-        margin: 10px 15px;
-    }
-
-    /* Calendar */
-
-    .calendarWidget {
-        width: 220px;
-        margin: 0 0 0 auto;
-        margin: 10px 0 0 20px;
-    }
-
-    @media only screen and (max-width: 768px) {
-        /* For mobile phones: */
-        .calendarWidget {
-            width: 150px;
-        }
-    }
-
-    .calendarWidget > .weekday {
-        background: #c5bb9b;
-        color: white;
-        font-size: 1.5rem;
-        padding: 5px 10px;
-        text-align: center;
-    }
-
-    .calendarWidget > .month, .calendarWidget > .day {
-        background: #a9e4f8;
-        color: black;
-        font-size: 3rem;
-        padding: 0 10px;
-        margin: 0 0 0 0;
-        text-align: center;
-    }
-
-    .calendarWidget > .day {
-        margin: -10px 0 0 0;
-        padding-bottom: 10px;
-        text-align: center;
-        font-size: 2.5rem;
-    }
-
-    .calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .fromNow {
-        margin-top: 3px
-    }
-
-    .calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod {
-        font-weight: bold;
-        font-family: monospace;
-        font-size: 1rem;
-    }
-
-    .calendarWidget > .simpleTimePeriod, .calendarWidget > .fromNow {
-        text-align: center;
-    }
-
-    .calendarWidget .extendedTimePeriod {
-        text-align: center;
-    }
-
-    .calendarWidget .fromNow {
-        font-size: 0.9rem;
-        text-align: center;
-        font-family: monospace;
-    }
-
-    .btn {
-        padding: 15px 10px;
-    }
-
-    .webcastButton {
-        text-align: right;
-        margin: 10px 2px
-    }
-
 </style>
 
 </body>
