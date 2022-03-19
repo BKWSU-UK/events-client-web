@@ -1,6 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Form } from 'react-formio'
 import makeModal from '../simpleModal/makeModal'
+import {
+    extractParameter
+} from '../../utils/paramExtraction'
+import EventContext from '../../context/EventContext'
 
 const eventDateIdAdapter = (currentEvent) => {
     console.log('extractEventDateId', currentEvent)
@@ -8,10 +12,10 @@ const eventDateIdAdapter = (currentEvent) => {
         !!currentEvent.dateList && currentEvent.dateList.length > 0 ? currentEvent.dateList[0].eventDateId  : -1
 }
 
-export function createForm (currentEvent) {
+export function createForm (currentEvent, eventContext) {
     const targetUrl = `https://events.brahmakumaris.org/bkregistration/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(currentEvent)}&addSubmit=true`
     console.log('form URL', targetUrl)
-    const formLanguage = window.eventsConfig.language || 'en-GB'
+    const formLanguage = extractParameter({...eventContext}, 'language') || 'en-GB'
 
     const formOptions = {
         language: formLanguage,
@@ -154,23 +158,7 @@ export function createForm (currentEvent) {
             <Form src={targetUrl} onFormLoad={onFormLoad} options={formOptions} onSubmitDone={onSubmitDone}/>
         </>
     )
-// const targetUrl = `http://gil.brahmakumaris.org:8085/FormIOGeneration.do?eventDateId=${currentEvent.eventDateId}&addSubmit=true`;
-//     return <>
-//         <div id="formIOContainer"/>
-//         <Form src={targetUrl}
-//               onSubmitDone={(response) => {
-//                   console.log('onSubmitDone', response);
-//                   return false;
-//               }} onError={(response) => {
-//             console.log('onError', response);
-//             // Used to inject the errors into the message.
-//             const validationErrors = response[0].validationErrors;
-//             Array.from(document.getElementsByTagName('li')).filter(e => e.getAttribute("ref") === "errorRef")[0]
-//                 .innerHTML = validationErrors.map(ve => {
-//                 return `<p>${ve.errorMessage}</p>`
-//             }).join(' ');
-//         }}/>
-//     </>;
+
 }
 
 /**
@@ -181,12 +169,13 @@ export function createForm (currentEvent) {
  * @constructor
  */
 export function EventForm ({ show, setShow, currentEvent }) {
+    const eventContext = useContext(EventContext)
     return (
         <>
             <h2 id="eventDisplayName">{currentEvent.name}</h2>
             <div className="row-fluid">
                 <div className="col-sd-12">
-                    {createForm(currentEvent)}
+                    {createForm(currentEvent, eventContext)}
                 </div>
             </div>
         </>

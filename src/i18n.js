@@ -1,5 +1,6 @@
-import React from 'react'
-import { extractParameterSimple } from './utils/paramExtraction'
+import React, { useContext } from 'react'
+import EventContext from './context/EventContext'
+import { extractParameter } from './utils/paramExtraction'
 
 export const langResources = {
     'en-GB': {
@@ -53,7 +54,7 @@ export const langResources = {
             'Close': 'Close',
             'Centre': 'Centre',
             'All': 'All',
-            '-- Select option --': '-- Select option --'
+            '-- Select option --': '-- Select option --',
         },
     },
     'en-US': {
@@ -107,7 +108,7 @@ export const langResources = {
             'Close': 'Close',
             'Centre': 'Center',
             'All': 'All',
-            '-- Select option --': '-- Select option --'
+            '-- Select option --': '-- Select option --',
         },
     },
     es: {
@@ -161,7 +162,7 @@ export const langResources = {
             'Close': 'Cerca',
             'Centre': 'Centro',
             'All': 'Todos',
-            '-- Select option --': '-- Seleccionar opción --'
+            '-- Select option --': '-- Seleccionar opción --',
         },
     },
     'pt-BR': {
@@ -215,20 +216,24 @@ export const langResources = {
             'Close': 'Fechar',
             'Centre': 'Escolha uma localidade',
             'All': 'Todos',
-            '-- Select option --': '-- Selecione a opção --'
+            '-- Select option --': '-- Selecione a opção --',
         },
     },
 }
 
 export function useTranslation () {
+
+    const eventContext = useContext(EventContext)
+
+    const props = { ...eventContext }
     return {
         t: function (key, extraObj) {
             if (arguments.length === 1) {
-                return langResources[extractParameterSimple('language',
+                return langResources[extractParameter(props,'language',
                     'en-US')].translations[key] || key
             } else {
                 // TODO: handle the extra object
-                return langResources[extractParameterSimple('language',
+                return langResources[extractParameter(props, 'language',
                     'en-US')].translations[`${key}_plural`] || key
             }
         },

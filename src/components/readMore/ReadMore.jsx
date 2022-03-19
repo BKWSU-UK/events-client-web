@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import EventType from '../EventType'
 import Venue from '../Venue'
 import moment from 'moment-timezone/index'
@@ -8,7 +8,10 @@ import { useTranslation } from '../../i18n'
 import WebcastButton from '../WebcastButton'
 import RenderSimilarEvents from './RenderSimilarEvents'
 import { determineTimeFormat } from '../DateWidget'
-import { extractParameterSimple } from '../../utils/paramExtraction'
+import {
+    extractParameter
+} from '../../utils/paramExtraction'
+import EventContext from '../../context/EventContext'
 
 function convertIsoToGoogleCal (dateStr) {
     return moment(dateStr, 'YYYY-MM-DD\'T\'hh:mm:ss').format('YYYYMMDDTHHmmss')
@@ -27,11 +30,11 @@ function renderAddToGoogleCalendar (event, date, t) {
     )
 }
 
-function includeForm (currentEvent) {
+function includeForm (currentEvent, eventContext) {
     return (
         <>
             {currentEvent.requiresRegistration && <div className="col-md-6">
-                {createForm(currentEvent)}
+                {createForm(currentEvent, eventContext)}
             </div>}
         </>
     )
@@ -40,6 +43,7 @@ function includeForm (currentEvent) {
 const DEFAULT_UPCOMING_LIMIT = 10
 
 function RenderUpcomingDates ({ dateList, currentEvent }) {
+
     const { t } = useTranslation()
     if (dateList.length === 0) {
         dateList.push({
@@ -48,9 +52,10 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
             startIso: currentEvent.startIso,
         })
     }
-    const timeFormat = determineTimeFormat()
-    moment.locale(extractParameterSimple('language', 'en-US'));
-    const upcomingDateLimit = window.eventsConfig.upcomingDateLimit ||
+    const eventContext = useContext(EventContext)
+    const timeFormat = determineTimeFormat(eventContext)
+    moment.locale(extractParameter({...eventContext},'language', 'en-US'));
+    const upcomingDateLimit = extractParameter({...eventContext}, 'upcomingDateLimit') ||
         DEFAULT_UPCOMING_LIMIT
     if (upcomingDateLimit && Array.isArray(dateList)) {
         console.log('type dateList', typeof dateList)
@@ -93,6 +98,7 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
  */
 export function ReadMore ({ currentEvent, dateList }) {
     const { t } = useTranslation()
+    const eventContext = useContext(EventContext)
     if (currentEvent?.venue) {
         return (
             <>
@@ -117,7 +123,7 @@ export function ReadMore ({ currentEvent, dateList }) {
                                                           currentEvent={currentEvent}/>}
                         <RenderSimilarEvents/>
                     </div>
-                    {includeForm(currentEvent)}
+                    {includeForm(currentEvent, eventContext)}
                 </div>
             </>
         )

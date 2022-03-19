@@ -13,11 +13,11 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 // Create a client
 const queryClient = new QueryClient()
 
-function App () {
+function App ({eventsConfig}) {
 
     return (
         <QueryClientProvider client={queryClient}>
-            <EventContextProvider>
+            <EventContextProvider eventsConfig={eventsConfig}>
                 <Router>
                     <Switch>
                         <Route path="/about">
@@ -33,8 +33,8 @@ function App () {
                             <EventCalendar/>
                         </Route>
                         <Route path="/">
-                            {window?.eventsConfig?.showSingleEvent ? <EventDetail/> :
-                                window?.eventsConfig?.showCalendar ?
+                            {eventsConfig?.showSingleEvent ? <EventDetail/> :
+                                eventsConfig?.showCalendar ?
                                 <EventCalendar/> :
                                 <EventTable/>
                             }

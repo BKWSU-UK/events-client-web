@@ -1,29 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#000000"/>
-    <meta
-            name="description"
-            content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
-
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
+<html>
+<link>
+    <title>Multiple Plugins in one page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <style type="text/stylesheet">
+        @-webkit-viewport   { width: device-width; }
+        @-moz-viewport      { width: device-width; }
+        @-ms-viewport       { width: device-width; }
+        @-o-viewport        { width: device-width; }
+        @viewport           { width: device-width; }
+    </style>
     <style type="text/css">
 
         .flexContainer {
@@ -47,10 +32,8 @@
             }
         }
     </style>
-    <title>Events</title>
 </head>
 <body>
-<noscript>You need to enable JavaScript to run this app.</noscript>
 <script>
     window.eventsConfig = [
         {
@@ -62,6 +45,7 @@
             // onlyWebcast: true,
             // onlineOnly: "no",
             language: 'en-GB',
+            eventsLang: 'en',
             showLocalTime: true,
             displayWebcastButton: true,
             eventsLimit: 10,
@@ -72,7 +56,7 @@
             suppressBookOnly: false,
             suppressVenue: true,
             showSimilarEvents: true,
-            onlineOnly: 'yes',
+            // onlineOnly: false,
             // eventsLang: "en", // Language filter,
             rootElement: 'emsRoot1',
             displayOrgFilter: false,
@@ -88,6 +72,7 @@
             // onlyWebcast: true,
             // onlineOnly: "no",
             language: 'en-GB',
+            eventsLang: 'hi',
             showLocalTime: true,
             displayWebcastButton: true,
             eventsLimit: 10,
@@ -100,33 +85,26 @@
             showSimilarEvents: true,
             // eventsLang: "en", // Language filter,
             rootElement: 'emsRoot2',
-            onlineOnly: 'no',
+            // onlineOnly: true,
             displayOrgFilter: false,
             fetchEvents: true, // Prevents initial event fetching
             useAllOrgIds: true, // If true does never display all events for all organisations
             // upcomingDateLimit: 5
         }]
 </script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.25.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.25.0/loader.js"></script>
 
 <div class="flexContainer">
     <div class="container-fluid half">
-        <h1>Online</h1>
+        <h1>English</h1>
         <div id="emsRoot1"></div>
     </div>
     <div class="container-fluid half">
-        <h1>In Person</h1>
+        <h1>Hindi</h1>
         <div id="emsRoot2" ></div>
     </div>
 </div>
-<!--
-  This HTML file is a template.
-  If you open it directly in the browser, you will see an empty page.
 
-  You can add webfonts, meta tags, or analytics to this file.
-  The build step will place the bundled scripts into the <body> tag.
-
-  To begin the development, run `npm start` or `yarn start`.
-  To create a production bundle, use `npm run build` or `yarn build`.
--->
 </body>
 </html>

@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react'
 import {openInNewTab} from "../utils/urlUtils";
 import { useTranslation } from '../i18n'
+import {
+    extractParameter
+} from '../utils/paramExtraction'
+import EventContext from '../context/EventContext'
 
 /**
  * Displays a button which opens the webcast page.
@@ -11,7 +15,8 @@ import { useTranslation } from '../i18n'
  */
 export default function WebcastButton({original}) {
     const {t} = useTranslation();
-    if(original.hasWebcast && original.webcastUrl && window.eventsConfig.displayWebcastButton) {
+    const eventContext = useContext(EventContext)
+    if(original.hasWebcast && original.webcastUrl && extractParameter({...eventContext},'displayWebcastButton')) {
         return (
             <button type="button" className="btn btn-info" onClick={() => openInNewTab(original.webcastUrl)}>
                 {t('Open webcast URL')}

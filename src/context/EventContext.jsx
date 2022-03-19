@@ -34,7 +34,8 @@ export const EventContextProvider = (props) => {
             events, setEvents,
             currentEvent, setCurrentEvent,
             similarEvents, setSimilarEvents,
-            orgIdFilter, setOrgIdFilter
+            orgIdFilter, setOrgIdFilter,
+            eventsConfig: props.eventsConfig
         }}>
             {props.children}
         </EventContext.Provider>

@@ -1,5 +1,9 @@
 import React from 'react'
 import { useTranslation } from '../../i18n'
+import {
+    extractParameter
+} from '../../utils/paramExtraction'
+import EventContext from '../../context/EventContext'
 
 function CloseButton ({ onClick, cross = false, id = null }) {
     const { t } = useTranslation()
@@ -20,6 +24,8 @@ function CloseButton ({ onClick, cross = false, id = null }) {
 export default function makeModal (WrappedComponent) {
     return class extends React.Component {
 
+        static contextType = EventContext;
+
         constructor (props) {
             super(props)
         }
@@ -34,7 +40,7 @@ export default function makeModal (WrappedComponent) {
         render () {
             if (this.props.show) {
                 this.props.setEventTableVisible(false)
-                if (window.eventsConfig.useBodyHiddenOverflow) {
+                if (extractParameter({...this.context}, 'useBodyHiddenOverflow')) {
                     document.getElementsByTagName(
                         'body')[0].style = 'overflow-y: hidden'
                 }

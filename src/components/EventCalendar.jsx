@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState, useCallback } from 'react'
-import { fetchEventList, getEventList } from '../service/dataAccess'
+import { getEventList } from '../service/dataAccess'
 import EventContext, { extractEventListParameters } from '../context/EventContext'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import { convertToBigCalendar } from '../service/calendarFactory'
 import moment from 'moment'
-import { extractParameterSimple } from '../utils/paramExtraction'
+import {
+    extractParameter
+} from '../utils/paramExtraction'
 import { useTranslation } from '../i18n'
 import { EventDisplayBody } from './EventDisplay'
 import WebcastButton from './WebcastButton'
@@ -22,22 +24,26 @@ import LoadingContainer from './loading/LoadingContainer'
  */
 const EventCalendar = (props) => {
     const { t } = useTranslation()
-    const allParams = extractEventListParameters(props)
+    const eventContext = useContext(EventContext)
+    const allParams = extractEventListParameters({ ...props, ...eventContext })
     const { orgId } = allParams
-    const { events, setEvents } = useContext(EventContext)
-    const {orgIdFilter} = useContext(EventContext);
+    const { events, setEvents } = eventContext
+    const {orgIdFilter} = eventContext;
     const [showModal, setShowModal] = useState(false)
     const [selectedEvent, setSelectedEvent] = useState(false)
 
-    const language = extractParameterSimple('language', 'en-US')
+    const language = extractParameter({...eventContext}, 'language', 'en-US')
     moment.locale(language)
     const localizer = momentLocalizer(moment)
 
-    const { isLoading, error, data } = useQuery(['eventsCalendar', orgId, orgIdFilter], () => {
-        if(window.eventsConfig.fetchEvents) {
-            return getEventList({ ...allParams, orgIdFilter })
+    const { isLoading, error, data } = useQuery([`eventsCalendar_${eventContext.id}`, orgId, orgIdFilter], () => {
+        if(!!orgIdFilter && orgIdFilter > 0) {
+            return getEventList({ ...allParams, orgIdFilter, eventContext })
+        }
+        else if (extractParameter({...eventContext}, 'fetchEvents')) {
+            return getEventList({ ...allParams, eventContext })
         } else {
-            return getEventList(allParams)
+            return []
         }
     })
 

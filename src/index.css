@@ -33,7 +33,7 @@ code {
     bottom: 0;
     padding: 20px;
     background-color: white; /* Black background with opacity */
-    z-index: 2; /* Specify a stack order in case you're using a different order for other elements */
+    z-index: 100; /* Specify a stack order in case you're using a different order for other elements */
     overflow-y: auto;
 }
 

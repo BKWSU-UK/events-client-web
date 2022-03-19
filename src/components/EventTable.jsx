@@ -18,17 +18,23 @@ import EventContext, { extractEventListParameters } from '../context/EventContex
 import CenterFilter from './CenterFilter'
 import { useQuery } from 'react-query'
 import LoadingContainer from './loading/LoadingContainer'
+import {
+    extractParameter
+} from '../utils/paramExtraction'
 
 function EventTableStruct ({ columns, params, show }) {
-    const { events, setEvents } = useContext(EventContext)
-    const { orgIdFilter } = useContext(EventContext)
+    const eventContext = useContext(EventContext)
+    const { events, setEvents, orgIdFilter } = eventContext
 
     const { isLoading, error, data } = useQuery(
-        ['eventsTable', orgIdFilter], () => {
-            if (window.eventsConfig.fetchEvents) {
-                return getEventList({ ...params, orgIdFilter })
+        [`eventsTable_${eventContext['eventsConfig']['id']}`, orgIdFilter], () => {
+            if(!!orgIdFilter && orgIdFilter > 0) {
+                return getEventList({ ...params, orgIdFilter, eventContext })
+            }
+            else if (extractParameter({...eventContext}, 'fetchEvents')) {
+                return getEventList({ ...params, eventContext })
             } else {
-                return getEventList(params)
+                return []
             }
         })
 
@@ -138,11 +144,12 @@ export const Styles = styled.div`
         `
 
 export function EventTable (props) {
-    const allParams = extractEventListParameters(props)
+    const eventContext = useContext(EventContext)
+    const { currentEvent, setCurrentEvent } = eventContext
+    const allParams = extractEventListParameters({ ...props, ...eventContext })
     const [eventTableVisible, setEventTableVisible] = useState(true)
     const [displayMoreAbout, setDisplayMoreAbout] = useState(false)
     const [displayForm, setDisplayForm] = useState(false)
-    const { currentEvent, setCurrentEvent } = useContext(EventContext)
     const [dateList, setDateList] = useState({})
     const { t } = useTranslation()
 
@@ -163,12 +170,13 @@ export function EventTable (props) {
                 accessor: 'description',
                 Cell: (props) => {
                     const original = props.row.original
+                    const useSimpleLayout = extractParameter({...eventContext},'useSimpleLayout')
                     return (
                         <EventDisplay original={original}
-                                      simple={typeof window.eventsConfig.useSimpleLayout ==
+                                      simple={typeof useSimpleLayout ==
                                       'undefined'
                                           ? false
-                                          : window.eventsConfig.useSimpleLayout}
+                                          : useSimpleLayout}
                                       props={props}
                                       setDisplayMoreAbout={setDisplayMoreAbout}
                                       setCurrentEvent={setCurrentEvent}

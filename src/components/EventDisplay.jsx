@@ -6,6 +6,9 @@ import { useTranslation } from '../i18n'
 import linkifyHtml from 'linkifyjs/html'
 import EventButtons, { processReadMoreClick } from './EventButtons'
 import EventContext from '../context/EventContext'
+import {
+    extractParameter
+} from '../utils/paramExtraction'
 
 export const EVENT_DATE_ID = '@@eventDateId@@'
 
@@ -20,8 +23,8 @@ function displayImage1(original) {
 
 const displaySubTitle = (original) => <h4 className="sub-title">{original.subTitle}</h4>
 
-function displaySimple(original, footerInfo) {
-    const showCalendar = window.eventsConfig.showCalendar
+function displaySimple(original, eventContext) {
+    const showCalendar = extractParameter({...eventContext},'showCalendar')
     let description
     if(showCalendar) {
         description = original.description
@@ -31,7 +34,7 @@ function displaySimple(original, footerInfo) {
     description = linkifyHtml(description, {
         defaultProtocol: 'https'
     });
-    const showVenue = !window.eventsConfig.suppressVenue && showCalendar
+    const showVenue = !extractParameter({...eventContext},'suppressVenue') && showCalendar
     return (
         <>
             {displaySubTitle(original)}
@@ -71,11 +74,11 @@ function renderButtons(footerInfo) {
     )
 }
 
-function displayFooterSimple(footerInfo) {
+function displayFooterSimple(footerInfo, eventContext) {
     const {original} = footerInfo;
     return (
         <>
-            {!window.eventsConfig.suppressVenue && !!original.venue &&
+            {!extractParameter({...eventContext},'suppressVenue') && !!original.venue &&
             <Venue venue={original.venue}
                    venueName={original.venue.name}
                    venueAddress={original.venue.address}
@@ -111,6 +114,7 @@ function EventDisplay({
                           setEventTableVisible
                       }) {
     const {t} = useTranslation();
+    const eventContext = useContext(EventContext)
     const footerInfo = {
         original, setDisplayMoreAbout,
         setCurrentEvent, setDateList, setDisplayForm, setEventTableVisible, t
@@ -118,13 +122,14 @@ function EventDisplay({
     return (
         <>
             <EventDisplayBody original={original} simple={simple} footerInfo={footerInfo}/>
-            {displayFooterSimple(footerInfo)}
+            {displayFooterSimple(footerInfo, eventContext)}
         </>
     );
 }
 
 export const EventDisplayBody = ({ original, simple, footerInfo}) => {
-    const { setSimilarEvents } = useContext(EventContext)
+    const eventContext = useContext(EventContext)
+    const { setSimilarEvents } = eventContext
     const startDate = '' + original.startTimestamp;
     const endDate = '' + original.endTimestamp;
     const {t} = useTranslation();
@@ -133,12 +138,12 @@ export const EventDisplayBody = ({ original, simple, footerInfo}) => {
             <div className="col-sm-12">
                 <h3 title={t(eventMap[original.eventTypeId])}><a href="#" onClick={async e => {
                     e.preventDefault()
-                    await processReadMoreClick(footerInfo, setSimilarEvents);
+                    await processReadMoreClick(footerInfo, setSimilarEvents, eventContext);
                 }}>{original.name}</a></h3>
                 <div className="pull-right">
                     <DateWidget startDate={startDate} endDate={endDate} timezone={original.timezone}/>
                 </div>
-                {simple ? displaySimple(original, { t, ...footerInfo }) : displayFull(original)}
+                {simple ? displaySimple(original, eventContext) : displayFull(original)}
             </div>
         </div>
     )

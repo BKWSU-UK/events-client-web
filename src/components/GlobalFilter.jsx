@@ -2,9 +2,10 @@
 
 // Define a default UI for filtering
 import {isChrome} from "../utils/browserDetection";
-import React from "react";
+import React, { useContext } from 'react'
 import {useTranslation} from "../i18n";
 import {extractParameter} from "../utils/paramExtraction";
+import EventContext from '../context/EventContext'
 
 /**
  * Renders the search text field.
@@ -19,8 +20,9 @@ function GlobalFilter({
                           setGlobalFilter,
                           rowsLength
                       }) {
-    const { t, i18n } = useTranslation();
-    if(extractParameter(null, 'eventsLimit', 10000) < 2) {
+    const { t } = useTranslation();
+    const eventContext = useContext(EventContext)
+    if(extractParameter({...eventContext}, 'eventsLimit', 10000) < 2) {
         return <></>;
     }
     return (

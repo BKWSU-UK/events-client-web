@@ -7,18 +7,23 @@ import {
 } from '../service/dataAccess'
 import { topFunction } from '../utils/scrolling'
 import EventContext from '../context/EventContext'
+import {
+    extractParameter
+} from '../utils/paramExtraction'
 
 /**
  * Changes the state to display the read more screen.
  * @param footerInfo
  * @param setSimilarEvents
+ * @param eventContext The event context
  * @returns {Promise<void>}
  */
-export const processReadMoreClick = async (footerInfo, setSimilarEvents) => {
+export const processReadMoreClick = async (footerInfo, setSimilarEvents, eventContext) => {
     const { original } = footerInfo
-    if (window.eventsConfig.singleEventUrlTemplate) {
+    const singleEventUrlTemplate = extractParameter({...eventContext}, 'singleEventUrlTemplate')
+    if (singleEventUrlTemplate) {
         const eventId = original.id
-        window.location.href = window.eventsConfig.singleEventUrlTemplate.replace(
+        window.location.href = singleEventUrlTemplate.replace(
             EVENT_DATE_ID, eventId)
     } else {
         const eventDateId = original.eventDateId
@@ -34,7 +39,8 @@ export const processReadMoreClick = async (footerInfo, setSimilarEvents) => {
  * @constructor
  */
 const EventButtons = ({ footerInfo }) => {
-    const { setSimilarEvents } = useContext(EventContext)
+    const eventContext = useContext(EventContext)
+    const { setSimilarEvents } = eventContext
     const {
         original, setCurrentEvent,
         setDisplayForm, setEventTableVisible, t,
@@ -43,12 +49,12 @@ const EventButtons = ({ footerInfo }) => {
     return (
         <div className="event-buttons">
             <button type="button" className="btn btn-info"
-                    onClick={() => processReadMoreClick(footerInfo, setSimilarEvents)}>{t(
+                    onClick={() => processReadMoreClick(footerInfo, setSimilarEvents, eventContext)}>{t(
                 'read-more')} {original.requiresRegistration ? ' ' +
                 t('and-book') : ''}</button>
             {' '}
             {original.requiresRegistration &&
-            !window.eventsConfig.suppressBookOnly ? (
+            !extractParameter({...eventContext}, 'suppressBookOnly') ? (
                 <button type="button" className="btn btn-info" onClick={() => {
                     setCurrentEvent(original)
                     setDisplayForm(true)

@@ -1,14 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react'
 import 'moment/locale/es';
 import 'moment/locale/en-gb';
 import 'moment/locale/pt-br';
 
 import moment from "moment-timezone";
 import {useTranslation} from "../i18n";
-import {extractParameterSimple} from "../utils/paramExtraction";
+import {
+    extractParameter
+} from '../utils/paramExtraction'
+import EventContext from '../context/EventContext'
 
-export const determineTimeFormat = () => {
-    const language = extractParameterSimple('language', 'en-US');
+export const determineTimeFormat = (eventContext) => {
+    const language = extractParameter({...eventContext},'language', 'en-US');
     if(language.indexOf("en") === 0) {
         return "h:mm a"
     }
@@ -27,9 +30,9 @@ function formatTime(mom, format, timezone) {
     return timezone ? mom.tz(guessTimezone()).format(format) : mom.format(format);
 }
 
-function showLocalTimeFull(localIsRemote, defaultFormat, timeParams) {
+function showLocalTimeFull(localIsRemote, defaultFormat, timeParams, eventContext) {
     const {baseMoment, baseEndMoment, timezone, t} = timeParams;
-    if (!localIsRemote && window.eventsConfig.showLocalTime) {
+    if (!localIsRemote && extractParameter({...eventContext}, 'showLocalTime')) {
         return (
             <div className="yourTime">
                 <div className="small">{t('Your time')}</div>
@@ -45,9 +48,9 @@ function showLocalTimeFull(localIsRemote, defaultFormat, timeParams) {
 }
 
 function showLocalTimeSimple(localIsRemote, defaultFormat, timeParams) {
-    const {baseMoment, baseEndMoment, timezone, t} = timeParams;
-    const timeFormat = determineTimeFormat()
-    if (!localIsRemote && window.eventsConfig.showLocalTime) {
+    const {baseMoment, baseEndMoment, timezone, t, eventContext} = timeParams;
+    const timeFormat = determineTimeFormat(eventContext)
+    if (!localIsRemote && extractParameter({...eventContext}, 'showLocalTime')) {
         return (
             <div className="yourTime">
                 <div className="small">{t('Your time')}</div>
@@ -66,9 +69,9 @@ function showLocalTimeSimple(localIsRemote, defaultFormat, timeParams) {
 
 function displayTimes(timeParams) {
 
-    const hideTime = extractParameterSimple('hideTime', false);
-    const {baseMoment, baseEndMoment, timezone, t} = timeParams;
-    const timeFormat = determineTimeFormat()
+    const {baseMoment, baseEndMoment, timezone, t, eventContext} = timeParams;
+    const hideTime = extractParameter({...eventContext}, 'hideTime', false);
+    const timeFormat = determineTimeFormat(eventContext)
     const localIsRemote = baseMoment.format(timeFormat) === formatTime(baseMoment.clone(), timeFormat, timezone);
     if (baseMoment.date() === baseEndMoment.date() && baseMoment.month() === baseEndMoment.month()) {
         if(hideTime) {
@@ -89,7 +92,7 @@ function displayTimes(timeParams) {
             <div className="extendedPeriod">
                 <div className="extendedTimePeriod">{baseMoment.format(defaultFormat)}</div>
                 <div className="extendedTimePeriod">{baseEndMoment.format(defaultFormat)}</div>
-                {showLocalTimeFull(localIsRemote, defaultFormat, timeParams)}
+                {showLocalTimeFull(localIsRemote, defaultFormat, timeParams, eventContext)}
                 <div className="fromNow">({baseMoment.fromNow()})</div>
             </div>
         )
@@ -110,7 +113,8 @@ export function momentFactory(dateExpr, timezone) {
  */
 export default function DateWidget({startDate, endDate, timezone}) {
     const {t} = useTranslation();
-    moment.locale(extractParameterSimple('language', 'en-US'));
+    const eventContext = useContext(EventContext)
+    moment.locale(extractParameter({...eventContext},'language', 'en-US'));
     const baseMoment = momentFactory(startDate, timezone);
     const baseEndMoment = momentFactory(endDate, timezone);
     return (
@@ -118,7 +122,7 @@ export default function DateWidget({startDate, endDate, timezone}) {
             <div className="weekday">{baseMoment.format("dddd")}</div>
             <div className="month">{baseMoment.format("MMM")}</div>
             <div className="day">{baseMoment.format("DD")}</div>
-            {displayTimes({baseMoment, baseEndMoment, timezone, t})}
+            {displayTimes({baseMoment, baseEndMoment, timezone, t, eventContext})}
         </div>
     );
 }
