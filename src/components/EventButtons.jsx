@@ -19,6 +19,7 @@ import {
  * @returns {Promise<void>}
  */
 export const processReadMoreClick = async (footerInfo, setSimilarEvents, eventContext) => {
+    console.info('Processing read more click')
     const { original } = footerInfo
     const singleEventUrlTemplate = extractParameter({...eventContext}, 'singleEventUrlTemplate')
     if (singleEventUrlTemplate) {
@@ -49,13 +50,19 @@ const EventButtons = ({ footerInfo }) => {
     return (
         <div className="event-buttons">
             <button type="button" className="btn btn-info"
-                    onClick={() => processReadMoreClick(footerInfo, setSimilarEvents, eventContext)}>{t(
+                    onClick={(e) => {
+                        e.stopPropagation()
+                        processReadMoreClick(footerInfo, setSimilarEvents,
+                            eventContext)
+                    }}>{t(
                 'read-more')} {original.requiresRegistration ? ' ' +
                 t('and-book') : ''}</button>
             {' '}
             {original.requiresRegistration &&
             !extractParameter({...eventContext}, 'suppressBookOnly') ? (
-                <button type="button" className="btn btn-info" onClick={() => {
+                <button type="button" className="btn btn-info" onClick={(e) => {
+                    e.stopPropagation()
+                    console.info('Processing read only click')
                     setCurrentEvent(original)
                     setDisplayForm(true)
                     setEventTableVisible(false)

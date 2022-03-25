@@ -1,0 +1,332 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <style type="text/stylesheet">
+        @-webkit-viewport   { width: device-width; }
+        @-moz-viewport      { width: device-width; }
+        @-ms-viewport       { width: device-width; }
+        @-o-viewport        { width: device-width; }
+        @viewport           { width: device-width; }
+    </style>
+    <title>2 Column Events</title>
+</head>
+<body>
+
+<script>
+    window.eventsConfig = [
+        {
+            id: 0,
+            useBodyHiddenOverflow: false,
+            useSimpleLayout: true,
+            orgId: [2],
+            eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
+            // onlyWebcast: true,
+            // onlineOnly: "no",
+            language: 'en-GB',
+            showLocalTime: true,
+            displayWebcastButton: true,
+            pageSize: 12,
+            eventsLimit: 12,
+            showCalendar: false,
+            showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
+            // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
+            // singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
+            suppressBookOnly: false,
+            suppressVenue: true,
+            showSimilarEvents: true,
+            onlineOnly: 'yes',
+            // eventsLang: "en", // Language filter,
+            rootElement: 'emsRoot1',
+            displayOrgFilter: false,
+            fetchEvents: true, // Prevents initial event fetching
+            useAllOrgIds: false, // If true does never display all events for all organisations
+            // upcomingDateLimit: 5
+        }, {
+            id: 1,
+            useBodyHiddenOverflow: false,
+            useSimpleLayout: true,
+            orgId: [2],
+            eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
+            // onlyWebcast: true,
+            // onlineOnly: "no",
+            language: 'en-GB',
+            showLocalTime: true,
+            displayWebcastButton: true,
+            eventsLimit: 10,
+            showCalendar: false,
+            showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
+            // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
+            singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
+            suppressBookOnly: false,
+            suppressVenue: true,
+            showSimilarEvents: true,
+            // eventsLang: "en", // Language filter,
+            rootElement: 'emsRoot2',
+            onlineOnly: 'no',
+            displayOrgFilter: false,
+            fetchEvents: true, // Prevents initial event fetching
+            useAllOrgIds: true, // If true does never display all events for all organisations
+            // upcomingDateLimit: 5
+        }]
+
+</script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.25.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.25.0/loader.js"></script>
+<link rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+<!--<link rel="stylesheet" href="/styles.css">-->
+<style type="text/css">
+
+    #root {
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    #root img {
+        display: none
+    }
+
+    .pager-box {
+        display: none;
+    }
+
+
+    .event-buttons {
+        margin-top: 10px;
+    }
+
+    .btn-primary {
+        background-color: #ffffff00;
+    }
+
+    .col-sm-12 > div:nth-of-type(2) {
+        text-align: left !important;
+        line-height: 1.2;
+        font-weight: normal;
+        font-size: small;
+        padding-bottom: 0px;
+    }
+
+    div#root {
+        margin: 0 0;
+    }
+
+
+    #root h3 {
+        font-family: Roboto;
+        font-weight: 400;
+        line-height: 1.0;
+        color: #1e7a8c;
+        text-align: left;
+        font-size: larger;
+        padding-bottom: 0em;
+    }
+
+    #root h4 {
+        font-size: 1.40625rem;
+        font-weight: 600;
+        color: #1e7a8c;
+    }
+
+
+    #root h5 {
+        font-family: Roboto;
+        font-weight: 600;
+        line-height: 1.25;
+        text-align: center;
+    }
+
+    #root .lead {
+        font-family: Roboto;
+        font-weight: 800;
+        line-height: 1.25;
+        color: #a3805b;
+        display: none;
+
+    }
+
+    #root .lead {
+        text-align: left;
+        line-height: 1.0;
+        margin-bottom: 8px;
+    }
+
+
+    .form-group.row.mb-0 {
+        display: none !important;
+    }
+
+    .row.mt-1.mb-1.ml-1, .form-group.row.mb-0 {
+        display: collapse !important;
+    }
+
+
+    .calendarWidget {
+        width: 160px;
+        margin: 0 0 8px 8px;
+        min-width: 160px;
+    }
+
+
+    .calendarWidget .weekday {
+        background-color: #90ab3e;
+        color: white;
+        font-size: 1.5rem;
+    }
+
+    .calendarWidget > .month {
+        padding-left: 24px;
+    }
+
+    .calendarWidget > .month, .calendarWidget > .day {
+        display: inline;
+        background: #bfd382;
+        color: #9b6c48;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+
+    .calendarWidget {
+        background: #bfd382;
+    }
+
+    .calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod {
+        font-weight: bold;
+        font-family: roboto;
+    / / monospace;
+        font-size: 1.1rem;
+    }
+
+    .calendarWidget .fromNow {
+        font-size: 1.0rem;
+        text-align: center;
+        padding: 0 0 6px;
+    }
+
+    tbody[role=rowgroup] > tr[role=row] > td[role=cell] > div:nth-child(3):before {
+        display: table;
+        content: " ";
+    }
+
+    tbody[role=rowgroup] > tr[role=row] > td[role=cell] > div:nth-child(3) {
+        margin-top: 0px
+    }
+
+
+    .mt-3, .my-3 {
+        margin-top: 0.5rem !important;
+    }
+
+    .card.card-body.bg-light {
+        display: none;
+    }
+
+    .btn-info {
+        display: block;
+        color: #ffffff;
+        background-color: #48a3b8 !important;
+        border-style: hidden;
+        border-radius: 3px;
+        padding: 5px;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-size: revert;
+    }
+
+    .btn-rounded-inverse {
+        font-size: 26px !important;
+        background-color: #48a3b8 !important;
+        border-style: hidden;
+        border-radius: 5px !important;
+        color: #ffffff !important;
+        display: block;
+        padding-bottom: 7px !important;
+    }
+
+
+    .btn-rounded-inverse2 {
+        font-size: 26px !important;
+        background-color: #9b6c48 !important;
+        border-style: hidden;
+        border-radius: 5px !important;
+        color: #ffffff !important;
+        display: block;
+        margin-top: 0px !important;
+        padding-bottom: 7px !important;
+    }
+
+
+    .acm-cta.style-1 a {
+        margin-top: 0px !important;
+        margin-bottom: 0px !important;
+        margin-right: 0px !important;
+    }
+
+
+    @media only screen and (max-width: 1024px) {
+        div#root {
+            margin: 0 1%;
+        }
+
+
+    }
+
+
+    /** Left side section **/
+    #emsRoot1 .calendarWidget .weekday {
+        background-color: #90ab3e;
+    }
+
+    #emsRoot1 .fromNow:after {
+        content: "\AOnline\A";
+        white-space: pre-wrap;
+        color: white;
+        font-size: 1.5rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+        font-weight: 400;
+    }
+
+    /** Right side section **/
+    #emsRoot2 .calendarWidget .weekday {
+        background-color: #9f7a48;
+
+    }
+
+    #emsRoot1 a, #emsRoot2 a {
+        color: #47a4b8;
+    }
+
+    #emsRoot2 .fromNow:after {
+        content: "\AIn House\A";
+        white-space: pre-wrap;
+        color: white;
+        font-size: 1.5rem;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !important;
+        font-weight: 400;
+    }
+
+    #emsRoot2 .calendarWidget, #emsRoot2 .month, #emsRoot2 .day {
+        background-color: #caaf8a;
+    }
+</style>
+
+<div class="section-inner ">
+    <div class="acm-spotlight container">
+        <div class="row">
+            <div class="col-md-12 col-lg-6">
+                <h1>Online</h1>
+                <div id="emsRoot1">
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+                <h1>In House</h1>
+                <div id="emsRoot2">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

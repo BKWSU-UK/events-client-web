@@ -42,8 +42,6 @@ function EventTableStruct ({ columns, params, show }) {
         setEvents(data)
     }
 
-    console.log('events', events)
-
     // Use the state and functions returned from useTable to build your UI
     const {
         getTableProps,
@@ -66,7 +64,7 @@ function EventTableStruct ({ columns, params, show }) {
     } = useTable({
         columns,
         data: events,
-        initialState: { pageIndex: 0 },
+        initialState: { pageIndex: 0, pageSize: extractParameter({...eventContext},'pageSize', 10) },
     }, useGlobalFilter, useSortBy, usePagination)
 
     // Render the UI for your table
