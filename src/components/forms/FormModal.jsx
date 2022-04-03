@@ -5,6 +5,7 @@ import {
     extractParameter
 } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
+import { SERVER_BASE } from '../../apiConstants'
 
 const eventDateIdAdapter = (currentEvent) => {
     console.log('extractEventDateId', currentEvent)
@@ -13,7 +14,7 @@ const eventDateIdAdapter = (currentEvent) => {
 }
 
 export function createForm (currentEvent, eventContext) {
-    const targetUrl = `https://events.brahmakumaris.org/bkregistration/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(currentEvent)}&addSubmit=true`
+    const targetUrl = `${SERVER_BASE}/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(currentEvent)}&addSubmit=true`
     console.log('form URL', targetUrl)
     const formLanguage = extractParameter({...eventContext}, 'language') || 'en-GB'
 

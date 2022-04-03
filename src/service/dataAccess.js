@@ -2,6 +2,9 @@ import {
     extractParameter
 } from '../utils/paramExtraction'
 import { ALL_ORG_IDS } from '../context/EventContext'
+import { SERVER_BASE } from '../apiConstants'
+
+
 
 const eventLimit = (eventContext) => extractParameter({ ...eventContext }, 'eventsLimit', 10000)
 
@@ -42,7 +45,7 @@ const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
 }
 
 const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured, eventContext}) => {
-    let targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
+    let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
     targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
     if (featured) {
         targetUrl += `&featured=true`
@@ -82,7 +85,7 @@ function fetchSingleEvent (fun, eventId) {
     if (!eventId) {
         return
     }
-    const targetUrl = `https://events.brahmakumaris.org/bkregistration/organisationEventReportController.do?simpleEventTemplate=jsonEvent.ftl&mimeType=application/json&eventIds=${eventId}`
+    const targetUrl = `${SERVER_BASE}/organisationEventReportController.do?simpleEventTemplate=jsonEvent.ftl&mimeType=application/json&eventIds=${eventId}`
     fetch(targetUrl).then((response) => response.json()).then((json) => {
         const response = json.response
         console.log(targetUrl, response)

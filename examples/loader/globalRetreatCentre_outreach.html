@@ -5,7 +5,29 @@
 </head>
 <body>
 <script type="application/javascript">
+    const meditationsLimit = 1
+    const normalEvents = 10
     window.eventsConfig = [{
+        useBodyHiddenOverflow: true,
+        useSimpleLayout: true,
+        orgId: [335], // GRC outreach only
+        eventTypeIds: "9",
+        onlineOnly: 'yes',
+        language: "en-GB", // "es" for Spanish also supported now,
+        showLocalTime: true,
+        featured: false, // Show only featured examples
+        displayWebcastButton: false, // displays the webcast button
+        suppressBookOnly: true, // Remove the book only button
+        suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+        singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
+        rootElement: 'meditationOnly',
+        displayOrgFilter: false,
+        fetchEvents: true, // Prevents initial event fetching
+        showSimilarEvents: true,
+        useAllOrgIds: true,
+        pageSize: meditationsLimit,
+        eventsLimit: meditationsLimit,
+    }, {
         useBodyHiddenOverflow: true,
         useSimpleLayout: true,
         orgId: [335], // GRC outreach only
@@ -14,26 +36,27 @@
         showLocalTime: true,
         featured: false, // Show only featured examples
         displayWebcastButton: false, // displays the webcast button
-        eventsLimit: 20, // show only one single event
         suppressBookOnly: true, // Remove the book only button
         suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-
         singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
-
-        rootElement: 'emsRoot',
+        rootElement: 'allEvents',
         displayOrgFilter: false,
         fetchEvents: true, // Prevents initial event fetching
         showSimilarEvents: true,
         useAllOrgIds: true,
-        pageSize: 12,
-        eventsLimit: 12,
+        pageSize: normalEvents,
+        eventsLimit: normalEvents,
     }]
 </script>
 
-<div id="emsRoot" class="container-fluid"></div>
+<h1>Meditation</h1>
+<div id="meditationOnly" class="container-fluid"></div>
 
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.25.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.25.0/loader.js"></script>
+<h1>All Events</h1>
+<div id="allEvents" class="container-fluid"></div>
+
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.26.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.26.0/loader.js"></script>
 
 
 <style type="text/css">

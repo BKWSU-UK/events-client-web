@@ -54,32 +54,25 @@
 <script>
     window.eventsConfig = [
         {
-            id: 0,
-            useBodyHiddenOverflow: false,
+            useBodyHiddenOverflow: true,
             useSimpleLayout: true,
-            orgId: [2],
-            eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
-            // onlyWebcast: true,
-            // onlineOnly: "no",
-            language: 'en-GB',
+            orgId: [5], // GRC only
+            eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+            language: "en-GB", // "es" for Spanish also supported now,
             showLocalTime: true,
-            displayWebcastButton: true,
-            pageSize: 12,
-            eventsLimit: 12,
-            showCalendar: false,
-            showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
-            // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
-            // singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
-            suppressBookOnly: false,
-            suppressVenue: true,
-            showSimilarEvents: true,
-            onlineOnly: 'yes',
-            // eventsLang: "en", // Language filter,
+            featured: false, // Show only featured examples
+            displayWebcastButton: false, // displays the webcast button
+            eventsLimit: 200, // show only one single event
+            suppressBookOnly: true, // Remove the book only button
+            suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+
+            // singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
+
             rootElement: 'emsRoot1',
             displayOrgFilter: false,
             fetchEvents: true, // Prevents initial event fetching
-            useAllOrgIds: false, // If true does never display all events for all organisations
-            // upcomingDateLimit: 5
+            showSimilarEvents: true,
+            useAllOrgIds: true
         }, {
             id: 1,
             useBodyHiddenOverflow: false,
