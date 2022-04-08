@@ -23,7 +23,9 @@ function venuePostalCodeDisplay(venuePostalCode) {
 function venuePostalCodeLocality(venuePostalCode, venueLocality, venue) {
     return (
         <div>
-            {venuePostalCodeDisplay(venuePostalCode)} {venueLocality} ({venue.country})
+            {venuePostalCodeDisplay(venuePostalCode)}
+            {' '}<span className="venue-locality">{venueLocality}</span>
+            {' '}<span className="venue-country">({venue.country})</span>
         </div>
     );
 }

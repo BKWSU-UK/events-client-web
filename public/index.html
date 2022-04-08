@@ -56,24 +56,23 @@
         {
             useBodyHiddenOverflow: true,
             useSimpleLayout: true,
-            orgId: [5], // GRC only
+            orgId: [335], // GRC only
             eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
             language: "en-GB", // "es" for Spanish also supported now,
             showLocalTime: true,
             featured: false, // Show only featured examples
             displayWebcastButton: false, // displays the webcast button
-            eventsLimit: 200, // show only one single event
+            eventsLimit: 2, // show only one single event
             suppressBookOnly: true, // Remove the book only button
             suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-
             // singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
-
             rootElement: 'emsRoot1',
             displayOrgFilter: false,
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
             useAllOrgIds: true
-        }, {
+        },
+        {
             id: 1,
             useBodyHiddenOverflow: false,
             useSimpleLayout: true,

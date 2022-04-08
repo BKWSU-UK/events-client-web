@@ -4,7 +4,7 @@
 </head>
 <body>
 <script>
-    window.eventsConfig = {
+    window.eventsConfig = [{
         useBodyHiddenOverflow: true,
         useSimpleLayout: true,
         orgId: [258], // GCH only
@@ -12,13 +12,14 @@
         language: "pt-BR", // Portuguese Brasil
         onlyWebcast: false, // show only webcast events
         showLocalTime: true,
+        rootElement: 'root',
         displayWebcastButton: true,
         eventsLimit: 100 // show only one single event
-    }
+    }]
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.11.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.11.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.27.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.27.0/loader.js"></script>
 <!-- Incluir CSS aqui -->
 <style type="text/css">
     /** Esconde o local do evento, que de momento nao interessa */

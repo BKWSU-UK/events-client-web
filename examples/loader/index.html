@@ -1,38 +1,56 @@
-<html>
-<head>
-    <title>Loader Test</title>
-</head>
-<body>
-<script>
 
-//    id |         name         |                                   description                                   | periodical
-//    ----+----------------------+---------------------------------------------------------------------------------+------------
-//    1 | lecture              | Lecture with a lecturer.                                                         | f
-//    2 | seminar              | Seminar witch interactive participation                                          | f
-//    3 | course               | Course with more than one lesson                                                 | t
-//    4 | conference           | Conference with multiple participants                                            | f
-//    5 | retreat              | Meeting of participants for an extended period of time with multiple activities  | f
-//    6 | workshop             | Programme with active member participation                                       | f
-//    7 | panel discussion     | Public discussion with a limited number of participants                          | f
-//    8 | special events       | Special events                                                                   | f
-//    9 | meditation           | Meditation programmes                                                            | t
-//    10 | misc                 | miscellaneous events                                                            | f
-//    11 | training             | Training for BKs or other type of training                                      | f
-//    12 | power and protection | power and protection                                                            | f
-//    14 | private              | Private events not to be displayed on public websites                           | f
-//    13 | group session        | Regular get together                                                            | t
-//    15 | online activity      | Online Activities                                                               | f
-//    16 | internal_event       | Internal or BK Events                                                           | f
-
-    window.eventsConfig = {
-        scrolltop: true,
-        orgId: [114, 2],
-        eventTypeIds: "6"
-    }
-</script>
-<div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/loader.js"></script>
-
-</body>
+<html lang="en">
+    <head>
+        <title>EMS Plugin Examples</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <style type="text/css">
+            iframe html { overflow-x: hidden}
+        </style>
+    </head>
+    <body>
+        <section class="min-h-screen xl:container xl:mx-auto">
+            <h1 class="text-center text-5xl my-5">Event Management System - Examples</h1>
+            <div class="grid grid-cols-12">
+                <div class="col-span-3 xl:col-span-2">
+                    <ul class="ml-2">
+                        <li><a href="belgrano.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">belgrano</a></li>
+<li><a href="calendar_brasil.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">calendar_brasil</a></li>
+<li><a href="calendar_gch.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">calendar_gch</a></li>
+<li><a href="event_calendar_brasil_filter.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">event_calendar_brasil_filter</a></li>
+<li><a href="event_list_brasil_filter.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">event_list_brasil_filter</a></li>
+<li><a href="event_list_oxford.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">event_list_oxford</a></li>
+<li><a href="event_list_uk_filter.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">event_list_uk_filter</a></li>
+<li><a href="gch.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch</a></li>
+<li><a href="gch_2_col_full.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_2_col_full</a></li>
+<li><a href="gch_events_english_hindi.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_events_english_hindi</a></li>
+<li><a href="gch_events_online_inhouse.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_events_online_inhouse</a></li>
+<li><a href="gch_event_in_page.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_event_in_page</a></li>
+<li><a href="gch_event_in_page_no_venue.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_event_in_page_no_venue</a></li>
+<li><a href="gch_featured.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_featured</a></li>
+<li><a href="gch_language.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_language</a></li>
+<li><a href="gch_simple.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_simple</a></li>
+<li><a href="gch_webcast_only.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">gch_webcast_only</a></li>
+<li><a href="globalRetreatCentre_outreach.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">globalRetreatCentre_outreach</a></li>
+<li><a href="grc_webpage.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">grc_webpage</a></li>
+<li><a href="latin_america.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">latin_america</a></li>
+<li><a href="online_brasil.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">online_brasil</a></li>
+<li><a href="open_id.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">open_id</a></li>
+<li><a href="oxford_inner_space.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">oxford_inner_space</a></li>
+<li><a href="peace_village_0.2.0.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">peace_village_0.2.0</a></li>
+<li><a href="peace_village_0.3.0.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">peace_village_0.3.0</a></li>
+<li><a href="peace_village_0.8.0.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">peace_village_0.8.0</a></li>
+<li><a href="peace_village_0.9.0.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">peace_village_0.9.0</a></li>
+<li><a href="spanish_barcelona.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">spanish_barcelona</a></li>
+<li><a href="spanish_latin_america.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">spanish_latin_america</a></li>
+<li><a href="worthing.html" target="displayIfrmae" class="hover:bg-gray-100 focus:underline">worthing</a></li>
+                    </ul>
+                </div>
+                <div class="col-span-8 xl:col-span-10 bg-slate-200 overflow-x-hidden">
+                    <iframe id="displayIfrmae" name="displayIfrmae" class="w-full h-full"/>
+                </div>
+            </div>
+        </section>
+    </body>
 </html>
