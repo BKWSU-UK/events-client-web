@@ -4,7 +4,7 @@
 </head>
 <body>
 <script>
-    window.eventsConfig = {
+    window.eventsConfig = [{
         useBodyHiddenOverflow: true,
         useSimpleLayout: true,
         orgId: [2], // GCH only
@@ -13,12 +13,14 @@
         onlyWebcast: false, // show only webcast events
         showLocalTime: true,
         displayWebcastButton: true,
-        showCalendar: true
-    }
+        showCalendar: true,
+        fetchEvents: true, // Prevents initial event fetching
+        rootElement: 'root',
+    }]
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.13.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.13.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/loader.js"></script>
 <!-- Incluir CSS aqui -->
 <style type="text/css">
     /** Esconde o local do evento, que de momento nao interessa */

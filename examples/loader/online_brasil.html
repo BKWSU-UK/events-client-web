@@ -13,6 +13,7 @@
         onlyWebcast: false, // show only webcast events
         showLocalTime: true,
         rootElement: 'root',
+        fetchEvents: true,
         displayWebcastButton: true,
         eventsLimit: 100 // show only one single event
     }]
@@ -25,6 +26,21 @@
     /** Esconde o local do evento, que de momento nao interessa */
     div.card.card-body.bg-light {
         display: none !important;
+    }
+    /** Stretch search field */
+    label[for=searchInput] + .col-6 {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+        padding-left: 0;
+    }
+    label[for=searchInput] {
+        float: left;
+        text-align: left !important;
+        padding-left: 0;
+    }
+    .search-box {
+        max-width: 100%;
     }
 </style>
 

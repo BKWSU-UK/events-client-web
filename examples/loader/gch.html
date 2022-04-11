@@ -4,7 +4,7 @@
 </head>
 <body>
 <script>
-    window.eventsConfig = {
+    window.eventsConfig = [{
         useBodyHiddenOverflow: true,
         useSimpleLayout: true,
         orgId: [2], // GCH only
@@ -17,17 +17,34 @@
         singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
         suppressBookOnly: true, // Remove the book only button
         suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+        fetchEvents: true,
         rootElement: 'root'
-    }
+    }]
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.24.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.24.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/loader.js"></script>
 <!--<link rel="stylesheet" href="styles.css">-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous">
 <style type="text/css">
+
+    /** Stretch search field */
+    label[for=searchInput] + .col-6 {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+        padding-left: 0;
+    }
+    label[for=searchInput] {
+        float: left;
+        text-align: left !important;
+        padding-left: 0;
+    }
+    .search-box {
+        max-width: 100%;
+    }
 </style>
 
 </body>

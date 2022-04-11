@@ -50,21 +50,27 @@
     }]
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.27.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.27.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/loader.js"></script>
 <style type="text/css">
     .search-box {
         padding-left: 0;
         margin-left: 0;
     }
-    label[for=searchInput] {
-        margin: 10px 0 -9px -20px;
-    }
-    .form-group > .col-6 {
-        max-width: 100%;
-    }
-    input.form-control, textarea {
+    /** Stretch search field */
+    label[for=searchInput] + .col-6 {
         width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+        padding-left: 0;
+    }
+    label[for=searchInput] {
+        float: left;
+        text-align: left !important;
+        padding-left: 0;
+    }
+    .search-box {
+        max-width: 100%;
     }
 </style>
 </body>

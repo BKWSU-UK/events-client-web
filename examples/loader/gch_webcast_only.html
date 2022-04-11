@@ -4,7 +4,7 @@
 </head>
 <body>
 <script>
-    window.eventsConfig = {
+    window.eventsConfig = [{
         rootElement: 'root',
         useBodyHiddenOverflow: true,
         useSimpleLayout: true,
@@ -16,12 +16,13 @@
         displayWebcastButton: true, // displays the webcast button
         eventsLimit: 10, // show only one single event,
         singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
+        fetchEvents: true,
         suppressBookOnly: true // Remove the book only button
-    }
+    }]
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.20.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.20.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/loader.js"></script>
 <!--<link rel="stylesheet" href="styles.css">-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
@@ -31,8 +32,20 @@
         padding-left: 0;
         padding-right: 0;
     }
-    .section-ct {
-        margin-left: 80px
+    /** Stretch search field */
+    label[for=searchInput] + .col-6 {
+        width: 100%;
+        max-width: 100%;
+        flex: 0 0 100%;
+        padding-left: 0;
+    }
+    label[for=searchInput] {
+        float: left;
+        text-align: left !important;
+        padding-left: 0;
+    }
+    .search-box {
+        max-width: 100%;
     }
 </style>
 

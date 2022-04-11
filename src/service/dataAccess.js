@@ -1,10 +1,6 @@
-import {
-    extractParameter
-} from '../utils/paramExtraction'
+import { extractParameter } from '../utils/paramExtraction'
 import { ALL_ORG_IDS } from '../context/EventContext'
 import { SERVER_BASE } from '../apiConstants'
-
-
 
 const eventLimit = (eventContext) => extractParameter({ ...eventContext }, 'eventsLimit', 10000)
 
@@ -12,23 +8,28 @@ const onlyWebcast = (eventContext) => extractParameter({ ...eventContext }, 'onl
 
 const onlineOnly = (eventContext) => extractParameter({ ...eventContext }, 'onlineOnly', false)
 
-const range = len => {
-    const arr = []
-    for (let i = 0; i < len; i++) {
-        arr.push(i)
-    }
-    return arr
-}
+const isPrivate = (eventContext) => extractParameter({ ...eventContext }, 'private', false)
 
-function processOnlineOnly (targetUrl, eventContext) {
-    const isOnlineOnly = onlineOnly(eventContext)
-    if (isOnlineOnly === 'yes') {
-        targetUrl += `&onlineOnly=true`
-    } else if (isOnlineOnly === 'no') {
-        targetUrl += `&onlineOnly=false`
+const hasRegistration = (eventContext) => extractParameter({ ...eventContext }, 'hasRegistration', false)
+
+const appendToTargetUrl = (value, targetUrl, parameter) => {
+    console.log('appendToTargetUrl', appendToTargetUrl)
+    if (value === 'yes') {
+        targetUrl += `&${parameter}=true`
+    } else if (value === 'no') {
+        targetUrl += `&${parameter}=false`
     }
     return targetUrl
 }
+
+const processHasRegistration = (targetUrl, eventContext) => appendToTargetUrl(
+    hasRegistration(eventContext), targetUrl, 'hasRegistration')
+
+const processPrivate = (targetUrl, eventContext) => appendToTargetUrl(
+    isPrivate(eventContext), targetUrl, 'private')
+
+const processOnlineOnly = (targetUrl, eventContext) => appendToTargetUrl(
+    onlineOnly(eventContext), targetUrl, 'onlineOnly')
 
 const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
 
@@ -58,6 +59,8 @@ const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, feat
         targetUrl += `&lang=${eventsLang}`
     }
     targetUrl = processOnlineOnly(targetUrl, eventContext)
+    targetUrl = processPrivate(targetUrl, eventContext)
+    targetUrl = processHasRegistration(targetUrl, eventContext)
     return targetUrl
 }
 

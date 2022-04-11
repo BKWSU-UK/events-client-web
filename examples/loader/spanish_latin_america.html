@@ -26,20 +26,34 @@
     //    15 | online activity      | Online Activities                                                               | f
     //    16 | internal_event       | Internal or BK Events                                                           | f
 
-    window.eventsConfig = {
+    window.eventsConfig = [{
         useBodyHiddenOverflow: true,
         useSimpleLayout: false,
         orgId: [
             420,425,422,423,421,426,424,806,805, //Argentina
             604,615,464,609,617,461,607,460,610,511,581,580,579,615,604,464, //Colo
             91,721,91,739,93,101,94,108,95,96,104,97,98,109,107,106,110,99,100,102,103,//España
+            475,489,//Costa Rica
+            473,//Paraguay
+            2934,2935,//Peru
         ],
-        eventTypeIds: "15",
-        language: "es" // "es" for Spanish also supported now
-    }
+        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+        rootElement: 'root',
+        language: "es", // "es" for Spanish also supported now
+        fetchEvents: true, // Prevents initial event fetching
+    }]
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.3.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.28.0/loader.js"></script>
+<style type="text/css">
+    label[for=searchInput] {
+        float: left;
+        text-align: left !important;
+    }
+    .search-box {
+        max-width: 100%;
+    }
+</style>
 </body>
 </html>

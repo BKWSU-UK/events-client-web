@@ -10,3 +10,5 @@ del build.zip
 cd build
 zip -r ..\build.zip *
 cd ..
+
+call examples.bat
