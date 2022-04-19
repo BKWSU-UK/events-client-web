@@ -11,8 +11,6 @@ import "./i18n";
 
 Components.setComponents(formio);
 
-console.time('Rendering time')
-
 window.eventsConfig.forEach((eventsConfig, i) => {
     console.log('Rendering app number', i)
     if(!eventsConfig['id']) {

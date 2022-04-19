@@ -35,8 +35,7 @@ function App ({eventsConfig}) {
                         <Route path="/">
                             {eventsConfig?.showSingleEvent ? <EventDetail/> :
                                 eventsConfig?.showCalendar ?
-                                <EventCalendar/> :
-                                <EventTable/>
+                                <EventCalendar/> : <EventTable/>
                             }
                         </Route>
                     </Switch>
