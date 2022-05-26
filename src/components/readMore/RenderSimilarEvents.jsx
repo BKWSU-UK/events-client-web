@@ -35,7 +35,7 @@ const RenderSimilarEvents = () => {
         return (
             similarEvents && similarEvents.length > 0 &&
             <>
-                <h4>{t('Similar Events')}</h4>
+                <h4 className="mt-2">{t('Similar Events')}</h4>
                 <div className="card card-body bg-light">
                     {similarEvents.map((event, i) => {
                         const startDate = createDateStr(event.startDateStr, event.startTime);

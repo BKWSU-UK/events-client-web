@@ -7,6 +7,7 @@ import linkifyHtml from 'linkifyjs/html'
 import EventButtons, { processReadMoreClick } from './EventButtons'
 import EventContext from '../context/EventContext'
 import { extractParameter } from '../utils/paramExtraction'
+import { removeBadStylesFromImg } from '../utils/imgUtils'
 
 export const EVENT_DATE_ID = '@@eventDateId@@'
 
@@ -47,6 +48,7 @@ function DisplaySimple ({ original, footerInfo }) {
         description = original.shortDescription || original.descriptionText ||
             original.description
     }
+    description = removeBadStylesFromImg(description)
     description = linkifyHtml(description, {
         defaultProtocol: 'https',
     })
@@ -72,12 +74,13 @@ function DisplaySimple ({ original, footerInfo }) {
     )
 }
 
-function displayFull (original) {
+const DisplayFull = ({ original }) => {
+    const description = removeBadStylesFromImg(original.description)
     return (
         <>
             {displaySubTitle(original)}
             <p className="lead">{original.eventTypeName}</p>
-            <span dangerouslySetInnerHTML={{ __html: original.description }}/>
+            <span dangerouslySetInnerHTML={{ __html: description }}/>
         </>
     )
 }
@@ -169,8 +172,7 @@ export const EventDisplayBody = ({ original, simple, footerInfo }) => {
                     <DateWidget startDate={startDate} endDate={endDate}
                                 timezone={original.timezone}/>
                 </div>
-                {simple ? <DisplaySimple original={original} footerInfo={footerInfo} /> : displayFull(
-                    original)}
+                {simple ? <DisplaySimple original={original} footerInfo={footerInfo} /> : <DisplayFull original={original}/>}
             </div>
         </div>
     )

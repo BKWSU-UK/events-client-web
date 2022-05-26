@@ -8,9 +8,7 @@ import { useTranslation } from '../../i18n'
 import WebcastButton from '../WebcastButton'
 import RenderSimilarEvents from './RenderSimilarEvents'
 import { determineTimeFormat } from '../DateWidget'
-import {
-    extractParameter
-} from '../../utils/paramExtraction'
+import { extractParameter } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
 
 function convertIsoToGoogleCal (dateStr) {
@@ -54,8 +52,9 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
     }
     const eventContext = useContext(EventContext)
     const timeFormat = determineTimeFormat(eventContext)
-    moment.locale(extractParameter({...eventContext},'language', 'en-US'));
-    const upcomingDateLimit = extractParameter({...eventContext}, 'upcomingDateLimit') ||
+    moment.locale(extractParameter({ ...eventContext }, 'language', 'en-US'))
+    const upcomingDateLimit = extractParameter({ ...eventContext },
+        'upcomingDateLimit') ||
         DEFAULT_UPCOMING_LIMIT
     if (upcomingDateLimit && Array.isArray(dateList)) {
         console.log('type dateList', typeof dateList)
@@ -63,7 +62,7 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
     }
     return (
         <>
-            <h4>
+            <h4 className="mt-2">
                 {t('upcoming-dates')}
             </h4>
             <div className="card card-body bg-light">
@@ -96,7 +95,7 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
  * @returns {*}
  * @constructor
  */
-export function ReadMore ({ currentEvent, dateList }) {
+export const ReadMore = ({ currentEvent, dateList }) => {
     const { t } = useTranslation()
     const eventContext = useContext(EventContext)
     if (currentEvent?.venue) {
@@ -121,6 +120,7 @@ export function ReadMore ({ currentEvent, dateList }) {
                                venueLocality={currentEvent.venue.locality}/>
                         {dateList && <RenderUpcomingDates dateList={dateList}
                                                           currentEvent={currentEvent}/>}
+                        <ContactEmail currentEvent={currentEvent}/>
                         <RenderSimilarEvents/>
                     </div>
                     {includeForm(currentEvent, eventContext)}
@@ -130,6 +130,25 @@ export function ReadMore ({ currentEvent, dateList }) {
     } else {
         return <></>
     }
+}
+
+export const ContactEmail = ({ currentEvent }) => {
+    const { t } = useTranslation()
+    const contactEmail = currentEvent.contactEmail
+    if (!!contactEmail) {
+        return (
+            <div className="contact-email">
+                <h4 className="card-title mt-2">{t('Contact Email')}</h4>
+                <div className="card mt-2">
+                    <div className="card-body bg-light">
+                        <p className="card-text">&#128231;{' '}<a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    return <></>
+
 }
 
 const ReadMoreModal = makeModal(ReadMore)

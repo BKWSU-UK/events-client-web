@@ -104,40 +104,13 @@
             showCalendar: false,
             showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
             // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
-            singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
+            // singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
             suppressBookOnly: false,
             suppressVenue: true,
             showSimilarEvents: true,
             // eventsLang: "en", // Language filter,
             rootElement: 'emsRoot2',
             onlineOnly: 'no',
-            displayOrgFilter: false,
-            fetchEvents: true, // Prevents initial event fetching
-            useAllOrgIds: true, // If true does never display all events for all organisations
-            // upcomingDateLimit: 5
-        },
-        {
-            id: 2,
-            useBodyHiddenOverflow: false,
-            useSimpleLayout: true,
-            orgId: [2],
-            eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
-            // onlyWebcast: true,
-            // onlineOnly: "no",
-            language: 'en-GB',
-            showLocalTime: true,
-            displayWebcastButton: true,
-            eventsLimit: 4,
-            showCalendar: false,
-            showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
-            // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
-            singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
-            suppressBookOnly: false,
-            suppressVenue: true,
-            showSimilarEvents: true,
-            // eventsLang: "en", // Language filter,
-            rootElement: 'emsRoot3',
-            private: 'yes',
             displayOrgFilter: false,
             fetchEvents: true, // Prevents initial event fetching
             useAllOrgIds: true, // If true does never display all events for all organisations
@@ -173,19 +146,15 @@
 </script>
 
 <div class="flexContainer">
-    <div class="container-fluid fourth">
+    <div class="container-fluid third">
         <h1>GRC Online</h1>
         <div id="emsRoot1"></div>
     </div>
-    <div class="container-fluid fourth">
+    <div class="container-fluid third">
         <h1>GCH In Person</h1>
         <div id="emsRoot2" ></div>
     </div>
-    <div class="container-fluid fourth">
-        <h1>GCH Private</h1>
-        <div id="emsRoot3" ></div>
-    </div>
-    <div class="container-fluid fourth">
+    <div class="container-fluid third">
         <h1>GCH Has registration</h1>
         <div id="emsRoot4" ></div>
     </div>
