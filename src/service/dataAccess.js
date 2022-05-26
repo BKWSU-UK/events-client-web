@@ -84,28 +84,26 @@ export const getEventList = async (params) => {
     return response?.data
 }
 
-function fetchSingleEvent (fun, eventId) {
+const fetchSingleEvent = async (eventId) => {
     if (!eventId) {
         return
     }
     const targetUrl = `${SERVER_BASE}/organisationEventReportController.do?simpleEventTemplate=jsonEvent.ftl&mimeType=application/json&eventIds=${eventId}`
-    fetch(targetUrl).then((response) => response.json()).then((json) => {
-        const response = json.response
-        console.log(targetUrl, response)
-        fun(response)
-    })
+    const response = await fetch(targetUrl)
+    const json = await response.json()
+    const jsonResponse = json.response
+    console.log(targetUrl, jsonResponse)
+    return jsonResponse
 }
 
-export function fetchEvent (setEvent, eventId) {
-    console.log('fetchEvent', setEvent)
-    fetchSingleEvent((response) => {
-        setEvent(response.data[0])
-    }, eventId)
+export const fetchEvent = async (setEvent, eventId) => {
+    const response = await fetchSingleEvent( eventId)
+    setEvent(response.data[0])
 }
 
-export function fetchEventDateList (setDateList, eventId) {
-    fetchSingleEvent((response) => setDateList(response.data[0].dateList),
-        eventId)
+export const fetchEventDateList = async (setDateList, eventId) => {
+    const response = await fetchSingleEvent(eventId)
+    setDateList(response.data[0].dateList)
 }
 
 export const fetchSimilarEventList = async (
@@ -126,4 +124,10 @@ export const fetchOrganisations = async (orgIds) => {
     const targetUrl = `https://events.brahmakumaris.org/registration/organisations/ids?ids=${orgList}`
     const response = await fetch(targetUrl)
     return response.json()
+}
+
+export const fetchSeatInformation = async (eventDateId) => {
+    const targetUrl = `https://events.brahmakumaris.org/bkregistration/seatsAvailable.do?eventDateId=${eventDateId}`
+    const response = await fetch(targetUrl)
+    return await response.json()
 }

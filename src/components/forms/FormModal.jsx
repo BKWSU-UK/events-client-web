@@ -6,6 +6,9 @@ import {
 } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
 import { SERVER_BASE } from '../../apiConstants'
+import { useTranslation } from '../../i18n'
+import { useQuery } from 'react-query'
+import { fetchSeatInformation } from '../../service/dataAccess'
 
 const eventDateIdAdapter = (currentEvent) => {
     console.log('extractEventDateId', currentEvent)
@@ -162,6 +165,26 @@ export function createForm (currentEvent, eventContext) {
 
 }
 
+const useSeatInformation = (currentEvent) => {
+    const eventDateId = currentEvent.eventDateId
+    const { isLoading, error, data } = useQuery([eventDateId], () => fetchSeatInformation(
+        eventDateId))
+    return { isLoading, error, data }
+}
+
+const NoMoreSeats = ({cols = 6}) => {
+
+    const { t } = useTranslation()
+
+    return (
+        <div className={`col-${cols}`}>
+            <div className="row alert alert-warning">
+                <div className="col-12">{t('There are no more seats available for this event!')}</div>
+            </div>
+        </div>
+    )
+}
+
 /**
  * Modal used to display forms.
  * @param show Determines, if the form is displayed or not.
@@ -171,6 +194,13 @@ export function createForm (currentEvent, eventContext) {
  */
 export function EventForm ({ show, setShow, currentEvent }) {
     const eventContext = useContext(EventContext)
+    const { isLoading, error, data } = useSeatInformation(currentEvent)
+    if(isLoading) {
+        return <></>
+    }
+    if(data?.exceededMaxParticipants) {
+        return <NoMoreSeats cols={12} />
+    }
     return (
         <>
             <h2 id="eventDisplayName">{currentEvent.name}</h2>
@@ -179,6 +209,24 @@ export function EventForm ({ show, setShow, currentEvent }) {
                     {createForm(currentEvent, eventContext)}
                 </div>
             </div>
+        </>
+    )
+}
+
+export const IncludeForm = ({ currentEvent, dateList }) => {
+    const eventContext = useContext(EventContext)
+    const { isLoading, error, data } = useSeatInformation(currentEvent)
+    if(isLoading) {
+        return <></>
+    }
+    if(data?.exceededMaxParticipants) {
+        return <NoMoreSeats />
+    }
+    return (
+        <>
+            {currentEvent.requiresRegistration && <div className="col-md-6">
+                {createForm(currentEvent, eventContext)}
+            </div>}
         </>
     )
 }

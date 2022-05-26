@@ -3,7 +3,7 @@ import EventType from '../EventType'
 import Venue from '../Venue'
 import moment from 'moment-timezone/index'
 import makeModal from '../simpleModal/makeModal'
-import { createForm } from '../forms/FormModal'
+import { IncludeForm } from '../forms/FormModal'
 import { useTranslation } from '../../i18n'
 import WebcastButton from '../WebcastButton'
 import RenderSimilarEvents from './RenderSimilarEvents'
@@ -25,16 +25,6 @@ function renderAddToGoogleCalendar (event, date, t) {
             event.descriptionText)}&location=${encodeURI(
             venue.address)}&trp=false&sf=true&output=xml`}
            target="_blank" rel="nofollow">{t('add-google-calendar')}</a>
-    )
-}
-
-function includeForm (currentEvent, eventContext) {
-    return (
-        <>
-            {currentEvent.requiresRegistration && <div className="col-md-6">
-                {createForm(currentEvent, eventContext)}
-            </div>}
-        </>
     )
 }
 
@@ -97,7 +87,6 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
  */
 export const ReadMore = ({ currentEvent, dateList }) => {
     const { t } = useTranslation()
-    const eventContext = useContext(EventContext)
     if (currentEvent?.venue) {
         return (
             <>
@@ -123,7 +112,7 @@ export const ReadMore = ({ currentEvent, dateList }) => {
                         <ContactEmail currentEvent={currentEvent}/>
                         <RenderSimilarEvents/>
                     </div>
-                    {includeForm(currentEvent, eventContext)}
+                    <IncludeForm currentEvent={currentEvent} dateList={dateList} />
                 </div>
             </>
         )

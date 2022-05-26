@@ -56,6 +56,8 @@ export const langResources = {
             'Centre': 'Centre',
             'All': 'All',
             '-- Select option --': '-- Select option --',
+            "There are no more seats available for this event!":
+                "There are no more seats available for this event! Please try to book another date."
         },
     },
     'en-US': {
@@ -111,6 +113,7 @@ export const langResources = {
             'Centre': 'Center',
             'All': 'All',
             '-- Select option --': '-- Select option --',
+            "There are no more seats available for this event!": "There are no more seats available for this event!"
         },
     },
     es: {
@@ -166,6 +169,7 @@ export const langResources = {
             'Centre': 'Centro',
             'All': 'Todos',
             '-- Select option --': '-- Seleccionar opción --',
+            "There are no more seats available for this event!": "¡No hay más asientos disponibles para este evento!"
         },
     },
     'pt-BR': {
@@ -221,6 +225,7 @@ export const langResources = {
             'Centre': 'Escolha uma localidade',
             'All': 'Todos',
             '-- Select option --': '-- Selecione a opção --',
+            "There are no more seats available for this event!": "Não há mais lugares disponíveis para este evento!"
         },
     },
 }
