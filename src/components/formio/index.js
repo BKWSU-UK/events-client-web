@@ -4,6 +4,7 @@ import Consent from "./consent/ConsentComponent";
 import Regid from "./regid/RegidComponent";
 import EmailConfirmation from "./emailConfirmation/EmailConfirmation";
 import Label from "./label/LabelComponent";
+import PrivacyPolicy from './privacyPolicy/PrivacyPolicyComponent'
 
 /**
  * Below is the registery of the components which are included in the form renderer.
@@ -14,5 +15,6 @@ export default {
     consent: Consent,
     regid: Regid,
     emailConfirmation: EmailConfirmation,
-    label: Label
+    label: Label,
+    privacyPolicy: PrivacyPolicy
 }
