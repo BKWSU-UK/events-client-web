@@ -1,10 +1,19 @@
 import React, { useContext } from 'react'
-import {openInNewTab} from "../utils/urlUtils";
+import { openInNewTab } from '../utils/urlUtils'
 import { useTranslation } from '../i18n'
-import {
-    extractParameter
-} from '../utils/paramExtraction'
+import { extractParameter } from '../utils/paramExtraction'
 import EventContext from '../context/EventContext'
+
+/** Implements GCH style logic */
+const hasWebcast = (original) => {
+    return !!original.hasWebcast
+        && !!original.webcastUrl
+        && !original.requiresRegistration
+        && original.webcastUrl.toLowerCase().match(/.+(webcast|watchlive).*/)
+}
+
+const chooseWebcastFunction = () => window.eventsConfig.hasWebcastFunc ||
+    hasWebcast
 
 /**
  * Displays a button which opens the webcast page.
@@ -13,12 +22,14 @@ import EventContext from '../context/EventContext'
  * @returns {*}
  * @constructor
  */
-export default function WebcastButton({original}) {
-    const {t} = useTranslation();
+export default function WebcastButton ({ original }) {
+    const { t } = useTranslation()
     const eventContext = useContext(EventContext)
-    if(original.hasWebcast && original.webcastUrl && extractParameter({...eventContext},'displayWebcastButton')) {
+    if (chooseWebcastFunction()(original) && !!original.webcastUrl &&
+        extractParameter({ ...eventContext }, 'displayWebcastButton')) {
         return (
-            <button type="button" className="btn btn-info" onClick={() => openInNewTab(original.webcastUrl)}>
+            <button type="button" className="btn btn-info"
+                    onClick={() => openInNewTab(original.webcastUrl)}>
                 {t('Open webcast URL')}
             </button>
         )
