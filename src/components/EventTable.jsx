@@ -12,22 +12,23 @@ import { withRouter } from 'react-router-dom'
 import EventDisplay, { eventMap } from './EventDisplay'
 import FormModal from './forms/FormModal'
 import ReadMoreModal from './readMore/ReadMore'
-import GlobalFilter from './GlobalFilter'
+import GlobalFilter from './filter/GlobalFilter'
 import { useTranslation } from '../i18n'
 import EventContext, { extractEventListParameters } from '../context/EventContext'
-import CenterFilter from './CenterFilter'
+import CenterFilter from './filter/CenterFilter'
 import { useQuery } from 'react-query'
 import LoadingContainer from './loading/LoadingContainer'
 import {
     extractParameter
 } from '../utils/paramExtraction'
+import OnlineFilter from './filter/OnlineFilter'
 
 function EventTableStruct ({ columns, params, show }) {
     const eventContext = useContext(EventContext)
-    const { events, setEvents, orgIdFilter } = eventContext
+    const { events, setEvents, orgIdFilter, filterState } = eventContext
 
     const { isLoading, error, data } = useQuery(
-        [`eventsTable_${eventContext['eventsConfig']['id']}`, orgIdFilter], () => {
+        [`eventsTable_${eventContext['eventsConfig']['id']}`, orgIdFilter, filterState], () => {
             if(!!orgIdFilter && orgIdFilter > 0) {
                 return getEventList({ ...params, orgIdFilter, eventContext })
             }
@@ -84,6 +85,7 @@ function EventTableStruct ({ columns, params, show }) {
                        pageOptions={pageOptions} pageIndex={pageIndex}
                        pageSize={pageSize} setPageSize={setPageSize}/>
             </div>
+            <OnlineFilter />
             <CenterFilter/>
             <LoadingContainer data={data} isLoading={isLoading} error={error}>
                 <table {...getTableProps()} className="table table-hover"

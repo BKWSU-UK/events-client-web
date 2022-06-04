@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from 'react'
-import EventContext, { ALL_ORG_IDS } from '../context/EventContext'
-import { useTranslation } from '../i18n'
+import React, { useContext, useEffect, useMemo, useState } from 'react'
+import EventContext, { ALL_ORG_IDS } from '../../context/EventContext'
+import { useTranslation } from '../../i18n'
 import {
     extractParameter
-} from '../utils/paramExtraction'
-import { fetchOrganisations } from '../service/dataAccess'
+} from '../../utils/paramExtraction'
+import { fetchOrganisations } from '../../service/dataAccess'
+import { DISPLAY_ORG_FILTER } from '../../context/appParams'
 
 /**
  * Filter for the centers.
@@ -20,7 +21,7 @@ const CenterFilter = () => {
 
     useEffect(() => {
         async function fetchOrgInfo() {
-            const orgInfoJson = extractParameter({...eventContext}, 'displayOrgFilter') &&
+            const orgInfoJson = extractParameter({...eventContext}, DISPLAY_ORG_FILTER) &&
                 await fetchOrganisations(extractParameter({...eventContext}, 'orgId')) || []
             setOrgInfo(orgInfoJson)
         }
@@ -34,11 +35,14 @@ const CenterFilter = () => {
         setOrgIdFilter(value)
     }
 
-    if(extractParameter(eventContext, 'displayOrgFilter')) {
+    const useOrgFilter = useMemo(() => extractParameter(eventContext, DISPLAY_ORG_FILTER), [])
+
+    if(useOrgFilter) {
         return <div className="row mt-2 mb-2 center-filter">
-            <div className="col-md-12"><label className="col-form-label"
-                                              htmlFor="centre-list">{t(
-                'Centre')}:</label></div>
+            <div className="col-md-12">
+                <label className="col-form-label"
+                    htmlFor="centre-list">{t('Centre')}:</label>
+            </div>
             <div className="col-md-12">
                 <select id="centre-list" className="form-control"
                         value={orgIdFilter} onChange={changeOrgIdFilter}>

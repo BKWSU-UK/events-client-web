@@ -9,11 +9,12 @@ import EventDetail from './components/EventDetail'
 import { EventContextProvider } from './context/EventContext'
 import EventCalendar from './components/EventCalendar'
 import { QueryClient, QueryClientProvider } from 'react-query'
+import EventForm from './components/EventForm'
 
 // Create a client
 const queryClient = new QueryClient()
 
-function App ({eventsConfig}) {
+function App ({ eventsConfig }) {
 
     return (
         <QueryClientProvider client={queryClient}>
@@ -29,13 +30,19 @@ function App ({eventsConfig}) {
                         <Route path="/event/:eventId">
                             <EventDetail/>
                         </Route>
+                        <Route path="/form/:eventId">
+                            <EventForm/>
+                        </Route>
                         <Route path="/calendar/:orgId">
                             <EventCalendar/>
                         </Route>
                         <Route path="/">
-                            {eventsConfig?.showSingleEvent ? <EventDetail/> :
-                                eventsConfig?.showCalendar ?
-                                <EventCalendar/> : <EventTable/>
+                            {eventsConfig?.showForm ?
+                                <EventForm/>
+                                : eventsConfig?.showSingleEvent ?
+                                    <EventDetail/> :
+                                    eventsConfig?.showCalendar ?
+                                        <EventCalendar/> : <EventTable/>
                             }
                         </Route>
                     </Switch>

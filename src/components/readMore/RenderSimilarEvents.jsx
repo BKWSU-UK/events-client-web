@@ -5,6 +5,7 @@ import { useTranslation } from '../../i18n'
 import { eventMap } from '../EventDisplay'
 import { determineTimeFormat, momentFactory } from '../DateWidget'
 import { fetchSimilarEventList } from '../../service/dataAccess'
+import useTimeFormat from '../../hooks/useTimeFormat'
 
 const createDateStr = (dateStr, time) => `${dateStr} ${time}`.replace(/:00$/, "")
 
@@ -17,6 +18,7 @@ const createDateStr = (dateStr, time) => `${dateStr} ${time}`.replace(/:00$/, ""
  */
 const RenderSimilarEvents = () => {
     const eventContext = useContext(EventContext)
+    const timeFormat = useTimeFormat()
     const { setCurrentEvent, events, similarEvents, setSimilarEvents } = eventContext
     const { t } = useTranslation()
     const showSimilarEvents = extractParameter({...eventContext}, 'showSimilarEvents', false)
@@ -43,7 +45,6 @@ const RenderSimilarEvents = () => {
                         const timezone = event.timezone;
                         const baseMoment = momentFactory(startDate, timezone);
                         const baseEndMoment = momentFactory(endDate, timezone);
-                        const timeFormat = determineTimeFormat(eventContext)
                         return (
                             <div className="row" key={i}>
                                 <div className="col-sm-12 similar-title">

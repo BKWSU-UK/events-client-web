@@ -1,10 +1,13 @@
 import { extractParameter } from '../utils/paramExtraction'
 import { ALL_ORG_IDS } from '../context/EventContext'
 import { SERVER_BASE } from '../apiConstants'
+import { DISPLAY_ONLINE_FILTER } from '../context/appParams'
+import { ONLINE_STATUSES } from '../context/onlineStates'
+import { DATA_ACCESS_PARAMS } from './dataAccessConstants'
 
 const eventLimit = (eventContext) => extractParameter({ ...eventContext }, 'eventsLimit', 10000)
 
-const onlyWebcast = (eventContext) => extractParameter({ ...eventContext }, 'onlyWebcast', false)
+const onlyWebcast = (eventContext) => extractParameter({ ...eventContext }, DATA_ACCESS_PARAMS.ONLY_WEBCAST, false)
 
 const onlineOnly = (eventContext) => extractParameter({ ...eventContext }, 'onlineOnly', false)
 
@@ -13,10 +16,9 @@ const isPrivate = (eventContext) => extractParameter({ ...eventContext }, 'priva
 const hasRegistration = (eventContext) => extractParameter({ ...eventContext }, 'hasRegistration', false)
 
 const appendToTargetUrl = (value, targetUrl, parameter) => {
-    console.log('appendToTargetUrl', appendToTargetUrl)
-    if (value === 'yes') {
+    if (value === DATA_ACCESS_PARAMS.LOGICAL_YES) {
         targetUrl += `&${parameter}=true`
-    } else if (value === 'no') {
+    } else if (value === DATA_ACCESS_PARAMS.LOGICAL_NO) {
         targetUrl += `&${parameter}=false`
     }
     return targetUrl
@@ -28,14 +30,42 @@ const processHasRegistration = (targetUrl, eventContext) => appendToTargetUrl(
 const processPrivate = (targetUrl, eventContext) => appendToTargetUrl(
     isPrivate(eventContext), targetUrl, 'private')
 
-const processOnlineOnly = (targetUrl, eventContext) => appendToTargetUrl(
-    onlineOnly(eventContext), targetUrl, 'onlineOnly')
+const onlyWebcastAdapter = (isOnlyWebcast, targetUrl) => {
+    if (isOnlyWebcast) {
+        targetUrl += `&${DATA_ACCESS_PARAMS.ONLY_WEBCAST}=${isOnlyWebcast}`
+    }
+    return targetUrl
+}
+
+const processOnlineOnly = (targetUrl, eventContext) => {
+    const onlineOnlyFilter = extractParameter(eventContext, DISPLAY_ONLINE_FILTER)
+    if(!onlineOnlyFilter) {
+        return appendToTargetUrl(
+            onlineOnly(eventContext), targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
+    } else {
+        console.log('processOnlineOnly', eventContext.filterState)
+        switch(eventContext.filterState.onlineStatus) {
+            case ONLINE_STATUSES.NONE:
+                return targetUrl
+            case ONLINE_STATUSES.IN_PERSON:
+                return appendToTargetUrl(
+                    DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
+            case ONLINE_STATUSES.ONLINE_ONLY:
+                return appendToTargetUrl(
+                    DATA_ACCESS_PARAMS.LOGICAL_YES, targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
+            case ONLINE_STATUSES.MIXED:
+                const targetUrl1 = appendToTargetUrl(
+                    DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
+                return onlyWebcastAdapter(true, targetUrl1)
+        }
+        return targetUrl
+    }
+}
 
 const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
 
 const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
     if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
-        console.log('orgIdStrFactory')
         const extractParameterSimple1 = extractParameter({eventsConfig: { useAllOrgIds }}, 'useAllOrgIds', false)
         if(!extractParameterSimple1) {
             return `${ALL_ORG_IDS}`
@@ -45,6 +75,8 @@ const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
     return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
 }
 
+
+
 const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured, eventContext}) => {
     let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
     targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
@@ -52,9 +84,7 @@ const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, feat
         targetUrl += `&featured=true`
     }
     const isOnlyWebcast = onlyWebcast(eventContext)
-    if (isOnlyWebcast) {
-        targetUrl += `&onlyWebcast=${isOnlyWebcast}`
-    }
+    targetUrl = onlyWebcastAdapter(isOnlyWebcast, targetUrl)
     if (eventsLang) {
         targetUrl += `&lang=${eventsLang}`
     }
@@ -73,7 +103,6 @@ export const getEventList = async (params) => {
     const eventsLimit = eventLimit(eventContext)
     const targetUrl = targetUrlFactory({orgIdStr, eventTypeIds, eventsLimit, eventsLang,
         featured: params.featured, eventContext})
-    console.log('targetUrl', eventContext.eventsConfig.id, targetUrl)
     const fetchResponse = await fetch(targetUrl)
     const json = await fetchResponse.json()
     if(json?.response?.status !== 0) {
@@ -84,7 +113,7 @@ export const getEventList = async (params) => {
     return response?.data
 }
 
-const fetchSingleEvent = async (eventId) => {
+export const fetchSingleEvent = async (eventId) => {
     if (!eventId) {
         return
     }

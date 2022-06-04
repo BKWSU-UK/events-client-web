@@ -1,11 +1,11 @@
 
 
 // Define a default UI for filtering
-import {isChrome} from "../utils/browserDetection";
+import {isChrome} from "../../utils/browserDetection";
 import React, { useContext } from 'react'
-import {useTranslation} from "../i18n";
-import {extractParameter} from "../utils/paramExtraction";
-import EventContext from '../context/EventContext'
+import {useTranslation} from "../../i18n";
+import {extractParameter} from "../../utils/paramExtraction";
+import EventContext from '../../context/EventContext'
 
 /**
  * Renders the search text field.

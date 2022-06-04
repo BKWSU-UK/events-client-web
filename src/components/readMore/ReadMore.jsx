@@ -7,9 +7,9 @@ import { IncludeForm } from '../forms/FormModal'
 import { useTranslation } from '../../i18n'
 import WebcastButton from '../WebcastButton'
 import RenderSimilarEvents from './RenderSimilarEvents'
-import { determineTimeFormat } from '../DateWidget'
 import { extractParameter } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
+import useTimeFormat from '../../hooks/useTimeFormat'
 
 function convertIsoToGoogleCal (dateStr) {
     return moment(dateStr, 'YYYY-MM-DD\'T\'hh:mm:ss').format('YYYYMMDDTHHmmss')
@@ -30,6 +30,27 @@ function renderAddToGoogleCalendar (event, date, t) {
 
 const DEFAULT_UPCOMING_LIMIT = 10
 
+export function RenderDate({date, currentEvent, timeFormat}) {
+    const { t } = useTranslation()
+    return (
+        <div className="row" key={date.eventDateId}>
+            <div className="col-12 col-md-5">
+                &#x1f4c5; {moment(date.startIso,
+                'YYYY-MM-DD\'T\'hh:mm:ss').
+                format(`Do MMM YYYY ${timeFormat}`)}
+            </div>
+            <div className="col-12 col-md-3">
+                ({moment(date.startIso,
+                'YYYY-MM-DD\'T\'hh:mm:ss').fromNow()})
+            </div>
+            <div className="col-12 col-md-4">
+                {renderAddToGoogleCalendar(currentEvent, date,
+                    t)}
+            </div>
+        </div>
+    )
+}
+
 function RenderUpcomingDates ({ dateList, currentEvent }) {
 
     const { t } = useTranslation()
@@ -41,7 +62,7 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
         })
     }
     const eventContext = useContext(EventContext)
-    const timeFormat = determineTimeFormat(eventContext)
+    const timeFormat = useTimeFormat()
     moment.locale(extractParameter({ ...eventContext }, 'language', 'en-US'))
     const upcomingDateLimit = extractParameter({ ...eventContext },
         'upcomingDateLimit') ||
@@ -58,21 +79,7 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
             <div className="card card-body bg-light">
                 {Array.isArray(dateList) ? dateList.map(date => {
                     return (
-                        <div className="row" key={date.eventDateId}>
-                            <div className="col-12 col-md-3">
-                                &#x1f4c5; {moment(date.startIso,
-                                'YYYY-MM-DD\'T\'hh:mm:ss').
-                                format(`Do MMM YYYY ${timeFormat}`)}
-                            </div>
-                            <div className="col-12 col-md-3">
-                                ({moment(date.startIso,
-                                'YYYY-MM-DD\'T\'hh:mm:ss').fromNow()})
-                            </div>
-                            <div className="col-12 col-md-6">
-                                {renderAddToGoogleCalendar(currentEvent, date,
-                                    t)}
-                            </div>
-                        </div>
+                        <RenderDate date={date} currentEvent={currentEvent} timeFormat={timeFormat} />
                     )
                 }) : ''}
             </div>
@@ -80,39 +87,55 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
     )
 }
 
+export const venueFactory = (currentEvent) => {
+    return {
+        ...currentEvent,
+        venue: {
+            name: currentEvent.venueName,
+            address: currentEvent.venueAddress,
+            postalCode: currentEvent.venuePostCode,
+            locality: currentEvent.venueCity,
+            country: currentEvent.venueCountry,
+        },
+    }
+}
+
 /**
  * Displays the extended content about an event.
  * @returns {*}
  * @constructor
  */
-export const ReadMore = ({ currentEvent, dateList }) => {
+export const ReadMore = () => {
     const { t } = useTranslation()
-    if (currentEvent?.venue) {
+    const { currentEvent } = useContext(EventContext)
+    const dateList = currentEvent?.dateList
+    const venueEvent = venueFactory(currentEvent)
+    if (venueEvent?.venue) {
         return (
             <>
-                <h2 id="eventDisplayName">{currentEvent.name}</h2>
+                <h2 id="eventDisplayName">{venueEvent.name}</h2>
                 <div className="row">
-                    <div className={currentEvent.requiresRegistration
+                    <div className={venueEvent.requiresRegistration
                         ? 'col-md-6'
                         : 'col-md-12'}>
-                        <EventType eventTypeInt={currentEvent.eventTypeId}/>
-                        <p dangerouslySetInnerHTML={{ __html: currentEvent.description }}/>
+                        <EventType eventTypeInt={venueEvent.eventTypeId}/>
+                        <p dangerouslySetInnerHTML={{ __html: venueEvent.description }}/>
                         <div className="row">
                             <div className="col-md-12 webcastButton">
-                                <WebcastButton original={currentEvent}/></div>
+                                <WebcastButton original={venueEvent}/></div>
                         </div>
 
-                        <Venue venue={currentEvent.venue}
-                               venueName={currentEvent.venue.name}
-                               venueAddress={currentEvent.venue.address}
-                               venuePostalCode={currentEvent.venue.postalCode}
-                               venueLocality={currentEvent.venue.locality}/>
+                        <Venue venue={venueEvent.venue}
+                               venueName={venueEvent.venue.name}
+                               venueAddress={venueEvent.venue.address}
+                               venuePostalCode={venueEvent.venue.postalCode}
+                               venueLocality={venueEvent.venue.locality}/>
                         {dateList && <RenderUpcomingDates dateList={dateList}
-                                                          currentEvent={currentEvent}/>}
-                        <ContactEmail currentEvent={currentEvent}/>
+                                                          currentEvent={venueEvent}/>}
+                        <ContactEmail currentEvent={venueEvent}/>
                         <RenderSimilarEvents/>
                     </div>
-                    <IncludeForm currentEvent={currentEvent} dateList={dateList} />
+                    <IncludeForm currentEvent={venueEvent} />
                 </div>
             </>
         )

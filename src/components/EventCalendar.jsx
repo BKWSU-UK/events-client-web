@@ -11,10 +11,11 @@ import { useTranslation } from '../i18n'
 import { EventDisplayBody } from './EventDisplay'
 import WebcastButton from './WebcastButton'
 import { EventForm } from './forms/FormModal'
-import CenterFilter from './CenterFilter'
+import CenterFilter from './filter/CenterFilter'
 import { useQuery } from 'react-query'
-import Loader from './loading/Loader'
 import LoadingContainer from './loading/LoadingContainer'
+import OnlineFilter from './filter/OnlineFilter'
+import useLanguage from '../hooks/useLanguage'
 
 /**
  * Used to display the events in a calendar format.
@@ -27,16 +28,16 @@ const EventCalendar = (props) => {
     const eventContext = useContext(EventContext)
     const allParams = extractEventListParameters({ ...props, ...eventContext })
     const { orgId } = allParams
-    const { events, setEvents } = eventContext
-    const {orgIdFilter} = eventContext;
+    const { events, setEvents, orgIdFilter, filterState} = eventContext
     const [showModal, setShowModal] = useState(false)
     const [selectedEvent, setSelectedEvent] = useState(false)
 
-    const language = extractParameter({...eventContext}, 'language', 'en-US')
-    moment.locale(language)
+    useLanguage()
+
     const localizer = momentLocalizer(moment)
 
-    const { isLoading, error, data } = useQuery([`eventsCalendar_${eventContext.id}`, orgId, orgIdFilter], () => {
+    const { isLoading, error, data } = useQuery(
+        [`eventsCalendar_${eventContext.id}`, orgId, orgIdFilter, filterState], () => {
         if(!!orgIdFilter && orgIdFilter > 0) {
             return getEventList({ ...allParams, orgIdFilter, eventContext })
         }
@@ -58,6 +59,7 @@ const EventCalendar = (props) => {
     return (
         <>
             <CenterFilter />
+            <OnlineFilter />
             <LoadingContainer data={data} isLoading={isLoading} error={error}>
                 <Calendar
                     localizer={localizer}

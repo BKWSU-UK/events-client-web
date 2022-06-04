@@ -1,48 +1,21 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { withRouter } from 'react-router-dom'
-import { fetchEvent } from '../service/dataAccess'
-import EventContext from '../context/EventContext'
-import { extractFromLocationQuery } from '../utils/urlUtils'
 import { ReadMore } from './readMore/ReadMore'
-import Loader from './loading/Loader'
-
-const venueFactory = (currentEvent) => {
-    return {
-        ...currentEvent,
-        venue: {
-            name: currentEvent.venueName,
-            address: currentEvent.venueAddress,
-            postalCode: currentEvent.venuePostCode,
-            locality: currentEvent.venueCity,
-            country: currentEvent.venueCountry
-        }
-    }
-}
+import DetailRenderer from './DetailRenderer'
 
 /**
  * Displays an event using the event identifier.
- * @param props
+ * @param props Contains router related properties we might want to keep.
  * @returns {JSX.Element}
  * @constructor
  */
-function EventDetail(props) {
-    const eventId = props.match.params.eventId || extractFromLocationQuery("eventId") || extractFromLocationQuery("id");
-    const {currentEvent, setCurrentEvent} = useContext(EventContext);
+function EventDetail (props) {
 
-    React.useEffect(() => {
-        fetchEvent(setCurrentEvent, eventId);
-    }, [fetchEvent]);
-
-
-    if (eventId) {
-        return (
-            <div className="container-fluid">
-                {!!currentEvent && <ReadMore currentEvent={venueFactory(currentEvent)} dateList={currentEvent.dateList}/>}
-            </div>
-        );
-    } else {
-        return <Loader />
-    }
+    return (
+        <DetailRenderer origProps={props}>
+            <ReadMore />
+        </DetailRenderer>
+    )
 }
 
-export default withRouter(EventDetail);
+export default withRouter(EventDetail)
