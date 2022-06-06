@@ -12,7 +12,7 @@ import { fetchSeatInformation } from '../../service/dataAccess'
 import CreateForm from './CreateForm'
 
 const useSeatInformation = (currentEvent) => {
-    const eventDateId = currentEvent.eventDateId
+    const eventDateId = currentEvent.eventDateId ? currentEvent.eventDateId : currentEvent.dateList[0].eventDateId
     const { isLoading, error, data } = useQuery([eventDateId], () => fetchSeatInformation(
         eventDateId))
     return { isLoading, error, data }
@@ -31,6 +31,8 @@ const NoMoreSeats = ({cols = 6}) => {
     )
 }
 
+const noMoreSeatsCondition = (data) => data?.exceededMaxParticipants || data?.availableSeats === 0
+
 /**
  * Modal used to display forms.
  * @param show Determines, if the form is displayed or not.
@@ -39,12 +41,11 @@ const NoMoreSeats = ({cols = 6}) => {
  * @constructor
  */
 export function EventForm ({ show, setShow, currentEvent }) {
-    const eventContext = useContext(EventContext)
     const { isLoading, error, data } = useSeatInformation(currentEvent)
     if(isLoading) {
         return <></>
     }
-    if(data?.exceededMaxParticipants) {
+    if(noMoreSeatsCondition(data)) {
         return <NoMoreSeats cols={12} />
     }
     return (
@@ -64,7 +65,7 @@ export const IncludeForm = ({ currentEvent, className = 'col-md-6'}) => {
     if(isLoading) {
         return <></>
     }
-    if(data?.exceededMaxParticipants) {
+    if(noMoreSeatsCondition(data)) {
         return <NoMoreSeats />
     }
     return (
