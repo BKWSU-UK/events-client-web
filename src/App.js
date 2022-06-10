@@ -2,6 +2,10 @@ import React from 'react'
 import './App.css'
 import 'react-big-calendar/lib/sass/styles.scss'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css' // if using DnD
+// Default theme
+import '@splidejs/react-splide/dist/css/splide-core.min.css'
+import '@splidejs/react-splide/dist/css/themes/splide-default.min.css'
+
 import EventTable from './components/EventTable'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import About from './components/About'
@@ -10,6 +14,8 @@ import { EventContextProvider } from './context/EventContext'
 import EventCalendar from './components/EventCalendar'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import EventForm from './components/EventForm'
+import CompositeCalendarParent
+    from './components/compositeCalendar/CompositeCalendarParent'
 
 // Create a client
 const queryClient = new QueryClient()
@@ -35,6 +41,9 @@ function App ({ eventsConfig }) {
                         </Route>
                         <Route path="/calendar/:orgId">
                             <EventCalendar/>
+                        </Route>
+                        <Route path="/composite-calendar">
+                            <CompositeCalendarParent />
                         </Route>
                         <Route path="/">
                             {eventsConfig?.showForm ?

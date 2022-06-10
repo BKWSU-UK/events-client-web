@@ -1,11 +1,5 @@
-import React, { useContext } from 'react'
-import { Form } from 'react-formio'
+import React from 'react'
 import makeModal from '../simpleModal/makeModal'
-import {
-    extractParameter
-} from '../../utils/paramExtraction'
-import EventContext from '../../context/EventContext'
-import { SERVER_BASE } from '../../apiConstants'
 import { useTranslation } from '../../i18n'
 import { useQuery } from 'react-query'
 import { fetchSeatInformation } from '../../service/dataAccess'

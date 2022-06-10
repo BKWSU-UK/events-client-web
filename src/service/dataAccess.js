@@ -43,7 +43,6 @@ const processOnlineOnly = (targetUrl, eventContext) => {
         return appendToTargetUrl(
             onlineOnly(eventContext), targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
     } else {
-        console.log('processOnlineOnly', eventContext.filterState)
         switch(eventContext.filterState.onlineStatus) {
             case ONLINE_STATUSES.NONE:
                 return targetUrl
@@ -62,9 +61,9 @@ const processOnlineOnly = (targetUrl, eventContext) => {
     }
 }
 
-const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
+export const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
 
-const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
+export const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
     if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
         const extractParameterSimple1 = extractParameter({eventsConfig: { useAllOrgIds }}, 'useAllOrgIds', false)
         if(!extractParameterSimple1) {
@@ -75,9 +74,22 @@ const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
     return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
 }
 
+const pad2 = (n) => !!n ? n.toString().padStart(2, "0") : ""
 
+const convertDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
 
-const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured, eventContext}) => {
+export const appendDates = (targetUrl, dateStart, dateEnd) => {
+    if(!!dateStart) {
+        targetUrl += `&startDate=${convertDate(dateStart)}`
+    }
+    if(!!dateEnd) {
+        targetUrl += `&endDate=${convertDate(dateEnd)}`
+    }
+    return targetUrl
+}
+
+export const targetUrlFactory = (params) => {
+    const {orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured, dateStart, dateEnd, eventContext} = params
     let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
     targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
     if (featured) {
@@ -91,18 +103,19 @@ const targetUrlFactory = ({orgIdStr, eventTypeIds, eventsLimit, eventsLang, feat
     targetUrl = processOnlineOnly(targetUrl, eventContext)
     targetUrl = processPrivate(targetUrl, eventContext)
     targetUrl = processHasRegistration(targetUrl, eventContext)
+    targetUrl = appendDates(targetUrl, dateStart, dateEnd)
     return targetUrl
 }
 
 export const getEventList = async (params) => {
-    const { orgId, eventTypeIds, eventsLang, orgIdFilter, eventContext } = params
+    const { orgId, eventTypeIds, eventsLang, orgIdFilter, eventContext, dateStart, dateEnd } = params
     const orgIdStr = orgIdStrFactory({ orgIdFilter, orgId, useAllOrgIds: eventContext.useAllOrgIds })
     if(parseInt(orgIdStr) < 1) {
         return []
     }
     const eventsLimit = eventLimit(eventContext)
     const targetUrl = targetUrlFactory({orgIdStr, eventTypeIds, eventsLimit, eventsLang,
-        featured: params.featured, eventContext})
+        featured: params.featured, eventContext, dateStart, dateEnd})
     const fetchResponse = await fetch(targetUrl)
     const json = await fetchResponse.json()
     if(json?.response?.status !== 0) {

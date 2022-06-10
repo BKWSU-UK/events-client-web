@@ -10,12 +10,13 @@ import RenderSimilarEvents from './RenderSimilarEvents'
 import { extractParameter } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
 import useTimeFormat from '../../hooks/useTimeFormat'
+import 'moment/locale/de';
 
 function convertIsoToGoogleCal (dateStr) {
     return moment(dateStr, 'YYYY-MM-DD\'T\'hh:mm:ss').format('YYYYMMDDTHHmmss')
 }
 
-function renderAddToGoogleCalendar (event, date, t) {
+function renderAddToGoogleCalendar (event, date, t, useIcon = false) {
     const venue = event.venue
     return (
         <a href={`http://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
@@ -24,28 +25,37 @@ function renderAddToGoogleCalendar (event, date, t) {
             date.endIso)}Z&details=${encodeURI(
             event.descriptionText)}&location=${encodeURI(
             venue.address)}&trp=false&sf=true&output=xml`}
-           target="_blank" rel="nofollow">{t('add-google-calendar')}</a>
+           target="_blank" rel="nofollow">{!useIcon && t('add-google-calendar') || <span>&#128276;</span>} </a>
     )
 }
 
 const DEFAULT_UPCOMING_LIMIT = 10
 
-export function RenderDate({date, currentEvent, timeFormat}) {
-    const { t } = useTranslation()
+export function RenderDate({date, currentEvent, timeFormat, useIcon = false}) {
+    const { t, langCode } = useTranslation()
+
+    const renderEndTimeIfSameDay = () => {
+        const startSplit = date.startIso.split('T')
+        const endSplit = date.endIso.split('T')
+        if(startSplit[0] === endSplit[0]) {
+            return "-" + moment(date.endIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
+                format(`${timeFormat}`)
+        }
+        return ""
+    }
+
     return (
         <div className="row" key={date.eventDateId}>
             <div className="col-12 col-md-5">
-                &#x1f4c5; {moment(date.startIso,
-                'YYYY-MM-DD\'T\'hh:mm:ss').
-                format(`Do MMM YYYY ${timeFormat}`)}
+                &#x1f4c5; {moment(date.startIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
+                format(`Do MMMM YYYY ${timeFormat}`)}{renderEndTimeIfSameDay()}
             </div>
             <div className="col-12 col-md-3">
                 ({moment(date.startIso,
-                'YYYY-MM-DD\'T\'hh:mm:ss').fromNow()})
+                'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).fromNow()})
             </div>
-            <div className="col-12 col-md-4">
-                {renderAddToGoogleCalendar(currentEvent, date,
-                    t)}
+            <div className="col-12 col-md-4 text-right">
+                {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}
             </div>
         </div>
     )

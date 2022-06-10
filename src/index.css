@@ -130,3 +130,66 @@ code {
 .similar-title {
     margin: 10px 0 -5px 0
 }
+
+/***************/
+/** Date strip */
+/***************/
+
+.calendar-date-strip-slide {
+    text-align: center;
+}
+
+.calendar-date-strip-slide > .week-day {
+    color: #aaaaaa;
+    margin-bottom: -10px;
+    font-weight: bold;
+}
+
+.calendar-date-strip-slide > .month-day {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+
+#splide01 > ul {
+    bottom: -1.5rem;
+}
+
+#splide01 > div.splide__arrows.splide__arrows--ltr > button.splide__arrow.splide__arrow--prev {
+    left: -0.5rem
+}
+
+#splide01 > div.splide__arrows.splide__arrows--ltr > button.splide__arrow.splide__arrow--next {
+    right: -0.5rem;
+}
+
+.calendar-date-today {
+    color: #f26e22;
+}
+
+.calendar-date-today > .week-day {
+    color: #f26e22;
+}
+
+li > .splide__pagination__page.is-active {
+    background: #f26e22;
+}
+
+.splide__slide.calendar-date-strip-slide:hover {
+    background: #efefef;
+    cursor: pointer;
+}
+
+.calendar-month-first.calendar-date-strip-slide {
+    background: #f26e22;
+    color: white;
+}
+
+.calendar-month-first.calendar-date-strip-slide .week-day {
+    background: #f26e22;
+    color: white;
+}
+
+.calendar-date-selected {
+    background: #1b1f23;
+    color: white
+}

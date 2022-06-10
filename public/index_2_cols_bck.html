@@ -53,9 +53,6 @@
             .flexContainer {
                 flex-direction: row;
             }
-            .full {
-                max-width: 100%;
-            }
             .half {
                 max-width: 50%;
             }
@@ -65,10 +62,6 @@
             .fourth {
                 max-width: 25%;
             }
-        }
-
-        #emsRoot1 {
-            margin-top: 2rem
         }
     </style>
     <title>Events</title>
@@ -80,9 +73,9 @@
         {
             useBodyHiddenOverflow: true,
             useSimpleLayout: true,
-            orgId: [2, 335], // GCH, GRC only
+            orgId: [2, 335], // GRC only
             eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
-            language: "de", // "es" for Spanish also supported now,
+            language: "en-GB", // "es" for Spanish also supported now,
             showLocalTime: true,
             featured: false, // Show only featured examples
             displayWebcastButton: false, // displays the webcast button
@@ -95,13 +88,26 @@
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
             useAllOrgIds: true
+        },
+        {
+            language: "en-GB",
+            showLocalTime: true,
+            displayWebcastButton: true,
+            showCalendar: false,
+            showSingleEvent: true, // Displays just a single event which needs to be specified in the URL
+            showSimilarEvents: true,
+            rootElement: 'emsRoot2'
         }]
 </script>
 
 <div class="flexContainer">
-    <div class="container-fluid full">
-        <h1>Germany Test</h1>
+    <div class="container-fluid half">
+        <h1>GRC Online</h1>
         <div id="emsRoot1"></div>
+    </div>
+    <div class="container-fluid half">
+        <h1>GCH</h1>
+        <div id="emsRoot2" ></div>
     </div>
 </div>
 <!--

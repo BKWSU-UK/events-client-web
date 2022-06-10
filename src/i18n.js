@@ -3,6 +3,72 @@ import EventContext from './context/EventContext'
 import { extractParameter } from './utils/paramExtraction'
 
 export const langResources = {
+    'de': {
+        translations: {
+            '-- Select option --': '-- Wähle eine Option --',
+            'add-google-calendar': 'Zu Google Kalender hinzufügen',
+            'agenda': 'Agenda',
+            'All': 'Alle',
+            'and-book': 'und buchen',
+            'back-to-events': 'Zurück zu den Ereignissen',
+            'BK Event': 'BK-Ereignis',
+            'book-only': 'BK-Ereignis',
+            'Centre': 'Center',
+            'Close': 'schließen',
+            'Conference': 'Konferenz', // TODO: Needs translation
+            'Contact Email': 'Kontakt E-mail',
+            'Could not retrieve event due to an error': 'Ereignis konnte aufgrund eines Fehlers nicht abgerufen werden',
+            'Course': 'Curso',
+            'day': 'Dia',
+            'description': 'Descripción',
+            'enter-search': 'Ingrese la búsqueda',
+            'event_plural': 'eventos',
+            'event': 'evento',
+            'go-to-page': 'Ir a la página',
+            'Group session': 'Sesión grupal',
+            'Lecture': 'Conferencia',
+            'Meditation': 'Meditación',
+            'Miscellaneous': 'Diversos',
+            'month': 'Mes',
+            'next': 'Seguinte',
+            'No events found': 'Keine Events gefunden ...',
+            'of': 'de',
+            'online_state_In Person': 'En persona',
+            'online_state_Mixed': 'En línea y en persona',
+            'online_state_Online': 'En línea',
+            'online_state_None': 'Todos los eventos',
+            'Online activity': 'Actividad en línea',
+            'Online State': 'Estado en línea',
+            'Open webcast URL': 'Abrir URL de webcast',
+            'page': 'Página',
+            'Panel discussion': 'Panel de discusión',
+            'Power and protection': 'Power and protection',
+            'previous': 'Anterior',
+            'Private': 'Privado',
+            'read-more': 'Leer más',
+            'Retreat': 'Retirada',
+            'search': 'Buscar',
+            'Seminar': 'Seminario',
+            'show': 'Mostrar',
+            'Similar Events': 'Eventos similares',
+            'Special event': 'Evento especial',
+            'To get started, edit <1>src/App.js</1> and save to reload.': 'Para comenzar, edite <1>src/App.js</1> y guarde para recargar',
+            'today': 'Hoy',
+            'Training': 'Formación',
+            'upcoming-dates': 'Fechas siguientes',
+            'week': 'Semana',
+            'weekday_FR': 'FR',
+            'weekday_MO': 'MO',
+            'weekday_SA': 'SA',
+            'weekday_SU': 'SO',
+            'weekday_TH': 'DO',
+            'weekday_TU': 'DI',
+            'weekday_WE': 'MI',
+            'Workshop': 'Workshop',
+            'Your time': 'Hora en su País',
+            "There are no more seats available for this event!": "¡No hay más asientos disponibles para este evento!",
+        },
+    },
     'en-GB': {
         translations: {
             '-- Select option --': '-- Select option --',
@@ -31,6 +97,7 @@ export const langResources = {
             'Miscellaneous': 'Miscellaneous',
             'month': 'Month',
             'next': 'Next',
+            'No events found': 'No events found ...',
             'of': 'of',
             'online_state_In Person': 'In Person',
             'online_state_Mixed': 'Online and In Person',
@@ -56,6 +123,13 @@ export const langResources = {
             'Training': 'Training',
             'upcoming-dates': 'Upcoming Dates',
             'week': 'Week',
+            'weekday_FR': 'FR',
+            'weekday_MO': 'MO',
+            'weekday_SA': 'SA',
+            'weekday_SU': 'SU',
+            'weekday_TH': 'TH',
+            'weekday_TU': 'TU',
+            'weekday_WE': 'WE',
             'Workshop': 'Workshop',
             'Your time': 'Your time',
             "There are no more seats available for this event!": "There are no more seats available for this event! Please try to book another date.",
@@ -89,6 +163,7 @@ export const langResources = {
             'Miscellaneous': 'Miscellaneous',
             'month': 'Month',
             'next': 'Next',
+            'No events found': 'No events found ...',
             'of': 'of',
             'online_state_In Person': 'In Person',
             'online_state_Mixed': 'Online and In Person',
@@ -114,6 +189,13 @@ export const langResources = {
             'Training': 'Training',
             'upcoming-dates': 'Upcoming Dates',
             'week': 'Week',
+            'weekday_FR': 'FR',
+            'weekday_MO': 'MO',
+            'weekday_SA': 'SA',
+            'weekday_SU': 'SU',
+            'weekday_TH': 'TH',
+            'weekday_TU': 'TU',
+            'weekday_WE': 'WE',
             'Workshop': 'Workshop',
             'Your time': 'Your time',
             "There are no more seats available for this event!": "There are no more seats available for this event!",
@@ -147,6 +229,7 @@ export const langResources = {
             'Miscellaneous': 'Diversos',
             'month': 'Mes',
             'next': 'Seguinte',
+            'No events found': 'No se encontraron eventos...',
             'of': 'de',
             'online_state_In Person': 'En persona',
             'online_state_Mixed': 'En línea y en persona',
@@ -172,6 +255,13 @@ export const langResources = {
             'Training': 'Formación',
             'upcoming-dates': 'Fechas siguientes',
             'week': 'Semana',
+            'weekday_FR': 'VI',
+            'weekday_MO': 'LU',
+            'weekday_SA': 'SA',
+            'weekday_SU': 'DO',
+            'weekday_TH': 'JU',
+            'weekday_TU': 'MA',
+            'weekday_WE': 'MI',
             'Workshop': 'Workshop',
             'Your time': 'Hora en su País',
             "There are no more seats available for this event!": "¡No hay más asientos disponibles para este evento!",
@@ -205,6 +295,7 @@ export const langResources = {
             'Miscellaneous': 'Outros',
             'month': 'Mês',
             'next': 'Seguinte',
+            'No events found': 'Nenhum evento encontrado...',
             'of': 'de',
             'online_state_In Person': 'Em pessoa',
             'online_state_Mixed': 'Online e em pessoa',
@@ -230,6 +321,13 @@ export const langResources = {
             'Training': 'Treinamento',
             'upcoming-dates': 'Próximas Datas',
             'week': 'Semana',
+            'weekday_FR': 'SE',
+            'weekday_MO': 'SE',
+            'weekday_SA': 'SA',
+            'weekday_SU': 'DO',
+            'weekday_TH': 'QU',
+            'weekday_TU': 'TE',
+            'weekday_WE': 'QU',
             'Workshop': 'Workshop',
             'Your time': 'Seu tempo',
             "There are no more seats available for this event!": "Não há mais lugares disponíveis para este evento!",
@@ -242,16 +340,17 @@ export function useTranslation () {
     const eventContext = useContext(EventContext)
 
     const props = { ...eventContext }
+    const langCode = extractParameter(props,'language', 'en-US')
+
     return {
         t: function (key, extraObj) {
             if (arguments.length === 1) {
-                return langResources[extractParameter(props,'language',
-                    'en-US')].translations[key] || key
+                return langResources[langCode].translations[key] || key
             } else {
                 // TODO: handle the extra object
-                return langResources[extractParameter(props, 'language',
-                    'en-US')].translations[`${key}_plural`] || key
+                return langResources[langCode].translations[`${key}_plural`] || key
             }
         },
+        langCode
     }
 }
