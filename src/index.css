@@ -135,6 +135,11 @@ code {
 /** Date strip */
 /***************/
 
+.calendar-date-strip {
+    border: 1px solid gainsboro;
+    padding: 20px 5px;
+}
+
 .calendar-date-strip-slide {
     text-align: center;
 }
