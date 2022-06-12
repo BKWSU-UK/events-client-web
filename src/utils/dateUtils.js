@@ -1,5 +1,6 @@
 import moment from 'moment-timezone'
 import { extractParameter } from './paramExtraction'
+import { momentFactory } from '../components/DateWidget'
 
 export function iterateDates (startDate, endDate) {
     console.log('iterateDates')
@@ -36,4 +37,21 @@ export const formatHeaderDates = (date) => {
     moment.locale(extractParameter(null,'language', 'en-US'));
     return !!date &&
         moment(date).format('DD MMM YYYY')
+}
+
+const pad2 = (n) => !!n ? n.toString().padStart(2, "0") : ""
+
+export const convertDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
+
+export const isBeforeToday = (date) => {
+    if(!date) {
+        return false
+    }
+    const now = new Date()
+    return now.getTime() > date.getTime()
+}
+
+export const timeAfterNow = (timeIso, timezone = 'Europe/London') => {
+    const diff  = momentFactory(timeIso, timezone).diff(moment())
+    return diff > 0
 }

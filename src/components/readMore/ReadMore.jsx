@@ -11,6 +11,7 @@ import { extractParameter } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
 import useTimeFormat from '../../hooks/useTimeFormat'
 import 'moment/locale/de';
+import { timeAfterNow } from '../../utils/dateUtils'
 
 function convertIsoToGoogleCal (dateStr) {
     return moment(dateStr, 'YYYY-MM-DD\'T\'hh:mm:ss').format('YYYYMMDDTHHmmss')
@@ -18,13 +19,13 @@ function convertIsoToGoogleCal (dateStr) {
 
 function renderAddToGoogleCalendar (event, date, t, useIcon = false) {
     const venue = event.venue
+
+    const renderedLocation = !!venue && `&location=${encodeURI(venue.address)}` || ""
+
     return (
         <a href={`http://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
-            event.name)}&dates=${convertIsoToGoogleCal(
-            date.startIso)}Z/${convertIsoToGoogleCal(
-            date.endIso)}Z&details=${encodeURI(
-            event.descriptionText)}&location=${encodeURI(
-            venue.address)}&trp=false&sf=true&output=xml`}
+            event.name)}&dates=${convertIsoToGoogleCal(date.startIso)}/${convertIsoToGoogleCal(date.endIso)}&details=${encodeURI(
+            event.descriptionText)}${renderedLocation}&trp=false&sf=true&output=xml`}
            target="_blank" rel="nofollow">{!useIcon && t('add-google-calendar') || <span>&#128276;</span>} </a>
     )
 }
@@ -44,19 +45,21 @@ export function RenderDate({date, currentEvent, timeFormat, useIcon = false}) {
         return ""
     }
 
+    const startAfterNow = !!timeAfterNow(date.startIso)
+
     return (
         <div className="row" key={date.eventDateId}>
-            <div className="col-12 col-md-5">
+            <div className="col-12 col-lg-5">
                 &#x1f4c5; {moment(date.startIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
                 format(`Do MMMM YYYY ${timeFormat}`)}{renderEndTimeIfSameDay()}
             </div>
-            <div className="col-12 col-md-3">
+            <div className="col-12 col-lg-3">
                 ({moment(date.startIso,
                 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).fromNow()})
             </div>
-            <div className="col-12 col-md-4 text-right">
+            {startAfterNow && <div className="col-12 col-lg-4 text-right">
                 {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}
-            </div>
+            </div>}
         </div>
     )
 }

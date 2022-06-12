@@ -4,6 +4,8 @@ import { SERVER_BASE } from '../apiConstants'
 import { DISPLAY_ONLINE_FILTER } from '../context/appParams'
 import { ONLINE_STATUSES } from '../context/onlineStates'
 import { DATA_ACCESS_PARAMS } from './dataAccessConstants'
+import { groupByDate } from './dateCounterFactory'
+import { convertDate } from '../utils/dateUtils'
 
 const eventLimit = (eventContext) => extractParameter({ ...eventContext }, 'eventsLimit', 10000)
 
@@ -74,10 +76,6 @@ export const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
     return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
 }
 
-const pad2 = (n) => !!n ? n.toString().padStart(2, "0") : ""
-
-const convertDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
-
 export const appendDates = (targetUrl, dateStart, dateEnd) => {
     if(!!dateStart) {
         targetUrl += `&startDate=${convertDate(dateStart)}`
@@ -89,8 +87,8 @@ export const appendDates = (targetUrl, dateStart, dateEnd) => {
 }
 
 export const targetUrlFactory = (params) => {
-    const {orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured, dateStart, dateEnd, eventContext} = params
-    let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport.ftl&orgId=${orgIdStr}`
+    const {orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured, dateStart, dateEnd, eventContext, useMinimal} = params
+    let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport${!!useMinimal ? "Minimal" : ""}.ftl&orgId=${orgIdStr}`
     targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
     if (featured) {
         targetUrl += `&featured=true`
@@ -107,15 +105,22 @@ export const targetUrlFactory = (params) => {
     return targetUrl
 }
 
+export const getEventListWithGroupCount = async (params) => {
+    const envList = await getEventList (params)
+    const groupedCount = groupByDate(envList)
+    return { groupedCount, envList }
+}
+
 export const getEventList = async (params) => {
-    const { orgId, eventTypeIds, eventsLang, orgIdFilter, eventContext, dateStart, dateEnd } = params
+    const { orgId, orgIdFilter, eventContext } = params
     const orgIdStr = orgIdStrFactory({ orgIdFilter, orgId, useAllOrgIds: eventContext.useAllOrgIds })
     if(parseInt(orgIdStr) < 1) {
         return []
     }
-    const eventsLimit = eventLimit(eventContext)
-    const targetUrl = targetUrlFactory({orgIdStr, eventTypeIds, eventsLimit, eventsLang,
-        featured: params.featured, eventContext, dateStart, dateEnd})
+    const eventsLimit = params.eventsLimit || eventLimit(eventContext)
+    const targetUrl = targetUrlFactory({...params, orgIdStr, eventsLimit,
+        featured: params.featured})
+    console.log('target url', targetUrl)
     const fetchResponse = await fetch(targetUrl)
     const json = await fetchResponse.json()
     if(json?.response?.status !== 0) {
@@ -153,7 +158,7 @@ export const fetchSimilarEventList = async (
     if (!eventDateId) {
         return
     }
-    const targetUrl = `https://events.brahmakumaris.org/registration/similarEvents.do?eventDateId=${eventDateId}&limit=${limit}`
+    const targetUrl = `${SERVER_BASE}/similarEvents.do?eventDateId=${eventDateId}&limit=${limit}`
     console.log('fetchSimilarEventList target', targetUrl)
     const response = await fetch(targetUrl)
     const json = await response.json()
@@ -163,13 +168,31 @@ export const fetchSimilarEventList = async (
 
 export const fetchOrganisations = async (orgIds) => {
     const orgList = orgIds.join(',')
-    const targetUrl = `https://events.brahmakumaris.org/registration/organisations/ids?ids=${orgList}`
+    const targetUrl = `${SERVER_BASE}/organisations/ids?ids=${orgList}`
     const response = await fetch(targetUrl)
     return response.json()
 }
 
 export const fetchSeatInformation = async (eventDateId) => {
-    const targetUrl = `https://events.brahmakumaris.org/bkregistration/seatsAvailable.do?eventDateId=${eventDateId}`
+    const targetUrl = `${SERVER_BASE}/seatsAvailable.do?eventDateId=${eventDateId}`
     const response = await fetch(targetUrl)
     return await response.json()
+}
+
+export const fetchEventDate = async (eventDateId) => {
+    if(!eventDateId) {
+        return null
+    }
+    const targetUrl = `${SERVER_BASE}/eventDateEvent/${eventDateId}?extendedData=true`
+    const response = await fetch(targetUrl)
+    return await response.json()
+}
+
+export const fetchEventDateWithSeats = async (eventDateId) => {
+    const eventDate = await fetchEventDate(eventDateId)
+    if(!!eventDate?.requiresRegistration) {
+        const seatInfo = await fetchSeatInformation(eventDateId)
+        return {...eventDate, ...seatInfo}
+    }
+     return eventDate
 }

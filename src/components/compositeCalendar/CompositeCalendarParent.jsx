@@ -1,18 +1,20 @@
 import { CompositeCalendarContextProvider } from '../../context/CompositeCalendarContext'
 import React from 'react'
-import CompositeCalendar from './CompositeCalendar'
+import DateStripCalendar from './DateStripCalendar'
+import SearchButtonsContainer from './controlPanel/SearchButtonsContainer'
 
 /**
  * Wraps the composite calendar around a context provider.
  * @returns {JSX.Element}
  * @constructor
  */
-const CompositeCalendarParent = () => {
+const DateStripCalendarParent = () => {
     return (
         <CompositeCalendarContextProvider>
-            <CompositeCalendar />
+            <SearchButtonsContainer />
+            <DateStripCalendar />
         </CompositeCalendarContextProvider>
     )
 }
 
-export default CompositeCalendarParent
+export default DateStripCalendarParent

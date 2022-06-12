@@ -5,7 +5,7 @@ import { useQuery } from 'react-query'
 import { fetchSeatInformation } from '../../service/dataAccess'
 import CreateForm from './CreateForm'
 
-const useSeatInformation = (currentEvent) => {
+export const useSeatInformation = (currentEvent) => {
     const eventDateId = currentEvent.eventDateId ? currentEvent.eventDateId : currentEvent.dateList[0].eventDateId
     const { isLoading, error, data } = useQuery([eventDateId], () => fetchSeatInformation(
         eventDateId))
@@ -55,7 +55,9 @@ export function EventForm ({ show, setShow, currentEvent }) {
 }
 
 export const IncludeForm = ({ currentEvent, className = 'col-md-6'}) => {
+
     const { isLoading, error, data } = useSeatInformation(currentEvent)
+
     if(isLoading) {
         return <></>
     }
@@ -64,7 +66,7 @@ export const IncludeForm = ({ currentEvent, className = 'col-md-6'}) => {
     }
     return (
         <>
-            {currentEvent.requiresRegistration && <div className={className}>
+            {!!currentEvent.requiresRegistration && <div className={className}>
                 <CreateForm currentEvent={currentEvent} />
             </div>}
         </>

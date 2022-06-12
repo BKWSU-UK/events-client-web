@@ -1,7 +1,9 @@
 import { SplideSlide } from '@splidejs/react-splide'
 import React, { useContext } from 'react'
-import { useTranslation } from '../../i18n'
-import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
+import { useTranslation } from '../../../i18n'
+import CompositeCalendarContext, { DATE_ACTIONS } from '../../../context/CompositeCalendarContext'
+import EventCountDots from './EventCountDots'
+import { isBeforeToday } from '../../../utils/dateUtils'
 
 const isToday = (date) => {
     const now = new Date()
@@ -32,31 +34,34 @@ const monthMap = {
     8: 'SEP',
     9: 'OCT',
     10: 'NOV',
-    11: 'DEC'
+    11: 'DEC',
 }
 
 /**
  * Draws the date and triggers events used to fetch events.
  * @constructor
  */
-const DateSlide = ({date, i}) => {
+const DateSlide = ({ date, i, eventCount }) => {
 
     const compositeCalendarContext = useContext(CompositeCalendarContext)
     const { stateDate, dispatchDate } = compositeCalendarContext
 
-    const {t} = useTranslation();
+    const { t } = useTranslation()
     const day = date.getDate()
     const monthIndex = date.getMonth()
     const isFirst = day === 1
-    const isSelected = stateDate.selectedSingleDate?.getDate() === date?.getDate()
+    const isSelected = stateDate.selectedSingleDate?.getDate() ===
+        date?.getDate()
         && stateDate.selectedSingleDate?.getMonth() === date?.getMonth()
         && stateDate.selectedSingleDate?.getFullYear() === date?.getFullYear()
 
     const clickHandler = (e) => {
-        dispatchDate({type: DATE_ACTIONS.SELECT_SINGLE_DATE,
+        dispatchDate({
+            type: DATE_ACTIONS.SELECT_SINGLE_DATE,
             payload: {
-                selectedSingleDate: date
-            }})
+                selectedSingleDate: date,
+            },
+        })
     }
 
     return (
@@ -64,18 +69,20 @@ const DateSlide = ({date, i}) => {
                      className={`calendar-date-strip-slide 
                         ${
                          isSelected && 'calendar-date-selected' ||
-                         isToday(date) && 'calendar-date-today' || 
-                        isFirst && 'calendar-month-first'}`}
+                         isToday(date) && 'calendar-date-today' ||
+                         isBeforeToday(date) && 'calendar-date-past' ||
+                         isFirst && 'calendar-month-first'}`}
                      value={`${date.getFullYear()}-${date.getMonth()}-${day}`}
                      onClick={clickHandler}
         >
             <div
                 className="week-day">{t(
-                `weekday_${ weekDayMap[date.getDay()] }`)}</div>
+                `weekday_${weekDayMap[date.getDay()]}`)}</div>
             <div
                 className="month-day">{date.getDate()}</div>
             {isFirst && <div
                 className="month">{monthMap[monthIndex]}</div>}
+            {<EventCountDots eventCount={eventCount}/>}
         </SplideSlide>
     )
 }

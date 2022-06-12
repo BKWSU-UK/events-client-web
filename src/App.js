@@ -14,7 +14,7 @@ import { EventContextProvider } from './context/EventContext'
 import EventCalendar from './components/EventCalendar'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import EventForm from './components/EventForm'
-import CompositeCalendarParent
+import DateStripCalendarParent
     from './components/compositeCalendar/CompositeCalendarParent'
 
 // Create a client
@@ -43,7 +43,7 @@ function App ({ eventsConfig }) {
                             <EventCalendar/>
                         </Route>
                         <Route path="/composite-calendar">
-                            <CompositeCalendarParent />
+                            <DateStripCalendarParent />
                         </Route>
                         <Route path="/">
                             {eventsConfig?.showForm ?

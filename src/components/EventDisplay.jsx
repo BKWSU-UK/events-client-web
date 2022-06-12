@@ -124,8 +124,8 @@ export const eventMap = {
     10: 'Miscellaneous',
     11: 'Training',
     12: 'Power and protection',
-    13: 'Private',
-    14: 'Group session',
+    13: 'Group session',
+    14: 'Private',
     15: 'Online activity',
     16: 'BK Event',
 }
