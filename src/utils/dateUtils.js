@@ -31,20 +31,24 @@ export const dateDiff = (date, diff) => {
     return clone
 }
 
-export const dateToKey = (date) => !!date && `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
+export const dateToKey = (date) => !!date &&
+    `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
 
 export const formatHeaderDates = (date) => {
-    moment.locale(extractParameter(null,'language', 'en-US'));
+    moment.locale(extractParameter(null, 'language', 'en-US'))
     return !!date &&
-        moment(date).format('DD MMM YYYY')
+        moment(date).format('dddd, DD MMM YYYY')
 }
 
-const pad2 = (n) => !!n ? n.toString().padStart(2, "0") : ""
+const pad2 = (n) => !!n ? n.toString().padStart(2, '0') : ''
 
-export const convertDate = (d) => `${d.getFullYear()}-${pad2(d.getMonth() + 1)}-${pad2(d.getDate())}`
+export const convertMonth = (d) => `${d.getFullYear()}-${pad2(
+    d.getMonth() + 1)}`
+
+export const convertDate = (d) => `${convertMonth(d)}-${pad2(d.getDate())}`
 
 export const isBeforeToday = (date) => {
-    if(!date) {
+    if (!date) {
         return false
     }
     const now = new Date()
@@ -52,6 +56,17 @@ export const isBeforeToday = (date) => {
 }
 
 export const timeAfterNow = (timeIso, timezone = 'Europe/London') => {
-    const diff  = momentFactory(timeIso, timezone).diff(moment())
+    const diff = momentFactory(timeIso, timezone).diff(moment())
     return diff > 0
+}
+
+export function monthStartAndEnd (date)
+{
+    if (!date) {
+        return monthStartAndEnd(new Date())
+    }
+    const monthStart = new Date(date.getFullYear(), date.getMonth(), 1)
+    let monthEnd = new Date(date.getFullYear(), date.getMonth() + 1 % 12, 1, 23, 59, 59)
+    monthEnd = dateDiff(monthEnd, -1)
+    return { monthStart, monthEnd }
 }

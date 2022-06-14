@@ -1,10 +1,10 @@
-import { RenderDate } from '../readMore/ReadMore'
+import { RenderDate } from '../../readMore/ReadMore'
 import EventExtraInfo from './EventExtraInfo'
-import React, { useContext, useMemo } from 'react'
-import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
-import { useTranslation } from '../../i18n'
-import { timeAfterNow } from '../../utils/dateUtils'
-import { extractImageFromEvent } from '../../utils/imgUtils'
+import React, { useMemo } from 'react'
+import { useTranslation } from '../../../i18n'
+import { extractImageFromEvent } from '../../../utils/imgUtils'
+import { eventMap } from '../../EventDisplay'
+import OnlineNotice from './OnlineNotice'
 
 /**
  * Used to display an event date.
@@ -35,14 +35,12 @@ const EventDateImageCard = ({ ev, timeFormat, showEventDate, startAfterNow }) =>
 
     return (
         <div
-            className={`col-12 col-md-6 col-xl-4 col-xxl-3 card ${!startAfterNow && 'calendar-date-past'}`}>
+            className={`col-12 col-md-6 col-xl-3 card ${!startAfterNow && 'calendar-date-past'}`}>
             <div style={{background: `url("${heroImage}") center center / cover no-repeat`, height: "13rem"}} />
             <div className={`${(!!ev.hasWebcast || !!ev.onlineOnly) &&
             'card-online' || !ev.onlineOnly && 'card-in-person'} card-body`}>
-                {ev.hasWebcast &&
-                <div className="online-notice">{t('online')}</div>}
-                {!ev.onlineOnly && <div className="in-person-notice">{t(
-                    'online_state_In Person')}</div>}
+                <OnlineNotice ev={ev} />
+                <h6>{t(eventMap[ev?.eventTypeId])}</h6>
                 <h4><a href="#" onClick={showEventDate} id={ev.id}>{ev.name}</a>
                 </h4>
                 <div><RenderDate date={ev}

@@ -1,5 +1,5 @@
 import React, { createContext, useReducer } from 'react'
-import { dateDiff } from '../utils/dateUtils'
+import { dateDiff, monthStartAndEnd } from '../utils/dateUtils'
 
 const CompositeCalendarContext = createContext()
 
@@ -9,15 +9,24 @@ export const DATE_ACTIONS = {
     SET_PERIOD: 'SET_PERIOD',
     SET_RANGE: 'SET_RANGE',
     SELECT_SINGLE_DATE: 'SELECT_SINGLE_DATE',
+    SELECT_MONTH: 'SELECT_MONTH',
     SET_DATE_COUNTS: 'SET_DATE_COUNTS',
     SHOW_MODAL_EVENT_DATE: 'SHOW_MODAL_EVENT_DATE',
     HIDE_MODAL_EVENT_DATE: 'HIDE_MODAL_EVENT_DATE',
-    CHANGE_CARD_TYPE: 'CHANGE_CARD_TYPE'
+    CHANGE_CARD_TYPE: 'CHANGE_CARD_TYPE',
+    CHANGE_ONLINE_STATUS: 'CHANGE_ONLINE_STATUS',
 }
 
 export const CARD_TYPE = {
     LONG_CARD: 0,
-    IMAGE_CARD: 1
+    IMAGE_CARD: 1,
+    MONTH: 2,
+}
+
+export const ONLINE_STATUS = {
+    ALL: 0,
+    ONLINE: 1,
+    IN_PERSON: 2,
 }
 
 const calculateVisibleEndDate = (dateRange, visibleDateStart) =>
@@ -45,7 +54,7 @@ const dateReducer = (state, action) => {
                 endDate: endDate,
                 visibleDateStart: startDate,
                 visibleDateEnd: calculateVisibleEndDate(dateRange, startDate),
-                selectedSingleDate: now
+                selectedSingleDate: now,
             }
         }
         case DATE_ACTIONS.SET_PERIOD: {
@@ -53,7 +62,8 @@ const dateReducer = (state, action) => {
             return {
                 ...state,
                 visibleDateStart: action.payload.visibleDateStart,
-                visibleDateEnd: calculateVisibleEndDate(dateRange, action.payload.visibleDateStart)
+                visibleDateEnd: calculateVisibleEndDate(dateRange,
+                    action.payload.visibleDateStart),
             }
         }
         case DATE_ACTIONS.SET_RANGE: {
@@ -61,43 +71,70 @@ const dateReducer = (state, action) => {
             return {
                 ...state,
                 dateRange,
-                visibleDateEnd: calculateVisibleEndDate(dateRange, state.visibleDateStart)
+                visibleDateEnd: calculateVisibleEndDate(dateRange,
+                    state.visibleDateStart),
             }
         }
         case DATE_ACTIONS.SELECT_SINGLE_DATE: {
-            if(state.selectedSingleDate?.getTime() === action.payload.selectedSingleDate.getTime()) {
+            if (state.selectedSingleDate?.getTime() ===
+                action.payload.selectedSingleDate.getTime()) {
                 return {
                     ...state,
-                    selectedSingleDate: null
+                    selectedSingleDate: null,
+                }
+            }
+            if (state.cardType === CARD_TYPE.MONTH) {
+                const { monthStart, monthEnd } = monthStartAndEnd(
+                    action.payload.selectedSingleDate)
+                return {
+                    ...state,
+                    selectedSingleDate: action.payload.selectedSingleDate,
+                    visibleDateStart: monthStart,
+                    visibleDateEnd: monthEnd
                 }
             }
             return {
                 ...state,
-                selectedSingleDate: action.payload.selectedSingleDate
+                selectedSingleDate: action.payload.selectedSingleDate,
+            }
+        }
+        case DATE_ACTIONS.SELECT_MONTH: {
+            return {
+                ...state,
+                selectedSingleDate: action.payload.selectedSingleDate,
+                visibleDateStart: action.payload.selectedSingleDate,
+                visibleDateEnd: action.payload.monthEnd,
+                cardType: CARD_TYPE.MONTH,
             }
         }
         case DATE_ACTIONS.SET_DATE_COUNTS: {
             return {
                 ...state,
-                groupedCount: { ...state.groupedCount, ...action.payload.groupedCount }
+                groupedCount: { ...state.groupedCount, ...action.payload.groupedCount },
             }
         }
         case DATE_ACTIONS.SHOW_MODAL_EVENT_DATE: {
             return {
                 ...state,
-                modalEventDateId: action.payload.modalEventDateId
+                modalEventDateId: action.payload.modalEventDateId,
             }
         }
         case DATE_ACTIONS.HIDE_MODAL_EVENT_DATE: {
             return {
                 ...state,
-                modalEventDateId: null
+                modalEventDateId: null,
             }
         }
         case DATE_ACTIONS.CHANGE_CARD_TYPE: {
             return {
                 ...state,
-                cardType: action.payload.cardType
+                cardType: action.payload.cardType,
+            }
+        }
+        case DATE_ACTIONS.CHANGE_ONLINE_STATUS: {
+            return {
+                ...state,
+                onlineStatus: action.payload.onlineStatus,
             }
         }
     }
@@ -117,12 +154,13 @@ export const CompositeCalendarContextProvider = (props) => {
             selectedSingleDate: null,
             groupedCount: null,
             modalEventDateId: null,
-            cardType: CARD_TYPE.LONG_CARD
+            cardType: CARD_TYPE.LONG_CARD,
+            onlineStatus: ONLINE_STATUS.ALL,
         },
     )
     return (
         <CompositeCalendarContext.Provider value={{
-            stateDate, dispatchDate
+            stateDate, dispatchDate,
         }}>{props.children}</CompositeCalendarContext.Provider>
     )
 }

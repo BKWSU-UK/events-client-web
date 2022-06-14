@@ -1,6 +1,9 @@
-import { CompositeCalendarContextProvider } from '../../context/CompositeCalendarContext'
-import React from 'react'
-import DateStripCalendar from './DateStripCalendar'
+import CompositeCalendarContext, {
+    CARD_TYPE,
+    CompositeCalendarContextProvider,
+} from '../../context/CompositeCalendarContext'
+import React, { useContext } from 'react'
+import MultiModeCalendar from './MultiModeCalendar'
 import SearchButtonsContainer from './controlPanel/SearchButtonsContainer'
 
 /**
@@ -9,10 +12,11 @@ import SearchButtonsContainer from './controlPanel/SearchButtonsContainer'
  * @constructor
  */
 const DateStripCalendarParent = () => {
+
     return (
         <CompositeCalendarContextProvider>
             <SearchButtonsContainer />
-            <DateStripCalendar />
+            <MultiModeCalendar />
         </CompositeCalendarContextProvider>
     )
 }

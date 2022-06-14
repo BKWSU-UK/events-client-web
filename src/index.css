@@ -258,3 +258,13 @@ li > .splide__pagination__page.is-active {
     backdrop-filter: blur(5px);
 }
 
+@media (min-width: 576px) {
+    .calendar-online-status {
+        text-align: right;
+    }
+}
+
+div.rbc-toolbar > span:nth-child(1) {
+    display: none;
+}
+

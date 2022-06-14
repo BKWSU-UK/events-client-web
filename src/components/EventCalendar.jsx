@@ -24,7 +24,6 @@ import useLanguage from '../hooks/useLanguage'
  * @constructor
  */
 const EventCalendar = (props) => {
-    const { t } = useTranslation()
     const eventContext = useContext(EventContext)
     const allParams = extractEventListParameters({ ...props, ...eventContext })
     const { orgId } = allParams
@@ -32,7 +31,7 @@ const EventCalendar = (props) => {
     const [showModal, setShowModal] = useState(false)
     const [selectedEvent, setSelectedEvent] = useState(false)
 
-    useLanguage()
+    const { t } = useLanguage()
 
     const localizer = momentLocalizer(moment)
 

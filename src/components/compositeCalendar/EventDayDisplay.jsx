@@ -3,6 +3,7 @@ import EventContext from '../../context/EventContext'
 import CompositeCalendarContext, {
     CARD_TYPE,
     DATE_ACTIONS,
+    ONLINE_STATUS,
 } from '../../context/CompositeCalendarContext'
 import { useQuery } from 'react-query'
 import { dateToKey } from '../../utils/dateUtils'
@@ -10,21 +11,23 @@ import { getEventListWithGroupCount } from '../../service/dataAccess'
 import LoadingContainer from '../loading/LoadingContainer'
 import useTimeFormat from '../../hooks/useTimeFormat'
 import { useTranslation } from '../../i18n'
-import EventDateCard from './EventDateCard'
+import EventDateCard from './card/EventDateCard'
 import EventDateCardWrapper from './EventDateCardWrapper'
-import EventDateImageCard from './EventDateImageCard'
+import EventDateImageCard from './card/EventDateImageCard'
+import { DISPLAY_ONLINE_FILTER, EVENTS_LIMIT } from '../../context/appParams'
+import { ONLINE_STATUSES } from '../../context/onlineStates'
+import { updateOnlineStatus } from './adapter/onlineAdapter'
 
-const EVENTS_LIMIT = 1000
+const onlineStatusAdapter = (stateDate) => `onlineStatus:${stateDate.onlineStatus}`
 
 /**
  * Used to retrieve a single day of data.
  */
 export class SingleDateQueryAdapter {
-    constructor () {}
 
     createQueryKey = (stateDate) => {
         const date = stateDate.selectedSingleDate
-        return `${dateToKey(date)}`
+        return `${dateToKey(date)}-${onlineStatusAdapter(stateDate)}`
     }
 
     callEventList = (stateDate, eventContext) => {
@@ -34,6 +37,8 @@ export class SingleDateQueryAdapter {
             const orgId = eventsConfig.orgId
             const eventTypeIds = eventsConfig.eventTypeIds
             const eventsLang = eventsConfig.eventsLang
+            updateOnlineStatus(stateDate, eventContext)
+
             return getEventListWithGroupCount({
                 orgId,
                 eventTypeIds,
@@ -43,10 +48,10 @@ export class SingleDateQueryAdapter {
                 dateStart: date,
                 dateEnd: date,
                 useMinimal: true,
-                eventsLimit: EVENTS_LIMIT
+                eventsLimit: EVENTS_LIMIT,
             })
         }
-        return {groupedCount: {}, envList: []}
+        return { groupedCount: {}, eventList: [] }
     }
 }
 
@@ -54,12 +59,12 @@ export class SingleDateQueryAdapter {
  * Used to retrieve a single day of data.
  */
 export class MultiDateQueryAdapter {
-    constructor () {}
 
     createQueryKey = (stateDate) => {
         const startDate = stateDate.visibleDateStart
         const endDate = stateDate.visibleDateEnd
-        return `${dateToKey(startDate)}_${dateToKey(endDate)}`
+        return `${dateToKey(startDate)}_${dateToKey(
+            endDate)}-${onlineStatusAdapter(stateDate)}`
     }
 
     callEventList = (stateDate, eventContext) => {
@@ -70,6 +75,9 @@ export class MultiDateQueryAdapter {
             const orgId = eventsConfig.orgId
             const eventTypeIds = eventsConfig.eventTypeIds
             const eventsLang = eventsConfig.eventsLang
+
+            updateOnlineStatus(stateDate, eventContext)
+
             return getEventListWithGroupCount({
                 orgId,
                 eventTypeIds,
@@ -79,17 +87,17 @@ export class MultiDateQueryAdapter {
                 dateStart: startDate,
                 dateEnd: endDate,
                 useMinimal: true,
-                eventsLimit: EVENTS_LIMIT
+                eventsLimit: EVENTS_LIMIT,
             })
         }
-        return {groupedCount: {}, envList: []}
+        return { groupedCount: {}, eventList: [] }
     }
 }
 
 const DEFAULT_EVENT_LIMIT = 10
 
 /**
- * Used to display the events for a single day.
+ * Used to display the events for a single day and for a time range.
  * @constructor
  */
 const EventDateDisplay = ({ adapter }) => {
@@ -106,7 +114,10 @@ const EventDateDisplay = ({ adapter }) => {
         () => adapter.callEventList(stateDate, eventContext))
 
     useEffect(() => {
-        dispatchDate({type: DATE_ACTIONS.SET_DATE_COUNTS, payload: {groupedCount: data?.groupedCount}})
+        dispatchDate({
+            type: DATE_ACTIONS.SET_DATE_COUNTS,
+            payload: { groupedCount: data?.groupedCount },
+        })
     }, [data, eventLimit])
 
     const incrementEventLimit = (e) => {
@@ -119,27 +130,41 @@ const EventDateDisplay = ({ adapter }) => {
         setEventLimit(eventLimit - DEFAULT_EVENT_LIMIT)
     }
 
-    const envList = data?.envList?.slice(0, eventLimit)
-    const hasMore = data?.envList?.length > eventLimit
-    const hasLess = envList?.length > DEFAULT_EVENT_LIMIT
+    const eventList = data?.eventList?.slice(0, eventLimit)
+    const hasMore = data?.eventList?.length > eventLimit
+    const hasLess = eventList?.length > DEFAULT_EVENT_LIMIT
+
+    function displayMoreLess(flag, className, func, key) {
+        if(flag) {
+            return <div className={`${className}`}><a href="#" onClick={func}>{t(key)}</a></div>
+        }
+    }
 
     return (
         <>
-            <LoadingContainer data={envList} isLoading={isLoading} error={error}>
-                <div className="flex-wrap" style={{display: 'flex'}}>
-                {!!envList && envList.length > 0 && envList?.map((ev, i) => {
-                    return <EventDateCardWrapper ev={ev} timeFormat={timeFormat} key={i}>
-                        {stateDate.cardType === CARD_TYPE.LONG_CARD ? <EventDateCard/> : <EventDateImageCard />}
-                    </EventDateCardWrapper>
-                })}
+            <LoadingContainer data={eventList} isLoading={isLoading}
+                              error={error}>
+                <div className="flex-wrap" style={{ display: 'flex' }}>
+                    {!!eventList && eventList.length > 0 &&
+                    eventList?.map((ev, i) => {
+                        return <EventDateCardWrapper ev={ev}
+                                                     timeFormat={timeFormat}
+                                                     key={i}>
+                            {stateDate.cardType === CARD_TYPE.LONG_CARD ?
+                                <EventDateCard/> : <EventDateImageCard/>}
+                        </EventDateCardWrapper>
+                    })}
                 </div>
-                {!!hasLess && <div className="calendar-show-less"><a href="#" onClick={decrementEventLimit}>{t('Show less')}</a></div>}
-                {!!hasMore && <div className="calendar-show-more"><a href="#" onClick={incrementEventLimit}>{t('Show more')}</a></div>}
-                {!!envList && envList.length === 0 && !!stateDate.selectedSingleDate &&
+                {displayMoreLess(hasMore, "calendar-show-more", incrementEventLimit, 'Show more')}
+                {displayMoreLess(hasLess, "calendar-show-less", decrementEventLimit, 'Show less')}
+                {!!eventList && eventList.length === 0 &&
+                !!stateDate.selectedSingleDate &&
                 <div>{t('No events found')}</div>}
             </LoadingContainer>
         </>
     )
 }
+
+
 
 export default EventDateDisplay

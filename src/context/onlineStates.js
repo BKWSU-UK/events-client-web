@@ -3,6 +3,7 @@ export const ONLINE_STATUSES = {
     ONLINE_ONLY: "Online",
     IN_PERSON: "In Person",
     MIXED: "Mixed",
+    HAS_WEBCAST: "HasWebcast"
 }
 
 export const ONLINE_STATES = Object.values(ONLINE_STATUSES)

@@ -11,7 +11,7 @@ const eventLimit = (eventContext) => extractParameter({ ...eventContext }, 'even
 
 const onlyWebcast = (eventContext) => extractParameter({ ...eventContext }, DATA_ACCESS_PARAMS.ONLY_WEBCAST, false)
 
-const onlineOnly = (eventContext) => extractParameter({ ...eventContext }, 'onlineOnly', false)
+const onlineOnly = (eventContext) => extractParameter({ ...eventContext }, DATA_ACCESS_PARAMS.ONLINE_ONLY, false)
 
 const isPrivate = (eventContext) => extractParameter({ ...eventContext }, 'private', false)
 
@@ -40,6 +40,7 @@ const onlyWebcastAdapter = (isOnlyWebcast, targetUrl) => {
 }
 
 const processOnlineOnly = (targetUrl, eventContext) => {
+    console.log('processOnlineOnly', processOnlineOnly)
     const onlineOnlyFilter = extractParameter(eventContext, DISPLAY_ONLINE_FILTER)
     if(!onlineOnlyFilter) {
         return appendToTargetUrl(
@@ -54,10 +55,14 @@ const processOnlineOnly = (targetUrl, eventContext) => {
             case ONLINE_STATUSES.ONLINE_ONLY:
                 return appendToTargetUrl(
                     DATA_ACCESS_PARAMS.LOGICAL_YES, targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
-            case ONLINE_STATUSES.MIXED:
+            case ONLINE_STATUSES.MIXED: {
                 const targetUrl1 = appendToTargetUrl(
-                    DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
+                    DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl,
+                    DATA_ACCESS_PARAMS.ONLINE_ONLY)
                 return onlyWebcastAdapter(true, targetUrl1)
+            }
+            case ONLINE_STATUSES.HAS_WEBCAST:
+                return onlyWebcastAdapter(true, targetUrl)
         }
         return targetUrl
     }
@@ -106,9 +111,9 @@ export const targetUrlFactory = (params) => {
 }
 
 export const getEventListWithGroupCount = async (params) => {
-    const envList = await getEventList (params)
-    const groupedCount = groupByDate(envList)
-    return { groupedCount, envList }
+    const eventList = await getEventList (params)
+    const groupedCount = groupByDate(eventList)
+    return { groupedCount, eventList }
 }
 
 export const getEventList = async (params) => {
@@ -184,6 +189,7 @@ export const fetchEventDate = async (eventDateId) => {
         return null
     }
     const targetUrl = `${SERVER_BASE}/eventDateEvent/${eventDateId}?extendedData=true`
+    console.log('fetchEventDate', targetUrl)
     const response = await fetch(targetUrl)
     return await response.json()
 }

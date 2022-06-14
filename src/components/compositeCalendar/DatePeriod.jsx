@@ -11,7 +11,7 @@ const DatePeriod = () => {
     const { stateDate } = compositeCalendarContext
 
     return (
-        <div className="row">
+        <div className="row" style={{clear: 'both'}}>
             <div className="col-6">
                 <h3 className="mt-5">{formatHeaderDates(stateDate.visibleDateStart)}</h3>
             </div>

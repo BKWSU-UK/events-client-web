@@ -1,4 +1,8 @@
-import { isBeforeToday, timeAfterNow } from '../../utils/dateUtils'
+import {
+    isBeforeToday,
+    monthStartAndEnd,
+    timeAfterNow,
+} from '../../utils/dateUtils'
 
 test('when is before today should be true', () => {
     expect(isBeforeToday(new Date(2000, 1, 1))).
@@ -23,4 +27,11 @@ test('when time before now should be true', () => {
 test('when time before now should be false', () => {
     expect(timeAfterNow("1300-01-01T00:00:00")).
         toBe(false)
+})
+
+test('when month end and start should return values', () => {
+    const {monthStart, monthEnd} = monthStartAndEnd()
+    expect(monthStart).toBeTruthy()
+    expect(monthStart.getDate()).toBe(1)
+    expect(monthEnd).toBeTruthy()
 })
