@@ -9,7 +9,6 @@ import { useTranslation } from '../../../i18n'
  */
 const OnlineNotice = ({ ev }) => {
     const { t } = useTranslation()
-    console.log('OnlineNotice', ev)
     return (
         <>
             {!!ev.hasWebcast &&

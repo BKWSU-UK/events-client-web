@@ -5,36 +5,48 @@ import React, { useContext } from 'react'
  */
 import DateStrip from './dateStrip/DateStrip'
 import EventDateDisplay, {
+    MixedSingleDateQueryAdapter,
     MultiDateQueryAdapter,
-    SingleDateQueryAdapter,
+    SingleDateQueryAdapter, SingleDayQueryAdapter,
 } from './EventDayDisplay'
 import DatePeriod from './DatePeriod'
 import SingleDateTitle from './SingleDateTitle'
 import EventDateModal from './EventDateModal'
-import CompositeCalendarContext, { CARD_TYPE } from '../../context/CompositeCalendarContext'
+import CompositeCalendarContext, { CARD_TYPEUI_VIEW } from '../../context/CompositeCalendarContext'
 import ClassicCalendar from './ClassicCalendar'
+
+const renderDateComponents = (adapter) => {
+    return (
+        <>
+            <DateStrip/>
+            <SingleDateTitle/>
+            <EventDateDisplay adapter={adapter}/>
+            <EventDateModal/>
+        </>
+    )
+}
 
 const renderSwitch = (stateDate) => {
     switch (stateDate.cardType) {
-        case CARD_TYPE.LONG_CARD:
-        case CARD_TYPE.IMAGE_CARD:
+        case CARD_TYPEUI_VIEW.LONG_CARD:
+        case CARD_TYPEUI_VIEW.IMAGE_CARD:
             return (
                 <>
-                    <DateStrip/>
-                    <SingleDateTitle/>
-                    <EventDateDisplay adapter={new SingleDateQueryAdapter()}/>
+                    {renderDateComponents(new SingleDateQueryAdapter())}
                     <DatePeriod/>
                     <EventDateDisplay adapter={new MultiDateQueryAdapter()}/>
-                    <EventDateModal/>
                 </>
             )
-        case CARD_TYPE.MONTH:
+        case CARD_TYPEUI_VIEW.MONTH:
+        case CARD_TYPEUI_VIEW.WEEK:
             return (
                 <>
                     <ClassicCalendar/>
                     <EventDateModal/>
                 </>
             )
+        case CARD_TYPEUI_VIEW.DAY:
+            return renderDateComponents(new SingleDayQueryAdapter())
     }
 }
 

@@ -2,6 +2,14 @@ import React, { useContext } from 'react'
 import CompositeCalendarContext, { DATE_ACTIONS } from '../../../context/CompositeCalendarContext'
 import { convertDate, convertMonth } from '../../../utils/dateUtils'
 
+export const safeStartDate = (stateDate) => {
+    let date = stateDate.visibleDateStart || stateDate.selectedSingleDate
+    if (!date) {
+        date = new Date()
+    }
+    return date
+}
+
 /**
  * Used to select a single date.
  * @constructor
@@ -19,17 +27,13 @@ const MonthSelector = () => {
             const monthEnd = new Date(year, (month) % 12, 1)
             dispatchDate({
                 type: DATE_ACTIONS.SELECT_MONTH,
-                payload: { selectedSingleDate: targetDate, monthEnd },
+                payload: { visibleDateEnd: monthEnd, selectedSingleDate: targetDate },
             })
         }
     }
 
     const convertDateToStr = () => {
-        let date = stateDate.visibleDateStart || stateDate.selectedSingleDate
-        if (!date) {
-            date = new Date()
-        }
-        return convertMonth(date)
+        return convertMonth(safeStartDate(stateDate))
     }
 
     return (

@@ -10,6 +10,8 @@ export const DATE_ACTIONS = {
     SET_RANGE: 'SET_RANGE',
     SELECT_SINGLE_DATE: 'SELECT_SINGLE_DATE',
     SELECT_MONTH: 'SELECT_MONTH',
+    SELECT_WEEK: 'SELECT_WEEK',
+    SELECT_DAY: 'SELECT_DAY',
     SET_DATE_COUNTS: 'SET_DATE_COUNTS',
     SHOW_MODAL_EVENT_DATE: 'SHOW_MODAL_EVENT_DATE',
     HIDE_MODAL_EVENT_DATE: 'HIDE_MODAL_EVENT_DATE',
@@ -17,10 +19,18 @@ export const DATE_ACTIONS = {
     CHANGE_ONLINE_STATUS: 'CHANGE_ONLINE_STATUS',
 }
 
-export const CARD_TYPE = {
+export const CARD_TYPEUI_VIEW = {
     LONG_CARD: 0,
     IMAGE_CARD: 1,
     MONTH: 2,
+    WEEK: 3,
+    DAY: 4,
+}
+
+export const ACTION_CARD_MAP = {
+    [DATE_ACTIONS.SELECT_MONTH]: CARD_TYPEUI_VIEW.MONTH,
+    [DATE_ACTIONS.SELECT_WEEK]: CARD_TYPEUI_VIEW.WEEK,
+    [DATE_ACTIONS.SELECT_DAY]: CARD_TYPEUI_VIEW.DAY
 }
 
 export const ONLINE_STATUS = {
@@ -83,14 +93,14 @@ const dateReducer = (state, action) => {
                     selectedSingleDate: null,
                 }
             }
-            if (state.cardType === CARD_TYPE.MONTH) {
+            if (state.cardType === CARD_TYPEUI_VIEW.MONTH) {
                 const { monthStart, monthEnd } = monthStartAndEnd(
                     action.payload.selectedSingleDate)
                 return {
                     ...state,
                     selectedSingleDate: action.payload.selectedSingleDate,
                     visibleDateStart: monthStart,
-                    visibleDateEnd: monthEnd
+                    visibleDateEnd: monthEnd,
                 }
             }
             return {
@@ -98,15 +108,16 @@ const dateReducer = (state, action) => {
                 selectedSingleDate: action.payload.selectedSingleDate,
             }
         }
-        case DATE_ACTIONS.SELECT_MONTH: {
+        case DATE_ACTIONS.SELECT_MONTH:
+        case DATE_ACTIONS.SELECT_WEEK:
+        case DATE_ACTIONS.SELECT_DAY:
             return {
                 ...state,
                 selectedSingleDate: action.payload.selectedSingleDate,
                 visibleDateStart: action.payload.selectedSingleDate,
-                visibleDateEnd: action.payload.monthEnd,
-                cardType: CARD_TYPE.MONTH,
+                visibleDateEnd: action.payload.visibleDateEnd,
+                cardType: ACTION_CARD_MAP[action.type],
             }
-        }
         case DATE_ACTIONS.SET_DATE_COUNTS: {
             return {
                 ...state,
@@ -154,7 +165,7 @@ export const CompositeCalendarContextProvider = (props) => {
             selectedSingleDate: null,
             groupedCount: null,
             modalEventDateId: null,
-            cardType: CARD_TYPE.LONG_CARD,
+            cardType: CARD_TYPEUI_VIEW.LONG_CARD,
             onlineStatus: ONLINE_STATUS.ALL,
         },
     )

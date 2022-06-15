@@ -1,7 +1,7 @@
 import {
     isBeforeToday,
     monthStartAndEnd,
-    timeAfterNow,
+    timeAfterNow, weekStartAndEnd,
 } from '../../utils/dateUtils'
 
 test('when is before today should be true', () => {
@@ -34,4 +34,12 @@ test('when month end and start should return values', () => {
     expect(monthStart).toBeTruthy()
     expect(monthStart.getDate()).toBe(1)
     expect(monthEnd).toBeTruthy()
+})
+
+test('when week start and end should return values', () => {
+    const {weekStart, weenEnd} = weekStartAndEnd()
+    expect(weekStart).toBeTruthy()
+    expect(weekStart.getDay()).toBe(1)
+    expect(weenEnd).toBeTruthy()
+    expect(weenEnd.getDay()).toBe(1)
 })

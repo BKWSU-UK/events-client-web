@@ -1,15 +1,19 @@
 import useLanguage from '../../hooks/useLanguage'
 import { Calendar, momentLocalizer } from 'react-big-calendar'
 import moment from 'moment'
-import React, { useContext } from 'react'
+import React, { useContext, useRef } from 'react'
 import EventContext, { extractEventListParameters } from '../../context/EventContext'
-import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
+import CompositeCalendarContext, {
+    CARD_TYPEUI_VIEW,
+    DATE_ACTIONS,
+} from '../../context/CompositeCalendarContext'
 import { useQuery } from 'react-query'
 import { getEventList } from '../../service/dataAccess'
 import { EVENTS_LIMIT } from '../../context/appParams'
 import LoadingContainer from '../loading/LoadingContainer'
 import { convertToBigCalendar } from '../../service/calendarFactory'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
+import { safeStartDate } from './controlPanel/MonthSelector'
 
 /**
  * Displays a normal calendar.
@@ -31,6 +35,8 @@ const ClassicCalendar = ({props}) => {
 
     const { t } = useLanguage()
     const localizer = momentLocalizer(moment)
+
+    const calendarRef = useRef({})
 
     const { isLoading, error, data } = useQuery(
         [
@@ -55,8 +61,13 @@ const ClassicCalendar = ({props}) => {
             })
         })
 
-    function onNavigate() {
-        // Needed to avoid errors
+    function chooseView () {
+        switch(stateDate.cardType) {
+            case CARD_TYPEUI_VIEW.WEEK:
+                return "week"
+            default:
+                return "month"
+        }
     }
 
     function onSelectEvent(event) {
@@ -68,16 +79,23 @@ const ClassicCalendar = ({props}) => {
         })
     }
 
+    function onNavigate() {
+        // Needed to avoid errors
+    }
+
+    console.log('safeStartDate(stateDate)', safeStartDate(stateDate))
+
     return (
         <LoadingContainer data={data} isLoading={isLoading} error={error}>
             <>
                 <Calendar
-                    date={stateDate.visibleDateStart}
-                    onNavigate={onNavigate}
+                    date={safeStartDate(stateDate)}
                     localizer={localizer}
                     events={convertToBigCalendar(data)}
                     startAccessor="start"
                     endAccessor="end"
+                    defaultView={chooseView()}
+                    onNavigate={onNavigate}
                     messages={{
                         'today': t('today'),
                         'previous': t('previous'),
@@ -89,6 +107,7 @@ const ClassicCalendar = ({props}) => {
                         'more': t('More'),
                     }}
                     onSelectEvent={onSelectEvent}
+                    ref={calendarRef}
                 />
             </>
         </LoadingContainer>

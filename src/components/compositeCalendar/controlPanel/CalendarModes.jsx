@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useMemo } from 'react'
 import CompositeCalendarContext, {
-    CARD_TYPE,
+    CARD_TYPEUI_VIEW,
     DATE_ACTIONS,
 } from '../../../context/CompositeCalendarContext'
 import { useTranslation } from '../../../i18n'
-import { monthStartAndEnd } from '../../../utils/dateUtils'
+import { monthStartAndEnd, weekStartAndEnd } from '../../../utils/dateUtils'
 
 const CARD_TYPE_KEY = 'cardType'
 
@@ -32,21 +32,49 @@ export const CalendarModes = () => {
         }
     }, [])
 
-    const activateTable = () => setCardType(CARD_TYPE.IMAGE_CARD)
+    const activateTable = () => setCardType(CARD_TYPEUI_VIEW.IMAGE_CARD)
 
-    const activateAgenda = () => setCardType(CARD_TYPE.LONG_CARD)
+    const activateAgenda = () => setCardType(CARD_TYPEUI_VIEW.LONG_CARD)
 
     const activateMonth = () => {
-        const { monthStart, monthEnd } = monthStartAndEnd(stateDate.selectedSingleDate)
+        const { monthStart, monthEnd } = monthStartAndEnd(
+            stateDate.selectedSingleDate)
         dispatchDate({
             type: DATE_ACTIONS.SELECT_MONTH,
             payload: {
-                selectedSingleDate: stateDate.selectedSingleDate,
+                selectedSingleDate: monthStart,
                 visibleDateStart: monthStart,
-                visibleDateEnd: monthEnd
+                visibleDateEnd: monthEnd,
             },
         })
-        window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPE.MONTH)
+        window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.MONTH)
+    }
+
+    const activateWeek = () => {
+        const { weekStart, weenEnd } = weekStartAndEnd(
+            stateDate.selectedSingleDate)
+        dispatchDate({
+            type: DATE_ACTIONS.SELECT_WEEK,
+            payload: {
+                selectedSingleDate: weekStart,
+                visibleDateStart: weekStart,
+                visibleDateEnd: weenEnd,
+            },
+        })
+        window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.WEEK)
+    }
+
+    const activateDay = () => {
+        const uniqueDate = stateDate.selectedSingleDate || stateDate.visibleDateStart || new Date()
+        dispatchDate({
+            type: DATE_ACTIONS.SELECT_DAY,
+            payload: {
+                selectedSingleDate: uniqueDate,
+                visibleDateStart: uniqueDate,
+                visibleDateEnd: uniqueDate
+            },
+        })
+        window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.DAY)
     }
 
     const activeOnType = (cardType) => stateDate.cardType === cardType &&
@@ -54,17 +82,27 @@ export const CalendarModes = () => {
 
     const caledarModes = useMemo(() => [
         {
-            cardType: CARD_TYPE.LONG_CARD,
+            cardType: CARD_TYPEUI_VIEW.LONG_CARD,
             func: activateAgenda,
             label: 'Agenda',
         },
         {
-            cardType: CARD_TYPE.MONTH,
+            cardType: CARD_TYPEUI_VIEW.MONTH,
             func: activateMonth,
             label: 'month',
         },
         {
-            cardType: CARD_TYPE.IMAGE_CARD,
+            cardType: CARD_TYPEUI_VIEW.WEEK,
+            func: activateWeek,
+            label: 'week',
+        },
+        {
+            cardType: CARD_TYPEUI_VIEW.DAY,
+            func: activateDay,
+            label: 'day',
+        },
+        {
+            cardType: CARD_TYPEUI_VIEW.IMAGE_CARD,
             func: activateTable,
             label: 'Table',
         },

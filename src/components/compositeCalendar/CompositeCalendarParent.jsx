@@ -1,5 +1,5 @@
 import CompositeCalendarContext, {
-    CARD_TYPE,
+    CARD_TYPEUI_VIEW,
     CompositeCalendarContextProvider,
 } from '../../context/CompositeCalendarContext'
 import React, { useContext } from 'react'

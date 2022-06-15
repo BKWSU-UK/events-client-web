@@ -61,7 +61,6 @@ const DateStrip = () => {
                 return splits[0] === year.toString() && splits[1] === month.toString() &&
                     splits[2] === day.toString()
             })
-            console.log('Navigating to index', index)
             splideRef.current.go(index)
         }
     }, [stateDate.selectedSingleDate])

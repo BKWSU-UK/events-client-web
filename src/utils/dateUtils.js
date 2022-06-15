@@ -70,3 +70,20 @@ export function monthStartAndEnd (date)
     monthEnd = dateDiff(monthEnd, -1)
     return { monthStart, monthEnd }
 }
+
+const MONDAY = 1
+
+export function weekStartAndEnd (date)
+{
+    if (!date) {
+        return weekStartAndEnd(new Date())
+    }
+
+    let weekStart = dateDiff(date, 0)
+    const weekDay = -1
+    while(weekStart.getDay() !== MONDAY) {
+        weekStart = dateDiff(weekStart, -1)
+    }
+    const weenEnd = dateDiff(weekStart, 7)
+    return { weekStart, weenEnd }
+}

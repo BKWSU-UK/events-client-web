@@ -18,7 +18,13 @@ import DateStripCalendarParent
     from './components/compositeCalendar/CompositeCalendarParent'
 
 // Create a client
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            refetchOnWindowFocus: true,
+        },
+    },
+})
 
 function App ({ eventsConfig }) {
 

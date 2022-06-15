@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import CompositeCalendarContext, {
-    CARD_TYPE,
+    CARD_TYPEUI_VIEW,
     DATE_ACTIONS,
 } from '../../../context/CompositeCalendarContext'
 import { useTranslation } from '../../../i18n'
@@ -9,11 +9,14 @@ import OnlineStatusButtons from './OnlineInPerson'
 import DateSelector from './DateSelector'
 import MonthSelector from './MonthSelector'
 import TodayButton from './TodayButton'
+import WeekSelector from './WeekSelector'
 
 const switchDateSelectionType = (stateDate) => {
     switch(stateDate.cardType) {
-        case CARD_TYPE.MONTH:
+        case CARD_TYPEUI_VIEW.MONTH:
             return <MonthSelector />
+        case CARD_TYPEUI_VIEW.WEEK:
+            return <WeekSelector />
         default:
             return <DateSelector />
     }

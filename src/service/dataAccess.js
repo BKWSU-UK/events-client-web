@@ -110,7 +110,16 @@ export const targetUrlFactory = (params) => {
     return targetUrl
 }
 
+export const getCombinedEventListWithGroupCount = async (params1, params2) => {
+    const [eventList1, eventList2] = await Promise.all([getEventList (params1), getEventList (params2)])
+    const eventList = Object.values(eventList1.concat(eventList2).reduce((a, e) => {a[e.eventDateId] = e; return a}, {}))
+    console.log('getCombinedEventListWithGroupCount')
+    const groupedCount = groupByDate(eventList)
+    return { groupedCount, eventList }
+}
+
 export const getEventListWithGroupCount = async (params) => {
+    console.log('grouped count', params.marker)
     const eventList = await getEventList (params)
     const groupedCount = groupByDate(eventList)
     return { groupedCount, eventList }
@@ -188,7 +197,7 @@ export const fetchEventDate = async (eventDateId) => {
     if(!eventDateId) {
         return null
     }
-    const targetUrl = `${SERVER_BASE}/eventDateEvent/${eventDateId}?extendedData=true`
+    const targetUrl = `${SERVER_BASE}/eventDateEventExact/${eventDateId}`
     console.log('fetchEventDate', targetUrl)
     const response = await fetch(targetUrl)
     return await response.json()
