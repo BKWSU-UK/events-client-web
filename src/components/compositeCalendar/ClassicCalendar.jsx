@@ -29,6 +29,7 @@ const ClassicCalendar = ({props}) => {
     const { stateDate, dispatchDate } = useContext(CompositeCalendarContext)
     const startDate = stateDate.visibleDateStart
     const endDate = stateDate.visibleDateEnd
+    const selectedSingleDate = stateDate.selectedSingleDate
     const eventsConfig = eventContext.eventsConfig
     const eventsLang = eventsConfig.eventsLang
     const eventTypeIds = eventsConfig.eventTypeIds
@@ -43,7 +44,7 @@ const ClassicCalendar = ({props}) => {
             `eventsCalendar_${eventContext.id}`,
             orgId,
             orgIdFilter,
-            filterState,
+            selectedSingleDate,
             startDate,
             endDate,
             stateDate.onlineStatus], () => {

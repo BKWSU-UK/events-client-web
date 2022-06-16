@@ -1,7 +1,7 @@
 import {
     isBeforeToday,
     monthStartAndEnd,
-    timeAfterNow, weekStartAndEnd,
+    timeAfterNow, weekListInYears, weekStartAndEnd,
 } from '../../utils/dateUtils'
 
 test('when is before today should be true', () => {
@@ -42,4 +42,13 @@ test('when week start and end should return values', () => {
     expect(weekStart.getDay()).toBe(1)
     expect(weenEnd).toBeTruthy()
     expect(weenEnd.getDay()).toBe(1)
+})
+
+test('when week of year should return values', () => {
+    const weeks = weekListInYears(3)
+    expect(weeks).toBeTruthy()
+    expect(weeks.length).toBeGreaterThan(1)
+    for(const week of weeks) {
+        expect(week).toContain("-W")
+    }
 })

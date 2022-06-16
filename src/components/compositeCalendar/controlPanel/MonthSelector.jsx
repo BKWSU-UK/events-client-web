@@ -1,6 +1,8 @@
 import React, { useContext } from 'react'
 import CompositeCalendarContext, { DATE_ACTIONS } from '../../../context/CompositeCalendarContext'
-import { convertDate, convertMonth } from '../../../utils/dateUtils'
+import { convertMonth } from '../../../utils/dateUtils'
+import { isSafari, isFirefox } from 'react-device-detect';
+import AlternateMonthSelector from './AlternateMonthSelector'
 
 export const safeStartDate = (stateDate) => {
     let date = stateDate.visibleDateStart || stateDate.selectedSingleDate
@@ -9,6 +11,8 @@ export const safeStartDate = (stateDate) => {
     }
     return date
 }
+
+
 
 /**
  * Used to select a single date.
@@ -36,12 +40,22 @@ const MonthSelector = () => {
         return convertMonth(safeStartDate(stateDate))
     }
 
-    return (
-        <input type="month"
-               className="calendar-today btn btn-info"
-               onChange={onChangeDate}
-               value={convertDateToStr()}/>
-    )
+    const switchWidget = () => {
+        if(isSafari || isFirefox) {
+            return (
+                <AlternateMonthSelector value={convertDateToStr()} onChangeDate={onChangeDate}/>
+            )
+        } else {
+            return (
+                <input type="month"
+                       className="calendar-today btn btn-info"
+                       onChange={onChangeDate}
+                       value={convertDateToStr()}/>
+            )
+        }
+    }
+
+    return switchWidget()
 }
 
 export default MonthSelector

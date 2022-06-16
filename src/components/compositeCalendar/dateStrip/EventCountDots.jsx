@@ -16,7 +16,7 @@ const EventCountDots = ({ eventCount = 0 }) => {
     if(eventCount < EVENT_LIMIT) {
         return (
             <>
-                {[...Array(eventCount)].map((elementInArray, index) => {
+                {Array(eventCount).fill(1).map((_, index) => {
                     return (
                         <button className="event-count"
                                 key={index}>{' '}</button>

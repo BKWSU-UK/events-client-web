@@ -3,6 +3,8 @@ import CompositeCalendarContext, { DATE_ACTIONS } from '../../../context/Composi
 import moment from 'moment'
 import { dateDiff } from '../../../utils/dateUtils'
 import { safeStartDate } from './MonthSelector'
+import { isSafari, isFirefox } from 'react-device-detect';
+import AlternateWeekSelector from './AlternateWeekSelector'
 
 /**
  * Used to select the week mode.
@@ -25,7 +27,9 @@ const WeekSelector = () => {
         const date = safeStartDate(stateDate)
         return moment(date).format('GGGG[-W]WW')
     }
-
+    if(isSafari || isFirefox) {
+        return <AlternateWeekSelector value={convertDateToStr()} onChange={onChangeDate}/>
+    }
     return (
         <input type="week"
                className="calendar-today btn btn-info"

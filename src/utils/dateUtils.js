@@ -40,7 +40,7 @@ export const formatHeaderDates = (date) => {
         moment(date).format('dddd, DD MMM YYYY')
 }
 
-const pad2 = (n) => !!n ? n.toString().padStart(2, '0') : ''
+export const pad2 = (n) => !!n ? n.toString().padStart(2, '0') : ''
 
 export const convertMonth = (d) => `${d.getFullYear()}-${pad2(
     d.getMonth() + 1)}`
@@ -86,4 +86,21 @@ export function weekStartAndEnd (date)
     }
     const weenEnd = dateDiff(weekStart, 7)
     return { weekStart, weenEnd }
+}
+
+export function weekListInYears(yearsNumber) {
+    const fullYear = new Date().getFullYear()
+    return [...Array(yearsNumber).keys()].map(i => i + fullYear).flatMap((year) => {
+        let date = new Date(year, 0, 1)
+        let currentYear = year
+        const weeks = []
+        while(currentYear === year) {
+            if(date.getDay() === MONDAY) {
+                weeks.push(`${currentYear}-W${pad2(weeks.length + 1)}`)
+            }
+            date = dateDiff(date, 1)
+            currentYear = date.getFullYear()
+        }
+        return weeks
+    })
 }
