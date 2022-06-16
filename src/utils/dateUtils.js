@@ -3,6 +3,14 @@ import { extractParameter } from './paramExtraction'
 import { momentFactory } from '../components/DateWidget'
 
 export function iterateDates (startDate, endDate) {
+    let rollDate = startDate
+    const dateArray = []
+    dateArray.push(rollDate)
+    iterateDatesBase(startDate, endDate, (rollDate) => dateArray.push(rollDate))
+    return dateArray
+}
+
+export function iterateDatesBase (startDate, endDate, func) {
     console.log('iterateDates')
     if (!startDate) {
         console.error('start date needs to exist')
@@ -21,6 +29,7 @@ export function iterateDates (startDate, endDate) {
     while (rollDate < endDate) {
         rollDate = dateDiff(rollDate, 1)
         dateArray.push(rollDate)
+        func(rollDate)
     }
     return dateArray
 }

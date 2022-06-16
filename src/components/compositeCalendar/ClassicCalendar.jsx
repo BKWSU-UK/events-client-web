@@ -14,6 +14,7 @@ import LoadingContainer from '../loading/LoadingContainer'
 import { convertToBigCalendar } from '../../service/calendarFactory'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
 import { safeStartDate } from './controlPanel/MonthSelector'
+import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 
 /**
  * Displays a normal calendar.
@@ -26,13 +27,13 @@ const ClassicCalendar = ({props}) => {
     const { orgIdFilter, filterState } = eventContext
     const allParams = extractEventListParameters({ ...props, ...eventContext })
     const { orgId } = allParams
-    const { stateDate, dispatchDate } = useContext(CompositeCalendarContext)
-    const startDate = stateDate.visibleDateStart
-    const endDate = stateDate.visibleDateEnd
-    const selectedSingleDate = stateDate.selectedSingleDate
+    const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext)
+    const startDate = stateCalendar.visibleDateStart
+    const endDate = stateCalendar.visibleDateEnd
+    const selectedSingleDate = stateCalendar.selectedSingleDate
     const eventsConfig = eventContext.eventsConfig
     const eventsLang = eventsConfig.eventsLang
-    const eventTypeIds = eventsConfig.eventTypeIds
+    const eventTypeIds = eventTypeIdAdapter(stateCalendar, eventsConfig.eventTypeIds)
 
     const { t } = useLanguage()
     const localizer = momentLocalizer(moment)
@@ -47,8 +48,9 @@ const ClassicCalendar = ({props}) => {
             selectedSingleDate,
             startDate,
             endDate,
-            stateDate.onlineStatus], () => {
-            updateOnlineStatus(stateDate, eventContext)
+            stateCalendar.onlineStatus,
+            stateCalendar.categoryFilter], () => {
+            updateOnlineStatus(stateCalendar, eventContext)
             return getEventList({
                 orgId,
                 eventTypeIds,
@@ -63,7 +65,7 @@ const ClassicCalendar = ({props}) => {
         })
 
     function chooseView () {
-        switch(stateDate.cardType) {
+        switch(stateCalendar.cardType) {
             case CARD_TYPEUI_VIEW.WEEK:
                 return "week"
             default:
@@ -73,7 +75,6 @@ const ClassicCalendar = ({props}) => {
 
     function onSelectEvent(event) {
         const { original } = event
-        console.log('onSelectEvent', original)
         dispatchDate({
             type: DATE_ACTIONS.SHOW_MODAL_EVENT_DATE,
             payload: { modalEventDateId: original.eventDateId },
@@ -84,13 +85,11 @@ const ClassicCalendar = ({props}) => {
         // Needed to avoid errors
     }
 
-    console.log('safeStartDate(stateDate)', safeStartDate(stateDate))
-
     return (
         <LoadingContainer data={data} isLoading={isLoading} error={error}>
             <>
                 <Calendar
-                    date={safeStartDate(stateDate)}
+                    date={safeStartDate(stateCalendar)}
                     localizer={localizer}
                     events={convertToBigCalendar(data)}
                     startAccessor="start"

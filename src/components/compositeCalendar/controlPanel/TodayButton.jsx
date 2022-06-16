@@ -9,7 +9,7 @@ import { useTranslation } from '../../../i18n'
  */
 const TodayButton = () => {
 
-    const { stateDate, dispatchDate } = useContext(CompositeCalendarContext)
+    const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext)
     const { t } = useTranslation()
 
     const setToday = () => {

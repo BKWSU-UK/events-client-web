@@ -8,12 +8,12 @@ import { formatHeaderDates } from '../../utils/dateUtils'
  */
 const SingleDateTitle = () => {
     const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { stateDate } = compositeCalendarContext
+    const { stateCalendar } = compositeCalendarContext
 
     return (
         <div className="row">
             <div className="col-12">
-                <h3 className="mt-5">{formatHeaderDates(stateDate.selectedSingleDate)}</h3>
+                <h3 className="mt-5">{formatHeaderDates(stateCalendar.selectedSingleDate)}</h3>
             </div>
         </div>
     )

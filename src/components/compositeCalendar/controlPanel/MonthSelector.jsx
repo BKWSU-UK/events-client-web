@@ -4,8 +4,8 @@ import { convertMonth } from '../../../utils/dateUtils'
 import { isSafari, isFirefox } from 'react-device-detect';
 import AlternateMonthSelector from './AlternateMonthSelector'
 
-export const safeStartDate = (stateDate) => {
-    let date = stateDate.visibleDateStart || stateDate.selectedSingleDate
+export const safeStartDate = (stateCalendar) => {
+    let date = stateCalendar.visibleDateStart || stateCalendar.selectedSingleDate
     if (!date) {
         date = new Date()
     }
@@ -19,7 +19,7 @@ export const safeStartDate = (stateDate) => {
  * @constructor
  */
 const MonthSelector = () => {
-    const { stateDate, dispatchDate } = useContext(CompositeCalendarContext)
+    const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext)
 
     const onChangeDate = (e) => {
         const value = e.target.value
@@ -37,7 +37,7 @@ const MonthSelector = () => {
     }
 
     const convertDateToStr = () => {
-        return convertMonth(safeStartDate(stateDate))
+        return convertMonth(safeStartDate(stateCalendar))
     }
 
     const switchWidget = () => {

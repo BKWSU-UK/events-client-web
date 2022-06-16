@@ -18,6 +18,7 @@
     "react": "^17.0.2",
     "react-big-calendar": "^0.32.0",
     "react-bootstrap": "^1.0.0-beta.16",
+    "react-device-detect": "^2.2.2",
     "react-dom": "^17.0.2",
     "react-formio": "^4.2.5",
     "react-i18next": "^11.4.0",

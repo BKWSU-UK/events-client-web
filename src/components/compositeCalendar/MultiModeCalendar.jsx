@@ -5,9 +5,9 @@ import React, { useContext } from 'react'
  */
 import DateStrip from './dateStrip/DateStrip'
 import EventDateDisplay, {
-    MixedSingleDateQueryAdapter,
     MultiDateQueryAdapter,
-    SingleDateQueryAdapter, SingleDayQueryAdapter,
+    SingleDateQueryAdapter,
+    SingleDayQueryAdapter,
 } from './EventDayDisplay'
 import DatePeriod from './DatePeriod'
 import SingleDateTitle from './SingleDateTitle'
@@ -26,8 +26,8 @@ const renderDateComponents = (adapter) => {
     )
 }
 
-const renderSwitch = (stateDate) => {
-    switch (stateDate.cardType) {
+const renderSwitch = (stateCalendar) => {
+    switch (stateCalendar.cardType) {
         case CARD_TYPEUI_VIEW.LONG_CARD:
         case CARD_TYPEUI_VIEW.IMAGE_CARD:
             return (
@@ -58,11 +58,11 @@ const renderSwitch = (stateDate) => {
 const MultiModeCalendar = () => {
 
     const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { stateDate } = compositeCalendarContext
+    const { stateCalendar } = compositeCalendarContext
 
     return (
         <div className="container-fluid">
-            {renderSwitch(stateDate)}
+            {renderSwitch(stateCalendar)}
         </div>
     )
 }

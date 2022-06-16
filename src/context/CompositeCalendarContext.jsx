@@ -17,6 +17,7 @@ export const DATE_ACTIONS = {
     HIDE_MODAL_EVENT_DATE: 'HIDE_MODAL_EVENT_DATE',
     CHANGE_CARD_TYPE: 'CHANGE_CARD_TYPE',
     CHANGE_ONLINE_STATUS: 'CHANGE_ONLINE_STATUS',
+    CHANGE_CATEGORY_FILTER: 'CHANGE_CATEGORY_FILTER',
 }
 
 export const CARD_TYPEUI_VIEW = {
@@ -39,6 +40,8 @@ export const ONLINE_STATUS = {
     IN_PERSON: 2,
 }
 
+export const ALL_CATEGORIES = 0
+
 const calculateVisibleEndDate = (dateRange, visibleDateStart) =>
     !!visibleDateStart
         ? dateDiff(visibleDateStart, dateRange - 1)
@@ -53,7 +56,6 @@ const dateReducer = (state, action) => {
             }
         case DATE_ACTIONS.INIT_DATE: {
             const dateRange = state.dateRange
-            console.log('dateRange', dateRange)
             const now = new Date()
             const startDate = dateDiff(now, state.startBefore)
             const endDate = dateDiff(now, state.endAfter)
@@ -119,9 +121,12 @@ const dateReducer = (state, action) => {
                 cardType: ACTION_CARD_MAP[action.type],
             }
         case DATE_ACTIONS.SET_DATE_COUNTS: {
+            if(!action.payload.groupedCount) {
+                return state
+            }
             return {
                 ...state,
-                groupedCount: { ...state.groupedCount, ...action.payload.groupedCount },
+                groupedCount: {...action.payload.groupedCount}
             }
         }
         case DATE_ACTIONS.SHOW_MODAL_EVENT_DATE: {
@@ -148,11 +153,16 @@ const dateReducer = (state, action) => {
                 onlineStatus: action.payload.onlineStatus,
             }
         }
+        case DATE_ACTIONS.CHANGE_CATEGORY_FILTER:
+            return {
+                ...state,
+                categoryFilter: action.payload.categoryFilter
+            }
     }
 }
 
 export const CompositeCalendarContextProvider = (props) => {
-    const [stateDate, dispatchDate] = useReducer(
+    const [stateCalendar, dispatchDate] = useReducer(
         dateReducer, {
             currentDate: new Date(),
             startDate: null,
@@ -167,11 +177,12 @@ export const CompositeCalendarContextProvider = (props) => {
             modalEventDateId: null,
             cardType: CARD_TYPEUI_VIEW.LONG_CARD,
             onlineStatus: ONLINE_STATUS.ALL,
+            categoryFilter: ALL_CATEGORIES
         },
     )
     return (
         <CompositeCalendarContext.Provider value={{
-            stateDate, dispatchDate,
+            stateCalendar, dispatchDate,
         }}>{props.children}</CompositeCalendarContext.Provider>
     )
 }

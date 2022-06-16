@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { getEventList } from '../service/dataAccess'
 import { Pager } from './Pager'
 import { withRouter } from 'react-router-dom'
-import EventDisplay, { eventMap } from './EventDisplay'
+import EventDisplay from './EventDisplay'
 import FormModal from './forms/FormModal'
 import ReadMoreModal from './readMore/ReadMore'
 import GlobalFilter from './filter/GlobalFilter'
@@ -22,6 +22,7 @@ import {
     extractParameter
 } from '../utils/paramExtraction'
 import OnlineFilter from './filter/OnlineFilter'
+import { eventMap } from '../service/dataAccessConstants'
 
 function EventTableStruct ({ columns, params, show }) {
     const eventContext = useContext(EventContext)

@@ -1,7 +1,7 @@
 import React from "react";
 
-import {eventMap} from "./EventDisplay";
 import {useTranslation} from "../i18n";
+import { eventMap } from '../service/dataAccessConstants'
 
 export default function EventType({eventTypeInt}) {
     const { t } = useTranslation();

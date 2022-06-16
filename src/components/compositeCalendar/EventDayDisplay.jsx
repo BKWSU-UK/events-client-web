@@ -18,27 +18,28 @@ import EventDateCardWrapper from './EventDateCardWrapper'
 import EventDateImageCard from './card/EventDateImageCard'
 import { EVENTS_LIMIT } from '../../context/appParams'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
+import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 
-const onlineStatusAdapter = (stateDate) => `onlineStatus:${stateDate.onlineStatus}`
+const onlineStatusAdapter = (stateCalendar) => `onlineStatus:${stateCalendar.onlineStatus}`
 
 /**
  * Used to retrieve a single day of data.
  */
 export class SingleDateQueryAdapter {
 
-    createQueryKey = (stateDate) => {
-        const date = stateDate.selectedSingleDate
-        return `${dateToKey(date)}-${onlineStatusAdapter(stateDate)}`
+    createQueryKey = (stateCalendar) => {
+        const date = stateCalendar.selectedSingleDate
+        return `${dateToKey(date)}-${onlineStatusAdapter(stateCalendar)}-category_${stateCalendar.categoryFilter}`
     }
 
-    callEventList = (stateDate, eventContext) => {
-        const date = stateDate.selectedSingleDate
+    callEventList = (stateCalendar, eventContext) => {
+        const date = stateCalendar.selectedSingleDate
         if (!!date) {
             const eventsConfig = eventContext.eventsConfig
             const orgId = eventsConfig.orgId
-            const eventTypeIds = eventsConfig.eventTypeIds
+            const eventTypeIds = eventTypeIdAdapter(stateCalendar, eventsConfig.eventTypeIds)
             const eventsLang = eventsConfig.eventsLang
-            updateOnlineStatus(stateDate, eventContext)
+            updateOnlineStatus(stateCalendar, eventContext)
 
             return getEventListWithGroupCount({
                 orgId,
@@ -56,7 +57,9 @@ export class SingleDateQueryAdapter {
         return { groupedCount: {}, eventList: [] }
     }
 
-    limitResults = (eventList, stateDate) => eventList
+    updateGroupCount = () => {}
+
+    limitResults = (eventList) => eventList
 }
 
 /**
@@ -64,23 +67,23 @@ export class SingleDateQueryAdapter {
  */
 export class MultiDateQueryAdapter {
 
-    createQueryKey = (stateDate) => {
-        const startDate = stateDate.visibleDateStart
-        const endDate = stateDate.visibleDateEnd
+    createQueryKey = (stateCalendar) => {
+        const startDate = stateCalendar.visibleDateStart
+        const endDate = stateCalendar.visibleDateEnd
         return `${dateToKey(startDate)}_${dateToKey(
-            endDate)}-${onlineStatusAdapter(stateDate)}`
+            endDate)}-${onlineStatusAdapter(stateCalendar)}-category_${stateCalendar.categoryFilter}`
     }
 
-    callEventList = (stateDate, eventContext) => {
-        const startDate = stateDate.visibleDateStart
-        const endDate = stateDate.visibleDateEnd
+    callEventList = (stateCalendar, eventContext) => {
+        const startDate = stateCalendar.visibleDateStart
+        const endDate = stateCalendar.visibleDateEnd
         if (!!startDate && !!endDate) {
             const eventsConfig = eventContext.eventsConfig
             const orgId = eventsConfig.orgId
-            const eventTypeIds = eventsConfig.eventTypeIds
+            const eventTypeIds = eventTypeIdAdapter(stateCalendar, eventsConfig.eventTypeIds)
             const eventsLang = eventsConfig.eventsLang
 
-            updateOnlineStatus(stateDate, eventContext)
+            updateOnlineStatus(stateCalendar, eventContext)
 
             return getEventListWithGroupCount({
                 orgId,
@@ -97,13 +100,20 @@ export class MultiDateQueryAdapter {
         return { groupedCount: {}, eventList: [] }
     }
 
-    limitResults = (eventList, stateDate) => eventList
+    updateGroupCount = (dispatchDate, data) => {
+        dispatchDate({
+            type: DATE_ACTIONS.SET_DATE_COUNTS,
+            payload: { groupedCount: data?.groupedCount }
+        })
+    }
+
+    limitResults = (eventList) => eventList
 }
 
 export class SingleDayQueryAdapter extends MultiDateQueryAdapter {
-    limitResults = (eventList, stateDate) => {
-        console.log('SingleDayQueryAdapter', eventList, stateDate)
-        const selectedSingleDate = stateDate.selectedSingleDate
+
+    limitResults = (eventList, stateCalendar) => {
+        const selectedSingleDate = stateCalendar.selectedSingleDate
         if(!selectedSingleDate) {
             return []
         }
@@ -117,24 +127,24 @@ export class SingleDayQueryAdapter extends MultiDateQueryAdapter {
         }) || []
     }
 
-    callEventList = (stateDate, eventContext) => {
-        const startDate = stateDate.visibleDateStart
-        const endDate = stateDate.visibleDateEnd
+    callEventList = (stateCalendar, eventContext) => {
+        const startDate = stateCalendar.visibleDateStart
+        const endDate = stateCalendar.visibleDateEnd
         if (!!startDate && !!endDate) {
             const eventsConfig = eventContext.eventsConfig
             const orgId = eventsConfig.orgId
-            const eventTypeIds = eventsConfig.eventTypeIds
+            const eventTypeIds = eventTypeIdAdapter(stateCalendar, eventsConfig.eventTypeIds)
             const eventsLang = eventsConfig.eventsLang
 
-            updateOnlineStatus(stateDate, eventContext)
+            updateOnlineStatus(stateCalendar, eventContext)
             const params1 = {
                 orgId,
                 eventTypeIds,
                 eventsLang,
                 orgIdFilter: null,
                 eventContext,
-                dateStart: stateDate.selectedSingleDate,
-                dateEnd: stateDate.selectedSingleDate,
+                dateStart: stateCalendar.selectedSingleDate,
+                dateEnd: stateCalendar.selectedSingleDate,
                 useMinimal: true,
                 eventsLimit: EVENTS_LIMIT,
             }
@@ -168,19 +178,16 @@ const EventDateDisplay = ({ adapter }) => {
     const [eventLimit, setEventLimit] = useState(DEFAULT_EVENT_LIMIT)
     const eventContext = useContext(EventContext)
     const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { stateDate, dispatchDate } = compositeCalendarContext
+    const { stateCalendar, dispatchDate } = compositeCalendarContext
     const timeFormat = useTimeFormat()
 
     const { isLoading, error, data } = useQuery(
-        [adapter.createQueryKey(stateDate), stateDate.cardType],
-        () => adapter.callEventList(stateDate, eventContext))
+        [adapter.createQueryKey(stateCalendar), stateCalendar.cardType],
+        () => adapter.callEventList(stateCalendar, eventContext))
 
     useEffect(() => {
-        dispatchDate({
-            type: DATE_ACTIONS.SET_DATE_COUNTS,
-            payload: { groupedCount: data?.groupedCount },
-        })
-    }, [data, eventLimit, stateDate.cardType])
+        adapter.updateGroupCount(dispatchDate, data)
+    }, [data, eventLimit, stateCalendar.cardType])
 
     const incrementEventLimit = (e) => {
         e.preventDefault()
@@ -192,12 +199,10 @@ const EventDateDisplay = ({ adapter }) => {
         setEventLimit(eventLimit - DEFAULT_EVENT_LIMIT)
     }
 
-    let eventList = adapter.limitResults(data?.eventList, stateDate)
+    let eventList = adapter.limitResults(data?.eventList, stateCalendar)
     const hasMore = eventList?.length > eventLimit
     const hasLess = eventLimit > DEFAULT_EVENT_LIMIT
     eventList = eventList?.slice(0, eventLimit)
-
-    console.log('eventList', eventList)
 
     function displayMoreLess(flag, className, func, key) {
         if(flag) {
@@ -215,7 +220,7 @@ const EventDateDisplay = ({ adapter }) => {
                         return <EventDateCardWrapper ev={ev}
                                                      timeFormat={timeFormat}
                                                      key={i}>
-                            {[CARD_TYPEUI_VIEW.LONG_CARD, CARD_TYPEUI_VIEW.DAY].includes(stateDate.cardType)  ?
+                            {[CARD_TYPEUI_VIEW.LONG_CARD].includes(stateCalendar.cardType)  ?
                                 <EventDateCard/> : <EventDateImageCard/>}
                         </EventDateCardWrapper>
                     })}
@@ -223,7 +228,7 @@ const EventDateDisplay = ({ adapter }) => {
                 {displayMoreLess(hasMore, "calendar-show-more", incrementEventLimit, 'Show more')}
                 {displayMoreLess(hasLess, "calendar-show-less", decrementEventLimit, 'Show less')}
                 {!!eventList && eventList.length === 0 &&
-                !!stateDate.selectedSingleDate &&
+                !!stateCalendar.selectedSingleDate &&
                 <div>{t('No events found')}</div>}
             </LoadingContainer>
         </>

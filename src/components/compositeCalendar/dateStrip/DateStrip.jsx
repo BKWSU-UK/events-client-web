@@ -1,6 +1,9 @@
 import React, { useContext, useEffect, useRef } from 'react'
 import { Splide } from '@splidejs/react-splide'
-import CompositeCalendarContext, { DATE_ACTIONS } from '../../../context/CompositeCalendarContext'
+import CompositeCalendarContext, {
+    CARD_TYPEUI_VIEW,
+    DATE_ACTIONS,
+} from '../../../context/CompositeCalendarContext'
 import { convertDate, iterateDates } from '../../../utils/dateUtils'
 import DateSlide from './DateSlide'
 
@@ -44,36 +47,39 @@ const DateStrip = () => {
 
     const splideRef = useRef()
     const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { stateDate, dispatchDate } = compositeCalendarContext
+    const { stateCalendar, dispatchDate } = compositeCalendarContext
 
     useEffect(() => {
         dispatchDate({ type: DATE_ACTIONS.INIT_DATE })
-    }, [stateDate.startBefore, stateDate.endAfter])
+    }, [stateCalendar.startBefore, stateCalendar.endAfter])
 
     useEffect(() => {
-        if(!!stateDate.selectedSingleDate) {
+        if (!!stateCalendar.selectedSingleDate && stateCalendar.cardType !== CARD_TYPEUI_VIEW.DAY) {
             const index = splideRef.current.slides.findIndex(s => {
                 const splits = s.getAttribute('value').split('-')
-                const selectedSingleDate = stateDate.selectedSingleDate
+                const selectedSingleDate = stateCalendar.selectedSingleDate
                 const year = selectedSingleDate.getFullYear()
                 const month = selectedSingleDate.getMonth()
                 const day = selectedSingleDate.getDate()
-                return splits[0] === year.toString() && splits[1] === month.toString() &&
+                return splits[0] === year.toString() && splits[1] ===
+                    month.toString() &&
                     splits[2] === day.toString()
             })
             splideRef.current.go(index)
         }
-    }, [stateDate.selectedSingleDate])
+    }, [stateCalendar.selectedSingleDate, stateCalendar.categoryFilter])
 
     const onMoved = (e, newIndex) => {
-        const finalIndex = newIndex + splideRef.current.options.perPage
         const slides = splideRef.current.slides
         const dateStr = slides[newIndex].getAttribute('value')
         const dateSplits = dateStr.split('-')
         const visibleDateStart = new Date(dateSplits[0], dateSplits[1],
             dateSplits[2])
         dispatchDate(
-            { type: DATE_ACTIONS.SET_PERIOD, payload: { visibleDateStart } })
+            {
+                type: DATE_ACTIONS.SET_PERIOD,
+                payload: { visibleDateStart },
+            })
     }
 
     function onResized (splide2) {
@@ -92,14 +98,15 @@ const DateStrip = () => {
                         onMoved={onMoved}
                         onResized={onResized}
                         ref={splideRef}>
-                    {!!stateDate.startDate &&
-                    iterateDates(stateDate.startDate, stateDate.endDate).
+                    {!!stateCalendar.startDate &&
+                    iterateDates(stateCalendar.startDate,
+                        stateCalendar.endDate).
                         map((d, i) => {
                             const isoDate = convertDate(d)
                             let eventCount = 0
-                            if (!!stateDate.groupedCount &&
-                                !!stateDate.groupedCount[isoDate]) {
-                                eventCount = stateDate.groupedCount[isoDate]
+                            if (!!stateCalendar.groupedCount &&
+                                !!stateCalendar.groupedCount[isoDate]) {
+                                eventCount = stateCalendar.groupedCount[isoDate]
                             }
                             return (
                                 <DateSlide date={d} key={i}

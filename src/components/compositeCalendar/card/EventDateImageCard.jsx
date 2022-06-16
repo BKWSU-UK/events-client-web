@@ -3,8 +3,8 @@ import EventExtraInfo from './EventExtraInfo'
 import React, { useMemo } from 'react'
 import { useTranslation } from '../../../i18n'
 import { extractImageFromEvent } from '../../../utils/imgUtils'
-import { eventMap } from '../../EventDisplay'
 import OnlineNotice from './OnlineNotice'
+import { eventMap } from '../../../service/dataAccessConstants'
 
 /**
  * Used to display an event date.

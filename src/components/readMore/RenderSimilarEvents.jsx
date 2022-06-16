@@ -2,10 +2,10 @@ import React, { useContext } from 'react'
 import EventContext from '../../context/EventContext'
 import { extractParameter } from '../../utils/paramExtraction'
 import { useTranslation } from '../../i18n'
-import { eventMap } from '../EventDisplay'
 import { determineTimeFormat, momentFactory } from '../DateWidget'
 import { fetchSimilarEventList } from '../../service/dataAccess'
 import useTimeFormat from '../../hooks/useTimeFormat'
+import { eventMap } from '../../service/dataAccessConstants'
 
 const createDateStr = (dateStr, time) => `${dateStr} ${time}`.replace(/:00$/, "")
 

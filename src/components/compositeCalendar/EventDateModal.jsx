@@ -2,7 +2,6 @@ import React, { useContext } from 'react'
 import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
 import { useQuery } from 'react-query'
 import { fetchEventDateWithSeats } from '../../service/dataAccess'
-import { eventMap } from '../EventDisplay'
 import { useTranslation } from '../../i18n'
 import { RenderDate } from '../readMore/ReadMore'
 import useTimeFormat from '../../hooks/useTimeFormat'
@@ -15,6 +14,7 @@ import CreateForm from '../forms/CreateForm'
 import Venue from '../Venue'
 import { GOOGLE_MAPS_API_KEY } from '../../context/appParams'
 import { extractParameter } from '../../utils/paramExtraction'
+import { eventMap } from '../../service/dataAccessConstants'
 
 const ImageDisplay = ({ event }) => {
     const image = extractImageFromEvent(event)
@@ -151,12 +151,12 @@ const EventDateModal = () => {
     const { t } = useTranslation()
     const timeFormat = useTimeFormat()
     const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { stateDate, dispatchDate } = compositeCalendarContext
+    const { stateCalendar, dispatchDate } = compositeCalendarContext
 
-    const { isLoading, error, data } = useQuery([stateDate.modalEventDateId],
-        () => fetchEventDateWithSeats(stateDate.modalEventDateId))
+    const { isLoading, error, data } = useQuery([stateCalendar.modalEventDateId],
+        () => fetchEventDateWithSeats(stateCalendar.modalEventDateId))
 
-    const showModal = !!stateDate.modalEventDateId
+    const showModal = !!stateCalendar.modalEventDateId
 
     const hide = () => {
         dispatchDate({ type: DATE_ACTIONS.HIDE_MODAL_EVENT_DATE })
@@ -165,7 +165,7 @@ const EventDateModal = () => {
     const adaptedEventDate = eventDateAdapter(data)
 
     return (
-        stateDate.modalEventDateId &&
+        stateCalendar.modalEventDateId &&
         <div className={`modal fade ${showModal && 'show'}`} tabIndex="-1"
              style={{ display: showModal ? 'block' : 'none' }}>
 

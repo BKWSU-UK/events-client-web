@@ -14,7 +14,7 @@ const CARD_TYPE_KEY = 'cardType'
  * @constructor
  */
 export const CalendarModes = () => {
-    const { stateDate, dispatchDate } = useContext(CompositeCalendarContext)
+    const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext)
     const { t } = useTranslation()
 
     const setCardType = (cardType) => {
@@ -38,7 +38,7 @@ export const CalendarModes = () => {
 
     const activateMonth = () => {
         const { monthStart, monthEnd } = monthStartAndEnd(
-            stateDate.selectedSingleDate)
+            stateCalendar.selectedSingleDate)
         dispatchDate({
             type: DATE_ACTIONS.SELECT_MONTH,
             payload: {
@@ -52,7 +52,7 @@ export const CalendarModes = () => {
 
     const activateWeek = () => {
         const { weekStart, weenEnd } = weekStartAndEnd(
-            stateDate.selectedSingleDate)
+            stateCalendar.selectedSingleDate)
         dispatchDate({
             type: DATE_ACTIONS.SELECT_WEEK,
             payload: {
@@ -65,7 +65,7 @@ export const CalendarModes = () => {
     }
 
     const activateDay = () => {
-        const uniqueDate = stateDate.selectedSingleDate || stateDate.visibleDateStart || new Date()
+        const uniqueDate = stateCalendar.selectedSingleDate || stateCalendar.visibleDateStart || new Date()
         dispatchDate({
             type: DATE_ACTIONS.SELECT_DAY,
             payload: {
@@ -77,7 +77,7 @@ export const CalendarModes = () => {
         window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.DAY)
     }
 
-    const activeOnType = (cardType) => stateDate.cardType === cardType &&
+    const activeOnType = (cardType) => stateCalendar.cardType === cardType &&
         'active'
 
     const caledarModes = useMemo(() => [

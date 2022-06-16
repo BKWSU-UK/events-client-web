@@ -11,8 +11,8 @@ import MonthSelector from './MonthSelector'
 import TodayButton from './TodayButton'
 import WeekSelector from './WeekSelector'
 
-const switchDateSelectionType = (stateDate) => {
-    switch(stateDate.cardType) {
+const switchDateSelectionType = (stateCalendar) => {
+    switch(stateCalendar.cardType) {
         case CARD_TYPEUI_VIEW.MONTH:
             return <MonthSelector />
         case CARD_TYPEUI_VIEW.WEEK:
@@ -29,7 +29,7 @@ const switchDateSelectionType = (stateDate) => {
  */
 const SearchButtonsContainer = () => {
 
-    const { stateDate } = useContext(CompositeCalendarContext)
+    const { stateCalendar } = useContext(CompositeCalendarContext)
     const { t } = useTranslation()
 
     return (
@@ -46,7 +46,7 @@ const SearchButtonsContainer = () => {
                 <div className="col-12 col-md-6 mb-3">
                     <TodayButton />
                     {' '}
-                    {switchDateSelectionType(stateDate)}
+                    {switchDateSelectionType(stateCalendar)}
                 </div>
             </div>
         </>

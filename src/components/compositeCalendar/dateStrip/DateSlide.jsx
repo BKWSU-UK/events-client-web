@@ -44,16 +44,16 @@ const monthMap = {
 const DateSlide = ({ date, i, eventCount }) => {
 
     const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { stateDate, dispatchDate } = compositeCalendarContext
+    const { stateCalendar, dispatchDate } = compositeCalendarContext
 
     const { t } = useTranslation()
     const day = date.getDate()
     const monthIndex = date.getMonth()
     const isFirst = day === 1
-    const isSelected = stateDate.selectedSingleDate?.getDate() ===
+    const isSelected = stateCalendar.selectedSingleDate?.getDate() ===
         date?.getDate()
-        && stateDate.selectedSingleDate?.getMonth() === date?.getMonth()
-        && stateDate.selectedSingleDate?.getFullYear() === date?.getFullYear()
+        && stateCalendar.selectedSingleDate?.getMonth() === date?.getMonth()
+        && stateCalendar.selectedSingleDate?.getFullYear() === date?.getFullYear()
 
     const clickHandler = (e) => {
         dispatchDate({

@@ -7,7 +7,7 @@ import { convertDate } from '../../../utils/dateUtils'
  * @constructor
  */
 const DateSelector = () => {
-    const { stateDate, dispatchDate } = useContext(CompositeCalendarContext)
+    const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext)
 
     const onChangeDate = (e) => {
         const value = e.target.value
@@ -36,7 +36,7 @@ const DateSelector = () => {
                className="calendar-today btn btn-info"
                onChange={onChangeDate}
                value={convertDateToStr(
-                   stateDate.selectedSingleDate)}/>
+                   stateCalendar.selectedSingleDate)}/>
     )
 }
 

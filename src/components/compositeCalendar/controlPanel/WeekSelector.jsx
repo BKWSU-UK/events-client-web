@@ -11,7 +11,7 @@ import AlternateWeekSelector from './AlternateWeekSelector'
  * @constructor
  */
 const WeekSelector = () => {
-    const { stateDate, dispatchDate } = useContext(CompositeCalendarContext)
+    const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext)
 
     const onChangeDate = (e) => {
         const weekMoment = moment(e.target.value)
@@ -24,7 +24,7 @@ const WeekSelector = () => {
     }
 
     const convertDateToStr = () => {
-        const date = safeStartDate(stateDate)
+        const date = safeStartDate(stateCalendar)
         return moment(date).format('GGGG[-W]WW')
     }
     if(isSafari || isFirefox) {
