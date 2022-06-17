@@ -50,7 +50,8 @@ const ClassicCalendar = ({props}) => {
             startDate,
             endDate,
             stateCalendar.onlineStatus,
-            stateCalendar.categoryFilter], () => {
+            stateCalendar.categoryFilter,
+            stateCalendar.searchExpression], () => {
             updateOnlineStatus(stateCalendar, eventContext)
             return getEventList({
                 orgId,
@@ -62,6 +63,7 @@ const ClassicCalendar = ({props}) => {
                 dateEnd: endDate,
                 useMinimal: true,
                 eventsLimit: EVENTS_LIMIT,
+                searchExpression: stateCalendar.searchExpression
             })
         })
 

@@ -15,18 +15,18 @@ const EventCountDots = ({ eventCount = 0 }) => {
 
     if(eventCount < EVENT_LIMIT) {
         return (
-            <>
+            <div className="event-counts">
                 {Array(eventCount).fill(1).map((_, index) => {
                     return (
                         <button className="event-count"
                                 key={index}>{' '}</button>
                     )
                 })}
-            </>
+            </div>
         )
     } else {
         return (
-            <div>{eventCount} {t('events')}</div>
+            <div className="event-counts">{eventCount} {t('events')}</div>
         )
     }
 }

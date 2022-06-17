@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState, useMemo } from 'react'
 import EventContext from '../../context/EventContext'
 import CompositeCalendarContext, {
     CARD_TYPEUI_VIEW,
@@ -20,6 +20,7 @@ import { EVENTS_LIMIT } from '../../context/appParams'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
 import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
+import searchAdapter from '../../context/searchAdapter'
 
 const onlineStatusAdapter = (stateCalendar) => `onlineStatus:${stateCalendar.onlineStatus}`
 
@@ -52,7 +53,8 @@ export class SingleDateQueryAdapter {
                 dateEnd: date,
                 useMinimal: true,
                 eventsLimit: EVENTS_LIMIT,
-                marker: 'single'
+                marker: 'single',
+                searchExpression: stateCalendar.searchExpression
             })
         }
         return { groupedCount: {}, eventList: [] }
@@ -96,6 +98,7 @@ export class MultiDateQueryAdapter {
                 dateEnd: endDate,
                 useMinimal: true,
                 eventsLimit: EVENTS_LIMIT,
+                searchExpression: stateCalendar.searchExpression
             })
         }
         return { groupedCount: {}, eventList: [] }
@@ -147,7 +150,7 @@ export class SingleDayQueryAdapter extends MultiDateQueryAdapter {
                 dateStart: stateCalendar.selectedSingleDate,
                 dateEnd: stateCalendar.selectedSingleDate,
                 useMinimal: true,
-                eventsLimit: EVENTS_LIMIT,
+                eventsLimit: EVENTS_LIMIT
             }
             const params2 = {
                 orgId,
@@ -158,10 +161,10 @@ export class SingleDayQueryAdapter extends MultiDateQueryAdapter {
                 dateStart: startDate,
                 dateEnd: endDate,
                 useMinimal: true,
-                eventsLimit: EVENTS_LIMIT,
+                eventsLimit: EVENTS_LIMIT
             }
 
-            return getCombinedEventListWithGroupCount(params1, params2)
+            return getCombinedEventListWithGroupCount(params1, params2, stateCalendar.searchExpression)
         }
         return { groupedCount: {}, eventList: [] }
     }
@@ -184,7 +187,7 @@ const EventDateDisplay = ({ adapter }) => {
     const timeFormat = useTimeFormat()
 
     const { isLoading, error, data } = useQuery(
-        [adapter.createQueryKey(stateCalendar), stateCalendar.cardType, orgIdFilter],
+        [adapter.createQueryKey(stateCalendar), stateCalendar.cardType, orgIdFilter, stateCalendar.searchExpression],
         () => adapter.callEventList(stateCalendar, eventContext))
 
     useEffect(() => {
@@ -202,6 +205,7 @@ const EventDateDisplay = ({ adapter }) => {
     }
 
     let eventList = adapter.limitResults(data?.eventList, stateCalendar)
+
     const hasMore = eventList?.length > eventLimit
     const hasLess = eventLimit > DEFAULT_EVENT_LIMIT
     eventList = eventList?.slice(0, eventLimit)

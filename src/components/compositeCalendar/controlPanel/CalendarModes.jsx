@@ -80,7 +80,7 @@ export const CalendarModes = () => {
     const activeOnType = (cardType) => stateCalendar.cardType === cardType &&
         'active'
 
-    const caledarModes = useMemo(() => [
+    const calendarModes = useMemo(() => [
         {
             cardType: CARD_TYPEUI_VIEW.LONG_CARD,
             func: activateAgenda,
@@ -111,7 +111,7 @@ export const CalendarModes = () => {
 
     return (
         <>
-            {caledarModes.map((ct, i) => (
+            {calendarModes.map((ct, i) => (
                 <button key={i} type="button" data-toggle="button"
                         className={`btn btn-info ${activeOnType(ct.cardType)}`}
                         onClick={ct.func}>{t(ct.label)}</button>

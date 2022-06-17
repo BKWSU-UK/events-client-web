@@ -18,6 +18,7 @@ export const DATE_ACTIONS = {
     CHANGE_CARD_TYPE: 'CHANGE_CARD_TYPE',
     CHANGE_ONLINE_STATUS: 'CHANGE_ONLINE_STATUS',
     CHANGE_CATEGORY_FILTER: 'CHANGE_CATEGORY_FILTER',
+    SET_SEARCH_EXPRESSION: 'SET_SEARCH_EXPRESSION',
 }
 
 export const CARD_TYPEUI_VIEW = {
@@ -158,6 +159,11 @@ const dateReducer = (state, action) => {
                 ...state,
                 categoryFilter: action.payload.categoryFilter
             }
+        case DATE_ACTIONS.SET_SEARCH_EXPRESSION:
+            return {
+                ...state,
+                searchExpression: action.payload.searchExpression
+            }
     }
 }
 
@@ -177,7 +183,8 @@ export const CompositeCalendarContextProvider = (props) => {
             modalEventDateId: null,
             cardType: CARD_TYPEUI_VIEW.LONG_CARD,
             onlineStatus: ONLINE_STATUS.ALL,
-            categoryFilter: ALL_CATEGORIES
+            categoryFilter: ALL_CATEGORIES,
+            searchExpression: ''
         },
     )
     return (

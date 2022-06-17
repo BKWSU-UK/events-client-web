@@ -49,15 +49,14 @@ function App ({ eventsConfig }) {
                             <EventCalendar/>
                         </Route>
                         <Route path="/composite-calendar">
-                            <DateStripCalendarParent />
+                            <DateStripCalendarParent/>
                         </Route>
                         <Route path="/">
-                            {eventsConfig?.showForm ?
-                                <EventForm/>
-                                : eventsConfig?.showSingleEvent ?
-                                    <EventDetail/> :
-                                    eventsConfig?.showCalendar ?
-                                        <EventCalendar/> : <EventTable/>
+                            {eventsConfig?.showForm ? <EventForm/>
+                                : eventsConfig?.showSingleEvent ? <EventDetail/> :
+                                    eventsConfig?.showCalendar ? <EventCalendar/>
+                                        : eventsConfig?.showCompositeCalendar ? <DateStripCalendarParent/> :
+                                        <EventTable/>
                             }
                         </Route>
                     </Switch>

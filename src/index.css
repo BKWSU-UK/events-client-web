@@ -268,7 +268,7 @@ div.rbc-toolbar > span:nth-child(1) {
     display: none;
 }
 
-.btn.calendar-category-selector, .btn.calendar-center-selector {
+.btn.calendar-category-selector, .btn.calendar-center-selector, .btn.calendar-search-selector {
     margin-bottom: 1rem;
     margin-right: 0.25rem;
     text-align: left;

@@ -54,18 +54,20 @@ const DateStrip = () => {
     }, [stateCalendar.startBefore, stateCalendar.endAfter])
 
     useEffect(() => {
-        if (!!stateCalendar.selectedSingleDate && stateCalendar.cardType !== CARD_TYPEUI_VIEW.DAY) {
+        if (!!stateCalendar.selectedSingleDate) {
             const index = splideRef.current.slides.findIndex(s => {
                 const splits = s.getAttribute('value').split('-')
                 const selectedSingleDate = stateCalendar.selectedSingleDate
                 const year = selectedSingleDate.getFullYear()
                 const month = selectedSingleDate.getMonth()
                 const day = selectedSingleDate.getDate()
-                return splits[0] === year.toString() && splits[1] ===
-                    month.toString() &&
-                    splits[2] === day.toString()
+                const hasEventCounts = s.querySelector('.event-counts').textContent?.length > 0
+                return !hasEventCounts && splits[0] === year.toString() && splits[1] === month.toString() && splits[2] === day.toString()
             })
-            splideRef.current.go(index)
+            console.log('selectedSingleDate', index)
+            if(index > -1) {
+                splideRef.current.go(index)
+            }
         }
     }, [stateCalendar.selectedSingleDate, stateCalendar.categoryFilter])
 
