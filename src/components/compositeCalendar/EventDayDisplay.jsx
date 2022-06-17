@@ -19,6 +19,7 @@ import EventDateImageCard from './card/EventDateImageCard'
 import { EVENTS_LIMIT } from '../../context/appParams'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
 import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
+import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
 
 const onlineStatusAdapter = (stateCalendar) => `onlineStatus:${stateCalendar.onlineStatus}`
 
@@ -45,7 +46,7 @@ export class SingleDateQueryAdapter {
                 orgId,
                 eventTypeIds,
                 eventsLang,
-                orgIdFilter: null,
+                orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
                 dateStart: date,
                 dateEnd: date,
@@ -89,7 +90,7 @@ export class MultiDateQueryAdapter {
                 orgId,
                 eventTypeIds,
                 eventsLang,
-                orgIdFilter: null,
+                orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
                 dateStart: startDate,
                 dateEnd: endDate,
@@ -141,7 +142,7 @@ export class SingleDayQueryAdapter extends MultiDateQueryAdapter {
                 orgId,
                 eventTypeIds,
                 eventsLang,
-                orgIdFilter: null,
+                orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
                 dateStart: stateCalendar.selectedSingleDate,
                 dateEnd: stateCalendar.selectedSingleDate,
@@ -152,7 +153,7 @@ export class SingleDayQueryAdapter extends MultiDateQueryAdapter {
                 orgId,
                 eventTypeIds,
                 eventsLang,
-                orgIdFilter: null,
+                orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
                 dateStart: startDate,
                 dateEnd: endDate,
@@ -177,12 +178,13 @@ const EventDateDisplay = ({ adapter }) => {
     const { t } = useTranslation()
     const [eventLimit, setEventLimit] = useState(DEFAULT_EVENT_LIMIT)
     const eventContext = useContext(EventContext)
+    const {orgIdFilter} = eventContext;
     const compositeCalendarContext = useContext(CompositeCalendarContext)
     const { stateCalendar, dispatchDate } = compositeCalendarContext
     const timeFormat = useTimeFormat()
 
     const { isLoading, error, data } = useQuery(
-        [adapter.createQueryKey(stateCalendar), stateCalendar.cardType],
+        [adapter.createQueryKey(stateCalendar), stateCalendar.cardType, orgIdFilter],
         () => adapter.callEventList(stateCalendar, eventContext))
 
     useEffect(() => {

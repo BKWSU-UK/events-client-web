@@ -15,6 +15,7 @@ import { convertToBigCalendar } from '../../service/calendarFactory'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
 import { safeStartDate } from './controlPanel/MonthSelector'
 import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
+import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
 
 /**
  * Displays a normal calendar.
@@ -24,7 +25,7 @@ import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 const ClassicCalendar = ({props}) => {
 
     const eventContext = useContext(EventContext)
-    const { orgIdFilter, filterState } = eventContext
+    const { orgIdFilter } = eventContext
     const allParams = extractEventListParameters({ ...props, ...eventContext })
     const { orgId } = allParams
     const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext)
@@ -55,7 +56,7 @@ const ClassicCalendar = ({props}) => {
                 orgId,
                 eventTypeIds,
                 eventsLang,
-                orgIdFilter: null,
+                orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
                 dateStart: startDate,
                 dateEnd: endDate,

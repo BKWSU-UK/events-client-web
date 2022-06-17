@@ -268,7 +268,8 @@ div.rbc-toolbar > span:nth-child(1) {
     display: none;
 }
 
-.calendar-category-selector {
+.btn.calendar-category-selector, .btn.calendar-center-selector {
     margin-bottom: 1rem;
+    margin-right: 0.25rem;
     text-align: left;
 }

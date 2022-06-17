@@ -12,7 +12,11 @@ import { DISPLAY_ORG_FILTER } from '../../context/appParams'
  * @returns {JSX.Element}
  * @constructor
  */
-const CenterFilter = () => {
+const CenterFilter = ({
+    renderSelectOnly = false,
+    selectionClass = "form-control",
+    firstOptionText = "-- Select option --"
+}) => {
 
     const [orgInfo, setOrgInfo] = useState([])
     const eventContext = useContext(EventContext)
@@ -37,23 +41,30 @@ const CenterFilter = () => {
 
     const useOrgFilter = useMemo(() => extractParameter(eventContext, DISPLAY_ORG_FILTER), [])
 
+    const renderSelect = () => {
+        return <select id="centre-list" className={selectionClass}
+                value={orgIdFilter} onChange={changeOrgIdFilter}>
+            <option key={ALL_ORG_IDS} value={ALL_ORG_IDS}
+                    title={orgInfo.map(e => e.name).join(", ")}>{t(firstOptionText)}</option>
+            {orgInfo.map((org, i) => {
+                return <option key={i}
+                               value={org.id}>{org.name} ({org.futureCount})</option>
+            })}
+        </select>
+    }
+
+
     if(useOrgFilter) {
+        if(renderSelectOnly) {
+            return renderSelect()
+        }
         return <div className="row mt-2 mb-2 center-filter">
             <div className="col-md-12">
                 <label className="col-form-label"
                     htmlFor="centre-list">{t('Centre')}:</label>
             </div>
             <div className="col-md-12">
-                <select id="centre-list" className="form-control"
-                        value={orgIdFilter} onChange={changeOrgIdFilter}>
-                    <option key={ALL_ORG_IDS} value={ALL_ORG_IDS}
-                            title={orgInfo.map(e => e.name).join(", ")}>{t(
-                        '-- Select option --')}</option>
-                    {orgInfo.map((org, i) => {
-                        return <option key={i}
-                                       value={org.id}>{org.name} ({org.futureCount})</option>
-                    })}
-                </select>
+                {renderSelect()}
             </div>
         </div>
     } else {
