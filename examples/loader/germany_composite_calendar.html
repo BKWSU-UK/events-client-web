@@ -6,9 +6,33 @@
         #emsRoot1 .container-fluid > .row > .col-12 > h3.mt-5 {
             margin-top: 5rem !important;
         }
+        h1 {
+            margin-left: 1rem;
+        }
         .calendar-search-selector {
             margin-top: 8px;
         }
+        .splide__track {
+            max-height: 5.6rem;
+            margin-bottom: 0.5rem;
+        }
+        #emsRoot1 .btn.calendar-category-selector, #emsRoot1 .btn.calendar-center-selector, #emsRoot1 .btn.calendar-search-selector {
+            margin-bottom: 0.5rem;
+        }
+        @media (max-width: 768px) {
+            .calendar-center-selector, .calendar-category-selector {
+                max-width: 150px;
+            }
+            #emsRoot1 .container-fluid > .row > .col-12 > h3.mt-5 {
+                margin-top: 3rem !important;
+            }
+        }
+        @media (min-width: 576px) {
+            #emsRoot1 .btn.calendar-category-selector, #emsRoot1 .btn.calendar-center-selector, #emsRoot1 .btn.calendar-search-selector {
+                margin-bottom: 1.5rem;
+            }
+        }
+
     </style>
 </head>
 <body>
@@ -133,7 +157,7 @@
         }]
 </script>
 <div class="container-fluid">
-    <h1>German Composite Calendar</h1>
+    <h1>German Calendar</h1>
     <div id="emsRoot1" class="container-fluid"></div>
 </div>
 <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.32.0/starter.js"></script>
