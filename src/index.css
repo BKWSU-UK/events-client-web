@@ -274,10 +274,14 @@ div.rbc-toolbar > span:nth-child(1) {
     text-align: left;
 }
 
-@media (max-width: 768px) {
-    .btn.calendar-search-selector {
-        display: none
-    }
+.calendar-modes-mobile {
+    justify-content: left;
+    width: 100%;
+    padding: 0.3rem 0.9rem;
+}
+
+.calendar-modes-button-mobile {
+    padding: 0.5rem 0 0.5rem 0
 }
 
 .mobile-search input {
@@ -290,13 +294,19 @@ div.rbc-toolbar > span:nth-child(1) {
     margin-bottom: 0.5rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 769px) {
     .btn.search-button, .mobile-search * {
+        display: none;
+    }
+    .row.calendar-mode-status-mobile {
         display: none;
     }
 }
 
 @media (max-width: 768px) {
+    .btn.calendar-search-selector, .calendar-modes, .calendar-online-status, .row.calendar-button-row {
+        display: none
+    }
     .calendar-center-selector, .calendar-category-selector {
         max-width: 150px;
     }

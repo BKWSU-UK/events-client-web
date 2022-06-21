@@ -10,8 +10,9 @@ import DateSelector from './DateSelector'
 import MonthSelector from './MonthSelector'
 import TodayButton from './TodayButton'
 import WeekSelector from './WeekSelector'
+import CalendarModesMobile from './CalendarModesMobile'
 
-const switchDateSelectionType = (stateCalendar) => {
+export const switchDateSelectionType = (stateCalendar) => {
     switch(stateCalendar.cardType) {
         case CARD_TYPEUI_VIEW.MONTH:
             return <MonthSelector />
@@ -41,6 +42,9 @@ const SearchButtonsContainer = () => {
                 <div className="col-12 col-md-6 mb-3 calendar-online-status">
                     <OnlineStatusButtons />
                 </div>
+            </div>
+            <div className="row calendar-mode-status-mobile">
+                <CalendarModesMobile />
             </div>
             <div className="row calendar-button-row">
                 <div className="col-12 col-md-6 mb-3">

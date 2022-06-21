@@ -1,42 +1,8 @@
-import { useTranslation } from '../../../i18n'
-import React, { useContext } from 'react'
-import CompositeCalendarContext, {
-    DATE_ACTIONS,
-    ONLINE_STATUS,
-} from '../../../context/CompositeCalendarContext'
+import React from 'react'
+import { ONLINE_STATUS } from '../../../context/CompositeCalendarContext'
+import useOnlineStatus from '../../../hooks/useOnlineStatus'
 
-/**
- * Online and in person buttons. This is a filter.
- * @constructor
- */
-const OnlineStatusButtons = () => {
-
-    const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { stateCalendar, dispatchDate } = compositeCalendarContext
-    const { t } = useTranslation()
-
-    const activateOnline = () => {
-        dispatchDate({
-            type: DATE_ACTIONS.CHANGE_ONLINE_STATUS,
-            payload: {
-                onlineStatus: stateCalendar.onlineStatus === ONLINE_STATUS.ONLINE
-                    ? ONLINE_STATUS.ALL
-                    : ONLINE_STATUS.ONLINE
-            },
-        })
-    }
-
-    const activateInPerson = () => {
-        dispatchDate({
-            type: DATE_ACTIONS.CHANGE_ONLINE_STATUS,
-            payload: {
-                onlineStatus: stateCalendar.onlineStatus === ONLINE_STATUS.IN_PERSON
-                    ? ONLINE_STATUS.ALL
-                    : ONLINE_STATUS.IN_PERSON
-            },
-        })
-    }
-
+export const OnlineStatusButtonsRender = ({ stateCalendar, activateOnline, activateInPerson, t }) => {
     return (
         <>
             <button type="button" data-toggle="button"
@@ -46,7 +12,25 @@ const OnlineStatusButtons = () => {
             <button type="button" data-toggle="button"
                     className={`btn btn-info ${stateCalendar.onlineStatus ===
                     ONLINE_STATUS.IN_PERSON && 'active'}`}
-                    onClick={activateInPerson}>{t('online_state_In Person')}</button>
+                    onClick={activateInPerson}>{t(
+                'online_state_In Person')}</button>
+        </>
+    )
+}
+
+/**
+ * Online and in person buttons. This is a filter.
+ * @constructor
+ */
+const OnlineStatusButtons = () => {
+
+    const [stateCalendar, activateOnline, activateInPerson, t] = useOnlineStatus()
+
+    return (
+        <>
+            <OnlineStatusButtonsRender t={t} activateInPerson={activateInPerson}
+                                       activateOnline={activateOnline}
+                                       stateCalendar={stateCalendar} />
         </>
     )
 
