@@ -12,16 +12,17 @@ const SearchFilter = () => {
 
     const { t } = useTranslation()
     const [searchExpression, setSearchExpression] = useState('')
+    const [mobileSearchOn, setMobileSearchOn] = useState(false)
     const compositeCalendarContext = useContext(CompositeCalendarContext)
     const { stateCalendar, dispatchDate } = compositeCalendarContext
 
     useEffect(() => {
         const storedSearch = window.localStorage.getItem(KEY_SEARCH)
-        if(!!storedSearch) {
+        if (!!storedSearch) {
             setSearchExpression(storedSearch)
             dispatchDate({
                 type: DATE_ACTIONS.SET_SEARCH_EXPRESSION,
-                payload: { searchExpression: storedSearch }
+                payload: { searchExpression: storedSearch },
             })
         }
     }, [])
@@ -62,9 +63,26 @@ const SearchFilter = () => {
         setSearchExpression(emptyExpression)
         dispatchDate({
             type: DATE_ACTIONS.SET_SEARCH_EXPRESSION,
-            payload: { searchExpression: emptyExpression }
+            payload: { searchExpression: emptyExpression },
         })
         window.localStorage.setItem(KEY_SEARCH, emptyExpression)
+    }
+
+    const renderMobileSearch = () => {
+        if (mobileSearchOn) {
+            return <div className="mobile-search row">
+                <div className="col-12">
+                    <input className="form-control" type="text"
+                           value={searchExpression}
+                           onChange={onChange} onKeyDown={handleEnter}/>
+                    <button className="btn btn-primary"
+                            onClick={onSearch} disabled={!acceptedSearch()}>&#x1F50E;</button>
+                    {!!stateCalendar.searchExpression &&<button className="btn"
+                                                                onClick={onClear} disabled={!acceptedSearch()}>&#10060;</button>}
+                </div>
+            </div>
+        }
+        return <></>
     }
 
     return (
@@ -74,7 +92,11 @@ const SearchFilter = () => {
                    value={searchExpression}
                    onChange={onChange} onKeyDown={handleEnter}/>
             <button className="btn btn-primary calendar-search-selector"
-                onClick={onSearch} disabled={!acceptedSearch()}>{t('search')}</button>
+                    onClick={onSearch} disabled={!acceptedSearch()}>{t(
+                'search')}</button>
+            <button className={`btn btn-${mobileSearchOn ? 'success' : 'light'} search-button`}
+                    onClick={() => setMobileSearchOn(!mobileSearchOn)}>&#x1F50E;</button>
+            {renderMobileSearch()}
             {!!stateCalendar.searchExpression &&
             <button className="btn btn-danger calendar-search-selector"
                     onClick={onClear}>{t('clear')}</button>}
