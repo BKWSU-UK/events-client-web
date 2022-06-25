@@ -1,6 +1,6 @@
 import React, { useContext } from 'react'
 import CompositeCalendarContext, {
-    CARD_TYPEUI_VIEW,
+    CARD_TYPEUI_VIEW, CompositeCalendarContextProvider,
     DATE_ACTIONS,
 } from '../../../context/CompositeCalendarContext'
 import { useTranslation } from '../../../i18n'
@@ -11,6 +11,8 @@ import MonthSelector from './MonthSelector'
 import TodayButton from './TodayButton'
 import WeekSelector from './WeekSelector'
 import CalendarModesMobile from './CalendarModesMobile'
+import FilterPanel from '../filterPanel/FilterPanel'
+import DateAndFilter from './DateAndFilter'
 
 export const switchDateSelectionType = (stateCalendar) => {
     switch(stateCalendar.cardType) {
@@ -35,7 +37,7 @@ const SearchButtonsContainer = () => {
 
     return (
         <>
-            <div className="row">
+            <div className="row calendar-navigation-filters">
                 <div className="col-12 col-md-6 mb-3 calendar-modes">
                     <CalendarModes/>
                 </div>
@@ -46,11 +48,9 @@ const SearchButtonsContainer = () => {
             <div className="row calendar-mode-status-mobile">
                 <CalendarModesMobile />
             </div>
-            <div className="row calendar-button-row">
-                <div className="col-12 col-md-6 mb-3">
-                    <TodayButton />
-                    {' '}
-                    {switchDateSelectionType(stateCalendar)}
+            <div className="row calendar-button-row calendar-dates-other-filters">
+                <div className="col-12">
+                    <DateAndFilter />
                 </div>
             </div>
         </>

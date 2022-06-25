@@ -7,6 +7,8 @@ import useOnlineStatus from '../../../hooks/useOnlineStatus'
 import { OnlineStatusButtonsRender } from './OnlineInPerson'
 import TodayButton from './TodayButton'
 import { switchDateSelectionType } from './SearchButtonsContainer'
+import FilterPanel from '../filterPanel/FilterPanel'
+import DateAndFilter from './DateAndFilter'
 
 /**
  * Used to switch between the calendar modes.
@@ -22,7 +24,7 @@ export const CalendarModesMobile = () => {
     return (
         <>
             <div className="col-12">
-                <button className={`btn btn-${show ? 'success' : 'info'}`} onClick={() => setShow(!show)}>
+                <button className={`btn btn-${show ? 'success' : 'info'} hamburger-button`} onClick={() => setShow(!show)}>
                     <FontAwesomeIcon icon={faBars}/></button>
                 {show && (
                     <div className="float-right">
@@ -33,15 +35,13 @@ export const CalendarModesMobile = () => {
                     </div>
                 )}
             </div>
-            <div className="col-12 calendar-modes-button-mobile">
-                {show && <CalendarModesButton activeOnType={activeOnType}
+            {show && <div className="col-12 calendar-modes-button-mobile">
+                <CalendarModesButton activeOnType={activeOnType}
                                               calendarModes={calendarModes}
-                                              t={t}/>}
-            </div>
-            {show && <div className="col-12 col-md-6 mb-3">
-                <TodayButton />
-                {' '}
-                {switchDateSelectionType(stateCalendar)}
+                                              t={t}/>
+            </div>}
+            {show && <div className="col-12 calendar-dates-other-filters mb-3">
+                <DateAndFilter />
             </div>}
         </>
     )

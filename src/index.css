@@ -185,6 +185,11 @@ code {
     background-color: #f6f6f6;
 }
 
+.calendar-event-image {
+    height: 13rem;
+    cursor: pointer;
+}
+
 .calendar-date-today > .week-day {
     color: #f26e22;
 }
@@ -268,10 +273,21 @@ div.rbc-toolbar > span:nth-child(1) {
     display: none;
 }
 
+.btn.calendar-category-selector {
+    margin-left: 0.25rem;
+}
+
 .btn.calendar-category-selector, .btn.calendar-center-selector, .btn.calendar-search-selector, .btn.search-button {
-    margin-bottom: 1rem;
     margin-right: 0.25rem;
     text-align: left;
+}
+
+.calendar-dates-other-filters, .calendar-dates-other-filters > div {
+    line-height: 3rem;
+}
+
+.hamburger-button {
+    margin-bottom: 0.25rem
 }
 
 .calendar-modes-mobile {

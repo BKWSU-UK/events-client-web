@@ -14,7 +14,6 @@ const DateStripCalendarParent = () => {
     return (
         <CompositeCalendarContextProvider>
             <SearchButtonsContainer />
-            <FilterPanel />
             <MultiModeCalendar />
         </CompositeCalendarContextProvider>
     )

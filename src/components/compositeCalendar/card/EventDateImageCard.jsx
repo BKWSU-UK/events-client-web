@@ -34,21 +34,26 @@ const EventDateImageCard = ({ ev, timeFormat, showEventDate, startAfterNow }) =>
     const heroImage = useMemo(() => selectImage(), [ev.id])
 
     return (
-        <div
-            className={`col-12 col-md-6 col-xl-3 card ${!startAfterNow && 'calendar-date-past'}`}>
-            <div style={{background: `url("${heroImage}") center center / cover no-repeat`, height: "13rem"}} />
-            <div className={`${(!!ev.hasWebcast || !!ev.onlineOnly) &&
-            'card-online' || !ev.onlineOnly && 'card-in-person'} card-body`}>
-                <OnlineNotice ev={ev} />
-                <h6>{t(eventMap[ev?.eventTypeId])}</h6>
-                <h4><a href="#" onClick={showEventDate} id={ev.id}>{ev.name}</a>
-                </h4>
-                <div><RenderDate date={ev}
-                                 currentEvent={ev}
-                                 timeFormat={timeFormat}
-                                 useIcon={true}/>
+        <div className="col-12 col-md-6 col-xl-3 calendar-event-card-wrapper">
+            <div
+                className={`card ${!startAfterNow && 'calendar-date-past'}`}>
+                <div style={{
+                    background: `url("${heroImage}") center center / cover no-repeat`
+                }} className="calendar-event-image" onClick={showEventDate} />
+                <div className={`${(!!ev.hasWebcast || !!ev.onlineOnly) &&
+                'card-online' || !ev.onlineOnly && 'card-in-person'} card-body`}>
+                    <OnlineNotice ev={ev} />
+                    <h6>{t(eventMap[ev?.eventTypeId])}</h6>
+                    <h4><a href="#" onClick={showEventDate} id={ev.id}>{ev.name}</a>
+                    </h4>
+                    <EventExtraInfo currentEvent={ev}/>
+                    <div className="calendar-event-datetime">
+                        <RenderDate date={ev}
+                                     currentEvent={ev}
+                                     timeFormat={timeFormat}
+                                     useIcon={true}/>
+                    </div>
                 </div>
-                <EventExtraInfo currentEvent={ev}/>
             </div>
         </div>
     )

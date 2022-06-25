@@ -9,15 +9,13 @@ import SearchFilter from './SearchFilter'
  */
 const FilterPanel = () => {
     return (
-        <div className="row">
-            <div className="col-12">
-                <CategoryFilter/>
-                <CenterFilter renderSelectOnly={true}
-                              selectionClass="btn btn-primary calendar-center-selector"
-                              firstOptionText="All locations"/>
-                <SearchFilter/>
-            </div>
-        </div>
+        <>
+            <CategoryFilter/>
+            <CenterFilter renderSelectOnly={true}
+                          selectionClass="btn btn-primary calendar-center-selector"
+                          firstOptionText="All locations"/>
+            <SearchFilter/>
+        </>
     )
 }
 
