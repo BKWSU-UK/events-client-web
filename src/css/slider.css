@@ -1,0 +1,27 @@
+
+.splide__slide .simple-event-slide-content {
+    padding: 0.5rem;
+    overflow: hidden;
+}
+
+.event-extra-info {
+    margin-bottom: 1rem;
+}
+
+.simple-event-slide .calendar-event-type {
+    margin-top: 0.5rem;
+}
+
+.slider-nvigation {
+    text-align: right;
+    margin-bottom: 1rem;
+}
+
+.slider-nvigation > .splide__pagination__page {
+    position: relative;
+    bottom: 7px;
+}
+
+.slider-nvigation svg {
+    cursor: pointer;
+}

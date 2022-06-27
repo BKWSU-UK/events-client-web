@@ -2,9 +2,10 @@ import { RenderDate } from '../../readMore/ReadMore'
 import EventExtraInfo from './EventExtraInfo'
 import React, { useMemo } from 'react'
 import { useTranslation } from '../../../i18n'
-import { extractImageFromEvent } from '../../../utils/imgUtils'
+import { imageAdapter } from '../../../utils/imgUtils'
 import OnlineNotice from './OnlineNotice'
-import { eventMap } from '../../../service/dataAccessConstants'
+import EventCardTitle from './EventCardTitle'
+import EventTypeTitle from './EventTypeTitle'
 
 /**
  * Used to display an event date.
@@ -19,19 +20,7 @@ const EventDateImageCard = ({ ev, timeFormat, showEventDate, startAfterNow }) =>
 
     const { t } = useTranslation()
 
-    const selectImage = () => {
-        const image = extractImageFromEvent(ev)
-        if (!!image) {
-            return image
-        }
-        const randomImages = window.eventsConfig[0].randomImages
-        if(!!randomImages) {
-            return randomImages[Math.floor(Math.random() * randomImages.length)]
-        }
-        return null
-    }
-
-    const heroImage = useMemo(() => selectImage(), [ev.id])
+    const heroImage = useMemo(() => imageAdapter(ev, window.eventsConfig[0]), [ev.id])
 
     return (
         <div className="col-12 col-md-6 col-xl-3 calendar-event-card-wrapper">
@@ -43,9 +32,8 @@ const EventDateImageCard = ({ ev, timeFormat, showEventDate, startAfterNow }) =>
                 <div className={`${(!!ev.hasWebcast || !!ev.onlineOnly) &&
                 'card-online' || !ev.onlineOnly && 'card-in-person'} card-body`}>
                     <OnlineNotice ev={ev} />
-                    <h6>{t(eventMap[ev?.eventTypeId])}</h6>
-                    <h4><a href="#" onClick={showEventDate} id={ev.id}>{ev.name}</a>
-                    </h4>
+                    <EventTypeTitle ev={ev} />
+                    <EventCardTitle ev={ev} showEventDate={showEventDate} />
                     <EventExtraInfo currentEvent={ev}/>
                     <div className="calendar-event-datetime">
                         <RenderDate date={ev}

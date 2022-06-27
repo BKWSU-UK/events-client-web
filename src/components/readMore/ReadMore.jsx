@@ -49,13 +49,13 @@ export function RenderDate({date, currentEvent, timeFormat, useIcon = false}) {
 
     return (
         <div className="row" key={date.eventDateId}>
-            <div className="col-12 col-lg-8">
+            <div className="col-10">
                 &#x1f4c5; {moment(date.startIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
                 format(`Do MMMM YYYY ${timeFormat}`)}{renderEndTimeIfSameDay()}
                 <span className="time-from-now">{' '}({moment(date.startIso,
                     'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).fromNow()})</span>
             </div>
-            {startAfterNow && <div className="col-12 col-lg-4 text-right">
+            {startAfterNow && <div className="col-2 text-right">
                 {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}
             </div>}
         </div>

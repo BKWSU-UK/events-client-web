@@ -5,9 +5,6 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { CalendarModesButton } from './CalendarModes'
 import useOnlineStatus from '../../../hooks/useOnlineStatus'
 import { OnlineStatusButtonsRender } from './OnlineInPerson'
-import TodayButton from './TodayButton'
-import { switchDateSelectionType } from './SearchButtonsContainer'
-import FilterPanel from '../filterPanel/FilterPanel'
 import DateAndFilter from './DateAndFilter'
 
 /**

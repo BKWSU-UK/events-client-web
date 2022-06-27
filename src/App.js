@@ -16,6 +16,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import EventForm from './components/EventForm'
 import DateStripCalendarParent
     from './components/compositeCalendar/CompositeCalendarParent'
+import EventSlider from './components/slider/EventSlider'
+import SliderParent from './components/slider/SliderParent'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -25,6 +27,44 @@ const queryClient = new QueryClient({
         },
     },
 })
+
+const WIDGET_TYPE = {
+    TABLE: "TABLE",
+    CALENDAR: "CALENDAR",
+    SINGLE_EVENT: "SINGLE_EVENT",
+    FORM: "FORM",
+    COMPOSITE_CALENDAR: "COMPOSITE_CALENDAR",
+    SLIDER: "SLIDER"
+}
+
+const chooseComponent = (eventsConfig) => {
+    switch(eventsConfig.widgetType) {
+        case WIDGET_TYPE.TABLE:
+            return <EventTable/>
+        case WIDGET_TYPE.CALENDAR:
+            return <EventCalendar/>
+        case WIDGET_TYPE.SINGLE_EVENT:
+            return <EventDetail/>
+        case WIDGET_TYPE.FORM:
+            return <EventForm/>
+        case WIDGET_TYPE.SLIDER:
+            return <SliderParent />
+    }
+    // Legacy configurations
+    if (eventsConfig?.showForm) {
+        return <EventForm/>
+    }
+    if (eventsConfig?.showSingleEvent) {
+        return <EventDetail/>
+    }
+    if (eventsConfig?.showCalendar) {
+        return <EventCalendar/>
+    }
+    if (eventsConfig?.showCompositeCalendar) {
+        return <DateStripCalendarParent/>
+    }
+    return <EventTable/>
+}
 
 function App ({ eventsConfig }) {
 
@@ -51,13 +91,11 @@ function App ({ eventsConfig }) {
                         <Route path="/composite-calendar">
                             <DateStripCalendarParent/>
                         </Route>
+                        <Route path="/slider">
+                            <SliderParent />
+                        </Route>
                         <Route path="/">
-                            {eventsConfig?.showForm ? <EventForm/>
-                                : eventsConfig?.showSingleEvent ? <EventDetail/> :
-                                    eventsConfig?.showCalendar ? <EventCalendar/>
-                                        : eventsConfig?.showCompositeCalendar ? <DateStripCalendarParent/> :
-                                        <EventTable/>
-                            }
+                            {chooseComponent(eventsConfig)}
                         </Route>
                     </Switch>
                 </Router>

@@ -13,8 +13,7 @@ import { timeAfterNow } from '../../utils/dateUtils'
  */
 const EventDateCardWrapper = ({children, ev, timeFormat}) => {
     const { t } = useTranslation()
-    const compositeCalendarContext = useContext(CompositeCalendarContext)
-    const { dispatchDate } = compositeCalendarContext
+    const { dispatchDate } = useContext(CompositeCalendarContext)
 
     const showEventDate = (e) => {
         e.preventDefault()

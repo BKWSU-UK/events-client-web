@@ -1,9 +1,5 @@
 export const removeBadStylesFromImg = (description) => {
-    const replacedDesc = description?.replace(/(<img.+style=["'])[^"']+(["'].+>)/g, '$1width:100%$2')
-    if(description?.includes("img")) {
-        console.log('Changed desc after', replacedDesc)
-    }
-    return replacedDesc
+    return description?.replace(/(<img.+style=["'])[^"']+(["'].+>)/g, '$1width:100%$2')
 }
 
 export const extractImageFromEvent = (event) => {
@@ -12,4 +8,16 @@ export const extractImageFromEvent = (event) => {
         image = `https://events.brahmakumaris.org${image}`
     }
     return image
+}
+
+export const imageAdapter = (ev, eventsConfig) => {
+    const image = extractImageFromEvent(ev)
+    if (!!image) {
+        return image
+    }
+    const randomImages = eventsConfig.randomImages
+    if(!!randomImages) {
+        return randomImages[Math.floor(Math.random() * randomImages.length)]
+    }
+    return null
 }
