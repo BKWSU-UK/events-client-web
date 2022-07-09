@@ -220,7 +220,7 @@ const EventDateDisplay = ({ adapter }) => {
         <>
             <LoadingContainer data={eventList} isLoading={isLoading}
                               error={error}>
-                <div className="flex-wrap" style={{ display: 'flex' }}>
+                <div className="calendar-card-wrapper flex-wrap">
                     {!!eventList && eventList.length > 0 &&
                     eventList.map((ev, i) => {
                         return <EventDateCardWrapper ev={ev}

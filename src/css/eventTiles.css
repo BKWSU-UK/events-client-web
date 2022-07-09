@@ -1,0 +1,52 @@
+.tiles-grid-container-2 {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(1, 1fr);
+}
+
+.tiles-grid-2 {
+    display: grid;
+    grid-gap: 1rem;
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 2rem;
+    min-height: 10rem;
+}
+
+.tiles-grid-img {
+    /*background: url("https://res.cloudinary.com/gilf/image/upload/v1646861253/jacob_dyer_714p2_B_Hns_TM_unsplash_e6dc6b021d.jpg") center center / cover no-repeat;*/
+}
+
+@media (min-width: 1024px) {
+    .tiles-grid-container-2 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.tiles-grid-container-2 img.tiles-lead {
+    width: 100%;
+}
+
+.tiles-grid-container-2 .calendar-event-type {
+    text-align: left;
+    font-size: 1.2rem;
+}
+
+.tiles-events-image {
+    width: 100%;
+}
+
+.tiles-events-body {
+    display: grid;
+    padding: 1rem;
+}
+
+.event-location {
+    float: right;
+}
+
+.tiles-more-details {
+    clear: both;
+    margin-top: 1rem;
+}
+

@@ -16,8 +16,8 @@ import { QueryClient, QueryClientProvider } from 'react-query'
 import EventForm from './components/EventForm'
 import DateStripCalendarParent
     from './components/compositeCalendar/CompositeCalendarParent'
-import EventSlider from './components/slider/EventSlider'
 import SliderParent from './components/slider/SliderParent'
+import TilesParent from './components/tiles/TilesParent'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -34,7 +34,8 @@ const WIDGET_TYPE = {
     SINGLE_EVENT: "SINGLE_EVENT",
     FORM: "FORM",
     COMPOSITE_CALENDAR: "COMPOSITE_CALENDAR",
-    SLIDER: "SLIDER"
+    SLIDER: "SLIDER",
+    TILES: "TILES"
 }
 
 const chooseComponent = (eventsConfig) => {
@@ -47,8 +48,12 @@ const chooseComponent = (eventsConfig) => {
             return <EventDetail/>
         case WIDGET_TYPE.FORM:
             return <EventForm/>
+        case WIDGET_TYPE.COMPOSITE_CALENDAR:
+            return <DateStripCalendarParent/>
         case WIDGET_TYPE.SLIDER:
             return <SliderParent />
+        case WIDGET_TYPE.TILES:
+            return <TilesParent />
     }
     // Legacy configurations
     if (eventsConfig?.showForm) {

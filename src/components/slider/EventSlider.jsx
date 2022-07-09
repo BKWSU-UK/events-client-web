@@ -10,6 +10,7 @@ import {
     faArrowRightLong
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import useGetEventList from '../../hooks/useGetEventList'
 
 export const EVENTS_LIMIT = 30
 
@@ -53,34 +54,11 @@ const sliderOptions = {
  * @constructor
  */
 const EventSlider = () => {
-    const eventContext = useContext(EventContext)
     const [showPrevious, setShowPrevious] = useState(false)
     const [showNext, setShowNext] = useState(true)
-    const allParams = extractEventListParameters({ ...eventContext })
-    const { orgId } = allParams
-    const orgIdFilter = null
-    const eventsConfig = eventContext.eventsConfig
-    const eventsLang = eventsConfig.eventsLang
-    const eventTypeIds = eventsConfig.eventTypeIds
-
     const splideRef = useRef()
 
-    const eventContextId = eventContext.id
-
-    const { isLoading, error, data } = useQuery(
-        [
-            `eventsSlider_${eventContextId}`,
-            orgId], () => {
-            return getEventList({
-                orgId,
-                eventTypeIds,
-                eventsLang,
-                orgIdFilter,
-                eventContext,
-                useMinimal: true,
-                eventsLimit: EVENTS_LIMIT,
-            })
-        })
+    const { isLoading, error, data, eventContext, eventsConfig } = useGetEventList(EVENTS_LIMIT)
 
     const callSlide = (direction) => {
         splideRef.current.go(splideRef.current.splide.index + direction)
@@ -106,7 +84,7 @@ const EventSlider = () => {
                 <FontAwesomeIcon icon={faArrowRightLong} className="fa-2x"
                                   onClick={() => callSlide(1)} style={{opacity: showNext ? 1 : 0.5}}/>
             </div>
-            <Splide className={`event-slider-${eventContextId}`}
+            <Splide className={`event-slider-${eventContext.id}`}
                     onMoved={onMoved}
                     options={sliderOptions}
                     ref={splideRef}>

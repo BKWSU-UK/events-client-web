@@ -10,7 +10,7 @@ import RenderSimilarEvents from './RenderSimilarEvents'
 import { extractParameter } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
 import useTimeFormat from '../../hooks/useTimeFormat'
-import 'moment/locale/de';
+import 'moment/locale/de'
 import { timeAfterNow } from '../../utils/dateUtils'
 
 function convertIsoToGoogleCal (dateStr) {
@@ -20,42 +20,53 @@ function convertIsoToGoogleCal (dateStr) {
 function renderAddToGoogleCalendar (event, date, t, useIcon = false) {
     const venue = event.venue
 
-    const renderedLocation = !!venue && `&location=${encodeURI(venue.address)}` || ""
+    const renderedLocation = !!venue &&
+        `&location=${encodeURI(venue.address)}` || ''
 
     return (
         <a href={`http://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
-            event.name)}&dates=${convertIsoToGoogleCal(date.startIso)}/${convertIsoToGoogleCal(date.endIso)}&details=${encodeURI(
+            event.name)}&dates=${convertIsoToGoogleCal(
+            date.startIso)}/${convertIsoToGoogleCal(
+            date.endIso)}&details=${encodeURI(
             event.descriptionText)}${renderedLocation}&trp=false&sf=true&output=xml`}
-           target="_blank" rel="nofollow">{!useIcon && t('add-google-calendar') || <span>&#128276;</span>} </a>
+           target="_blank" rel="nofollow">{!useIcon &&
+        t('add-google-calendar') || <span>&#128276;</span>} </a>
     )
 }
 
 const DEFAULT_UPCOMING_LIMIT = 10
 
-export function RenderDate({date, currentEvent, timeFormat, useIcon = false}) {
+export function RenderDate ({
+    date, currentEvent, timeFormat, useIcon = false,
+    useCalendarIcon = true, addGoogleCalendar = true
+}) {
     const { t, langCode } = useTranslation()
 
     const renderEndTimeIfSameDay = () => {
         const startSplit = date.startIso.split('T')
         const endSplit = date.endIso.split('T')
-        if(startSplit[0] === endSplit[0]) {
-            return "-" + moment(date.endIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
-                format(`${timeFormat}`)
+        if (startSplit[0] === endSplit[0]) {
+            return '-' +
+                moment(date.endIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
+                    format(`${timeFormat}`)
         }
-        return ""
+        return ''
     }
 
     const startAfterNow = !!timeAfterNow(date.startIso)
 
     return (
         <div className="row" key={date.eventDateId}>
-            <div className="col-10">
-                &#x1f4c5; {moment(date.startIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
+            <div className="calendar-date-info col-10">
+                {useCalendarIcon && <>&#x1f4c5;</>} {moment(date.startIso,
+                'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
                 format(`Do MMMM YYYY ${timeFormat}`)}{renderEndTimeIfSameDay()}
                 <span className="time-from-now">{' '}({moment(date.startIso,
-                    'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).fromNow()})</span>
+                    'YYYY-MM-DD\'T\'hh:mm:ss').
+                    locale(langCode).
+                    fromNow()})</span>
             </div>
-            {startAfterNow && <div className="col-2 text-right">
+            {addGoogleCalendar && startAfterNow && <div className="col-2 text-right">
                 {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}
             </div>}
         </div>
@@ -90,7 +101,8 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
             <div className="card card-body bg-light">
                 {Array.isArray(dateList) ? dateList.map(date => {
                     return (
-                        <RenderDate date={date} currentEvent={currentEvent} timeFormat={timeFormat} />
+                        <RenderDate date={date} currentEvent={currentEvent}
+                                    timeFormat={timeFormat}/>
                     )
                 }) : ''}
             </div>
@@ -99,6 +111,9 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
 }
 
 export const venueFactory = (currentEvent) => {
+    if(currentEvent.venue) {
+        return {...currentEvent}
+    }
     return {
         ...currentEvent,
         venue: {
@@ -117,10 +132,11 @@ export const venueFactory = (currentEvent) => {
  * @constructor
  */
 export const ReadMore = () => {
-    const { t } = useTranslation()
+
     const { currentEvent } = useContext(EventContext)
     const dateList = currentEvent?.dateList
     const venueEvent = venueFactory(currentEvent)
+
     if (venueEvent?.venue) {
         return (
             <>
@@ -146,7 +162,7 @@ export const ReadMore = () => {
                         <ContactEmail currentEvent={venueEvent}/>
                         <RenderSimilarEvents/>
                     </div>
-                    <IncludeForm currentEvent={venueEvent} />
+                    <IncludeForm currentEvent={venueEvent}/>
                 </div>
             </>
         )
@@ -164,7 +180,9 @@ export const ContactEmail = ({ currentEvent }) => {
                 <h4 className="card-title mt-2">{t('Contact Email')}</h4>
                 <div className="card mt-2">
                     <div className="card-body bg-light">
-                        <p className="card-text">&#128231;{' '}<a href={`mailto:${contactEmail}`}>{contactEmail}</a></p>
+                        <p className="card-text">&#128231;{' '}<a
+                            href={`mailto:${contactEmail}`}>{contactEmail}</a>
+                        </p>
                     </div>
                 </div>
             </div>

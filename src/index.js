@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import './css/compositeCalendar.css';
 import './css/slider.css';
+import './css/eventTiles.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -21,8 +22,6 @@ window.eventsConfig.forEach((eventsConfig, i) => {
     ReactDOM.render(<App eventsConfig={eventsConfig}/>,
         document.getElementById(eventsConfig.rootElement));
 })
-
-console.timeEnd('Rendering time')
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.

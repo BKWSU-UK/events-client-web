@@ -19,7 +19,6 @@ import {
  * @returns {Promise<void>}
  */
 export const processReadMoreClick = async (footerInfo, setSimilarEvents, eventContext) => {
-    console.info('Processing read more click')
     const { original } = footerInfo
     const singleEventUrlTemplate = extractParameter({...eventContext}, 'singleEventUrlTemplate')
     if (singleEventUrlTemplate) {
@@ -52,8 +51,7 @@ const EventButtons = ({ footerInfo }) => {
             <button type="button" className="btn btn-info"
                     onClick={(e) => {
                         e.stopPropagation()
-                        processReadMoreClick(footerInfo, setSimilarEvents,
-                            eventContext)
+                        processReadMoreClick(footerInfo, setSimilarEvents, eventContext)
                     }}>{t(
                 'read-more')} {original.requiresRegistration ? ' ' +
                 t('and-book') : ''}</button>
@@ -80,8 +78,8 @@ const processReadMore = (footerInfo) => {
         original, setDisplayMoreAbout, setCurrentEvent, setDateList,
         setEventTableVisible, t,
     } = footerInfo
-    setDisplayMoreAbout(true)
     setCurrentEvent(original)
+    setDisplayMoreAbout(true)
     setEventTableVisible(false)
     fetchEventDateList(setDateList, original.id)
     gotoTop()

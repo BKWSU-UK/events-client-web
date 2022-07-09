@@ -34,6 +34,14 @@
     right: -0.5rem;
 }
 
+.calendar-card-wrapper {
+    display: flex;
+}
+
+.calendar-date-info {
+
+}
+
 .calendar-date-today {
     color: #f26e22;
 }

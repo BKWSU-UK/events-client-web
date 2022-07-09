@@ -30,7 +30,7 @@ function VenuePostalCodeLocality({ venuePostalCode, venueLocality, venue }) {
             <div>
                 <span className="venue-locality">{venueLocality}</span>
                 {' '}{venuePostalCodeDisplay(venuePostalCode)}
-                {' '}<span className="venue-country">({venue.country})</span>
+                {' '}<span className="venue-country">({venue.country} )</span>
             </div>
         )
     }
@@ -54,7 +54,7 @@ function venueEmail(venue) {
 }
 
 function venuePhone(venue) {
-    if (venue.phone) {
+    if (!!venue.phone && !venue.phone === 'null') {
         return (
             <div>
                 {String.fromCharCode(9742)}: <a href={`tel:${venue.phone}`}>{venue.phone}</a>
