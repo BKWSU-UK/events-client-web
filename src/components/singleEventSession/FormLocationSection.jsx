@@ -22,13 +22,13 @@ const FormLocationSection = ({ev}) => {
     return (
         <div className="row">
             {hasRegistration && <div
-                className={`col - 12 ${applyHalfCol()} calendar-details-form`}>
+                className={`col-12 ${applyHalfCol()} calendar-details-form`}>
                 <h6 className="calendar-please-register">Please register for
                     this event</h6>
                 <CreateForm currentEvent={ev}/>
             </div>}
             {hasCoordinates && <div
-                className={`col - 12 ${applyHalfCol()} calendar-details-google-map`}>
+                className={`col-12 ${applyHalfCol()} calendar-details-google-map`}>
                 <GoogleMapsDisplay event={ev} useWrapper={false}/>
             </div>}
         </div>

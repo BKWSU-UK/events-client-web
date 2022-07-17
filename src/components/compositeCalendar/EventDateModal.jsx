@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
 import { useQuery } from 'react-query'
 import { fetchEventDateWithSeats } from '../../service/dataAccess'
@@ -16,6 +16,7 @@ import { eventDateAdapter } from '../../utils/dateUtils'
 import { missesCoordinates } from '../../utils/googleCalendarUtils'
 import extractText from '../../utils/textExtraction'
 import linkifyHtml from 'linkifyjs/html'
+import { Wrapper } from '@googlemaps/react-wrapper'
 
 const ImageDisplay = ({ event }) => {
     const image = extractImageFromEvent(event)
@@ -35,12 +36,15 @@ const WebcastUrlDisplay = ({ event }) => {
     )
 }
 
-export const DescriptionDisplay = ({ event, className="" }) => {
+export const DescriptionDisplay = ({ event, className = '' }) => {
     return (
         <div className={`row mt-2 ${className}`}>
             <div className="col-12">
-                {!!event?.shortDescription && <p>{event?.shortDescription}</p> ||
-                    <div dangerouslySetInnerHTML={{__html: linkifyHtml(extractText(event?.description))}} />
+                {!!event?.shortDescription &&
+                <p>{event?.shortDescription}</p> ||
+                <div dangerouslySetInnerHTML={{
+                    __html: linkifyHtml(extractText(event?.description)),
+                }}/>
                 }
             </div>
         </div>
@@ -101,40 +105,82 @@ export const VenueDisplay = ({ event }) => {
     )
 }
 
+function MyMapComponent ({
+    center,
+    zoom,
+    children
+}) {
+    const ref = useRef()
+
+    const [map, setMap] = useState()
+
+    useEffect(() => {
+        setMap(new window.google.maps.Map(ref.current, {
+            center,
+            zoom,
+        }))
+        // remove map on unmount
+        return () => {
+            if (map) {
+                setMap(null)
+            }
+        }
+    }, [center])
+
+    return <>
+        <div ref={ref} className="googleMap"/>
+        {React.Children.map(children, (child) => {
+            if (React.isValidElement(child)) {
+                // set the map prop on the child component
+                return React.cloneElement(child, { map });
+            }
+        })}
+    </>
+}
+
+const Marker = (options) => {
+    const [marker, setMarker] = React.useState()
+
+    React.useEffect(() => {
+        if (!marker) {
+            setMarker(new window.google.maps.Marker())
+        }
+
+        // remove marker from map on unmount
+        return () => {
+            if (!!marker) {
+                marker.setMap(null)
+            }
+        }
+    }, [marker])
+    React.useEffect(() => {
+        if (!!marker) {
+            marker.setOptions(options)
+        }
+    }, [marker, options])
+    return null
+}
+
 export const GoogleMapsDisplay = ({ event, useWrapper = true }) => {
-    if (missesCoordinates(event)) {
-        return <></>
-    }
 
     const latitude = event?.simpleVenue.latitude
     const longitude = event?.simpleVenue.longitude
 
     const language = extractParameter(null, 'language', 'en-US')
-    const src = `https://www.google.com/maps/embed/v1/view?key=${GOOGLE_MAPS_API_KEY}&center=${latitude},${longitude}&zoom=18&language=${language}`
 
-    const iframe = () => {
-        return (
-            <iframe
-                width="100%"
-                height="400"
-                frameBorder="0" style={{border: 0}}
-                referrerPolicy="no-referrer-when-downgrade"
-                src={src}
-                allowFullScreen>
-            </iframe>
-        )
-    }
+    const center = { lat: parseFloat(latitude), lng: parseFloat(longitude) }
+    const zoom = 19
 
-    if(!useWrapper) {
-        return iframe()
+    if (missesCoordinates(event)) {
+        return <></>
     }
 
     return (
-        <div className="row mt-2">
-            <div className="col-12">
-                {iframe()}
-            </div>
-        </div>
+        <Wrapper apiKey={GOOGLE_MAPS_API_KEY}>
+            <MyMapComponent center={center} zoom={zoom}>
+                <Marker position={center}/>
+            </MyMapComponent>
+        </Wrapper>
     )
 }
 
@@ -149,7 +195,8 @@ const EventDateModal = () => {
     const compositeCalendarContext = useContext(CompositeCalendarContext)
     const { stateCalendar, dispatchDate } = compositeCalendarContext
 
-    const { isLoading, error, data } = useQuery([stateCalendar.modalEventDateId],
+    const { isLoading, error, data } = useQuery(
+        [stateCalendar.modalEventDateId],
         () => fetchEventDateWithSeats(stateCalendar.modalEventDateId))
 
     const showModal = !!stateCalendar.modalEventDateId
