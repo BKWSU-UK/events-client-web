@@ -2,6 +2,8 @@ import { useTranslation } from '../../i18n'
 import React, { useContext } from 'react'
 import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
 import { timeAfterNow } from '../../utils/dateUtils'
+import EventContext from '../../context/EventContext'
+import { handleShowEventDate } from '../commonActions'
 
 /**
  * Wrapper around a component that does the rendering.
@@ -12,15 +14,13 @@ import { timeAfterNow } from '../../utils/dateUtils'
  * @constructor
  */
 const EventDateCardWrapper = ({children, ev, timeFormat}) => {
+
     const { t } = useTranslation()
+    const eventContext = useContext(EventContext)
     const { dispatchDate } = useContext(CompositeCalendarContext)
 
     const showEventDate = (e) => {
-        e.preventDefault()
-        dispatchDate({
-            type: DATE_ACTIONS.SHOW_MODAL_EVENT_DATE,
-            payload: { modalEventDateId: ev.eventDateId },
-        })
+        handleShowEventDate(eventContext, ev, dispatchDate)
     }
 
     const startAfterNow = !!timeAfterNow(ev.startIso)

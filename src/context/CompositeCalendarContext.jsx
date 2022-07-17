@@ -181,7 +181,7 @@ export const CompositeCalendarContextProvider = (props) => {
             selectedSingleDate: null,
             groupedCount: null,
             modalEventDateId: null,
-            cardType: CARD_TYPEUI_VIEW.LONG_CARD,
+            cardType: CARD_TYPEUI_VIEW.IMAGE_CARD,
             onlineStatus: ONLINE_STATUS.ALL,
             categoryFilter: ALL_CATEGORIES,
             searchExpression: ''

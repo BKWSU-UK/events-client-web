@@ -18,6 +18,8 @@ import DateStripCalendarParent
     from './components/compositeCalendar/CompositeCalendarParent'
 import SliderParent from './components/slider/SliderParent'
 import TilesParent from './components/tiles/TilesParent'
+import EventSessionParent
+    from './components/singleEventSession/EventSessionParent'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -32,6 +34,7 @@ const WIDGET_TYPE = {
     TABLE: "TABLE",
     CALENDAR: "CALENDAR",
     SINGLE_EVENT: "SINGLE_EVENT",
+    SINGLE_EVENT_SESSION: "SINGLE_EVENT_SESSION",
     FORM: "FORM",
     COMPOSITE_CALENDAR: "COMPOSITE_CALENDAR",
     SLIDER: "SLIDER",
@@ -46,6 +49,8 @@ const chooseComponent = (eventsConfig) => {
             return <EventCalendar/>
         case WIDGET_TYPE.SINGLE_EVENT:
             return <EventDetail/>
+        case WIDGET_TYPE.SINGLE_EVENT_SESSION:
+            return <EventSessionParent />
         case WIDGET_TYPE.FORM:
             return <EventForm/>
         case WIDGET_TYPE.COMPOSITE_CALENDAR:
@@ -95,6 +100,9 @@ function App ({ eventsConfig }) {
                         </Route>
                         <Route path="/composite-calendar">
                             <DateStripCalendarParent/>
+                        </Route>
+                        <Route path="/single-event-session">
+                            <EventSessionParent/>
                         </Route>
                         <Route path="/slider">
                             <SliderParent />

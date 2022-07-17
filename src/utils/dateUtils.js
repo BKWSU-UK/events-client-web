@@ -113,3 +113,23 @@ export function weekListInYears(yearsNumber) {
         return weeks
     })
 }
+
+export const eventDateAdapter = (eventDate) => {
+    if (!eventDate) {
+        return null
+    }
+    return {
+        ...eventDate,
+        startIso: `${eventDate.startDate}T${eventDate.startTime}`,
+        endIso: `${eventDate.endDate}T${eventDate.endTime}`,
+    }
+}
+
+export const isSameDay = (date) => {
+    const startSplit = date.startIso.split('T')
+    const endSplit = date.endIso.split('T')
+    return startSplit[0] === endSplit[0]
+}
+
+export const renderTimeFromIso = (isoDate, langCode, timeFormat) => moment(isoDate, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
+    format(timeFormat)

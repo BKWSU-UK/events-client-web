@@ -15,7 +15,8 @@ export const imageAdapter = (ev, eventsConfig) => {
     if (!!image) {
         return image
     }
-    const randomImages = eventsConfig.randomImages
+    console.log('eventsConfig', eventsConfig)
+    const randomImages = eventsConfig.randomImages || eventsConfig.eventsConfig.randomImages
     if(!!randomImages) {
         return randomImages[Math.floor(Math.random() * randomImages.length)]
     }

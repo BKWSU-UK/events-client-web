@@ -6,6 +6,8 @@ import EventCardTitle from '../compositeCalendar/card/EventCardTitle'
 import EventExtraInfo from '../compositeCalendar/card/EventExtraInfo'
 import { RenderDate } from '../readMore/ReadMore'
 import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
+import { handleShowEventDate } from '../commonActions'
+import EventContext from '../../context/EventContext'
 
 /**
  * Used to display an event in a single slide.
@@ -14,13 +16,11 @@ import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeC
 const EventSlide = ({ event, i, eventsConfig }) => {
 
     const { dispatchDate } = useContext(CompositeCalendarContext)
+    const eventContext = useContext(EventContext)
 
     const showEventDate = (e) => {
         e.preventDefault()
-        dispatchDate({
-            type: DATE_ACTIONS.SHOW_MODAL_EVENT_DATE,
-            payload: { modalEventDateId: event.eventDateId },
-        })
+        handleShowEventDate(eventContext, event, dispatchDate)
     }
 
     const heroImage = useMemo(() => imageAdapter(event, eventsConfig),

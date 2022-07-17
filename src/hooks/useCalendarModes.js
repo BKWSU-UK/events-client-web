@@ -76,8 +76,7 @@ const useCalendarModes = () => {
         window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.DAY)
     }
 
-    const activeOnType = (cardType) => stateCalendar.cardType === cardType &&
-        'active'
+    const activeOnType = (cardType) => stateCalendar.cardType === cardType && 'active'
 
     const calendarModes = useMemo(() => [
         {

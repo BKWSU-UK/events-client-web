@@ -3,8 +3,10 @@ import useGetEventList from '../../hooks/useGetEventList'
 import LoadingContainer from '../loading/LoadingContainer'
 import useLanguage from '../../hooks/useLanguage'
 import HeroTile from './HeroTile'
-import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
+import CompositeCalendarContext from '../../context/CompositeCalendarContext'
 import SmallTile from './SmallTile'
+import EventContext from '../../context/EventContext'
+import { handleShowEventDate } from '../commonActions'
 
 const EVENTS_LIMIT = 10
 
@@ -17,13 +19,11 @@ const LIMIT = 5
 const Tiles = () => {
 
     const { dispatchDate } = useContext(CompositeCalendarContext)
+    const eventContext = useContext(EventContext)
 
     const showEventDate = (e, ev) => {
         e.preventDefault()
-        dispatchDate({
-            type: DATE_ACTIONS.SHOW_MODAL_EVENT_DATE,
-            payload: { modalEventDateId: ev.eventDateId },
-        })
+        handleShowEventDate(eventContext, ev, dispatchDate)
     }
 
     const { isLoading, error, data } = useGetEventList(

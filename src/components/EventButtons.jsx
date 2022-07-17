@@ -10,6 +10,7 @@ import EventContext from '../context/EventContext'
 import {
     extractParameter
 } from '../utils/paramExtraction'
+import { EVENT_CONFIG } from '../context/appParams'
 
 /**
  * Changes the state to display the read more screen.
@@ -20,7 +21,7 @@ import {
  */
 export const processReadMoreClick = async (footerInfo, setSimilarEvents, eventContext) => {
     const { original } = footerInfo
-    const singleEventUrlTemplate = extractParameter({...eventContext}, 'singleEventUrlTemplate')
+    const singleEventUrlTemplate = extractParameter({...eventContext}, EVENT_CONFIG.SINGLE_EVENT_URL_TEMPLATE)
     if (singleEventUrlTemplate) {
         const eventId = original.id
         window.location.href = singleEventUrlTemplate.replace(

@@ -11,26 +11,19 @@ import { extractParameter } from '../../utils/paramExtraction'
 import EventContext from '../../context/EventContext'
 import useTimeFormat from '../../hooks/useTimeFormat'
 import 'moment/locale/de'
-import { timeAfterNow } from '../../utils/dateUtils'
+import {
+    isSameDay,
+    renderTimeFromIso,
+    timeAfterNow,
+} from '../../utils/dateUtils'
+import { googleCalendarLink } from '../../utils/googleCalendarUtils'
 
-function convertIsoToGoogleCal (dateStr) {
-    return moment(dateStr, 'YYYY-MM-DD\'T\'hh:mm:ss').format('YYYYMMDDTHHmmss')
-}
-
-function renderAddToGoogleCalendar (event, date, t, useIcon = false) {
-    const venue = event.venue
-
-    const renderedLocation = !!venue &&
-        `&location=${encodeURI(venue.address)}` || ''
+function renderAddToGoogleCalendar (event, date, t, useIcon = false, linkText = 'add-google-calendar') {
 
     return (
-        <a href={`http://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
-            event.name)}&dates=${convertIsoToGoogleCal(
-            date.startIso)}/${convertIsoToGoogleCal(
-            date.endIso)}&details=${encodeURI(
-            event.descriptionText)}${renderedLocation}&trp=false&sf=true&output=xml`}
+        <a href={googleCalendarLink(event, date)}
            target="_blank" rel="nofollow">{!useIcon &&
-        t('add-google-calendar') || <span>&#128276;</span>} </a>
+        t(linkText) || <span>&#128276;</span>} </a>
     )
 }
 
@@ -43,12 +36,9 @@ export function RenderDate ({
     const { t, langCode } = useTranslation()
 
     const renderEndTimeIfSameDay = () => {
-        const startSplit = date.startIso.split('T')
-        const endSplit = date.endIso.split('T')
-        if (startSplit[0] === endSplit[0]) {
+        if (isSameDay(date)) {
             return '-' +
-                moment(date.endIso, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
-                    format(`${timeFormat}`)
+                renderTimeFromIso(date.endIso, langCode, timeFormat)
         }
         return ''
     }
@@ -61,10 +51,10 @@ export function RenderDate ({
                 {useCalendarIcon && <>&#x1f4c5;</>} {moment(date.startIso,
                 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
                 format(`Do MMMM YYYY ${timeFormat}`)}{renderEndTimeIfSameDay()}
-                <span className="time-from-now">{' '}({moment(date.startIso,
+                <span className="time-from-now">{' '}{moment(date.startIso,
                     'YYYY-MM-DD\'T\'hh:mm:ss').
                     locale(langCode).
-                    fromNow()})</span>
+                    fromNow()}</span>
             </div>
             {addGoogleCalendar && startAfterNow && <div className="col-2 text-right">
                 {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}

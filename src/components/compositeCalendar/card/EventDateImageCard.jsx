@@ -6,6 +6,7 @@ import { imageAdapter } from '../../../utils/imgUtils'
 import OnlineNotice from './OnlineNotice'
 import EventCardTitle from './EventCardTitle'
 import EventTypeTitle from './EventTypeTitle'
+import { chooseOnlineClass } from './EventDateCard'
 
 /**
  * Used to display an event date.
@@ -29,8 +30,7 @@ const EventDateImageCard = ({ ev, timeFormat, showEventDate, startAfterNow }) =>
                 <div style={{
                     background: `url("${heroImage}") center center / cover no-repeat`
                 }} className="calendar-event-image" onClick={showEventDate} />
-                <div className={`${(!!ev.hasWebcast || !!ev.onlineOnly) &&
-                'card-online' || !ev.onlineOnly && 'card-in-person'} card-body`}>
+                <div className={`${chooseOnlineClass(ev)} card-body`}>
                     <OnlineNotice ev={ev} />
                     <EventTypeTitle ev={ev} />
                     <EventCardTitle ev={ev} showEventDate={showEventDate} />

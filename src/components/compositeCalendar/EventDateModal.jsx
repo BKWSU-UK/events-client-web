@@ -5,16 +5,17 @@ import { fetchEventDateWithSeats } from '../../service/dataAccess'
 import { useTranslation } from '../../i18n'
 import { RenderDate } from '../readMore/ReadMore'
 import useTimeFormat from '../../hooks/useTimeFormat'
-import {
-    extractImageFromEvent,
-    removeBadStylesFromImg,
-} from '../../utils/imgUtils'
+import { extractImageFromEvent } from '../../utils/imgUtils'
 import LoadingContainer from '../loading/LoadingContainer'
 import CreateForm from '../forms/CreateForm'
 import Venue from '../Venue'
 import { GOOGLE_MAPS_API_KEY } from '../../context/appParams'
 import { extractParameter } from '../../utils/paramExtraction'
 import { eventMap } from '../../service/dataAccessConstants'
+import { eventDateAdapter } from '../../utils/dateUtils'
+import { missesCoordinates } from '../../utils/googleCalendarUtils'
+import extractText from '../../utils/textExtraction'
+import linkifyHtml from 'linkifyjs/html'
 
 const ImageDisplay = ({ event }) => {
     const image = extractImageFromEvent(event)
@@ -34,18 +35,13 @@ const WebcastUrlDisplay = ({ event }) => {
     )
 }
 
-const DescriptionDisplay = ({ event }) => {
-    if (event?.shortDescription) {
-        return (
-            <p>{event?.shortDescription}</p>
-        )
-    }
+export const DescriptionDisplay = ({ event, className="" }) => {
     return (
-        <div className="row mt-2">
+        <div className={`row mt-2 ${className}`}>
             <div className="col-12">
-                <div dangerouslySetInnerHTML={{
-                    __html: removeBadStylesFromImg(event?.description),
-                }}/>
+                {!!event?.shortDescription && <p>{event?.shortDescription}</p> ||
+                    <div dangerouslySetInnerHTML={{__html: linkifyHtml(extractText(event?.description))}} />
+                }
             </div>
         </div>
     )
@@ -90,7 +86,7 @@ const venueAdapter = (event) => {
     }
 }
 
-const VenueDisplay = ({ event }) => {
+export const VenueDisplay = ({ event }) => {
     const { venue, venueName, venueAddress, venuePostalCode, venueLocality } =
         venueAdapter(event)
     return (
@@ -105,41 +101,41 @@ const VenueDisplay = ({ event }) => {
     )
 }
 
-const GoogleMapsDisplay = ({ event }) => {
-    const latitude = event?.simpleVenue.latitude
-    const longitude = event?.simpleVenue.longitude
-    if (event.onlineOnly || !latitude || !longitude || latitude === "0.0"|| longitude === "0.0") {
+export const GoogleMapsDisplay = ({ event, useWrapper = true }) => {
+    if (missesCoordinates(event)) {
         return <></>
     }
+
+    const latitude = event?.simpleVenue.latitude
+    const longitude = event?.simpleVenue.longitude
 
     const language = extractParameter(null, 'language', 'en-US')
     const src = `https://www.google.com/maps/embed/v1/view?key=${GOOGLE_MAPS_API_KEY}&center=${latitude},${longitude}&zoom=18&language=${language}`
 
+    const iframe = () => {
+        return (
+            <iframe
+                width="100%"
+                height="400"
+                frameBorder="0" style={{border: 0}}
+                referrerPolicy="no-referrer-when-downgrade"
+                src={src}
+                allowFullScreen>
+            </iframe>
+        )
+    }
+
+    if(!useWrapper) {
+        return iframe()
+    }
+
     return (
         <div className="row mt-2">
             <div className="col-12">
-                <iframe
-                    width="100%"
-                    height="300"
-                    frameBorder="0" style={{border: 0}}
-                    referrerPolicy="no-referrer-when-downgrade"
-                    src={src}
-                    allowFullScreen>
-                </iframe>
+                {iframe()}
             </div>
         </div>
     )
-}
-
-const eventDateAdapter = (eventDate) => {
-    if (!eventDate) {
-        return null
-    }
-    return {
-        ...eventDate,
-        startIso: `${eventDate.startDate}T${eventDate.startTime}`,
-        endIso: `${eventDate.endDate}T${eventDate.endTime}`,
-    }
 }
 
 /**

@@ -4,6 +4,16 @@ import React from 'react'
 import { useTranslation } from '../../../i18n'
 import OnlineNotice from './OnlineNotice'
 
+export const chooseOnlineClass = (ev) => {
+    if(!!ev.hasWebcast && !!ev.onlineOnly) {
+        return 'card-online'
+    }
+    if(!!ev.hasWebcast && !ev.onlineOnly) {
+        return 'card-online-in-person'
+    }
+    return 'card-in-person'
+}
+
 /**
  * Used to display an event date.
  * @param ev The event
@@ -20,8 +30,7 @@ const EventDateCard = ({ ev, timeFormat, showEventDate, startAfterNow }) => {
     return (
         <div
             className={`col-12 card ${!startAfterNow && 'calendar-date-past'}`}>
-            <div className={`${(!!ev.hasWebcast || !!ev.onlineOnly) &&
-            'card-online' || !ev.onlineOnly && 'card-in-person'} card-body`}>
+            <div className={`${chooseOnlineClass(ev)} card-body`}>
                 <OnlineNotice ev={ev} />
                 <h4><a href="#" onClick={showEventDate} id={ev.id}>{ev.name}</a>
                 </h4>

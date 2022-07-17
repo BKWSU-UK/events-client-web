@@ -16,6 +16,7 @@ import { updateOnlineStatus } from './adapter/onlineAdapter'
 import { safeStartDate } from './controlPanel/MonthSelector'
 import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
+import { handleShowEventDate } from '../commonActions'
 
 /**
  * Displays a normal calendar.
@@ -77,11 +78,7 @@ const ClassicCalendar = ({props}) => {
     }
 
     function onSelectEvent(event) {
-        const { original } = event
-        dispatchDate({
-            type: DATE_ACTIONS.SHOW_MODAL_EVENT_DATE,
-            payload: { modalEventDateId: original.eventDateId },
-        })
+        handleShowEventDate(eventContext, event, dispatchDate)
     }
 
     function onNavigate() {
