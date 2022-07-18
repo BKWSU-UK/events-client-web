@@ -31,6 +31,10 @@
     background-color: transparent;
 }
 
+.calendar-speaker-img-container {
+    margin: 0 auto
+}
+
 .calendar-speaker-main {
     margin-top: 2rem;
     margin-bottom: 2rem;

@@ -23,7 +23,7 @@ const SpeakerSection = ({ev}) => {
 
     return (
         <div className="row calendar-speaker-main">
-            <div className="col-12 col-sm-6 col-lg-7 col-xl-8 calendar-speaker-bio">
+            <div className="col-12 col-sm-6 col-lg-6 col-xl-6 calendar-speaker-bio">
                 <div className="row">
                     <div className="col-12">
                         <h4 className="calendar-speaker-title">{t('About Our Speaker')}</h4>
