@@ -1,0 +1,93 @@
+.countdown > .cell {
+    font-size: 2rem;
+    text-align: center;
+}
+
+.cell-number-container-text-unit {
+    position: absolute;
+    font-size: 0.75rem;
+    padding-top: 50%;
+    color: #c1c1c1;
+}
+
+.countdown-header {
+    margin-bottom: 2rem;
+}
+
+@media (min-width: 768px) {
+    .countdown > .cell {
+        font-size: 3rem;
+    }
+
+    .cell-number-container-text-unit {
+        font-size: 1.7rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .countdown > .cell {
+        font-size: 3rem;
+    }
+
+    .cell-number-container-text-unit {
+        font-size: 2rem;
+    }
+}
+
+.cell-number-container {
+    background-color: #efefef;
+    width: 100%;
+    padding-top: 100%;
+    border-radius: 50%;
+    position: relative;
+}
+
+.cell-number-container-text {
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.event-count-container {
+    min-height: 480px;
+    display: grid;
+    align-content: center;
+}
+
+.video-container {
+    position: relative;
+    padding-bottom: 56.25%;
+    padding-top: 30px;
+    height: 0;
+    overflow: hidden;
+}
+
+.video-container iframe, .video-container object, .video-container embed {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.countdown-header .calendar-organisation {
+    margin: 0 10px 10px 20px
+}
+
+@media (min-width: 768px) {
+    .countdown-info {
+        display: flex
+    }
+    .countdown-header .calendar-organisation {
+        margin: 0 10px 0 20px
+    }
+}
+
+.countdown-info .list-group-item {
+    border: 0
+}

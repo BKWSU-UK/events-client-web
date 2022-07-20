@@ -1,5 +1,6 @@
 import React from 'react'
 import { useTranslation } from '../../i18n'
+import { correctImagePath } from '../../utils/imageUtils'
 
 /**
  * The speaker section.
@@ -13,7 +14,7 @@ const SpeakerSection = ({ev}) => {
     let speakerImage = ev.image3
     if(!!speakerImage) {
         if(speakerImage.startsWith("/imageupload")) {
-            speakerImage = "https://events.brahmakumaris.org" + speakerImage
+            speakerImage = correctImagePath(speakerImage)
         }
     }
 

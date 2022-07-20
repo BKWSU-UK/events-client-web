@@ -20,6 +20,7 @@ import SliderParent from './components/slider/SliderParent'
 import TilesParent from './components/tiles/TilesParent'
 import EventSessionParent
     from './components/singleEventSession/EventSessionParent'
+import EventCountDownParent from './components/countDown/EventCountDownParent'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -38,7 +39,8 @@ const WIDGET_TYPE = {
     FORM: "FORM",
     COMPOSITE_CALENDAR: "COMPOSITE_CALENDAR",
     SLIDER: "SLIDER",
-    TILES: "TILES"
+    TILES: "TILES",
+    EVENT_COUNT_DOWN: "EVENT_COUNT_DOWN"
 }
 
 const chooseComponent = (eventsConfig) => {
@@ -59,6 +61,8 @@ const chooseComponent = (eventsConfig) => {
             return <SliderParent />
         case WIDGET_TYPE.TILES:
             return <TilesParent />
+        case WIDGET_TYPE.EVENT_COUNT_DOWN:
+            return <EventCountDownParent/>
     }
     // Legacy configurations
     if (eventsConfig?.showForm) {
@@ -103,6 +107,9 @@ function App ({ eventsConfig }) {
                         </Route>
                         <Route path="/single-event-session">
                             <EventSessionParent/>
+                        </Route>
+                        <Route path="/event-countdown">
+                            <EventCountDownParent/>
                         </Route>
                         <Route path="/slider">
                             <SliderParent />

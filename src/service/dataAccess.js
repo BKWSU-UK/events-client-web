@@ -234,3 +234,12 @@ export const fetchEventDateWithSeats = async (eventDateId) => {
     }
     return eventDate
 }
+
+export const fetchNextListEvents = async(countries, timezone) => {
+    if(!countries) {
+        return []
+    }
+    const targetUrl = `${SERVER_BASE}/findNextLiveEvent?countries=${countries}&timezone=${timezone}`
+    const response = await fetch(targetUrl)
+    return await response.json()
+}

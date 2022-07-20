@@ -1,0 +1,41 @@
+<html>
+<head>
+    <title>Loader Test</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <style type="text/css">
+        .countdown-info {
+            margin-left: -20px;
+        }
+    </style>
+</head>
+<body>
+
+<script>
+    window.eventsConfig = [
+        {
+            showLocalTime: true,
+            rootElement: 'emsRoot1',
+            language: "de",
+            widgetType: "EVENT_COUNT_DOWN",
+            eventCountDownTimezone: "Europe/Berlin",
+            eventCountDownCountries: "Germany,Austria,Switzerland",
+            calendarDayImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.38.0/assets/images/calendar_day.png",
+            calendarTimeImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.38.0/assets/images/calendar_time.png",
+            calendarEventTypeImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.38.0/assets/images/calendar_event_type.png",
+            randomImages: ["https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+                "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
+                "https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg",
+                "https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg",
+                "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
+                "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
+                "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg"],
+            shivaStarImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.37.0/assets/images/shiva.png"
+        }]
+</script>
+<h1>Countdown</h1>
+<div id="emsRoot1" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.38.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.38.0/loader.js"></script>
+
+</body>
+</html>
