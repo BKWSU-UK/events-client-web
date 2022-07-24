@@ -1,6 +1,7 @@
 import React from 'react'
 import { useTranslation } from '../../i18n'
 import { correctImagePath } from '../../utils/imageUtils'
+import linkifyHtml from 'linkifyjs/html'
 
 /**
  * The speaker section.
@@ -32,8 +33,9 @@ const SpeakerSection = ({ev}) => {
                     </div>
                 </div>
                 <div className="row">
-                    <div className="col-12">
-                    </div>
+                    <div className="col-12" dangerouslySetInnerHTML={{__html: linkifyHtml(ev.speakerDescription, {
+                            defaultProtocol: 'https',
+                        })}} />
                 </div>
             </div>
             <div className="col-12 col-sm-6 col-lg-5 col-xl-4 calendar-speaker-img-container">
