@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from 'react'
 import EventContext from '../../context/EventContext'
-import { extractRandomImage } from '../../utils/imgUtils'
-import { correctImagePath } from '../../utils/imageUtils'
+import { correctImagePath, extractRandomImage } from '../../utils/imgUtils'
 import {
     EVENT_COUNTDOWN_ACTIONS,
     EventCountdownContext,
@@ -22,14 +21,9 @@ const imageFactory = (data, eventsConfig) => {
 const ImageContainer = (props) => {
 
     const { eventsConfig } = useContext(EventContext)
-    const { dispatchCountdown } = useContext(EventCountdownContext)
     const { data } = props
 
     const image = imageFactory(data, eventsConfig)
-
-    useEffect(() => {
-        dispatchCountdown({type: EVENT_COUNTDOWN_ACTIONS.SET_DATA, data})
-    }, [])
 
     return (
         <div className="container event-count-container" style={{background: `url(${image}) center center / cover no-repeat`}}>

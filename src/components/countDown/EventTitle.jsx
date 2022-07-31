@@ -4,8 +4,8 @@ import { DescriptionDisplay } from '../compositeCalendar/EventDateModal'
 import EventInfoDate from '../singleEventSession/eventInfoSection/EventInfoDate'
 import EventInfoTime from '../singleEventSession/eventInfoSection/EventInfoTime'
 import EventInfoType from '../singleEventSession/eventInfoSection/EVentInfoType'
-import EventLocation from '../compositeCalendar/card/EventLocation'
 import EventOrganisation from '../singleEventSession/EventOrganisation'
+import { processDefaultEmptyArray } from '../../utils/validationUtils'
 
 /**
  * The event title.
@@ -15,24 +15,21 @@ const EventTitle = () => {
     const { stateCountdownData } = useContext(EventCountdownContext)
     const { data } = stateCountdownData
 
-    if(!data || data.length === 0) {
-        return <></>
-    }
+    return processDefaultEmptyArray(data, (data) => {
+        const ev = data[0]
 
-    const ev = data[0]
-
-    return (
-        <div className="container countdown-header">
-            <h1>{ev.name}</h1>
-            <DescriptionDisplay event={ev} className="calendar-detail-description" />
-            <div className="countdown-info">
-                <EventOrganisation ev={ev} />
-                <EventInfoDate ev={ev} />
-                <EventInfoTime ev={ev} />
-                <EventInfoType ev={ev} />
+        return (
+            <div className="container countdown-header">
+                <h1>{ev.name}</h1>
+                <div className="countdown-info">
+                    <EventOrganisation ev={ev} />
+                    <EventInfoDate ev={ev} />
+                    <EventInfoTime ev={ev} />
+                    <EventInfoType ev={ev} />
+                </div>
             </div>
-        </div>
-    )
+        )
+    })
 }
 
 export default EventTitle

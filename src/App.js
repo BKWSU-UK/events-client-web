@@ -20,7 +20,7 @@ import SliderParent from './components/slider/SliderParent'
 import TilesParent from './components/tiles/TilesParent'
 import EventSessionParent
     from './components/singleEventSession/EventSessionParent'
-import EventCountDownParent from './components/countDown/EventCountDownParent'
+import EventCountdownMain from './components/countDown/EventCountdownMain'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -62,7 +62,7 @@ const chooseComponent = (eventsConfig) => {
         case WIDGET_TYPE.TILES:
             return <TilesParent />
         case WIDGET_TYPE.EVENT_COUNT_DOWN:
-            return <EventCountDownParent/>
+            return <EventCountdownMain/>
     }
     // Legacy configurations
     if (eventsConfig?.showForm) {
@@ -109,7 +109,7 @@ function App ({ eventsConfig }) {
                             <EventSessionParent/>
                         </Route>
                         <Route path="/event-countdown">
-                            <EventCountDownParent/>
+                            <EventCountdownMain/>
                         </Route>
                         <Route path="/slider">
                             <SliderParent />
