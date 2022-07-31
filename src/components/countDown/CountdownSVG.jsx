@@ -137,6 +137,10 @@ const CountdownSVG = ({ timezone }) => {
         },
     ]
 
+    if (!timediff || stateCountdownData.started) {
+        return <></>
+    }
+
     return (
         <div className="row countdown-svg">
             {timeComponents.map((svgElement, i) => {
