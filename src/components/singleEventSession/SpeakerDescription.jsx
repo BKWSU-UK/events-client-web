@@ -6,11 +6,14 @@ import linkifyHtml from 'linkifyjs/html'
  * @constructor
  */
 const SpeakerDescription = ({ev}) => {
+
     return (
         <div className="row countdown-speaker">
-            <div className="col-12" dangerouslySetInnerHTML={{__html: linkifyHtml(ev.speakerDescription, {
+            {!!ev.speakerDescription && <div className="col-12" dangerouslySetInnerHTML={{
+                __html: linkifyHtml(ev.speakerDescription, {
                     defaultProtocol: 'https',
-                })}} />
+                }),
+            }}/>}
         </div>
     )
 }
