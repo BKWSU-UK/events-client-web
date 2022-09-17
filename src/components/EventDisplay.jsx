@@ -141,7 +141,7 @@ export const EventDisplayBody = ({ original, simple, footerInfo }) => {
     return (
         <div className="row">
             <div className="col-sm-12">
-                <h3 title={t(eventMap[original.eventTypeId])}><a href="#"
+                <h3 title={t(eventMap[original.eventTypeId])} data-eventDateId={original.eventDateId}><a href="#"
                                                                  onClick={async e => {
                                                                      e.preventDefault()
                                                                      await processReadMoreClick(
