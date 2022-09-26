@@ -45,7 +45,6 @@ export default class PrivacyPolicy extends AbstractReactComponent {
      * #returns ReactInstance
      */
     attachReact(element) {
-        console.log('Privacy this.props.component', this.component)
         return ReactDOM.render(
             <div dangerouslySetInnerHTML={{__html: this.component.content}} /> ,
             element

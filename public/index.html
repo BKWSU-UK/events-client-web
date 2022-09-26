@@ -80,22 +80,22 @@
         {
             useBodyHiddenOverflow: true,
             useSimpleLayout: true,
-            orgId: [2,5,89,111,139,154,158,159,160,161,163,176,178,183,184,185,186,187,189,190,191,192,193,194,195,196,197,199,200,201,202,204,210,211,212,309,335,336,345,346,347,350,351,352,353,355,357,358,359,365,366,367,368,369,398,399,406,491,492,493,494,512,621,626,668,673,677,709,715,717,719,768,769,770,771,772,773,807,822,823,825,836,837,2705,2706,2824,2895], // GCH, GRC only
+            orgId: [2], // GCH, GRC only
             eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
             language: "de", // "es" for Spanish also supported now,
             showLocalTime: true,
             featured: false, // Show only featured examples
-            displayWebcastButton: false, // displays the webcast button
-            eventsLimit: 20, // show only one single event
+            displayWebcastButton: true, // displays the webcast button
+            eventsLimit: 1000, // show only one single event
             suppressBookOnly: true, // Remove the book only button
             suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-            singleEventUrlTemplate: "http://localhost:3006/single-event-session?eventSessionId=@@eventDateId@@",
+            // singleEventUrlTemplate: "http://localhost:3006/single-event-session?eventSessionId=@@eventDateId@@",
             rootElement: 'emsRoot1',
             displayOrgFilter: true,
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
             useAllOrgIds: true,
-            widgetType: "SINGLE_EVENT_SESSION",
+            widgetType: "TABLE",
             eventCountDownStyle: "animated",
             eventCountDownTimezone: "Europe/Berlin",
             eventCountDownCountries: "Germany,Austria,Switzerland",
@@ -106,7 +106,13 @@
             "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
             "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
             "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg"],
-            shivaStarImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.37.0/assets/images/shiva.png"
+            shivaStarImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.37.0/assets/images/shiva.png",
+            searchFilterFunction: (e) => {
+                return !!e.hasWebcast && !e.requiresRegistration && !!e.webcastUrl && e.webcastUrl.toLowerCase().match(/.+(webcast|watchlive).*/);
+            },
+            eventSliceFunction: (eventList) => {
+                return eventList.slice(0, 1)
+            }
         }]
 </script>
 

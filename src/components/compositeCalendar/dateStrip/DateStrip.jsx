@@ -64,7 +64,6 @@ const DateStrip = () => {
                 const hasEventCounts = s.querySelector('.event-counts').textContent?.length > 0
                 return !hasEventCounts && splits[0] === year.toString() && splits[1] === month.toString() && splits[2] === day.toString()
             })
-            console.log('selectedSingleDate', index)
             if(index > -1) {
                 splideRef.current.go(index)
             }

@@ -10,12 +10,20 @@
         orgId: [2], // GCH only
         eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
         language: "en-GB", // "es" for Spanish also supported now,
+        onlyWebcast: true, // show only webcast events
+        featured: true, // Show only featured examples
         showLocalTime: true,
-        displayWebcastButton: true,
+        displayOrgFilter: false,
+        displayWebcastButton: false,
+        fetchEvents: true, // Prevents initial event fetching
         eventsLimit: 1000,
         rootElement: 'root',
-        fetchEvents: true,
-        eventsLang: "pt"
+        searchFilterFunction: (e) => {
+            return !!e.hasWebcast && !e.requiresRegistration && !!e.webcastUrl && e.webcastUrl.toLowerCase().match(/.+(webcast|watchlive).*/);
+        },
+        eventSliceFunction: (eventList) => {
+            return eventList.slice(0, 1) // show only one single event
+        }
     }]
 </script>
 <div id="root" class="container-fluid"></div>
@@ -26,10 +34,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous">
 <style type="text/css">
-    #root {
-        padding-left: 0;
-        padding-right: 0;
-    }
+
     /** Stretch search field */
     label[for=searchInput] + .col-6 {
         width: 100%;

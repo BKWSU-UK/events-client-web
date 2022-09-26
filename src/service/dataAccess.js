@@ -164,7 +164,8 @@ export const getEventList = async (params) => {
     }
     const response = json.response
     let eventList = response?.data
-    eventList = searchAdapter(eventList, params.searchExpression)
+    eventList = searchAdapter(eventList,
+        params.searchExpression, params.searchFilterFunction, params.eventSliceFunction)
     return eventList
 }
 

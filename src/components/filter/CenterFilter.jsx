@@ -32,7 +32,6 @@ const CenterFilter = ({
                 await fetchOrganisations(
                     extractParameter({ ...eventContext }, 'orgId')) || []
             setOrgInfo(orgInfoJson)
-            console.log('orgInfo', orgInfoJson)
             if (!!storedValue && orgInfoJson.map(o => o.id).includes(parseInt(storedValue))) {
                 setOrgIdFilter(storedValue)
             }

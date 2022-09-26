@@ -19,7 +19,7 @@ export function googleCalendarLink (event, date) {
 }
 
 export function missesCoordinates(event) {
-    const latitude = event?.simpleVenue.latitude
-    const longitude = event?.simpleVenue.longitude
+    const latitude = event?.simpleVenue?.latitude
+    const longitude = event?.simpleVenue?.longitude
     return (event.onlineOnly || !latitude || !longitude || latitude === "0.0"|| longitude === "0.0")
 }

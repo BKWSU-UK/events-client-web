@@ -17,7 +17,9 @@ export const extractEventListParameters = (props) => {
         '1,2,3,4,5,6,7,8,9,10,11,12,13,15')
     const featured = extractParameter(props, 'featured', null)
     const eventsLang = extractParameter(props, EVENTS_LANG, null)
-    return { orgId, eventTypeIds, featured, eventsLang }
+    const searchFilterFunction = props.eventsConfig['searchFilterFunction']
+    const eventSliceFunction = props.eventsConfig['eventSliceFunction']
+    return { orgId, eventTypeIds, featured, eventsLang, searchFilterFunction, eventSliceFunction }
 }
 
 /**

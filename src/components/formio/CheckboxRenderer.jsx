@@ -21,7 +21,6 @@ export default class CheckboxRenderer extends RendererParent {
 
     postSetValueCallback = () => {
         this.props.onChange(this.state.value, {});
-        console.log('this.state.value', this.state.value);
     };
 
     render() {

@@ -15,8 +15,6 @@ import Loader from './loading/Loader'
 export default function DetailRenderer (props) {
     const { t } = useTranslation()
 
-    console.log('DetailRenderer props', props)
-
     const eventId = props?.origProps?.match?.params.eventId ||
         extractFromLocationQuery('eventId') || extractFromLocationQuery('id')
 

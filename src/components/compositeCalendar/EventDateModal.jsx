@@ -79,14 +79,14 @@ const FormDisplay = ({ event }) => {
 const venueAdapter = (event) => {
     const venue = {
         ...event.simpleVenue,
-        country: event.simpleVenue.countryName,
+        country: event.simpleVenue?.countryName,
     }
     return {
         venue,
-        venueName: event.simpleVenue.name,
-        venueAddress: event.simpleVenue.address,
-        venuePostalCode: event.simpleVenue.postalCode,
-        venueLocality: event.simpleVenue.locality,
+        venueName: event.simpleVenue?.name,
+        venueAddress: event.simpleVenue?.address,
+        venuePostalCode: event.simpleVenue?.postalCode,
+        venueLocality: event.simpleVenue?.locality,
     }
 }
 
