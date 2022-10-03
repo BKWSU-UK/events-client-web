@@ -1,19 +1,26 @@
 import React from 'react'
 import { ONLINE_STATUS } from '../../../context/CompositeCalendarContext'
 import useOnlineStatus from '../../../hooks/useOnlineStatus'
+import { faHouse, faTv } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export const OnlineStatusButtonsRender = ({ stateCalendar, activateOnline, activateInPerson, t }) => {
+export const OnlineStatusButtonsRender = ({
+    stateCalendar,
+    activateOnline,
+    activateInPerson,
+    t,
+    isMobile = false,
+}) => {
     return (
         <>
             <button type="button" data-toggle="button"
                     className={`btn btn-info ${stateCalendar.onlineStatus ===
                     ONLINE_STATUS.ONLINE && 'active'} `}
-                    onClick={activateOnline}>{t('online_state_Online')}</button>
+                    onClick={activateOnline}>{isMobile ? <FontAwesomeIcon icon={faTv}/>: t('online_state_Online')}</button>
             <button type="button" data-toggle="button"
                     className={`btn btn-info ${stateCalendar.onlineStatus ===
                     ONLINE_STATUS.IN_PERSON && 'active'}`}
-                    onClick={activateInPerson}>{t(
-                'online_state_In Person')}</button>
+                    onClick={activateInPerson}>{isMobile ? <FontAwesomeIcon icon={faHouse}/>: t('online_state_In Person')}</button>
         </>
     )
 }
@@ -30,7 +37,7 @@ const OnlineStatusButtons = () => {
         <>
             <OnlineStatusButtonsRender t={t} activateInPerson={activateInPerson}
                                        activateOnline={activateOnline}
-                                       stateCalendar={stateCalendar} />
+                                       stateCalendar={stateCalendar}/>
         </>
     )
 

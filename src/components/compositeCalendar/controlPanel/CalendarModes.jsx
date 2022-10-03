@@ -1,13 +1,15 @@
 import React from 'react'
 import useCalendarModes from '../../../hooks/useCalendarModes'
+import { faBars } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
-export const CalendarModesButton = ({calendarModes, activeOnType, t}) => {
+export const CalendarModesButton = ({calendarModes, activeOnType, t, isMobile=false}) => {
     return (
         <>
             {calendarModes.map((ct, i) => (
                 <button key={i} type="button" data-toggle="button"
                         className={`btn btn-info ${activeOnType(ct.cardType)}`}
-                        onClick={ct.func}>{t(ct.label)}</button>
+                        onClick={ct.func}>{isMobile ? <FontAwesomeIcon icon={ct.icon}/> : t(ct.label)}</button>
             ))}
         </>
     )

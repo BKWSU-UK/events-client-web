@@ -1,8 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
 import CompositeCalendarContext, { DATE_ACTIONS } from '../../../context/CompositeCalendarContext'
 import { useTranslation } from '../../../i18n'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+    faSearch
+} from '@fortawesome/free-solid-svg-icons'
 
 const KEY_SEARCH = 'eventKeySearch'
+
 
 /**
  * Sets the search filter
@@ -76,7 +81,7 @@ const SearchFilter = () => {
                            value={searchExpression}
                            onChange={onChange} onKeyDown={handleEnter}/>
                     <button className="btn btn-primary"
-                            onClick={onSearch} disabled={!acceptedSearch()}>&#x1F50E;</button>
+                            onClick={onSearch} disabled={!acceptedSearch()}><FontAwesomeIcon icon={faSearch}/></button>
                     {!!stateCalendar.searchExpression &&<button className="btn"
                                                                 onClick={onClear} disabled={!acceptedSearch()}>&#10060;</button>}
                 </div>
@@ -95,7 +100,7 @@ const SearchFilter = () => {
                     onClick={onSearch} disabled={!acceptedSearch()}>{t(
                 'search')}</button>
             <button className={`btn btn-${mobileSearchOn ? 'success' : 'light'} search-button`}
-                    onClick={() => setMobileSearchOn(!mobileSearchOn)}>&#x1F50E;</button>
+                    onClick={() => setMobileSearchOn(!mobileSearchOn)}><FontAwesomeIcon icon={faSearch}/></button>
             {renderMobileSearch()}
             {!!stateCalendar.searchExpression &&
             <button className="btn btn-danger calendar-search-selector"

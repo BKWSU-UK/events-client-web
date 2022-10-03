@@ -20,6 +20,7 @@ const EventDateCardWrapper = ({children, ev, timeFormat}) => {
     const { dispatchDate } = useContext(CompositeCalendarContext)
 
     const showEventDate = (e) => {
+        e.preventDefault()
         handleShowEventDate(eventContext, ev, dispatchDate)
     }
 

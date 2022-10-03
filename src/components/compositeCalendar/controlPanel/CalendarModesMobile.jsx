@@ -21,24 +21,26 @@ export const CalendarModesMobile = () => {
     return (
         <>
             <div className="col-12">
-                <button className={`btn btn-${show ? 'success' : 'info'} hamburger-button`} onClick={() => setShow(!show)}>
+                <button className={`btn btn-${show
+                    ? 'success'
+                    : 'info'} hamburger-button`} onClick={() => setShow(!show)}>
                     <FontAwesomeIcon icon={faBars}/></button>
-                {show && (
-                    <div className="float-right">
-                        <OnlineStatusButtonsRender t={t}
-                                                   activateInPerson={activateInPerson}
-                                                   activateOnline={activateOnline}
-                                                   stateCalendar={stateCalendar}/>
-                    </div>
-                )}
             </div>
             {show && <div className="col-12 calendar-modes-button-mobile">
                 <CalendarModesButton activeOnType={activeOnType}
-                                              calendarModes={calendarModes}
-                                              t={t}/>
+                                     calendarModes={calendarModes}
+                                     t={t}
+                                     isMobile={true}/>
+                <div className="float-right">
+                    <OnlineStatusButtonsRender t={t}
+                                               activateInPerson={activateInPerson}
+                                               activateOnline={activateOnline}
+                                               stateCalendar={stateCalendar}
+                                               isMobile={true}/>
+                </div>
             </div>}
             {show && <div className="col-12 calendar-dates-other-filters mb-3">
-                <DateAndFilter />
+                <DateAndFilter/>
             </div>}
         </>
     )

@@ -78,6 +78,7 @@ const ClassicCalendar = ({props}) => {
     }
 
     function onSelectEvent(event) {
+        console.log('onSelectEvent', event)
         handleShowEventDate(eventContext, event, dispatchDate)
     }
 

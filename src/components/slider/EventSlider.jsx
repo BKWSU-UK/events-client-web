@@ -1,13 +1,10 @@
-import React, { useContext, useRef, useState } from 'react'
-import EventContext, { extractEventListParameters } from '../../context/EventContext'
-import { useQuery } from 'react-query'
-import { getEventList } from '../../service/dataAccess'
+import React, { useRef, useState } from 'react'
 import LoadingContainer from '../loading/LoadingContainer'
 import { Splide } from '@splidejs/react-splide'
 import EventSlide from './EventSlide'
 import {
     faArrowLeftLong,
-    faArrowRightLong
+    faArrowRightLong,
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import useGetEventList from '../../hooks/useGetEventList'

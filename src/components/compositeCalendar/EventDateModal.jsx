@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useRef, useState } from 'react'
-import CompositeCalendarContext, { DATE_ACTIONS } from '../../context/CompositeCalendarContext'
+import CompositeCalendarContext, {
+    DATE_ACTIONS,
+} from '../../context/CompositeCalendarContext'
 import { useQuery } from 'react-query'
 import { fetchEventDateWithSeats } from '../../service/dataAccess'
 import { useTranslation } from '../../i18n'
@@ -17,6 +19,7 @@ import { missesCoordinates } from '../../utils/googleCalendarUtils'
 import extractText from '../../utils/textExtraction'
 import linkifyHtml from 'linkifyjs/html'
 import { Wrapper } from '@googlemaps/react-wrapper'
+import { chooseOnlineClass } from './card/EventDateCard'
 
 const ImageDisplay = ({ event }) => {
     const image = extractImageFromEvent(event)
@@ -41,10 +44,10 @@ export const DescriptionDisplay = ({ event, className = '' }) => {
         <div className={`row mt-2 ${className}`}>
             <div className="col-12">
                 {!!event?.shortDescription &&
-                <p>{event?.shortDescription}</p> ||
-                <div dangerouslySetInnerHTML={{
-                    __html: linkifyHtml(extractText(event?.description)),
-                }}/>
+                    <p>{event?.shortDescription}</p> ||
+                    <div dangerouslySetInnerHTML={{
+                        __html: linkifyHtml(extractText(event?.description)),
+                    }}/>
                 }
             </div>
         </div>
@@ -68,9 +71,9 @@ const FormDisplay = ({ event }) => {
         <div className="row mt-2">
             <div className="col-12">
                 {!!event &&
-                event.requiresRegistration &&
-                event.availableSeats > 0 &&
-                <CreateForm currentEvent={event}/>}
+                    event.requiresRegistration &&
+                    event.availableSeats > 0 &&
+                    <CreateForm currentEvent={event}/>}
             </div>
         </div>
     )
@@ -108,7 +111,7 @@ export const VenueDisplay = ({ event }) => {
 function MyMapComponent ({
     center,
     zoom,
-    children
+    children,
 }) {
     const ref = useRef()
 
@@ -132,7 +135,7 @@ function MyMapComponent ({
         {React.Children.map(children, (child) => {
             if (React.isValidElement(child)) {
                 // set the map prop on the child component
-                return React.cloneElement(child, { map });
+                return React.cloneElement(child, { map })
             }
         })}
     </>
@@ -226,29 +229,31 @@ const EventDateModal = () => {
                                 <span aria-hidden="true">&times;</span>
                             </button>
                         </div>
-                        <div className="modal-body">
+                        {adaptedEventDate &&
+                            <div className={`${chooseOnlineClass(
+                                adaptedEventDate)} modal-body`}>
 
-                            <SubTitleAndTypeDisplay
-                                event={adaptedEventDate}/>
+                                <SubTitleAndTypeDisplay
+                                    event={adaptedEventDate}/>
 
-                            <div className="row">
-                                <div className="col-12">
-                                    {!!adaptedEventDate &&
-                                    <RenderDate date={adaptedEventDate}
-                                                currentEvent={adaptedEventDate}
-                                                timeFormat={timeFormat}
-                                                useIcon={true}/>}
+                                <div className="row">
+                                    <div className="col-12">
+                                        {!!adaptedEventDate &&
+                                            <RenderDate date={adaptedEventDate}
+                                                        currentEvent={adaptedEventDate}
+                                                        timeFormat={timeFormat}
+                                                        useIcon={true}/>}
+                                    </div>
                                 </div>
-                            </div>
 
-                            <DescriptionDisplay event={adaptedEventDate}/>
-                            {!!adaptedEventDate &&
-                            <ImageDisplay event={adaptedEventDate}/>}
-                            <WebcastUrlDisplay event={adaptedEventDate}/>
-                            <VenueDisplay event={adaptedEventDate}/>
-                            <FormDisplay event={adaptedEventDate}/>
-                            <GoogleMapsDisplay event={adaptedEventDate}/>
-                        </div>
+                                <DescriptionDisplay event={adaptedEventDate}/>
+                                {!!adaptedEventDate &&
+                                    <ImageDisplay event={adaptedEventDate}/>}
+                                <WebcastUrlDisplay event={adaptedEventDate}/>
+                                <VenueDisplay event={adaptedEventDate}/>
+                                <FormDisplay event={adaptedEventDate}/>
+                                <GoogleMapsDisplay event={adaptedEventDate}/>
+                            </div>}
                         <div className="modal-footer">
                             <button type="button" className="btn btn-secondary"
                                     data-dismiss="modal"
@@ -257,7 +262,7 @@ const EventDateModal = () => {
                     </LoadingContainer>
                 </div>
             </div>
-        </div>
+        </div> || <></>
     )
 }
 

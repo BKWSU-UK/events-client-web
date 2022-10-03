@@ -5,6 +5,13 @@ import CompositeCalendarContext, {
 } from '../context/CompositeCalendarContext'
 import { useTranslation } from '../i18n'
 import { monthStartAndEnd, weekStartAndEnd } from '../utils/dateUtils'
+import {
+    faCalendar,
+    faCalendarWeek,
+    faCalendarDays,
+    faCalendarDay,
+    faTable,
+} from '@fortawesome/free-solid-svg-icons'
 
 const CARD_TYPE_KEY = 'cardType'
 
@@ -83,26 +90,31 @@ const useCalendarModes = () => {
             cardType: CARD_TYPEUI_VIEW.LONG_CARD,
             func: activateAgenda,
             label: 'Agenda',
+            icon: faCalendar
         },
         {
             cardType: CARD_TYPEUI_VIEW.MONTH,
             func: activateMonth,
             label: 'month',
+            icon: faCalendarDays
         },
         {
             cardType: CARD_TYPEUI_VIEW.WEEK,
             func: activateWeek,
             label: 'week',
+            icon: faCalendarWeek
         },
         {
             cardType: CARD_TYPEUI_VIEW.DAY,
             func: activateDay,
             label: 'day',
+            icon: faCalendarDay
         },
         {
             cardType: CARD_TYPEUI_VIEW.IMAGE_CARD,
             func: activateTable,
             label: 'Table',
+            icon: faTable
         },
 
     ], [])

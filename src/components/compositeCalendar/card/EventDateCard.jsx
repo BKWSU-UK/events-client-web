@@ -5,10 +5,10 @@ import { useTranslation } from '../../../i18n'
 import OnlineNotice from './OnlineNotice'
 
 export const chooseOnlineClass = (ev) => {
-    if(!!ev.hasWebcast && !!ev.onlineOnly) {
+    if(!!ev?.hasWebcast && !!ev?.onlineOnly) {
         return 'card-online'
     }
-    if(!!ev.hasWebcast && !ev.onlineOnly) {
+    if(!!ev?.hasWebcast && !ev?.onlineOnly) {
         return 'card-online-in-person'
     }
     return 'card-in-person'

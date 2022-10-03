@@ -24,7 +24,7 @@ const EventDateImageCard = ({ ev, timeFormat, showEventDate, startAfterNow }) =>
     const heroImage = useMemo(() => imageAdapter(ev, window.eventsConfig[0]), [ev.id])
 
     return (
-        <div className="col-12 col-md-6 col-xl-3 calendar-event-card-wrapper">
+        <div className="col-12 col-sm-6 col-md-4 col-xl-4 calendar-event-card-wrapper">
             <div
                 className={`card ${!startAfterNow && 'calendar-date-past'}`}>
                 <div style={{

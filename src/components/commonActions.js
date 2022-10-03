@@ -5,9 +5,10 @@ import { DATE_ACTIONS } from '../context/CompositeCalendarContext'
 import { extractImageFromEvent } from '../utils/imgUtils'
 
 export const handleShowEventDate = (eventContext, ev, dispatchDate) => {
+    console.log('handleShowEventDate')
     const singleEventUrlTemplate = extractParameter({ ...eventContext },
         EVENT_CONFIG.SINGLE_EVENT_URL_TEMPLATE)
-    const eventDateId = ev.eventDateId
+    const eventDateId = ev.eventDateId || ev.original?.eventDateId
     if (!!singleEventUrlTemplate) {
         const image = extractImageFromEvent(ev)
         window.location.href = singleEventUrlTemplate.replace(EVENT_DATE_ID,
