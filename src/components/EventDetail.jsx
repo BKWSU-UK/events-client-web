@@ -2,6 +2,7 @@ import React from 'react'
 import { withRouter } from 'react-router-dom'
 import { ReadMore } from './readMore/ReadMore'
 import DetailRenderer from './DetailRenderer'
+import '../css/singleEvent.css'
 
 /**
  * Displays an event using the event identifier.

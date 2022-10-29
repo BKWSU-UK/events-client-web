@@ -7,6 +7,6 @@ export default function EventType({eventTypeInt}) {
     const { t } = useTranslation();
 
     return (
-        <p className="lead">{t(eventMap["" + eventTypeInt])}</p>
+        <p className="lead">{t(eventMap[eventTypeInt])}</p>
     )
 }

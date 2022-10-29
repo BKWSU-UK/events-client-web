@@ -3,11 +3,14 @@ export const removeBadStylesFromImg = (description) => {
 }
 
 export const extractImageFromEvent = (event) => {
+    if(!event) {
+        return ""
+    }
     let image = event.image1 || event.image2 || event.image3
     if (!!image && image.startsWith('/')) {
         image = `https://events.brahmakumaris.org${image}`
     }
-    return image
+    return !!image ? image : ""
 }
 
 export const imageAdapter = (ev, eventsConfig) => {

@@ -25,7 +25,7 @@ export const langResources = {
             'day': 'Tag',
             'days': 'Tage',
             'description': 'Beschreibung',
-            'enter-search': 'Ingrese la búsqueda',
+            'enter-search': 'Suche eingeben',
             'event_plural': 'eventos',
             'event': 'Event',
             'events': 'Events',

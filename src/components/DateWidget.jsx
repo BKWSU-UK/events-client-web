@@ -19,6 +19,10 @@ export const determineTimeFormat = (eventContext) => {
     return "HH:mm"
 }
 
+export const determineDateTimeFormat = (eventContext) => {
+    return "Do MMMM YYYY " + determineTimeFormat(eventContext)
+}
+
 function guessTimezone() {
     const guess = moment.tz.guess(true);
     if (!guess) {

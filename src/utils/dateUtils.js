@@ -131,5 +131,8 @@ export const isSameDay = (date) => {
     return startSplit[0] === endSplit[0]
 }
 
+export const renderDateTimeFromIso = (isoDate, langCode, timeFormat) => moment(isoDate, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
+    format(timeFormat)
+
 export const renderTimeFromIso = (isoDate, langCode, timeFormat) => moment(isoDate, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
     format(timeFormat)

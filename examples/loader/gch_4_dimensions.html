@@ -4,6 +4,7 @@
 </head>
 <body>
 <script>
+    const generateSocialMedialUrl = (e) =>`https://globalcooperationhouse.org/whatson-full/singleevent/${e.id}`
     window.eventsConfig = [
         {
             useBodyHiddenOverflow: true,
@@ -22,7 +23,8 @@
             displayOrgFilter: false,
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
-            useAllOrgIds: true
+            useAllOrgIds: true,
+            generateSocialMedialUrl
         },
         {
             id: 1,
@@ -50,6 +52,7 @@
             fetchEvents: true, // Prevents initial event fetching
             useAllOrgIds: true, // If true does never display all events for all organisations
             // upcomingDateLimit: 5
+            generateSocialMedialUrl
         },
         {
             id: 2,
@@ -77,6 +80,7 @@
             fetchEvents: true, // Prevents initial event fetching
             useAllOrgIds: true, // If true does never display all events for all organisations
             // upcomingDateLimit: 5
+            generateSocialMedialUrl
         },
         {
             id: 3,
@@ -104,6 +108,7 @@
             fetchEvents: true, // Prevents initial event fetching
             useAllOrgIds: true, // If true does never display all events for all organisations
             // upcomingDateLimit: 5
+            generateSocialMedialUrl
         }]
 </script>
 <div class="flexContainer">
@@ -124,8 +129,8 @@
         <div id="emsRoot4" ></div>
     </div>
 </div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.42.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.42.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.43.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.43.0/loader.js"></script>
 <!--<link rel="stylesheet" href="styles.css">-->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"

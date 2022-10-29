@@ -1,0 +1,48 @@
+{
+  "id": 4199221,
+  "index": 0,
+  "archived": false,
+  "private": false,
+  "featured": true,
+  "hasWebcast": true,
+  "webcastUrl": "https://tinyurl.com/Evo2Disso",
+  "onlineOnly": true,
+  "eventTypeId": 8,
+  "orgId": 2,
+  "name": "No Evolution without Dissolution",
+  "subTitle": "The Cycle of Change that facilitates ONENESS",
+  "shortDescription": "A reflective workshop with renowned actors Dr Amina Blackwood Meeks and Clarke Peters",
+  "description": "<div>\n\tA reflective workshop with renowned actors <strong>Dr Amina Blackwood Meeks</strong> and <strong>Clarke Peters</strong></div>\n<div>\n\t&nbsp;</div>\n<div>\n\t<strong>Booking Essential</strong></div>\n<div>\n\t&nbsp;</div>\n<div>\n\t<b><a href=\"https://tinyurl.com/Evo2Disso\" style=\"background-color: rgb(72, 163, 184); color: white; border-radius: 5px; padding: 10px 25px; text-align: center; text-decoration-line: none; display: inline-block;\" target=\"_blank\">REGISTER NOW</a></b></div>\n",
+  "descriptionText": "A reflective workshop with renowned actors Dr Amina Blackwood Meeks and Clarke Peters Booking Essential REGISTER NOW",
+  "speaker": "Dr Amina Blackwood Meeks, Clarke Peters",
+  "languageCode": "en",
+  "eventDateId": 4203079,
+  "hasImage1": true,
+  "image1": "https://events.brahmakumaris.org/bkregistration/imageController.do?eventId=4199221&imageNr=1",
+  "hasImage2": false,
+  "requiresRegistration": false,
+  "registrationCount": 0,
+  "maxParticipants": 200,
+  "contactEmail": "gchenquiries@uk.brahmakumaris.org",
+  "startTimestamp": "2022-10-29 14:00",
+  "startIso": "2022-10-29T14:00:00",
+  "endTimestamp": "2022-10-29 17:00",
+  "endIso": "2022-10-29T17:00:00",
+  "venue": {
+    "id": 2757,
+    "name": "Global Co-operation House  ",
+    "address": "65-69 Pound Lane, Willesden Green",
+    "postalCode": "NW10 2HH",
+    "locality": "London",
+    "country": "United Kingdom",
+    "email": "gchenquiries@uk.brahmakumaris.org",
+    "phone": "020 8727 3418"
+  },
+  "dateList": [
+    {
+      "eventDateId": 4203079,
+      "startIso": "2022-10-29T14:00:00",
+      "endIso": "2022-10-29T17:00:00"
+    }
+  ]
+}

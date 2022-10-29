@@ -17,13 +17,15 @@ import {
     timeAfterNow,
 } from '../../utils/dateUtils'
 import { googleCalendarLink } from '../../utils/googleCalendarUtils'
+import SocialIcons from './SocialIcons'
 
-function renderAddToGoogleCalendar (event, date, t, useIcon = false, linkText = 'add-google-calendar') {
+function renderAddToGoogleCalendar (
+    event, date, t, useIcon = false, linkText = 'add-google-calendar') {
 
     return (
         <a href={googleCalendarLink(event, date)}
            target="_blank" rel="nofollow">{!useIcon &&
-        t(linkText) || <span>&#128276;</span>} </a>
+            t(linkText) || <span>&#128276;</span>} </a>
     )
 }
 
@@ -31,7 +33,7 @@ const DEFAULT_UPCOMING_LIMIT = 10
 
 export function RenderDate ({
     date, currentEvent, timeFormat, useIcon = false,
-    useCalendarIcon = true, addGoogleCalendar = true
+    useCalendarIcon = true, addGoogleCalendar = true,
 }) {
     const { t, langCode } = useTranslation()
 
@@ -45,6 +47,7 @@ export function RenderDate ({
 
     const startAfterNow = !!timeAfterNow(date.startIso)
 
+
     return (
         <div className="row" key={date.eventDateId}>
             <div className="calendar-date-info col-10">
@@ -56,9 +59,10 @@ export function RenderDate ({
                     locale(langCode).
                     fromNow()}</span>
             </div>
-            {addGoogleCalendar && startAfterNow && <div className="col-2 text-right">
-                {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}
-            </div>}
+            {addGoogleCalendar && startAfterNow &&
+                <div className="col-2 text-right">
+                    {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}
+                </div>}
         </div>
     )
 }
@@ -77,10 +81,9 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
     const timeFormat = useTimeFormat()
     moment.locale(extractParameter({ ...eventContext }, 'language', 'en-US'))
     const upcomingDateLimit = extractParameter({ ...eventContext },
-        'upcomingDateLimit') ||
+            'upcomingDateLimit') ||
         DEFAULT_UPCOMING_LIMIT
     if (upcomingDateLimit && Array.isArray(dateList)) {
-        console.log('type dateList', typeof dateList)
         dateList = dateList.slice(0, upcomingDateLimit)
     }
     return (
@@ -89,9 +92,10 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
                 {t('upcoming-dates')}
             </h4>
             <div className="card card-body bg-light">
-                {Array.isArray(dateList) ? dateList.map(date => {
+                {Array.isArray(dateList) ? dateList.map((date, i) => {
                     return (
-                        <RenderDate date={date} currentEvent={currentEvent}
+                        <RenderDate date={date} key={`RenderDate_${i}`}
+                                    currentEvent={currentEvent}
                                     timeFormat={timeFormat}/>
                     )
                 }) : ''}
@@ -101,8 +105,8 @@ function RenderUpcomingDates ({ dateList, currentEvent }) {
 }
 
 export const venueFactory = (currentEvent) => {
-    if(currentEvent.venue) {
-        return {...currentEvent}
+    if (currentEvent.venue) {
+        return { ...currentEvent }
     }
     return {
         ...currentEvent,
@@ -114,6 +118,25 @@ export const venueFactory = (currentEvent) => {
             country: currentEvent.venueCountry,
         },
     }
+}
+
+export const ShowImage = () => {
+    const { currentEvent, eventsConfig } = useContext(EventContext)
+    const images = [1, 2, 3]
+    return (
+        <>
+            {images.map((imageIndex) => {
+                if (!!eventsConfig[`singleEventShowImage${imageIndex}`] &&
+                    !!currentEvent[`image${imageIndex}`]) {
+                    return (
+                        <img
+                            src={`https://events.brahmakumaris.org${currentEvent[`image${imageIndex}`]}`}
+                            className="img-fluid" alt={currentEvent.name}/>
+                    )
+                }
+            })}
+        </>
+    )
 }
 
 /**
@@ -136,6 +159,7 @@ export const ReadMore = () => {
                         ? 'col-md-6'
                         : 'col-md-12'}>
                         <EventType eventTypeInt={venueEvent.eventTypeId}/>
+                        <ShowImage/>
                         <p dangerouslySetInnerHTML={{ __html: venueEvent.description }}/>
                         <div className="row">
                             <div className="col-md-12 webcastButton">
@@ -150,6 +174,7 @@ export const ReadMore = () => {
                         {dateList && <RenderUpcomingDates dateList={dateList}
                                                           currentEvent={venueEvent}/>}
                         <ContactEmail currentEvent={venueEvent}/>
+                        <SocialIcons currentEvent={currentEvent} />
                         <RenderSimilarEvents/>
                     </div>
                     <IncludeForm currentEvent={venueEvent}/>

@@ -124,8 +124,7 @@ function EventTableStruct ({ columns, params, show }) {
                             <tr {...row.getRowProps()}>
                                 {row.cells.filter(cell => showColumns.includes(
                                     cell.column.id)).map(cell => {
-                                    return <td {...cell.getCellProps()}>{cell.render(
-                                        'Cell')}</td>
+                                    return <td {...cell.getCellProps()}>{cell.render('Cell')}</td>
                                 })}
                             </tr>
                         )
