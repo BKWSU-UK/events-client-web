@@ -129,7 +129,7 @@ function EventDisplay ({
             <EventDisplayBody original={original} simple={simple}
                               footerInfo={footerInfo}/>
             {displayFooterSimple(footerInfo, eventContext)}
-            <SocialIcons currentEvent={original} buttonSize={24} />
+            <SocialIcons currentEvent={original} buttonSize={32} />
         </>
     )
 }

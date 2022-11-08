@@ -35,6 +35,7 @@ export function RenderDate ({
     date, currentEvent, timeFormat, useIcon = false,
     useCalendarIcon = true, addGoogleCalendar = true,
 }) {
+    const { eventsConfig } = useContext(EventContext)
     const { t, langCode } = useTranslation()
 
     const renderEndTimeIfSameDay = () => {
@@ -47,10 +48,9 @@ export function RenderDate ({
 
     const startAfterNow = !!timeAfterNow(date.startIso)
 
-
     return (
         <div className="row" key={date.eventDateId}>
-            <div className="calendar-date-info col-10">
+            <div className="calendar-date-info col-8">
                 {useCalendarIcon && <>&#x1f4c5;</>} {moment(date.startIso,
                 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
                 format(`Do MMMM YYYY ${timeFormat}`)}{renderEndTimeIfSameDay()}
@@ -59,10 +59,12 @@ export function RenderDate ({
                     locale(langCode).
                     fromNow()}</span>
             </div>
-            {addGoogleCalendar && startAfterNow &&
-                <div className="col-2 text-right">
-                    {renderAddToGoogleCalendar(currentEvent, date, t, useIcon)}
-                </div>}
+            <div className="col-4 text-right text-nowrap">
+            {!!eventsConfig.showGoogleCalendarIcon ?
+                    (addGoogleCalendar && startAfterNow) && renderAddToGoogleCalendar(currentEvent, date, t, useIcon)
+                : currentEvent.locality
+            }
+            </div>
         </div>
     )
 }

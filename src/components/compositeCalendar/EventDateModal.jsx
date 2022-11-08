@@ -44,8 +44,8 @@ export const DescriptionDisplay = ({ event, className = '' }) => {
         <div className={`row mt-2 ${className}`}>
             <div className="col-12">
                 {!!event?.shortDescription &&
-                    <p>{event?.shortDescription}</p> ||
-                    <div dangerouslySetInnerHTML={{
+                    <p className="preline-text">{event?.shortDescription}</p> ||
+                    <div className="preline-text" dangerouslySetInnerHTML={{
                         __html: linkifyHtml(extractText(event?.description)),
                     }}/>
                 }

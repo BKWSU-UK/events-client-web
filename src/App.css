@@ -58,3 +58,12 @@
 }
 
 .emsMainImage { width: 100% }
+
+.copy-icon {
+  position: relative;
+  top: 6px
+}
+
+.preline-text {
+  white-space: pre-line
+}

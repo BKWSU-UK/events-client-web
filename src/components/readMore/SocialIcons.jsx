@@ -14,13 +14,16 @@ import {
     WhatsappIcon,
     WhatsappShareButton,
 } from 'react-share'
-import React, { useContext, useMemo } from 'react'
+import React, { useContext, useMemo, useState } from 'react'
 import EventContext from '../../context/EventContext'
 import { useTranslation } from '../../i18n'
 import { useDateTimeFormat } from '../../hooks/useTimeFormat'
 import { renderDateTimeFromIso } from '../../utils/dateUtils'
 import { eventMap } from '../../service/dataAccessConstants'
 import { extractImageFromEvent } from '../../utils/imgUtils'
+import { faCopy } from '@fortawesome/free-solid-svg-icons'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { copyToClipboardModern } from '../../utils/copyClipboard'
 
 const generateMessage = (currentEvent, langCode, dateTimeFormat, eventType) => {
     const dateStr = currentEvent.dateList?.length > 0 ?
@@ -55,9 +58,9 @@ export const tableEventToSingleEventAdapter = (currentEvent) => {
 const SocialIcons = ({ currentEvent, buttonSize = 32 }) => {
 
     currentEvent = tableEventToSingleEventAdapter(currentEvent)
-    console.log('currentEvent', currentEvent)
 
     const { eventsConfig } = useContext(EventContext)
+    const [copyMessage, setCopyMessage] = useState("")
     const { t, langCode } = useTranslation()
     const dateTimeFormat = useDateTimeFormat()
 
@@ -76,6 +79,13 @@ const SocialIcons = ({ currentEvent, buttonSize = 32 }) => {
         [currentEvent.id])
     const eventImage = useMemo(() => generateImage(currentEvent),
         [currentEvent.id])
+
+    const copyClipboard = (e) => {
+        e.preventDefault()
+        copyToClipboardModern(shareUrl)
+        setCopyMessage(t('Copied event address to clipboard ...'))
+        setTimeout(() => setCopyMessage(""), 10000)
+    }
 
     if (!!eventsConfig.hideSocial) {
         return <></>
@@ -140,6 +150,13 @@ const SocialIcons = ({ currentEvent, buttonSize = 32 }) => {
                 >
                     <TelegramIcon size={buttonSize} round />
                 </TelegramShareButton>
+                {' '}
+                <FontAwesomeIcon icon={faCopy}
+                                 size="2x"
+                                 className="copy-icon"
+                                 onClick={copyClipboard}/>
+                {' '}
+                {copyMessage}
             </div>
         </div>
 

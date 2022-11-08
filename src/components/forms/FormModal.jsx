@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import makeModal from '../simpleModal/makeModal'
 import { useTranslation } from '../../i18n'
 import { useQuery } from 'react-query'
 import { fetchSeatInformation } from '../../service/dataAccess'
 import CreateForm from './CreateForm'
+import EventContext from '../../context/EventContext'
 
 export const useSeatInformation = (currentEvent) => {
     const eventDateId = currentEvent.eventDateId ? currentEvent.eventDateId : currentEvent.dateList[0].eventDateId
@@ -12,14 +13,20 @@ export const useSeatInformation = (currentEvent) => {
     return { isLoading, error, data }
 }
 
-const NoMoreSeats = ({cols = 6}) => {
+const NoMoreSeats = ({cols = 6, currentEvent}) => {
 
     const { t } = useTranslation()
+    const { eventsConfig } = useContext(EventContext)
+
+    const customNoMoreSeatsMessage = typeof eventsConfig.customNoMoreSeatsMessage === "function" ?
+        eventsConfig.customNoMoreSeatsMessage(currentEvent) : null
 
     return (
         <div className={`col-${cols}`}>
             <div className="row alert alert-warning">
                 <div className="col-12">{t('There are no more seats available for this event!')}</div>
+                {!!customNoMoreSeatsMessage &&
+                    <div dangerouslySetInnerHTML={{ __html: customNoMoreSeatsMessage }} /> }
             </div>
         </div>
     )
@@ -40,7 +47,7 @@ export function EventForm ({ show, setShow, currentEvent }) {
         return <></>
     }
     if(noMoreSeatsCondition(data)) {
-        return <NoMoreSeats cols={12} />
+        return <NoMoreSeats cols={12} currentEvent={currentEvent} />
     }
     return (
         <>
@@ -62,7 +69,7 @@ export const IncludeForm = ({ currentEvent, className = 'col-md-6'}) => {
         return <></>
     }
     if(noMoreSeatsCondition(data)) {
-        return <NoMoreSeats />
+        return <NoMoreSeats currentEvent={currentEvent} />
     }
     return (
         <>
