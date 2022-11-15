@@ -125,6 +125,16 @@
             customNoMoreSeatsMessage: (currentEvent) => {
                 const eventId = currentEvent.id
                 const eventName = currentEvent.name
+                const specialEvents = [4223791]
+                if (specialEvents.includes(eventId)) {
+                    return `
+                        <div class="row">
+                            <div class="col-12 ml-3">
+                                <a href="https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${4226234}">Our waiting list</a>
+                            </div>
+                        </div>
+                        `
+                }
                 return `
                     <div class="row">
                         <div class="col-12 ml-3">

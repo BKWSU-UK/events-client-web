@@ -191,7 +191,7 @@ export const langResources = {
             'weekday_WE': 'WE',
             'Workshop': 'Workshop',
             'Your time': 'Your time',
-            "There are no more seats available for this event!": "There are no more seats available for this event! Please try to book another date.",
+            "There are no more seats available for this event!": "There are no more spaces available for this event! Please try to book another date.",
         },
     },
     'en-US': {
