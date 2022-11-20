@@ -18,11 +18,10 @@ const GoogleCalendarImportButton = ({ev}) => {
         ev.descriptionText = ev.webcastUrl + "\r\n" + ev.descriptionText
     }
     ev.venue = ev.simpleVenue
-    const calendarLink = googleCalendarLink(ev, adaptedEventDate)
 
     return (
         <div className="col-12 calendar-detail-buttons">
-            <a href={calendarLink} target="_blank">{t('Import on Google Calendar')}</a>
+            <a href={googleCalendarLink(ev, adaptedEventDate)} target="_blank">{t('Import on Google Calendar')}</a>
         </div>
     )
 }
