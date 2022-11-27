@@ -11,7 +11,7 @@ export function googleCalendarLink (event, date) {
     const renderedLocation = !!venue &&
         `&location=${encodeURI(venue.address)}` || ''
 
-    return `http://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
+    return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
         event.name)}&dates=${convertIsoToGoogleCal(
         date.startIso)}/${convertIsoToGoogleCal(
         date.endIso)}&details=${encodeURI(
