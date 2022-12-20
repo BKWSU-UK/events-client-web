@@ -13,6 +13,8 @@ export const handleShowEventDate = (eventContext, ev, dispatchDate) => {
         const image = extractImageFromEvent(ev)
         window.location.href = singleEventUrlTemplate.replace(EVENT_DATE_ID,
             eventDateId)
+            + `&startDateTime=${window.encodeURI(ev.startIso)}`
+            + `&endDateTime=${window.encodeURI(ev.endIso)}`
             + `&title=${window.encodeURI(ev.name)}`
             + (!!image ? `&image=${window.encodeURI(image)}`: '')
 
