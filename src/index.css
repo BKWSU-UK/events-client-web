@@ -84,17 +84,17 @@ code {
     font-size: 2.5rem;
 }
 
-.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .fromNow {
+.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .fromNow, .calendarWidget .dateSeparator {
     margin-top: 3px
 }
 
-.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod {
+.calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .dateSeparator {
     font-weight: bold;
     font-family: monospace;
     font-size: 1rem;
 }
 
-.calendarWidget > .simpleTimePeriod, .calendarWidget > .fromNow {
+.calendarWidget > .simpleTimePeriod, .calendarWidget > .fromNow, .calendarWidget .dateSeparator {
     text-align: center;
 }
 

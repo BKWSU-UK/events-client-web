@@ -136,3 +136,5 @@ export const renderDateTimeFromIso = (isoDate, langCode, timeFormat) => moment(i
 
 export const renderTimeFromIso = (isoDate, langCode, timeFormat) => moment(isoDate, 'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
     format(timeFormat)
+
+export const isSameMoment = (baseMoment, baseEndMoment) => baseMoment.date() === baseEndMoment.date() && baseMoment.month() === baseEndMoment.month()

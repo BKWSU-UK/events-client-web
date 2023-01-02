@@ -12,133 +12,155 @@ import EventContext from '../../context/EventContext'
 import useTimeFormat from '../../hooks/useTimeFormat'
 import 'moment/locale/de'
 import {
-    isSameDay,
-    renderTimeFromIso,
-    timeAfterNow,
+  isSameDay, isSameMoment,
+  renderTimeFromIso,
+  timeAfterNow,
 } from '../../utils/dateUtils'
 import { googleCalendarLink } from '../../utils/googleCalendarUtils'
 import SocialIcons from './SocialIcons'
 
 function renderAddToGoogleCalendar (
-    event, date, t, useIcon = false, linkText = 'add-google-calendar') {
+  event, date, t, useIcon = false, linkText = 'add-google-calendar') {
 
-    return (
-        <a href={googleCalendarLink(event, date)}
-           target="_blank" rel="nofollow">{!useIcon &&
-            t(linkText) || <span>&#128276;</span>} </a>
-    )
+  return (
+    <a href={googleCalendarLink(event, date)}
+       target="_blank" rel="nofollow">{!useIcon &&
+      t(linkText) || <span>&#128276;</span>} </a>
+  )
 }
 
 const DEFAULT_UPCOMING_LIMIT = 10
 
 export function RenderDate ({
-    date, currentEvent, timeFormat, useIcon = false,
-    useCalendarIcon = true, addGoogleCalendar = true,
+  date, currentEvent, timeFormat, useIcon = false,
+  useCalendarIcon = true, addGoogleCalendar = true,
 }) {
-    const { eventsConfig } = useContext(EventContext)
-    const { t, langCode } = useTranslation()
+  const { eventsConfig } = useContext(EventContext)
+  const { t, langCode } = useTranslation()
 
-    const renderEndTimeIfSameDay = () => {
-        if (isSameDay(date)) {
-            return '-' +
-                renderTimeFromIso(date.endIso, langCode, timeFormat)
-        }
-        return ''
+  const renderEndTimeIfSameDay = () => {
+    if (isSameDay(date)) {
+      return '-' +
+        renderTimeFromIso(date.endIso, langCode, timeFormat)
     }
+    return ''
+  }
 
-    const startAfterNow = !!timeAfterNow(date.startIso)
+  const startAfterNow = !!timeAfterNow(date.startIso)
 
-    return (
-        <div className="row" key={date.eventDateId}>
-            <div className="calendar-date-info col-8">
-                {useCalendarIcon && <>&#x1f4c5;</>} {moment(date.startIso,
-                'YYYY-MM-DD\'T\'hh:mm:ss').locale(langCode).
-                format(`Do MMMM YYYY ${timeFormat}`)}{renderEndTimeIfSameDay()}
-                <span className="time-from-now">{' '}{moment(date.startIso,
-                    'YYYY-MM-DD\'T\'hh:mm:ss').
-                    locale(langCode).
-                    fromNow()}</span>
-            </div>
-            <div className="col-4 text-right text-nowrap">
-            {!!eventsConfig.showGoogleCalendarIcon ?
-                    (addGoogleCalendar && startAfterNow) && renderAddToGoogleCalendar(currentEvent, date, t, useIcon)
-                : currentEvent.locality
-            }
-            </div>
-        </div>
-    )
+  const dateFormat = 'ddd, Do MMM YYYY'
+
+  const startMoment = moment(date.startIso, 'YYYY-MM-DD\'T\'hh:mm:ss')
+  const endMoment = moment(date.endIso, 'YYYY-MM-DD\'T\'hh:mm:ss')
+
+  return (
+    <div className="row" key={date.eventDateId}>
+      <div className="calendar-date-info col-12">
+        {useCalendarIcon && <>&#x1f4c5;</>} {startMoment.locale(langCode).
+        format(`${dateFormat} ${timeFormat}`)}
+        {renderEndTimeIfSameDay()}
+        {!isSameMoment(startMoment, endMoment) &&
+          <span> - {endMoment.locale(langCode).
+            format(`${dateFormat} ${timeFormat}`)}</span>}
+        <span className="time-from-now">{' '}({moment(date.startIso,
+          'YYYY-MM-DD\'T\'hh:mm:ss').
+          locale(langCode).
+          fromNow()})</span>
+      </div>
+      <div className="col-12 text-right text-nowrap">
+        {!!eventsConfig.showGoogleCalendarIcon ?
+          (addGoogleCalendar && startAfterNow) &&
+          renderAddToGoogleCalendar(currentEvent, date, t, useIcon)
+          : currentEvent.locality
+        }
+      </div>
+    </div>
+  )
 }
 
 function RenderUpcomingDates ({ dateList, currentEvent }) {
 
-    const { t } = useTranslation()
-    if (dateList.length === 0) {
-        dateList.push({
-            eventDateId: currentEvent.eventDateId,
-            endIso: currentEvent.endIso,
-            startIso: currentEvent.startIso,
-        })
-    }
-    const eventContext = useContext(EventContext)
-    const timeFormat = useTimeFormat()
-    moment.locale(extractParameter({ ...eventContext }, 'language', 'en-US'))
-    const upcomingDateLimit = extractParameter({ ...eventContext },
-            'upcomingDateLimit') ||
-        DEFAULT_UPCOMING_LIMIT
-    if (upcomingDateLimit && Array.isArray(dateList)) {
-        dateList = dateList.slice(0, upcomingDateLimit)
-    }
-    return (
-        <>
-            <h4 className="mt-2">
-                {t('upcoming-dates')}
-            </h4>
-            <div className="card card-body bg-light">
-                {Array.isArray(dateList) ? dateList.map((date, i) => {
-                    return (
-                        <RenderDate date={date} key={`RenderDate_${i}`}
-                                    currentEvent={currentEvent}
-                                    timeFormat={timeFormat}/>
-                    )
-                }) : ''}
-            </div>
-        </>
-    )
+  const { t } = useTranslation()
+  if (dateList.length === 0) {
+    dateList.push({
+      eventDateId: currentEvent.eventDateId,
+      endIso: currentEvent.endIso,
+      startIso: currentEvent.startIso,
+    })
+  }
+  const eventContext = useContext(EventContext)
+  const timeFormat = useTimeFormat()
+  moment.locale(extractParameter({ ...eventContext }, 'language', 'en-US'))
+  const upcomingDateLimit = extractParameter({ ...eventContext },
+      'upcomingDateLimit') ||
+    DEFAULT_UPCOMING_LIMIT
+  if (upcomingDateLimit && Array.isArray(dateList)) {
+    dateList = dateList.slice(0, upcomingDateLimit)
+  }
+  return (
+    <>
+      <h4 className="mt-2">
+        {t('upcoming-dates')}
+      </h4>
+      <div className="card card-body bg-light">
+        {Array.isArray(dateList) ? dateList.map((date, i) => {
+          return (
+            <RenderDate date={date} key={`RenderDate_${i}`}
+                        currentEvent={currentEvent}
+                        timeFormat={timeFormat}/>
+          )
+        }) : ''}
+      </div>
+    </>
+  )
 }
 
 export const venueFactory = (currentEvent) => {
-    if (currentEvent.venue) {
-        return { ...currentEvent }
-    }
-    return {
-        ...currentEvent,
-        venue: {
-            name: currentEvent.venueName,
-            address: currentEvent.venueAddress,
-            postalCode: currentEvent.venuePostCode,
-            locality: currentEvent.venueCity,
-            country: currentEvent.venueCountry,
-        },
-    }
+  if (currentEvent.venue) {
+    return { ...currentEvent }
+  }
+  return {
+    ...currentEvent,
+    venue: {
+      name: currentEvent.venueName,
+      address: currentEvent.venueAddress,
+      postalCode: currentEvent.venuePostCode,
+      locality: currentEvent.venueCity,
+      country: currentEvent.venueCountry,
+    },
+  }
 }
 
 export const ShowImage = () => {
-    const { currentEvent, eventsConfig } = useContext(EventContext)
-    const images = [1, 2, 3]
-    return (
-        <>
-            {images.map((imageIndex) => {
-                if (!!eventsConfig[`singleEventShowImage${imageIndex}`] &&
-                    !!currentEvent[`image${imageIndex}`]) {
-                    return (
-                        <img
-                            src={`https://events.brahmakumaris.org${currentEvent[`image${imageIndex}`]}`}
-                            className="img-fluid" alt={currentEvent.name}/>
-                    )
-                }
-            })}
-        </>
-    )
+  const { currentEvent, eventsConfig } = useContext(EventContext)
+  const images = [1, 2, 3]
+  return (
+    <>
+      {images.map((imageIndex) => {
+        if (!!eventsConfig[`singleEventShowImage${imageIndex}`] &&
+          !!currentEvent[`image${imageIndex}`]) {
+          return (
+            <img
+              src={`https://events.brahmakumaris.org${currentEvent[`image${imageIndex}`]}`}
+              className="img-fluid" alt={currentEvent.name}/>
+          )
+        }
+      })}
+    </>
+  )
+}
+
+function CalendarFirstDate ({ dateList, currentEvent, timeFormat }) {
+  return <div className="card card-body bg-light mb-2 calendar-first-date">
+    {Array.isArray(dateList) && dateList.length > 0 &&
+      dateList.slice(0, 1).map((date, i) => {
+        return (
+          <RenderDate date={date} key={`RenderDate_${i}`}
+                      currentEvent={currentEvent}
+                      timeFormat={timeFormat}/>
+        )
+      })}
+  </div>
 }
 
 /**
@@ -148,64 +170,68 @@ export const ShowImage = () => {
  */
 export const ReadMore = () => {
 
-    const { currentEvent } = useContext(EventContext)
-    const dateList = currentEvent?.dateList
-    const venueEvent = venueFactory(currentEvent)
+  const { currentEvent } = useContext(EventContext)
+  const dateList = currentEvent?.dateList
+  const venueEvent = venueFactory(currentEvent)
+  const timeFormat = useTimeFormat()
 
-    if (venueEvent?.venue) {
-        return (
-            <>
-                <h2 id="eventDisplayName">{venueEvent.name}</h2>
-                <div className="row">
-                    <div className={venueEvent.requiresRegistration
-                        ? 'col-md-6'
-                        : 'col-md-12'}>
-                        <EventType eventTypeInt={venueEvent.eventTypeId}/>
-                        <ShowImage/>
-                        <p dangerouslySetInnerHTML={{ __html: venueEvent.description }}/>
-                        <div className="row">
-                            <div className="col-md-12 webcastButton">
-                                <WebcastButton original={venueEvent}/></div>
-                        </div>
+  if (venueEvent?.venue) {
+    return (
+      <>
+        <h2 id="eventDisplayName">{venueEvent.name}</h2>
+        <div className="row">
+          <div className={venueEvent.requiresRegistration
+            ? 'col-md-6'
+            : 'col-md-12'}>
+            <EventType eventTypeInt={venueEvent.eventTypeId}/>
+            <CalendarFirstDate dateList={dateList}
+                               currentEvent={currentEvent}
+                               timeFormat={timeFormat} />
+            <ShowImage/>
+            <p dangerouslySetInnerHTML={{ __html: venueEvent.description }}/>
+            <div className="row">
+              <div className="col-md-12 webcastButton">
+                <WebcastButton original={venueEvent}/></div>
+            </div>
 
-                        <Venue venue={venueEvent.venue}
-                               venueName={venueEvent.venue.name}
-                               venueAddress={venueEvent.venue.address}
-                               venuePostalCode={venueEvent.venue.postalCode}
-                               venueLocality={venueEvent.venue.locality}/>
-                        {dateList && <RenderUpcomingDates dateList={dateList}
-                                                          currentEvent={venueEvent}/>}
-                        <ContactEmail currentEvent={venueEvent}/>
-                        <SocialIcons currentEvent={currentEvent} />
-                        <RenderSimilarEvents/>
-                    </div>
-                    <IncludeForm currentEvent={venueEvent}/>
-                </div>
-            </>
-        )
-    } else {
-        return <></>
-    }
+            <Venue venue={venueEvent.venue}
+                   venueName={venueEvent.venue.name}
+                   venueAddress={venueEvent.venue.address}
+                   venuePostalCode={venueEvent.venue.postalCode}
+                   venueLocality={venueEvent.venue.locality}/>
+            {dateList && <RenderUpcomingDates dateList={dateList}
+                                              currentEvent={venueEvent}/>}
+            <ContactEmail currentEvent={venueEvent}/>
+            <SocialIcons currentEvent={currentEvent}/>
+            <RenderSimilarEvents/>
+          </div>
+          <IncludeForm currentEvent={venueEvent}/>
+        </div>
+      </>
+    )
+  } else {
+    return <></>
+  }
 }
 
 export const ContactEmail = ({ currentEvent }) => {
-    const { t } = useTranslation()
-    const contactEmail = currentEvent.contactEmail
-    if (!!contactEmail) {
-        return (
-            <div className="contact-email">
-                <h4 className="card-title mt-2">{t('Contact Email')}</h4>
-                <div className="card mt-2">
-                    <div className="card-body bg-light">
-                        <p className="card-text">&#128231;{' '}<a
-                            href={`mailto:${contactEmail}`}>{contactEmail}</a>
-                        </p>
-                    </div>
-                </div>
-            </div>
-        )
-    }
-    return <></>
+  const { t } = useTranslation()
+  const contactEmail = currentEvent.contactEmail
+  if (!!contactEmail) {
+    return (
+      <div className="contact-email">
+        <h4 className="card-title mt-2">{t('Contact Email')}</h4>
+        <div className="card mt-2">
+          <div className="card-body bg-light">
+            <p className="card-text">&#128231;{' '}<a
+              href={`mailto:${contactEmail}`}>{contactEmail}</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    )
+  }
+  return <></>
 
 }
 

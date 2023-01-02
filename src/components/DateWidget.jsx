@@ -10,6 +10,7 @@ import {
     extractParameter
 } from '../utils/paramExtraction'
 import EventContext from '../context/EventContext'
+import { isSameMoment } from '../utils/dateUtils'
 
 export const determineTimeFormat = (eventContext) => {
     const language = extractParameter({...eventContext},'language', 'en-US');
@@ -78,7 +79,7 @@ function displayTimes(timeParams) {
     const hideTime = extractParameter({...eventContext}, 'hideTime', false);
     const timeFormat = determineTimeFormat(eventContext)
     const localIsRemote = baseMoment.format(timeFormat) === formatTime(baseMoment.clone(), timeFormat, timezone);
-    if (baseMoment.date() === baseEndMoment.date() && baseMoment.month() === baseEndMoment.month()) {
+    if (isSameMoment(baseMoment, baseEndMoment)) {
         if(hideTime) {
             return <></>;
         }
@@ -92,10 +93,12 @@ function displayTimes(timeParams) {
             </>
         )
     } else {
-        const defaultFormat = hideTime ? "ddd MMM DD" : "ddd MMM DD, hh:mm a";
+        const dayFormat = "ddd MMM D"
+        const defaultFormat = hideTime ? dayFormat : dayFormat + ", h:mm a";
         return (
             <div className="extendedPeriod">
                 <div className="extendedTimePeriod">{baseMoment.format(defaultFormat)}</div>
+                <div className="dateSeparator">{t('to')}</div>
                 <div className="extendedTimePeriod">{baseEndMoment.format(defaultFormat)}</div>
                 {showLocalTimeFull(localIsRemote, defaultFormat, timeParams, eventContext)}
                 <div className="fromNow">({baseMoment.fromNow()})</div>
