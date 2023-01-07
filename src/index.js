@@ -4,6 +4,7 @@ import './index.css';
 import './css/compositeCalendar.css';
 import './css/slider.css';
 import './css/eventTiles.css';
+import './css/eventTable.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'bootstrap/dist/css/bootstrap.min.css';

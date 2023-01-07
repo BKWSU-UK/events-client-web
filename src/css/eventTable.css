@@ -1,0 +1,17 @@
+.tags {
+    font-size: 1.4rem;
+}
+
+.tags .badge {
+    margin-right: 8px;
+    padding: 0.5rem 1rem 0.5rem 1.3rem;
+}
+
+.tags .fa-tag {
+    position: relative;
+    top: 3px
+}
+
+.tags .deactivated {
+    color: #5a6268;
+}

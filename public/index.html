@@ -24,7 +24,7 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <style type="text/css">
+    <style>
 
         .flexContainer {
             display: flex;
@@ -34,36 +34,12 @@
             justify-content: center;
         }
 
-        .half {
-            flex: 1;
-            max-width: 100%;
-        }
-
-        .third {
-            flex: 1;
-            max-width: 100%;
-        }
-
-        .fourth {
-            flex: 1;
-            max-width: 100%;
-        }
-
         @media (min-width: 1024px) {
             .flexContainer {
                 flex-direction: row;
             }
             .full {
                 max-width: 100%;
-            }
-            .half {
-                max-width: 50%;
-            }
-            .third {
-                max-width: 33%;
-            }
-            .fourth {
-                max-width: 25%;
             }
         }
 
@@ -98,9 +74,9 @@
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
             useAllOrgIds: true,
-            widgetType: "TABLE",
+            widgetType: "TABLE", // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
             hideSocial: false,
-            private: 'yes',
+            private: 'no',
             showGoogleCalendarIcon: false,
             eventCountDownStyle: "animated",
             eventCountDownTimezone: "Europe/Berlin",
@@ -124,7 +100,6 @@
                 return `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${e.id}`
             },
             customNoMoreSeatsMessage: (currentEvent) => {
-                const eventId = currentEvent.id
                 const eventName = currentEvent.name
                 return `
                     <div class="row">
@@ -133,7 +108,8 @@
                         </div>
                     </div>
                 `
-            }
+            },
+            tags: 'women,spirituality,meditation'
         }]
 </script>
 

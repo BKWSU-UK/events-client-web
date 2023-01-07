@@ -9,238 +9,266 @@ import { convertDate } from '../utils/dateUtils'
 import searchAdapter from '../context/searchAdapter'
 
 const eventLimit = (eventContext) => extractParameter({ ...eventContext },
-    'eventsLimit', 10000)
+  'eventsLimit', 10000)
 
 const onlyWebcast = (eventContext) => extractParameter({ ...eventContext },
-    DATA_ACCESS_PARAMS.ONLY_WEBCAST, false)
+  DATA_ACCESS_PARAMS.ONLY_WEBCAST, false)
 
 const onlineOnly = (eventContext) => extractParameter({ ...eventContext },
-    DATA_ACCESS_PARAMS.ONLINE_ONLY, false)
+  DATA_ACCESS_PARAMS.ONLINE_ONLY, false)
 
 const isPrivate = (eventContext) => extractParameter({ ...eventContext },
-    'private', false)
+  'private', false)
 
 const hasRegistration = (eventContext) => extractParameter({ ...eventContext },
-    'hasRegistration', false)
+  'hasRegistration', false)
+
+const getTagsString = (eventContext) => {
+  const { selectedTag, activateTags } = eventContext?.filterState
+  if(!activateTags) {
+    return null
+  }
+  if(!!selectedTag) {
+    return [selectedTag]
+  }
+  return extractParameter({ ...eventContext }, 'tags')
+}
 
 const appendToTargetUrl = (value, targetUrl, parameter) => {
-    if (value === DATA_ACCESS_PARAMS.LOGICAL_YES) {
-        targetUrl += `&${parameter}=true`
-    } else if (value === DATA_ACCESS_PARAMS.LOGICAL_NO) {
-        targetUrl += `&${parameter}=false`
-    }
-    return targetUrl
+  if (value === DATA_ACCESS_PARAMS.LOGICAL_YES) {
+    targetUrl += `&${parameter}=true`
+  } else if (value === DATA_ACCESS_PARAMS.LOGICAL_NO) {
+    targetUrl += `&${parameter}=false`
+  }
+  return targetUrl
 }
 
 const processHasRegistration = (targetUrl, eventContext) => appendToTargetUrl(
-    hasRegistration(eventContext), targetUrl, 'hasRegistration')
+  hasRegistration(eventContext), targetUrl, 'hasRegistration')
 
 const processPrivate = (targetUrl, eventContext) => appendToTargetUrl(
-    isPrivate(eventContext), targetUrl, 'private')
+  isPrivate(eventContext), targetUrl, 'private')
+
+const processTags = (targetUrl, eventContext) => {
+  const tagsString = getTagsString(eventContext)
+  return targetUrl + (!!tagsString? `&tags=${tagsString}` : '')
+}
 
 const onlyWebcastAdapter = (isOnlyWebcast, targetUrl) => {
-    if (isOnlyWebcast) {
-        targetUrl += `&${DATA_ACCESS_PARAMS.ONLY_WEBCAST}=${isOnlyWebcast}`
-    }
-    return targetUrl
+  if (isOnlyWebcast) {
+    targetUrl += `&${DATA_ACCESS_PARAMS.ONLY_WEBCAST}=${isOnlyWebcast}`
+  }
+  return targetUrl
 }
 
 const processOnlineOnly = (targetUrl, eventContext) => {
-    console.log('processOnlineOnly', processOnlineOnly)
-    const onlineOnlyFilter = extractParameter(eventContext,
-        DISPLAY_ONLINE_FILTER)
-    if (!onlineOnlyFilter) {
-        return appendToTargetUrl(
-            onlineOnly(eventContext), targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
-    } else {
-        switch (eventContext.filterState.onlineStatus) {
-            case ONLINE_STATUSES.NONE:
-                return targetUrl
-            case ONLINE_STATUSES.IN_PERSON:
-                return appendToTargetUrl(
-                    DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl,
-                    DATA_ACCESS_PARAMS.ONLINE_ONLY)
-            case ONLINE_STATUSES.ONLINE_ONLY:
-                return appendToTargetUrl(
-                    DATA_ACCESS_PARAMS.LOGICAL_YES, targetUrl,
-                    DATA_ACCESS_PARAMS.ONLINE_ONLY)
-            case ONLINE_STATUSES.MIXED: {
-                const targetUrl1 = appendToTargetUrl(
-                    DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl,
-                    DATA_ACCESS_PARAMS.ONLINE_ONLY)
-                return onlyWebcastAdapter(true, targetUrl1)
-            }
-            case ONLINE_STATUSES.HAS_WEBCAST:
-                return onlyWebcastAdapter(true, targetUrl)
-        }
+  console.log('processOnlineOnly', processOnlineOnly)
+  const onlineOnlyFilter = extractParameter(eventContext,
+    DISPLAY_ONLINE_FILTER)
+  if (!onlineOnlyFilter) {
+    return appendToTargetUrl(
+      onlineOnly(eventContext), targetUrl, DATA_ACCESS_PARAMS.ONLINE_ONLY)
+  } else {
+    switch (eventContext.filterState.onlineStatus) {
+      case ONLINE_STATUSES.NONE:
         return targetUrl
+      case ONLINE_STATUSES.IN_PERSON:
+        return appendToTargetUrl(
+          DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl,
+          DATA_ACCESS_PARAMS.ONLINE_ONLY)
+      case ONLINE_STATUSES.ONLINE_ONLY:
+        return appendToTargetUrl(
+          DATA_ACCESS_PARAMS.LOGICAL_YES, targetUrl,
+          DATA_ACCESS_PARAMS.ONLINE_ONLY)
+      case ONLINE_STATUSES.MIXED: {
+        const targetUrl1 = appendToTargetUrl(
+          DATA_ACCESS_PARAMS.LOGICAL_NO, targetUrl,
+          DATA_ACCESS_PARAMS.ONLINE_ONLY)
+        return onlyWebcastAdapter(true, targetUrl1)
+      }
+      case ONLINE_STATUSES.HAS_WEBCAST:
+        return onlyWebcastAdapter(true, targetUrl)
     }
+    return targetUrl
+  }
 }
 
 export const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
 
 export const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
-    if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
-        const extractParameterSimple1 = extractParameter(
-            { eventsConfig: { useAllOrgIds } }, 'useAllOrgIds', false)
-        if (!extractParameterSimple1) {
-            return `${ALL_ORG_IDS}`
-        }
-        return joinIfArray(orgId)
+  if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
+    const extractParameterSimple1 = extractParameter(
+      { eventsConfig: { useAllOrgIds } }, 'useAllOrgIds', false)
+    if (!extractParameterSimple1) {
+      return `${ALL_ORG_IDS}`
     }
-    return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
+    return joinIfArray(orgId)
+  }
+  return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
 }
 
 export const appendDates = (targetUrl, dateStart, dateEnd) => {
-    if (!!dateStart) {
-        targetUrl += `&startDate=${convertDate(dateStart)}`
-    }
-    if (!!dateEnd) {
-        targetUrl += `&endDate=${convertDate(dateEnd)}`
-    }
-    return targetUrl
+  if (!!dateStart) {
+    targetUrl += `&startDate=${convertDate(dateStart)}`
+  }
+  if (!!dateEnd) {
+    targetUrl += `&endDate=${convertDate(dateEnd)}`
+  }
+  return targetUrl
 }
 
 export const targetUrlFactory = (params) => {
-    const { orgIdStr, eventTypeIds, eventsLimit, eventsLang, featured, dateStart, dateEnd, eventContext, useMinimal } = params
-    let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport${!!useMinimal
-        ? 'Minimal'
-        : ''}.ftl&orgId=${orgIdStr}`
-    targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
-    if (featured) {
-        targetUrl += `&featured=true`
-    }
-    const isOnlyWebcast = onlyWebcast(eventContext)
-    targetUrl = onlyWebcastAdapter(isOnlyWebcast, targetUrl)
-    if (eventsLang) {
-        targetUrl += `&lang=${eventsLang}`
-    }
-    targetUrl = processOnlineOnly(targetUrl, eventContext)
-    targetUrl = processPrivate(targetUrl, eventContext)
-    targetUrl = processHasRegistration(targetUrl, eventContext)
-    targetUrl = appendDates(targetUrl, dateStart, dateEnd)
-    return targetUrl
+  const {
+    orgIdStr,
+    eventTypeIds,
+    eventsLimit,
+    eventsLang,
+    featured,
+    dateStart,
+    dateEnd,
+    eventContext,
+    useMinimal,
+  } = params
+  let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport${!!useMinimal
+    ? 'Minimal'
+    : ''}.ftl&orgId=${orgIdStr}`
+  targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
+  if (featured) {
+    targetUrl += `&featured=true`
+  }
+  const isOnlyWebcast = onlyWebcast(eventContext)
+  targetUrl = onlyWebcastAdapter(isOnlyWebcast, targetUrl)
+  if (eventsLang) {
+    targetUrl += `&lang=${eventsLang}`
+  }
+  const appendFunctions = [processOnlineOnly, processPrivate, processHasRegistration, processTags]
+  for (const fn of appendFunctions) {
+    targetUrl = fn(targetUrl, eventContext)
+  }
+  targetUrl = appendDates(targetUrl, dateStart, dateEnd)
+  return targetUrl
 }
 
 export const getCombinedEventListWithGroupCount = async (
-    params1, params2, searchExpression) => {
-    const [eventList1, eventList2] = await Promise.all(
-        [getEventList(params1), getEventList(params2)])
-    let eventList = Object.values(
-        eventList1.concat(eventList2).reduce((a, e) => {
-            a[e.eventDateId] = e
-            return a
-        }, {}))
-    eventList = searchAdapter(eventList, searchExpression)
-    console.log('getCombinedEventListWithGroupCount')
-    const groupedCount = groupByDate(eventList)
-    return { groupedCount, eventList }
+  params1, params2, searchExpression) => {
+  const [eventList1, eventList2] = await Promise.all(
+    [getEventList(params1), getEventList(params2)])
+  let eventList = Object.values(
+    eventList1.concat(eventList2).reduce((a, e) => {
+      a[e.eventDateId] = e
+      return a
+    }, {}))
+  eventList = searchAdapter(eventList, searchExpression)
+  console.log('getCombinedEventListWithGroupCount')
+  const groupedCount = groupByDate(eventList)
+  return { groupedCount, eventList }
 }
 
 export const getEventListWithGroupCount = async (params) => {
-    console.log('grouped count', params.marker)
-    let eventList = await getEventList(params)
-    const groupedCount = groupByDate(eventList)
-    return { groupedCount, eventList }
+  console.log('grouped count', params.marker)
+  let eventList = await getEventList(params)
+  const groupedCount = groupByDate(eventList)
+  return { groupedCount, eventList }
 }
 
 export const getEventList = async (params) => {
-    const { orgId, orgIdFilter, eventContext } = params
-    const orgIdStr = orgIdStrFactory(
-        { orgIdFilter, orgId, useAllOrgIds: eventContext.useAllOrgIds })
-    if (parseInt(orgIdStr) < 1) {
-        return []
-    }
-    const eventsLimit = params.eventsLimit || eventLimit(eventContext)
-    const targetUrl = targetUrlFactory({
-        ...params, orgIdStr, eventsLimit,
-        featured: params.featured,
-    })
-    console.log('target url', targetUrl)
-    const fetchResponse = await fetch(targetUrl)
-    const json = await fetchResponse.json()
-    if (json?.response?.status !== 0) {
-        console.error('Error occurred whiles fetching events', json)
-    }
-    const response = json.response
-    let eventList = response?.data
-    eventList = searchAdapter(eventList,
-        params.searchExpression, params.searchFilterFunction, params.eventSliceFunction)
-    return eventList
+  const { orgId, orgIdFilter, eventContext } = params
+  const orgIdStr = orgIdStrFactory(
+    { orgIdFilter, orgId, useAllOrgIds: eventContext.useAllOrgIds })
+  if (parseInt(orgIdStr) < 1) {
+    return []
+  }
+  const eventsLimit = params.eventsLimit || eventLimit(eventContext)
+  const targetUrl = targetUrlFactory({
+    ...params, orgIdStr, eventsLimit,
+    featured: params.featured,
+  })
+  console.log('target url', targetUrl)
+  const fetchResponse = await fetch(targetUrl)
+  const json = await fetchResponse.json()
+  if (json?.response?.status !== 0) {
+    console.error('Error occurred whiles fetching events', json)
+  }
+  const response = json.response
+  let eventList = response?.data
+  eventList = searchAdapter(eventList,
+    params.searchExpression, params.searchFilterFunction,
+    params.eventSliceFunction)
+  return eventList
 }
 
 export const fetchSingleEvent = async (eventId) => {
-    if (!eventId) {
-        return
-    }
-    const targetUrl = `${SERVER_BASE}/organisationEventReportController.do?simpleEventTemplate=jsonEvent.ftl&mimeType=application/json&eventIds=${eventId}`
-    const response = await fetch(targetUrl)
-    const json = await response.json()
-    const jsonResponse = json.response
-    console.log(targetUrl, jsonResponse)
-    return jsonResponse
+  if (!eventId) {
+    return
+  }
+  const targetUrl = `${SERVER_BASE}/organisationEventReportController.do?simpleEventTemplate=jsonEvent.ftl&mimeType=application/json&eventIds=${eventId}`
+  const response = await fetch(targetUrl)
+  const json = await response.json()
+  const jsonResponse = json.response
+  console.log(targetUrl, jsonResponse)
+  return jsonResponse
 }
 
 export const fetchEvent = async (setEvent, eventId) => {
-    const response = await fetchSingleEvent(eventId)
-    setEvent(response.data[0])
+  const response = await fetchSingleEvent(eventId)
+  setEvent(response.data[0])
 }
 
 export const fetchEventDateList = async (setDateList, eventId) => {
-    const response = await fetchSingleEvent(eventId)
-    setDateList(response.data[0].dateList)
+  const response = await fetchSingleEvent(eventId)
+  setDateList(response.data[0].dateList)
 }
 
 export const fetchSimilarEventList = async (
-    eventDateId, setSimilarEvents, limit = 3) => {
-    if (!eventDateId) {
-        return
-    }
-    const targetUrl = `${SERVER_BASE}/similarEvents.do?eventDateId=${eventDateId}&limit=${limit}`
-    console.log('fetchSimilarEventList target', targetUrl)
-    const response = await fetch(targetUrl)
-    const json = await response.json()
-    console.log('similar events', json)
-    setSimilarEvents(json)
+  eventDateId, setSimilarEvents, limit = 3) => {
+  if (!eventDateId) {
+    return
+  }
+  const targetUrl = `${SERVER_BASE}/similarEvents.do?eventDateId=${eventDateId}&limit=${limit}`
+  console.log('fetchSimilarEventList target', targetUrl)
+  const response = await fetch(targetUrl)
+  const json = await response.json()
+  console.log('similar events', json)
+  setSimilarEvents(json)
 }
 
 export const fetchOrganisations = async (orgIds) => {
-    const orgList = orgIds.join(',')
-    const targetUrl = `${SERVER_BASE}/organisations/ids?ids=${orgList}`
-    const response = await fetch(targetUrl)
-    return response.json()
+  const orgList = orgIds.join(',')
+  const targetUrl = `${SERVER_BASE}/organisations/ids?ids=${orgList}`
+  const response = await fetch(targetUrl)
+  return response.json()
 }
 
 export const fetchSeatInformation = async (eventDateId) => {
-    const targetUrl = `${SERVER_BASE}/seatsAvailable.do?eventDateId=${eventDateId}`
-    const response = await fetch(targetUrl)
-    return await response.json()
+  const targetUrl = `${SERVER_BASE}/seatsAvailable.do?eventDateId=${eventDateId}`
+  const response = await fetch(targetUrl)
+  return await response.json()
 }
 
 export const fetchEventDate = async (eventDateId) => {
-    if (!eventDateId) {
-        return null
-    }
-    const targetUrl = `${SERVER_BASE}/eventDateEventExact/${eventDateId}`
-    console.log('fetchEventDate', targetUrl)
-    const response = await fetch(targetUrl)
-    return await response.json()
+  if (!eventDateId) {
+    return null
+  }
+  const targetUrl = `${SERVER_BASE}/eventDateEventExact/${eventDateId}`
+  console.log('fetchEventDate', targetUrl)
+  const response = await fetch(targetUrl)
+  return await response.json()
 }
 
 export const fetchEventDateWithSeats = async (eventDateId) => {
-    const eventDate = await fetchEventDate(eventDateId)
-    if (!!eventDate?.requiresRegistration) {
-        const seatInfo = await fetchSeatInformation(eventDateId)
-        return { ...eventDate, ...seatInfo }
-    }
-    return eventDate
+  const eventDate = await fetchEventDate(eventDateId)
+  if (!!eventDate?.requiresRegistration) {
+    const seatInfo = await fetchSeatInformation(eventDateId)
+    return { ...eventDate, ...seatInfo }
+  }
+  return eventDate
 }
 
-export const fetchNextListEvents = async(countries, timezone) => {
-    if(!countries) {
-        return []
-    }
-    const targetUrl = `${SERVER_BASE}/findNextLiveEvent?countries=${countries}&timezone=${timezone}`
-    const response = await fetch(targetUrl)
-    return await response.json()
+export const fetchNextListEvents = async (countries, timezone) => {
+  if (!countries) {
+    return []
+  }
+  const targetUrl = `${SERVER_BASE}/findNextLiveEvent?countries=${countries}&timezone=${timezone}`
+  const response = await fetch(targetUrl)
+  return await response.json()
 }
