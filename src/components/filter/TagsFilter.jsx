@@ -45,7 +45,7 @@ const TagsFilter = () => {
   }
 
   return (
-    <div className="row mt-3">
+    <div className="row mt-3 mb-3">
       <div className="col-12 tags">
         {filterState.tags.map((t, i) => (
           <a href="#"

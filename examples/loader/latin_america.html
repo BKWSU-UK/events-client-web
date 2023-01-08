@@ -1,13 +1,35 @@
-<html>
+<html lang="en">
 <head>
     <title>Loader Test</title>
+    <style>
+        .col-sm-12 {
+            width: 100%;
+        }
+    </style>
+    <style>
+        .search-box {
+            padding-left: 0;
+            margin-left: 0;
+        }
+        /** Stretch search field */
+        label[for=searchInput] + .col-6 {
+            width: 100%;
+            max-width: 100%;
+            flex: 0 0 100%;
+            padding-left: 0;
+        }
+        label[for=searchInput] {
+            float: left;
+            text-align: left !important;
+            padding-left: 0;
+        }
+        .search-box {
+            max-width: 100%;
+        }
+    </style>
 </head>
 <body>
-<style type="text/css">
-    .col-sm-12 {
-        width: 100%;
-    }
-</style>
+
 <script>
 
 //    id |         name         |                                   description                                   | periodical
@@ -50,28 +72,8 @@
     }]
 </script>
 <div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.48.0/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.49.0/starter.js"></script>
 <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.42.0/loader.js"></script>
-<style type="text/css">
-    .search-box {
-        padding-left: 0;
-        margin-left: 0;
-    }
-    /** Stretch search field */
-    label[for=searchInput] + .col-6 {
-        width: 100%;
-        max-width: 100%;
-        flex: 0 0 100%;
-        padding-left: 0;
-    }
-    label[for=searchInput] {
-        float: left;
-        text-align: left !important;
-        padding-left: 0;
-    }
-    .search-box {
-        max-width: 100%;
-    }
-</style>
+
 </body>
 </html>

@@ -4,22 +4,29 @@
 </head>
 <body>
 <script>
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [2], // GCH only
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        language: "en-GB", // "es" for Spanish also supported now,
-        onlyWebcast: true, // show only webcast events
-        featured: true, // Show only featured examples
-        showLocalTime: true,
-        fetchEvents: true,
-        displayWebcastButton: true,
-        rootElement: 'root',
-        eventsLimit: 10 // show only one single event
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [846], // GCH only for now
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "de", // "es" for Spanish also supported now,
+      showLocalTime: true,
+      featured: false, // Show only featured examples
+      displayWebcastButton: true, // displays the webcast button
+      eventsLimit: 1000, // show only one single event
+      suppressBookOnly: true, // Remove the book only button
+      suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+      rootElement: 'emsRoot1',
+      fetchEvents: true, // Prevents initial event fetching
+      showSimilarEvents: true,
+      useAllOrgIds: true,
+      widgetType: "TABLE", // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
+      hideSocial: false,
+      private: 'no'
     }]
 </script>
-<div id="root" class="container-fluid"></div>
+<div id="emsRoot1" class="container-fluid"></div>
 <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.49.0/starter.js"></script>
 <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.49.0/loader.js"></script>
 <!--<link rel="stylesheet" href="styles.css">-->
