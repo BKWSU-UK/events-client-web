@@ -7,10 +7,9 @@ import {
 } from '../service/dataAccess'
 import { topFunction } from '../utils/scrolling'
 import EventContext from '../context/EventContext'
-import {
-    extractParameter
-} from '../utils/paramExtraction'
+import { extractParameter } from '../utils/paramExtraction'
 import { EVENT_CONFIG } from '../context/appParams'
+import * as rdd from 'react-device-detect'
 
 /**
  * Changes the state to display the read more screen.
@@ -22,10 +21,12 @@ import { EVENT_CONFIG } from '../context/appParams'
 export const processReadMoreClick = async (footerInfo, setSimilarEvents, eventContext) => {
     const { original } = footerInfo
     const singleEventUrlTemplate = extractParameter({...eventContext}, EVENT_CONFIG.SINGLE_EVENT_URL_TEMPLATE)
-    if (singleEventUrlTemplate) {
-        const eventId = original.id
-        window.location.href = singleEventUrlTemplate.replace(
-            EVENT_DATE_ID, eventId)
+    const specialIpadLink = extractParameter({...eventContext}, EVENT_CONFIG.SPECIAL_IPAD_TEMPLATE)
+    if(rdd.isIPad13 && !!specialIpadLink) {
+        window.location.href = specialIpadLink.replace(EVENT_DATE_ID, original.id) + "&ipad=true"
+    }
+    else if (!!singleEventUrlTemplate) {
+        window.location.href = singleEventUrlTemplate.replace(EVENT_DATE_ID, original.id)
     } else {
         const eventDateId = original.eventDateId
         await fetchSimilarEventList(eventDateId, setSimilarEvents)

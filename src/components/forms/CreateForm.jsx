@@ -4,10 +4,9 @@ import { SERVER_BASE } from '../../apiConstants'
 import { extractParameter } from '../../utils/paramExtraction'
 import { Form } from 'react-formio'
 
-const Webform = require('formiojs/Webform')
 const _Webform = require('formiojs/Webform').default
 
-_Webform.prototype.showErrors = function showErrors (error, triggerEvent) {
+_Webform.prototype.showErrors = function showErrors (error) {
   const validationErrors = error?.validationErrors
   if (!!validationErrors) {
     console.log('validationErrors', validationErrors)
@@ -36,6 +35,7 @@ export default function CreateForm (currentEvent) {
   const formLanguage = extractParameter({ ...eventContext }, 'language') ||
     'en-GB'
   const formIOContainer = useRef()
+  const formComponent = useRef()
 
   const formOptions = {
     language: formLanguage,
@@ -227,15 +227,26 @@ export default function CreateForm (currentEvent) {
       1000)
   }
 
+  // The submit handler
+  const onSubmit = () => {
+    formIOContainer.current.innerHTML = '';
+    // This is the code which resets the form
+    const current = formComponent.current
+    current.formio.emit('resetForm')
+  }
+
+  // The Form IO form with the on submit event handler
   return (
     <>
       <div id="formIOContainerScroller"/>
       <div id="formIOContainer" ref={formIOContainer}/>
 
-      <Form src={targetUrl} onFormLoad={onFormLoad}
+      <Form src={targetUrl}
+            onFormLoad={onFormLoad}
             options={formOptions}
             onSubmitDone={onSubmitDone}
-            onSubmit={(e) => formIOContainer.current.innerHTML = ''}
+            onSubmit={onSubmit}
+            ref={formComponent}
       />
     </>
   )

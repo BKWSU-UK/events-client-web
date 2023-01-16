@@ -65,7 +65,8 @@
             eventsLimit: 1000, // show only one single event
             suppressBookOnly: true, // Remove the book only button
             suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-            singleEventUrlTemplate: "http://localhost:3006/single-event-session?eventSessionId=@@eventDateId@@",
+            singleEventUrlTemplate: "https://eventswebclient-test-gil.bkwsu.eu/v0.50.0/loader/single_event.html?eventId=@@eventDateId@@",
+            specialIpadLink: "https://eventswebclient-test-gil.bkwsu.eu/v0.50.0/loader/single_event.html?eventId=@@eventDateId@@",
             singleEventShowImage1: true,
             singleEventShowImage2: false,
             singleEventShowImage3: false,
@@ -74,7 +75,7 @@
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
             useAllOrgIds: true,
-            widgetType: "TABLE", // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
+            widgetType: "SINGLE_EVENT", // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
             hideSocial: false,
             private: 'no',
             showGoogleCalendarIcon: false,
@@ -109,7 +110,7 @@
                     </div>
                 `
             },
-            tags: 'women,spirituality,meditation'
+            // tags: 'women,spirituality,meditation'
         }]
 </script>
 

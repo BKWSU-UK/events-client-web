@@ -8,5 +8,6 @@ export const URL_PARAMS = {
 }
 
 export const EVENT_CONFIG = {
-    SINGLE_EVENT_URL_TEMPLATE: 'singleEventUrlTemplate'
+    SINGLE_EVENT_URL_TEMPLATE: 'singleEventUrlTemplate',
+    SPECIAL_IPAD_TEMPLATE: "specialIpadLink"
 }
