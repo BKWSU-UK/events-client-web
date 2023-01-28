@@ -26,6 +26,7 @@ import {
 import OnlineFilter from './filter/OnlineFilter'
 import { eventMap } from '../service/dataAccessConstants'
 import TagsFilter from './filter/TagsFilter'
+import LoadingPlaceHolder from './loading/LoadingPlaceHolder'
 
 function EventTableStruct ({ columns, params, show }) {
   const eventContext = useContext(EventContext)
@@ -97,7 +98,7 @@ function EventTableStruct ({ columns, params, show }) {
       <OnlineFilter/>
       <TagsFilter />
       <CenterFilter/>
-      <LoadingContainer data={data} isLoading={isLoading} error={error}>
+      <LoadingPlaceHolder data={data} isLoading={isLoading} error={error}>
         <table {...getTableProps()} className="table table-hover"
                style={{ visibility: show ? 'visible' : 'hidden' }}>
           <thead className="thead-dark">
@@ -140,7 +141,7 @@ function EventTableStruct ({ columns, params, show }) {
           })}
           </tbody>
         </table>
-      </LoadingContainer>
+      </LoadingPlaceHolder>
     </>
   )
 }

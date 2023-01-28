@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import RendererParent from "../RendererParent";
 
 const defaultValue = 1;
@@ -23,11 +23,9 @@ const CounterRenderer = class extends RendererParent {
 
     setValue = (event) => {
         let value = event.target.value === '' ? 0 : event.target.value;
-        if (this.max < 10) {
-            value = value % 10
-        }
+        console.log('setValue', value)
         if (value > this.max) {
-            value = this.max
+            value = value % this.max
         } else if (value < this.min) {
             value = this.min
         }
@@ -39,7 +37,7 @@ const CounterRenderer = class extends RendererParent {
 
         value = value || defaultValue;
         min = min || defaultValue;
-        max = max || 10;
+        max = max || 50;
         return  (
             <input type="number" value={value} className="form-control"
                    id={this.props.component.id}
