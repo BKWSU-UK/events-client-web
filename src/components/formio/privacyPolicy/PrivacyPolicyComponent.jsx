@@ -8,6 +8,9 @@ import editDummy from '../EditDummy'
  * Label component used to separate
  */
 export default class PrivacyPolicy extends AbstractReactComponent {
+
+    setValue(value) {}
+
     /**
      * This function tells the form builder about your component. It's name, icon and what group it should be in.
      *

@@ -9,13 +9,13 @@ const _Webform = require('formiojs/Webform').default
 _Webform.prototype.showErrors = function showErrors (error) {
   const validationErrors = error?.validationErrors
   if (!!validationErrors) {
-    console.log('validationErrors', validationErrors)
     const errorHtml = validationErrors.map(
-      ve => `<li class="list-group-item list-group-item-action list-group-item-danger">${ve.name}: ${ve.errorMessage}</li>`).join('')
+      ve => `<li class="list-group-item list-group-item-action list-group-item-danger">${ve.name}: ${ve.errorMessage}</li>`).
+      join('')
     let formIOContainer = window.document.querySelector(
       '#formIOContainer')
     formIOContainer.innerHTML = `<ul class="list-group">${errorHtml}</ul>`
-    window.document.getElementById("formIOContainerScroller").scrollIntoView();
+    window.document.getElementById('formIOContainerScroller').scrollIntoView()
   }
   return []
 }
@@ -221,18 +221,27 @@ export default function CreateForm (currentEvent) {
 
   const onFormLoad = () => forceTranslate('button[type=\'submit\']', 'Submit')
 
-  const onSubmitDone = () => {
+  const resetForm = () => {
+    const current = formComponent.current
+    current.formio.emit('resetForm')
+  }
+
+  const onSubmitDone = (e) => {
+
+    const getMethods = (obj) => Object.getOwnPropertyNames(obj).filter(item => typeof obj[item] === 'function')
+
     forceTranslate('div[role=\'alert\'] > p', 'complete')
-    setTimeout(() => forceTranslate('span[ref=\'buttonMessage\']', 'complete'),
+
+    setTimeout(() => {
+        forceTranslate('span[ref=\'buttonMessage\']', 'complete')
+      },
       1000)
+    resetForm()
   }
 
   // The submit handler
   const onSubmit = () => {
-    formIOContainer.current.innerHTML = '';
-    // This is the code which resets the form
-    const current = formComponent.current
-    current.formio.emit('resetForm')
+    formIOContainer.current.innerHTML = ''
   }
 
   // The Form IO form with the on submit event handler

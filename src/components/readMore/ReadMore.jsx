@@ -141,6 +141,7 @@ export const ShowImage = () => {
           !!currentEvent[`image${imageIndex}`]) {
           return (
             <img
+              key={`show_image_${imageIndex}`}
               src={`https://events.brahmakumaris.org${currentEvent[`image${imageIndex}`]}`}
               className="img-fluid" alt={currentEvent.name}/>
           )
