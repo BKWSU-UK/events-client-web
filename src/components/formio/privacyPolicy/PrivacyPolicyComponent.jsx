@@ -9,6 +9,10 @@ import editDummy from '../EditDummy'
  */
 export default class PrivacyPolicy extends AbstractReactComponent {
 
+    /**
+     * Keep this method here otherwise reset form will fail
+     * @param value
+     */
     setValue(value) {}
 
     /**
