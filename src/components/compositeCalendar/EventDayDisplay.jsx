@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState, useMemo } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import EventContext from '../../context/EventContext'
 import CompositeCalendarContext, {
     CARD_TYPEUI_VIEW,
@@ -20,7 +20,6 @@ import { EVENTS_LIMIT } from '../../context/appParams'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
 import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
-import searchAdapter from '../../context/searchAdapter'
 
 const onlineStatusAdapter = (stateCalendar) => `onlineStatus:${stateCalendar.onlineStatus}`
 
@@ -36,6 +35,8 @@ export class SingleDateQueryAdapter {
 
     callEventList = (stateCalendar, eventContext) => {
         const date = stateCalendar.selectedSingleDate
+        const endDate = new Date()
+        endDate.setDate(date.getDate() + 1)
         if (!!date) {
             const eventsConfig = eventContext.eventsConfig
             const orgId = eventsConfig.orgId
@@ -50,7 +51,7 @@ export class SingleDateQueryAdapter {
                 orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
                 dateStart: date,
-                dateEnd: date,
+                dateEnd: endDate,
                 useMinimal: true,
                 eventsLimit: EVENTS_LIMIT,
                 marker: 'single',
@@ -203,6 +204,8 @@ const EventDateDisplay = ({ adapter }) => {
         e.preventDefault()
         setEventLimit(eventLimit - DEFAULT_EVENT_LIMIT)
     }
+
+    console.log('data?.eventList', data?.eventList)
 
     let eventList = adapter.limitResults(data?.eventList, stateCalendar)
 
