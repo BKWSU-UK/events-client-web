@@ -34,10 +34,8 @@ export class SingleDateQueryAdapter {
     }
 
     callEventList = (stateCalendar, eventContext) => {
-        const date = stateCalendar.selectedSingleDate
-        const endDate = new Date()
-        endDate.setDate(date.getDate() + 1)
-        if (!!date) {
+        const exactStartDate = stateCalendar.selectedSingleDate
+        if (!!exactStartDate) {
             const eventsConfig = eventContext.eventsConfig
             const orgId = eventsConfig.orgId
             const eventTypeIds = eventTypeIdAdapter(stateCalendar, eventsConfig.eventTypeIds)
@@ -50,8 +48,7 @@ export class SingleDateQueryAdapter {
                 eventsLang,
                 orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
-                dateStart: date,
-                dateEnd: endDate,
+                exactStartDate,
                 useMinimal: true,
                 eventsLimit: EVENTS_LIMIT,
                 marker: 'single',
