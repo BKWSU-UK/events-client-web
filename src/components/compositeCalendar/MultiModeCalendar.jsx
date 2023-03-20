@@ -20,7 +20,7 @@ const renderDateComponents = (adapter) => {
         <>
             <DateStrip/>
             <SingleDateTitle/>
-            <EventDateDisplay adapter={adapter}/>
+            <EventDateDisplay adapter={adapter} hideMissing={true}/>
             <EventDateModal/>
         </>
     )
@@ -34,7 +34,7 @@ const renderSwitch = (stateCalendar) => {
                 <>
                     {renderDateComponents(new SingleDateQueryAdapter())}
                     <DatePeriod/>
-                    <EventDateDisplay adapter={new MultiDateQueryAdapter()}/>
+                    <EventDateDisplay adapter={new MultiDateQueryAdapter()} hideMissing={false} />
                 </>
             )
         case CARD_TYPEUI_VIEW.MONTH:

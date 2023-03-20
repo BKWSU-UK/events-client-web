@@ -9,15 +9,16 @@ import Loader from './Loader'
  * @constructor
  */
 const LoadingContainer = (props) => {
+  const { data } = props
   const { t } = useTranslation()
-  if (!props.data || props.isLoading) {
+  if (!data || props.isLoading) {
     return <Loader/>
   }
   if (props.error) {
     const errorMessage = props.errorMessage ?? 'An error has occurred.'
     return <div className="error">{t(errorMessage)}</div>
   }
-  if (Array.isArray(props.data) && props.data.length === 0) {
+  if (Array.isArray(data) && data.length === 0) {
     const noDataMessage = props.noDataMessage ?? 'No events found'
     return <div className="warning">{t(noDataMessage)}</div>
   }

@@ -46,6 +46,10 @@
         #emsRoot1 {
             margin-top: 2rem
         }
+
+        #emsRoot1 div.rbc-toolbar > span:nth-child(1) {
+            display: flex;
+        }
     </style>
     <title>Events</title>
 </head>
@@ -75,7 +79,8 @@
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
             useAllOrgIds: true,
-            widgetType: "COMPOSITE_CALENDAR", // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
+            // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
+            widgetType: "COMPOSITE_CALENDAR",
             hideSocial: false,
             private: 'no',
             showGoogleCalendarIcon: false,

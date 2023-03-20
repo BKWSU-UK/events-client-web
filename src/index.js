@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import './css/compositeCalendar.css';
 import './css/slider.css';
@@ -16,12 +16,12 @@ import "./i18n";
 Components.setComponents(formio);
 
 window.eventsConfig.forEach((eventsConfig, i) => {
-    console.log('Rendering app number', i)
+    console.info('Rendering app number', i)
     if(!eventsConfig['id']) {
         eventsConfig['id'] = i // Add an id due to React useQuery
     }
-    ReactDOM.render(<App eventsConfig={eventsConfig}/>,
-        document.getElementById(eventsConfig.rootElement));
+    const root = createRoot(document.getElementById(eventsConfig.rootElement));
+    root.render(<App eventsConfig={eventsConfig}/>);
 })
 
 // If you want your app to work offline and load faster, you can change

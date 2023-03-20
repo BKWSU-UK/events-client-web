@@ -43,10 +43,10 @@ export const dateDiff = (date, diff) => {
 export const dateToKey = (date) => !!date &&
     `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
 
-export const formatHeaderDates = (date) => {
+export const formatHeaderDates = (date, format = 'dddd, DD MMM YYYY') => {
     moment.locale(extractParameter(null, 'language', 'en-US'))
     return !!date &&
-        moment(date).format('dddd, DD MMM YYYY')
+        moment(date).format(format)
 }
 
 export const pad2 = (n) => !!n ? n.toString().padStart(2, '0') : ''
