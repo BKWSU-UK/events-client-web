@@ -15,7 +15,7 @@ const DatePeriod = () => {
     <div className="row" style={{ clear: 'both' }}>
       <div className="col-12">
         <h3 className="mt-5">{formatHeaderDates(stateCalendar.visibleDateStart,
-          COMPOSITE_CALENDAR_CONFIG.HEADER_DATE_FORMAT)} -- {formatHeaderDates(stateCalendar.visibleDateEnd,
+          COMPOSITE_CALENDAR_CONFIG.HEADER_DATE_FORMAT)} &#8212; {formatHeaderDates(stateCalendar.visibleDateEnd,
           COMPOSITE_CALENDAR_CONFIG.HEADER_DATE_FORMAT)}</h3>
       </div>
     </div>
