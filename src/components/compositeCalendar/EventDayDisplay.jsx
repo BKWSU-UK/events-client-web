@@ -217,8 +217,6 @@ const EventDateDisplay = ({ adapter, hideMissing = false }) => {
     setEventLimit(eventLimit - DEFAULT_EVENT_LIMIT)
   }
 
-  console.log('data?.eventList', data?.eventList)
-
   let eventList = adapter.limitResults(data?.eventList, stateCalendar)
 
   const hasMore = eventList?.length > eventLimit
