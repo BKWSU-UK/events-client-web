@@ -2,8 +2,12 @@ import React, { useContext } from 'react'
 import EventContext from './context/EventContext'
 import { extractParameter } from './utils/paramExtraction'
 import { translationsGB } from './i18n_gb'
+import { translationsBS } from './i18n_bs'
 
 export const langResources = {
+    'bs': {
+        translations: translationsBS
+    },
     'de': {
         translations: {
             '-- Select option --': '-- Wähle eine Option --',
