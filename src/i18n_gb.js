@@ -73,6 +73,7 @@ const translationsGB = {
   'show': 'Show',
   'Show less': 'Show less',
   'Show more': 'Show more',
+  'Show required fields': 'Show required fields',
   'Similar Events': 'Similar Events',
   'Special event': 'Special event',
   'Table': 'Table',

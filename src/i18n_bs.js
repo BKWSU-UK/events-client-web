@@ -71,6 +71,7 @@ const translationsBS = {
   'Share on Twitter': 'Podijeli na Twitter-u',
   'Share via Email': 'Podijeli emailom',
   'show': 'Pokaži',
+  'Show required fields': 'Prikaži obavezna polja',
   'Show less': 'Pokaži manje',
   'Show more': 'Pokaži više',
   'Similar Events': 'Slični događaji',
