@@ -169,7 +169,4 @@ code {
     }
 }
 
-.missing-fields li:after {
-    content: ", "
-}
 

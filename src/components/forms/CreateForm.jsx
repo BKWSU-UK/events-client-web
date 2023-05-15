@@ -35,35 +35,48 @@ export const eventDateIdAdapter = (currentEvent) => {
  * Used to display missing fields.
  * @constructor
  */
-function ShowMissingFields ({ formComponent }) {
+function ShowMissingFields ({ formComponent, changeCount }) {
   const [displayMissing, setDisplayMissing] = useState(false)
-  const requiredFields = formComponent?.current?.formio.components.filter(c => c.component.validate.required)
+  const requiredFields = formComponent?.current?.formio.components.filter(
+    c => c.component.validate.required)
 
-  useEffect(() => window.scrollTo(0, document.body.scrollHeight), [displayMissing])
+  useEffect(() => window.scrollTo(0, document.body.scrollHeight),
+    [displayMissing])
 
   const handleClick = (e, c) => {
     const element = document.querySelector(`#${c.component.id} div[tabindex]`)
       ?? document.querySelector(`#${c.component.id} input`)
-    if(!!element) {
-      element.scrollIntoView({ behavior: "smooth", block: "end", inline: "nearest" })
+    if (!!element) {
+      element.scrollIntoView(
+        { behavior: 'smooth', block: 'end', inline: 'nearest' })
       element.focus()
     }
     e.preventDefault()
   }
 
+  const data = !!requiredFields ? requiredFields[0]?.data : {}
+
   return (
+
     <>
       {!displayMissing && <a href="#" onClick={(e) => {
-        setDisplayMissing(true);
-        e.preventDefault();
+        setDisplayMissing(true)
+        e.preventDefault()
       }
       }>Show required fields</a>}
-      {displayMissing && <a href="#" onClick={(e) => {setDisplayMissing(false); e.preventDefault()}}>Hide required
+      {displayMissing && <a href="#" onClick={(e) => {
+        setDisplayMissing(false)
+        e.preventDefault()
+      }}>Hide required
         fields</a>}
-      {displayMissing && <ul className="missing-fields">
+      {displayMissing && changeCount && <ul className="missing-fields">
         {requiredFields.
-          map((c, i) => (<li key={`missing_field_${i}`}><a href="#"
-                                                           onClick={(e) => handleClick(e, c)}>{c.label}</a></li>))}
+          map((c, i) => {
+            const value = !!data && !!data[c.key] ? `: ${data[c.key]}` : ''
+            return <li key={`missing_field_${i}`}>
+              <a href="#" className={`${!value ? 'text-danger' : ''}`} onClick={(e) => handleClick(e, c)}>{c.label} {value}</a>
+            </li>
+          })}
       </ul>}
     </>
   )
@@ -73,11 +86,15 @@ export default function CreateForm (currentEvent) {
   const eventContext = useContext(EventContext)
   // Used to hide the form on successful submission.
   const [hideForm, setHideForm] = useState(false)
+  const [changeCount, setChangeCount] = useState(1)
   const targetUrl = `${SERVER_BASE}/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(
     currentEvent)}&addSubmit=true`
-  const formLanguage = extractParameter({ ...eventContext }, 'language') || 'en-GB'
-  const formSuccessMessage = extractParameter({ ...eventContext }, 'formSuccessMessage')
-  const showMissingFields = extractParameter({ ...eventContext }, 'formShowMissingFields')
+  const formLanguage = extractParameter({ ...eventContext }, 'language') ||
+    'en-GB'
+  const formSuccessMessage = extractParameter({ ...eventContext },
+    'formSuccessMessage')
+  const showMissingFields = extractParameter({ ...eventContext },
+    'formShowMissingFields')
   const formIOContainer = useRef()
   const formComponent = useRef()
 
@@ -104,12 +121,12 @@ export default function CreateForm (currentEvent) {
     forceTranslate('button[type=\'submit\']', 'Submit')
     console.log('formComponent', formComponent)
     const formInstance = formComponent.current?.instance?.instance
-    if(!!formInstance) {
+    if (!!formInstance) {
       formInstance.components.filter(
         c => c.component.validate.required).forEach(c => {
         const element = document.querySelector(`#${c.component.id} label`)
-        if (!!element && !element.classList.contains("field-required")) {
-          element.classList.add("field-required")
+        if (!!element && !element.classList.contains('field-required')) {
+          element.classList.add('field-required')
         }
       })
     }
@@ -128,7 +145,7 @@ export default function CreateForm (currentEvent) {
       },
       1000)
     resetForm()
-    if(!!formSuccessMessage) {
+    if (!!formSuccessMessage) {
       setHideForm(true)
     }
   }
@@ -142,23 +159,25 @@ export default function CreateForm (currentEvent) {
   return (
     <>
       {!hideForm && <>
-          <div id="formIOContainerScroller"/>
-          <div id="formIOContainer" ref={formIOContainer}/>
-        </>
+        <div id="formIOContainerScroller"/>
+        <div id="formIOContainer" ref={formIOContainer}/>
+      </>
       }
 
       {hideForm && formSuccessMessage &&
-        <div id="formSuccessMessage" dangerouslySetInnerHTML={{__html: formSuccessMessage}}/> }
+        <div id="formSuccessMessage"
+             dangerouslySetInnerHTML={{ __html: formSuccessMessage }}/>}
 
       {!hideForm && <Form src={targetUrl}
-             onFormLoad={onFormLoad}
-             options={formOptions}
-             onSubmitDone={onSubmitDone}
-             onSubmit={onSubmit}
-             ref={formComponent}
+                          onFormLoad={onFormLoad}
+                          options={formOptions}
+                          onSubmitDone={onSubmitDone}
+                          onChange={() => setChangeCount(changeCount + 1)}
+                          onSubmit={onSubmit}
+                          ref={formComponent}
       />}
-      {!!showMissingFields && <ShowMissingFields formComponent={formComponent}/>}
-
+      {!hideForm && !!showMissingFields &&
+        <ShowMissingFields formComponent={formComponent} changeCount={changeCount}/>}
 
     </>
   )
