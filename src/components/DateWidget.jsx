@@ -3,6 +3,7 @@ import 'moment/locale/es';
 import 'moment/locale/en-gb';
 import 'moment/locale/pt-br';
 import 'moment/locale/de';
+import 'moment/locale/bs';
 
 import moment from "moment-timezone";
 import {useTranslation} from "../i18n";

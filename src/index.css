@@ -131,3 +131,42 @@ code {
     margin: 10px 0 -5px 0
 }
 
+.missing-fields {
+    list-style-type: none;
+    display: inline-block;
+}
+
+.missing-fields {
+    display: flex;
+    flex-wrap: wrap;
+    padding-top: 10px;
+    padding-left: 5px;
+}
+
+.missing-fields li {
+    display: block;
+    width: 50%;
+}
+
+@media only screen and (min-width: 768px) {
+    .missing-fields li {
+        display: block;
+        width: 33%;
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    .missing-fields li {
+        display: block;
+        width: 33%;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .missing-fields li {
+        display: block;
+        width: 25%;
+    }
+}
+
+

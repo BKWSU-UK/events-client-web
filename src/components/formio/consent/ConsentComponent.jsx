@@ -1,9 +1,9 @@
-import {ReactComponent} from "react-formio";
-import editDummy from "../EditDummy";
-import ReactDOM from "react-dom";
-import React from "react";
-import ConsentRenderer from "./ConsentRenderer";
-import AbstractReactComponent from "../AbstractReactComponent";
+import { ReactComponent } from 'react-formio'
+import editDummy from '../EditDummy'
+import ReactDOM from 'react-dom'
+import React from 'react'
+import ConsentRenderer from './ConsentRenderer'
+import AbstractReactComponent from '../AbstractReactComponent'
 
 /**
  * Draws a consent checkbox for the GDPR consent. It defaults always to unchecked.
@@ -48,7 +48,7 @@ export default class Consent extends AbstractReactComponent {
     /**
      * This function is called when the DIV has been rendered and added to the DOM. You can now instantiate the react component.
      *
-     * @param DOMElement
+     * @param element The
      * #returns ReactInstance
      */
     attachReact(element) {
@@ -60,6 +60,15 @@ export default class Consent extends AbstractReactComponent {
             />,
             element
         );
+        // const root = createRoot(element)
+        // return root.render(
+        //   <ConsentRenderer
+        //     component={this.component} // These are the component settings if you want to use them to render the component.
+        //     value={this.dataValue} // The starting value of the component.
+        //     onChange={this.updateValue} // The onChange event to call when the value changes.
+        //   />,
+        //   element
+        // );
     }
 
     /**

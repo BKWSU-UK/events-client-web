@@ -107,7 +107,11 @@ export const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
   return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
 }
 
-export const appendDates = (targetUrl, dateStart, dateEnd) => {
+export const appendDates = (targetUrl, dateStart, dateEnd, exactStartDate) => {
+  if(!!exactStartDate) {
+    targetUrl += `&exactStartDate=${convertDate(exactStartDate)}`
+    return targetUrl
+  }
   if (!!dateStart) {
     targetUrl += `&startDate=${convertDate(dateStart)}`
   }
@@ -124,6 +128,7 @@ export const targetUrlFactory = (params) => {
     eventsLimit,
     eventsLang,
     featured,
+    exactStartDate,
     dateStart,
     dateEnd,
     eventContext,
@@ -145,7 +150,7 @@ export const targetUrlFactory = (params) => {
   for (const fn of appendFunctions) {
     targetUrl = fn(targetUrl, eventContext)
   }
-  targetUrl = appendDates(targetUrl, dateStart, dateEnd)
+  targetUrl = appendDates(targetUrl, dateStart, dateEnd, exactStartDate)
   return targetUrl
 }
 

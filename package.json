@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.51.0",
+  "version": "0.57.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -19,11 +19,11 @@
     "linkifyjs": "^2.1.9",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.31",
-    "react": "^17.0.2",
+    "react": "^18.2.0",
     "react-big-calendar": "^0.32.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-device-detect": "^2.2.2",
-    "react-dom": "^17.0.2",
+    "react-dom": "^18.2.0",
     "react-formio": "^4.2.5",
     "react-i18next": "^11.4.0",
     "react-placeholder": "^4.1.0",

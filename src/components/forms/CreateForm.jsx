@@ -1,8 +1,11 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import EventContext from '../../context/EventContext'
 import { SERVER_BASE } from '../../apiConstants'
 import { extractParameter } from '../../utils/paramExtraction'
 import { Form } from 'react-formio'
+import { formTranslations_en_gb } from './formTranslations_en_gb'
+import { formTranslation_pt_br } from './formTranslation_pt_br'
+import { formTranslation_de_de } from './formTranslation_de_de'
 
 const _Webform = require('formiojs/Webform').default
 
@@ -28,184 +31,79 @@ export const eventDateIdAdapter = (currentEvent) => {
       : -1
 }
 
+/**
+ * Used to display missing fields.
+ * @constructor
+ */
+function ShowMissingFields ({ formComponent, changeCount }) {
+  const [displayMissing, setDisplayMissing] = useState(false)
+  const requiredFields = formComponent?.current?.formio?.components?.filter(
+    c => c.component.validate.required)
+
+  useEffect(() => window.scrollTo(0, document.body.scrollHeight),
+    [displayMissing])
+
+  const handleClick = (e, c) => {
+    const element = document.querySelector(`#${c.component.id} div[tabindex]`)
+      ?? document.querySelector(`#${c.component.id} input`)
+    if (!!element) {
+      element.scrollIntoView(
+        { behavior: 'smooth', block: 'end', inline: 'nearest' })
+      element.focus()
+    }
+    e.preventDefault()
+  }
+
+  const data = !!requiredFields ? requiredFields[0]?.data : {}
+
+  return (
+
+    <>
+      {!displayMissing && <a href="#" onClick={(e) => {
+        setDisplayMissing(true)
+        e.preventDefault()
+      }
+      }>Show required fields</a>}
+      {displayMissing && <a href="#" onClick={(e) => {
+        setDisplayMissing(false)
+        e.preventDefault()
+      }}>Hide required
+        fields</a>}
+      {displayMissing && changeCount && <ul className="missing-fields">
+        {requiredFields.
+          map((c, i) => {
+            const value = !!data && !!data[c.key] ? `: ${data[c.key]}` : ''
+            return <li key={`missing_field_${i}`}>
+              <a href="#" className={`${!value ? 'text-danger' : ''}`} onClick={(e) => handleClick(e, c)}>{c.label} {value}</a>
+            </li>
+          })}
+      </ul>}
+    </>
+  )
+}
+
 export default function CreateForm (currentEvent) {
   const eventContext = useContext(EventContext)
+  // Used to hide the form on successful submission.
+  const [hideForm, setHideForm] = useState(false)
+  const [changeCount, setChangeCount] = useState(1)
   const targetUrl = `${SERVER_BASE}/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(
     currentEvent)}&addSubmit=true`
   const formLanguage = extractParameter({ ...eventContext }, 'language') ||
     'en-GB'
+  const formSuccessMessage = extractParameter({ ...eventContext },
+    'formSuccessMessage')
+  const showMissingFields = extractParameter({ ...eventContext },
+    'formShowMissingFields')
   const formIOContainer = useRef()
   const formComponent = useRef()
 
   const formOptions = {
     language: formLanguage,
     i18n: {
-      'en-GB': {
-        translation: {
-          complete: 'Submission Complete',
-          error: 'Please fix the following errors before submitting.',
-          submitError: 'Please check the form and correct all errors before submitting.',
-          required: '{{field}} is required',
-          unique: '{{field}} must be unique',
-          array: '{{field}} must be an array',
-          array_nonempty: '{{field}} must be a non-empty array', // eslint-disable-line camelcase
-          nonarray: '{{field}} must not be an array',
-          select: '{{field}} contains an invalid selection',
-          pattern: '{{field}} does not match the pattern {{pattern}}',
-          minLength: '{{field}} must have at least {{length}} characters.',
-          maxLength: '{{field}} must have no more than {{length}} characters.',
-          minWords: '{{field}} must have at least {{length}} words.',
-          maxWords: '{{field}} must have no more than {{length}} words.',
-          min: '{{field}} cannot be less than {{min}}.',
-          max: '{{field}} cannot be greater than {{max}}.',
-          maxDate: '{{field}} should not contain date after {{- maxDate}}',
-          minDate: '{{field}} should not contain date before {{- minDate}}',
-          maxYear: '{{field}} should not contain year greater than {{maxYear}}',
-          minYear: '{{field}} should not contain year less than {{minYear}}',
-          invalid_email: '{{field}} must be a valid email.', // eslint-disable-line camelcase
-          invalid_url: '{{field}} must be a valid url.', // eslint-disable-line camelcase
-          invalid_regex: '{{field}} does not match the pattern {{regex}}.', // eslint-disable-line camelcase
-          invalid_date: '{{field}} is not a valid date.', // eslint-disable-line camelcase
-          invalid_day: '{{field}} is not a valid day.', // eslint-disable-line camelcase
-          mask: '{{field}} does not match the mask.',
-          stripe: '{{stripe}}',
-          month: 'Month',
-          day: 'Day',
-          year: 'Year',
-          january: 'January',
-          february: 'February',
-          march: 'March',
-          april: 'April',
-          may: 'May',
-          june: 'June',
-          july: 'July',
-          august: 'August',
-          september: 'September',
-          october: 'October',
-          november: 'November',
-          december: 'December',
-          next: 'Next',
-          previous: 'Previous',
-          cancel: 'Cancel',
-          submit: 'Submit Form',
-          'Submit': 'Submit',
-          confirmCancel: 'Are you sure you want to cancel?',
-          saveDraftInstanceError: 'Cannot save draft because there is no formio instance.',
-          saveDraftAuthError: 'Cannot save draft unless a user is authenticated.',
-          restoreDraftInstanceError: 'Cannot restore draft because there is no formio instance.',
-        },
-      }, 'pt-BR': {
-        translation: {
-          complete: 'Agradecemos sua inscrição! ' +
-            'Você agora receberá um email de confirmação. ' +
-            'Saudações de Paz, ' +
-            'Brahma Kumaris ',
-          error: 'Please fix the following errors before submitting.',
-          submitError: 'Please check the form and correct all errors before submitting.',
-          required: '{{field}} is required',
-          unique: '{{field}} must be unique',
-          array: '{{field}} must be an array',
-          array_nonempty: '{{field}} must be a non-empty array', // eslint-disable-line camelcase
-          nonarray: '{{field}} must not be an array',
-          select: '{{field}} contains an invalid selection',
-          pattern: '{{field}} does not match the pattern {{pattern}}',
-          minLength: '{{field}} must have at least {{length}} characters.',
-          maxLength: '{{field}} must have no more than {{length}} characters.',
-          minWords: '{{field}} must have at least {{length}} words.',
-          maxWords: '{{field}} must have no more than {{length}} words.',
-          min: '{{field}} cannot be less than {{min}}.',
-          max: '{{field}} cannot be greater than {{max}}.',
-          maxDate: '{{field}} should not contain date after {{- maxDate}}',
-          minDate: '{{field}} should not contain date before {{- minDate}}',
-          maxYear: '{{field}} should not contain year greater than {{maxYear}}',
-          minYear: '{{field}} should not contain year less than {{minYear}}',
-          invalid_email: '{{field}} must be a valid email.', // eslint-disable-line camelcase
-          invalid_url: '{{field}} must be a valid url.', // eslint-disable-line camelcase
-          invalid_regex: '{{field}} does not match the pattern {{regex}}.', // eslint-disable-line camelcase
-          invalid_date: '{{field}} is not a valid date.', // eslint-disable-line camelcase
-          invalid_day: '{{field}} is not a valid day.', // eslint-disable-line camelcase
-          mask: '{{field}} does not match the mask.',
-          stripe: '{{stripe}}',
-          month: 'Month',
-          day: 'Day',
-          year: 'Year',
-          january: 'January',
-          february: 'February',
-          march: 'March',
-          april: 'April',
-          may: 'May',
-          june: 'June',
-          july: 'July',
-          august: 'August',
-          september: 'September',
-          october: 'October',
-          november: 'November',
-          december: 'December',
-          next: 'Next',
-          previous: 'Previous',
-          cancel: 'Cancelar',
-          submit: 'Enviar',
-          'Submit': 'Enviar',
-          confirmCancel: 'Are you sure you want to cancel?',
-          saveDraftInstanceError: 'Cannot save draft because there is no formio instance.',
-          saveDraftAuthError: 'Cannot save draft unless a user is authenticated.',
-          restoreDraftInstanceError: 'Cannot restore draft because there is no formio instance.',
-        },
-      }, 'de-DE': {
-        translation: {
-          complete: 'Submission Complete',
-          error: 'Please fix the following errors before submitting.',
-          submitError: 'Please check the form and correct all errors before submitting.',
-          required: '{{field}} is required',
-          unique: '{{field}} must be unique',
-          array: '{{field}} must be an array',
-          array_nonempty: '{{field}} must be a non-empty array', // eslint-disable-line camelcase
-          nonarray: '{{field}} must not be an array',
-          select: '{{field}} contains an invalid selection',
-          pattern: '{{field}} does not match the pattern {{pattern}}',
-          minLength: '{{field}} must have at least {{length}} characters.',
-          maxLength: '{{field}} must have no more than {{length}} characters.',
-          minWords: '{{field}} must have at least {{length}} words.',
-          maxWords: '{{field}} must have no more than {{length}} words.',
-          min: '{{field}} cannot be less than {{min}}.',
-          max: '{{field}} cannot be greater than {{max}}.',
-          maxDate: '{{field}} should not contain date after {{- maxDate}}',
-          minDate: '{{field}} should not contain date before {{- minDate}}',
-          maxYear: '{{field}} should not contain year greater than {{maxYear}}',
-          minYear: '{{field}} should not contain year less than {{minYear}}',
-          invalid_email: '{{field}} must be a valid email.', // eslint-disable-line camelcase
-          invalid_url: '{{field}} must be a valid url.', // eslint-disable-line camelcase
-          invalid_regex: '{{field}} does not match the pattern {{regex}}.', // eslint-disable-line camelcase
-          invalid_date: '{{field}} is not a valid date.', // eslint-disable-line camelcase
-          invalid_day: '{{field}} is not a valid day.', // eslint-disable-line camelcase
-          mask: '{{field}} does not match the mask.',
-          stripe: '{{stripe}}',
-          month: 'Month',
-          day: 'Day',
-          year: 'Year',
-          january: 'January',
-          february: 'February',
-          march: 'March',
-          april: 'April',
-          may: 'May',
-          june: 'June',
-          july: 'July',
-          august: 'August',
-          september: 'September',
-          october: 'October',
-          november: 'November',
-          december: 'December',
-          next: 'Next',
-          previous: 'Previous',
-          cancel: 'Cancel',
-          submit: 'Submit Form',
-          'Submit': 'Submit',
-          confirmCancel: 'Are you sure you want to cancel?',
-          saveDraftInstanceError: 'Cannot save draft because there is no formio instance.',
-          saveDraftAuthError: 'Cannot save draft unless a user is authenticated.',
-          restoreDraftInstanceError: 'Cannot restore draft because there is no formio instance.',
-        },
-      },
+      'en-GB': formTranslations_en_gb,
+      'pt-BR': formTranslation_pt_br,
+      'de-DE': formTranslation_de_de,
     },
   }
 
@@ -219,17 +117,27 @@ export default function CreateForm (currentEvent) {
     }
   }
 
-  const onFormLoad = () => forceTranslate('button[type=\'submit\']', 'Submit')
+  const onFormLoad = () => {
+    forceTranslate('button[type=\'submit\']', 'Submit')
+    console.log('formComponent', formComponent)
+    const formInstance = formComponent.current?.instance?.instance
+    if (!!formInstance) {
+      formInstance.components.filter(
+        c => c.component.validate.required).forEach(c => {
+        const element = document.querySelector(`#${c.component.id} label`)
+        if (!!element && !element.classList.contains('field-required')) {
+          element.classList.add('field-required')
+        }
+      })
+    }
+  }
 
   const resetForm = () => {
     const current = formComponent.current
     current.formio.emit('resetForm')
   }
 
-  const onSubmitDone = (e) => {
-
-    const getMethods = (obj) => Object.getOwnPropertyNames(obj).filter(item => typeof obj[item] === 'function')
-
+  const onSubmitDone = () => {
     forceTranslate('div[role=\'alert\'] > p', 'complete')
 
     setTimeout(() => {
@@ -237,6 +145,9 @@ export default function CreateForm (currentEvent) {
       },
       1000)
     resetForm()
+    if (!!formSuccessMessage) {
+      setHideForm(true)
+    }
   }
 
   // The submit handler
@@ -247,16 +158,27 @@ export default function CreateForm (currentEvent) {
   // The Form IO form with the on submit event handler
   return (
     <>
-      <div id="formIOContainerScroller"/>
-      <div id="formIOContainer" ref={formIOContainer}/>
+      {!hideForm && <>
+        <div id="formIOContainerScroller"/>
+        <div id="formIOContainer" ref={formIOContainer}/>
+      </>
+      }
 
-      <Form src={targetUrl}
-            onFormLoad={onFormLoad}
-            options={formOptions}
-            onSubmitDone={onSubmitDone}
-            onSubmit={onSubmit}
-            ref={formComponent}
-      />
+      {hideForm && formSuccessMessage &&
+        <div id="formSuccessMessage"
+             dangerouslySetInnerHTML={{ __html: formSuccessMessage }}/>}
+
+      {!hideForm && <Form src={targetUrl}
+                          onFormLoad={onFormLoad}
+                          options={formOptions}
+                          onSubmitDone={onSubmitDone}
+                          onChange={() => setChangeCount(changeCount + 1)}
+                          onSubmit={onSubmit}
+                          ref={formComponent}
+      />}
+      {!hideForm && !!showMissingFields &&
+        <ShowMissingFields formComponent={formComponent} changeCount={changeCount}/>}
+
     </>
   )
 

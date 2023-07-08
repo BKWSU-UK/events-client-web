@@ -13,6 +13,7 @@ export const DATE_ACTIONS = {
     SELECT_WEEK: 'SELECT_WEEK',
     SELECT_DAY: 'SELECT_DAY',
     SET_DATE_COUNTS: 'SET_DATE_COUNTS',
+    SET_EVENT_COUNT: 'SET_EVENT_COUNT',
     SHOW_MODAL_EVENT_DATE: 'SHOW_MODAL_EVENT_DATE',
     HIDE_MODAL_EVENT_DATE: 'HIDE_MODAL_EVENT_DATE',
     CHANGE_CARD_TYPE: 'CHANGE_CARD_TYPE',
@@ -130,6 +131,12 @@ const dateReducer = (state, action) => {
                 groupedCount: {...action.payload.groupedCount}
             }
         }
+        case DATE_ACTIONS.SET_EVENT_COUNT: {
+            return {
+                ...state,
+                eventCount: action.payload.eventCount
+            }
+        }
         case DATE_ACTIONS.SHOW_MODAL_EVENT_DATE: {
             return {
                 ...state,
@@ -184,7 +191,8 @@ export const CompositeCalendarContextProvider = (props) => {
             cardType: CARD_TYPEUI_VIEW.IMAGE_CARD,
             onlineStatus: ONLINE_STATUS.ALL,
             categoryFilter: ALL_CATEGORIES,
-            searchExpression: ''
+            searchExpression: '',
+            eventCount: 0
         },
     )
     return (
