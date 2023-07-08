@@ -58,7 +58,7 @@
             useSimpleLayout: true,
             orgId: [845], // GCH only for now
             eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-            language: "de", // "es" for Spanish also supported now,
+            language: "en-GB", // "es" for Spanish also supported now. Other values: de, en-GB
             showLocalTime: true,
             featured: false, // Show only featured examples
             displayWebcastButton: true, // displays the webcast button
@@ -75,7 +75,7 @@
             fetchEvents: true, // Prevents initial event fetching
             showSimilarEvents: true,
             useAllOrgIds: true,
-            widgetType: "COMPOSITE_CALENDAR", // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
+            widgetType: "FORM", // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
             hideSocial: false,
             private: 'no',
             showGoogleCalendarIcon: false,
@@ -90,7 +90,7 @@
             "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
             "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg"],
             shivaStarImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.37.0/assets/images/shiva.png",
-            searchFilterFunction: (e) => {
+            searchFilterFunction: (_) => {
                 return true
                 // return !!e.hasWebcast && !e.requiresRegistration && !!e.webcastUrl && e.webcastUrl.toLowerCase().match(/.+(webcast|watchlive).*/);
             },
