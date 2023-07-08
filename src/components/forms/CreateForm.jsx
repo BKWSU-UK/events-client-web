@@ -37,7 +37,7 @@ export const eventDateIdAdapter = (currentEvent) => {
  */
 function ShowMissingFields ({ formComponent, changeCount }) {
   const [displayMissing, setDisplayMissing] = useState(false)
-  const requiredFields = formComponent?.current?.formio.components.filter(
+  const requiredFields = formComponent?.current?.formio?.components?.filter(
     c => c.component.validate.required)
 
   useEffect(() => window.scrollTo(0, document.body.scrollHeight),
