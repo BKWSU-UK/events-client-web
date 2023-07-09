@@ -15,8 +15,6 @@ function EventDisplay ({ currentEvent }) {
     'hideEventDate', false)
   const showShortDescription = extractParameter(null,
     'showShortDescription', false)
-  const showDescription = extractParameter(null,
-    'showDescription', false)
 
   useLanguage()
   if (!!currentEvent) {

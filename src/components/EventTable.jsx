@@ -6,7 +6,6 @@ import {
   useTable,
 } from 'react-table'
 import styled from 'styled-components'
-import { getEventList } from '../service/dataAccess'
 import { Pager } from './Pager'
 import { withRouter } from 'react-router-dom'
 import EventDisplay from './EventDisplay'
@@ -18,8 +17,6 @@ import EventContext, {
   extractEventListParameters,
 } from '../context/EventContext'
 import CenterFilter from './filter/CenterFilter'
-import { useQuery } from 'react-query'
-import LoadingContainer from './loading/LoadingContainer'
 import {
   extractParameter,
 } from '../utils/paramExtraction'
@@ -27,28 +24,10 @@ import OnlineFilter from './filter/OnlineFilter'
 import { eventMap } from '../service/dataAccessConstants'
 import TagsFilter from './filter/TagsFilter'
 import LoadingPlaceHolder from './loading/LoadingPlaceHolder'
+import useOrganisationEvents from '../hooks/useOrganisationEvents'
 
 function EventTableStruct ({ columns, params, show }) {
-  const eventContext = useContext(EventContext)
-  const { events, setEvents, orgIdFilter, filterState } = eventContext
-
-  const { isLoading, error, data } = useQuery(
-    [
-      `eventsTable_${eventContext['eventsConfig']['id']}`,
-      orgIdFilter,
-      filterState], () => {
-      if (!!orgIdFilter && orgIdFilter > 0) {
-        return getEventList({ ...params, orgIdFilter, eventContext })
-      } else if (extractParameter({ ...eventContext }, 'fetchEvents')) {
-        return getEventList({ ...params, eventContext })
-      } else {
-        return []
-      }
-    })
-
-  if (!!data) {
-    setEvents(data)
-  }
+  const {events, eventContext, data, isLoading, error} = useOrganisationEvents(params)
 
   // Use the state and functions returned from useTable to build your UI
   const {
@@ -146,14 +125,15 @@ function EventTableStruct ({ columns, params, show }) {
   )
 }
 
-export const Styles = styled.div`
+
+
+export function EventTable (props) {
+  const Styles = styled.div`
         padding: 0rem;
         table {
             width: 100%;
         }
         `
-
-export function EventTable (props) {
   const eventContext = useContext(EventContext)
   const { currentEvent, setCurrentEvent } = eventContext
   const allParams = extractEventListParameters({ ...props, ...eventContext })
