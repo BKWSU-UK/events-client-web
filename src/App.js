@@ -21,6 +21,8 @@ import TilesParent from './components/tiles/TilesParent'
 import EventSessionParent
     from './components/singleEventSession/EventSessionParent'
 import EventCountdownMain from './components/countDown/EventCountdownMain'
+import EventsMonthCalendar
+    from './components/eventsMonthCalendar/EventsMonthCalendar'
 
 // Create a client
 const queryClient = new QueryClient({
@@ -34,6 +36,7 @@ const queryClient = new QueryClient({
 const WIDGET_TYPE = {
     TABLE: "TABLE",
     CALENDAR: "CALENDAR",
+    EVENTS_MONTH_CALENDAR: "EVENTS_MONTH_CALENDAR",
     SINGLE_EVENT: "SINGLE_EVENT",
     SINGLE_EVENT_SESSION: "SINGLE_EVENT_SESSION",
     FORM: "FORM",
@@ -49,6 +52,8 @@ const chooseComponent = (eventsConfig) => {
             return <EventTable/>
         case WIDGET_TYPE.CALENDAR:
             return <EventCalendar/>
+        case WIDGET_TYPE.EVENTS_MONTH_CALENDAR:
+            return <EventsMonthCalendar/>
         case WIDGET_TYPE.SINGLE_EVENT:
             return <EventDetail/>
         case WIDGET_TYPE.SINGLE_EVENT_SESSION:
@@ -91,6 +96,9 @@ function App ({ eventsConfig }) {
                             <About/>
                         </Route>
                         <Route path="/events/:orgId">
+                            <EventTable/>
+                        </Route>
+                        <Route path="/events-month-calendar/:orgId">
                             <EventTable/>
                         </Route>
                         <Route path="/event/:eventId">
