@@ -23,3 +23,7 @@ export const eventMap = {
     15: 'Online activity',
     16: 'BK Event',
 }
+
+export const QUERY_PARAMS = {
+    START_DATE_LIMIT: 'startDateLimit',
+}

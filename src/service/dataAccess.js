@@ -3,7 +3,7 @@ import { ALL_ORG_IDS } from '../context/EventContext'
 import { SERVER_BASE } from '../apiConstants'
 import { DISPLAY_ONLINE_FILTER } from '../context/appParams'
 import { ONLINE_STATUSES } from '../context/onlineStates'
-import { DATA_ACCESS_PARAMS } from './dataAccessConstants'
+import {DATA_ACCESS_PARAMS, QUERY_PARAMS} from './dataAccessConstants'
 import { groupByDate } from './dateCounterFactory'
 import { convertDate } from '../utils/dateUtils'
 import searchAdapter from '../context/searchAdapter'
@@ -107,13 +107,16 @@ export const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
   return orgIdFilter ? joinIfArray(orgIdFilter) : joinIfArray(orgId)
 }
 
-export const appendDates = (targetUrl, dateStart, dateEnd, exactStartDate) => {
+export const appendDates = ({targetUrl, dateStart, dateEnd, exactStartDate, startDateLimit}) => {
   if(!!exactStartDate) {
     targetUrl += `&exactStartDate=${convertDate(exactStartDate)}`
     return targetUrl
   }
   if (!!dateStart) {
     targetUrl += `&startDate=${convertDate(dateStart)}`
+  }
+  if (!!startDateLimit) {
+    targetUrl += `&${QUERY_PARAMS.START_DATE_LIMIT}=${convertDate(startDateLimit)}`
   }
   if (!!dateEnd) {
     targetUrl += `&endDate=${convertDate(dateEnd)}`
@@ -130,6 +133,7 @@ export const targetUrlFactory = (params) => {
     featured,
     exactStartDate,
     dateStart,
+    startDateLimit,
     dateEnd,
     eventContext,
     useMinimal,
@@ -150,7 +154,7 @@ export const targetUrlFactory = (params) => {
   for (const fn of appendFunctions) {
     targetUrl = fn(targetUrl, eventContext)
   }
-  targetUrl = appendDates(targetUrl, dateStart, dateEnd, exactStartDate)
+  targetUrl = appendDates({targetUrl, dateStart, dateEnd, exactStartDate, startDateLimit})
   return targetUrl
 }
 

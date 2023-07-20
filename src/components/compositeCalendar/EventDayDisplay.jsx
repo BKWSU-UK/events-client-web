@@ -20,6 +20,7 @@ import { EVENTS_LIMIT } from '../../context/appParams'
 import { updateOnlineStatus } from './adapter/onlineAdapter'
 import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
+import {QUERY_PARAMS} from "../../service/dataAccessConstants";
 
 const onlineStatusAdapter = (stateCalendar) => `onlineStatus:${stateCalendar.onlineStatus}`
 
@@ -102,7 +103,7 @@ export class MultiDateQueryAdapter {
         orgIdFilter: orgIdFilterAdapter(eventContext),
         eventContext,
         dateStart: startDate,
-        dateEnd: endDate,
+        [QUERY_PARAMS.START_DATE_LIMIT]: endDate,
         useMinimal: true,
         eventsLimit: EVENTS_LIMIT,
         searchExpression: stateCalendar.searchExpression,

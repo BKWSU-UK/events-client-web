@@ -17,6 +17,7 @@ import { safeStartDate } from './controlPanel/MonthSelector'
 import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
 import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
 import { handleShowEventDate } from '../commonActions'
+import {QUERY_PARAMS} from "../../service/dataAccessConstants";
 
 /**
  * Displays a normal calendar.
@@ -61,7 +62,7 @@ const ClassicCalendar = ({props}) => {
                 orgIdFilter: orgIdFilterAdapter(eventContext),
                 eventContext,
                 dateStart: startDate,
-                dateEnd: endDate,
+                [QUERY_PARAMS.START_DATE_LIMIT]: endDate,
                 useMinimal: true,
                 eventsLimit: EVENTS_LIMIT,
                 searchExpression: stateCalendar.searchExpression
