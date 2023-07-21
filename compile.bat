@@ -9,7 +9,8 @@ xcopy /s build\* %TARGET_DIR%
 del build.zip
 call node .\scripts\removeGoogleFonts.mjs
 cd build
-zip -r ..\build.zip *
+REM zip -r ..\build.zip *
+powershell Compress-Archive -Force * ..\build.zip
 cd ..
 
 call examples.bat

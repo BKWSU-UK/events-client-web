@@ -1,5 +1,5 @@
 @echo off
 
 cd examples
-zip -r ..\examples.zip loader
+powershell Compress-Archive -Force loader ..\examples.zip
 cd ..

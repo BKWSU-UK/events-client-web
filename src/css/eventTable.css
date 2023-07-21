@@ -15,3 +15,7 @@
 .tags .deactivated {
     color: #5a6268;
 }
+
+.calendarWidget > .weekday {
+    width: 100%;
+}
