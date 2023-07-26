@@ -9,6 +9,7 @@ import { useTranslation } from '../../i18n'
 import moment from 'moment-timezone/index'
 import { extractParameter } from '../../utils/paramExtraction'
 import LoadingContainer from '../loading/LoadingContainer'
+import EventType from "../EventType";
 
 const LINK_NAME_FUNC = 'eventsCalendarFunction'
 
@@ -40,6 +41,7 @@ function EventDisplay ({
             event.hasWebcast ? t('online_state_Mixed') :
               t('online_state_In Person')}
         </div>
+        <div className="calendar-event-type"><EventType eventTypeInt={event.eventTypeId} useLead={false} /></div>
         <a itemProp="url"
            href={eventsCalendarFunction(event)}
            className="eventLink"><span itemProp="name">{event.name}</span></a>

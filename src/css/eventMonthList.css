@@ -67,7 +67,12 @@ h1 {
 
 .calendar-event-online {
     display: inline-block;
-    width: 151px;
+    width: 100px;
+}
+
+.calendar-event-type {
+    display: inline-block;
+    width: 100px;
 }
 
 .eventLink {
