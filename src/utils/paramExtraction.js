@@ -1,4 +1,5 @@
 import {extractFromLocationQuery} from "./urlUtils";
+import {LINK_NAME_FUNC} from "../appParameters";
 
 export const extractParameterSimple = (name, defaultValue = null) => extractParameter(null, name, defaultValue);
 
@@ -18,3 +19,9 @@ export const extractParameter = (props, name, defaultValue) => {
     }
     return window?.eventsConfig.length > 0 ? window.eventsConfig[0][name] : defaultValue;
 };
+
+export function extractEventLinkFunction(eventsConfig) {
+    return typeof eventsConfig[LINK_NAME_FUNC] ===
+    'function' ? eventsConfig[LINK_NAME_FUNC] :
+      (event) => `https://globalcooperationhouse.org/whatson-full/singleevent/${event.id}`
+}

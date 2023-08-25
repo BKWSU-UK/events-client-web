@@ -1,24 +1,19 @@
-import React, { useContext } from 'react'
-import useOrganisationEvents from '../../hooks/useOrganisationEvents'
+import React from 'react'
 import '../../css/eventMonthList.css'
-import { withRouter } from 'react-router-dom'
-import EventContext, {
-  extractEventListParameters,
-} from '../../context/EventContext'
-import { useTranslation } from '../../i18n'
+import {withRouter} from 'react-router-dom'
+import {useTranslation} from '../../i18n'
 import moment from 'moment-timezone/index'
-import { extractParameter } from '../../utils/paramExtraction'
+import {extractEventLinkFunction, extractParameter} from '../../utils/paramExtraction'
 import LoadingContainer from '../loading/LoadingContainer'
 import EventType from "../EventType";
+import useOrganisationEventsWithContext from "../../hooks/useOrganisationEventsWithContext";
 
-const LINK_NAME_FUNC = 'eventsCalendarFunction'
+function EventDisplay({
+                        event, momentStartIso, eventsCalendarFunction,
+                        drawIconLine = true
+                      }) {
 
-function EventDisplay ({
-  event, momentStartIso, eventsCalendarFunction,
-  drawIconLine = true
-}) {
-
-  const { t } = useTranslation()
+  const {t} = useTranslation()
   const dayOfMonth = momentStartIso.format('D')
   const declinedDayOfMonth = momentStartIso.format('Do')
   const momentEndIso = moment(event.endIso)
@@ -41,7 +36,7 @@ function EventDisplay ({
             event.hasWebcast ? t('online_state_Mixed') :
               t('online_state_In Person')}
         </div>
-        <div className="calendar-event-type"><EventType eventTypeInt={event.eventTypeId} useLead={false} /></div>
+        <div className="calendar-event-type"><EventType eventTypeInt={event.eventTypeId} useLead={false}/></div>
         <a itemProp="url"
            href={eventsCalendarFunction(event)}
            className="eventLink"><span itemProp="name">{event.name}</span></a>
@@ -57,17 +52,11 @@ function EventDisplay ({
  * https://globalcooperationhouse.org/whatson-full
  * @constructor
  */
-function EventsMonthCalendar (props) {
-  const eventContext = useContext(EventContext)
-  const { eventsConfig } = eventContext
-  const eventsCalendarFunction = typeof eventsConfig[LINK_NAME_FUNC] ===
-  'function'
-    ?
-    eventsConfig[LINK_NAME_FUNC]
-    : (event) => `https://globalcooperationhouse.org/whatson-full/singleevent/${event.id}`
-  const allParams = extractEventListParameters({ ...props, ...eventContext })
-  const { events, data, isLoading, error } = useOrganisationEvents(allParams)
-  const displayYear = extractParameter({ ...eventContext }, 'showYear')
+function EventsMonthCalendar(props) {
+  const {events, data, isLoading, error, eventContext, eventsConfig} = useOrganisationEventsWithContext(props)
+  const displayYear = extractParameter({...eventContext}, 'showYear')
+  const eventsCalendarFunction = extractEventLinkFunction(eventsConfig)
+  const locale = extractParameter({...eventContext}, 'language', 'en-US')
   const curMonth = []
   return (
     <div className="container">
@@ -76,8 +65,7 @@ function EventsMonthCalendar (props) {
           <div id="t3-content" className="t3-content col-xs-12">
             <div className="events-page">
               {events.map((event, i) => {
-                moment.locale(
-                  extractParameter({ ...eventContext }, 'language', 'en-US'))
+                moment.locale(locale)
                 const momentStartIso = moment(event.startIso)
                 const month = momentStartIso.format('MMMM')
                 const displayMonth = curMonth.length === 0 || curMonth[0] !==
@@ -92,10 +80,11 @@ function EventsMonthCalendar (props) {
                   moment(events[i].startIso).month()
                 return (
                   <section key={`${i}_${event.name}`}>
-                    {displayMonth && <h1 className="events-month">{month}{displayYear && ` ${momentStartIso.year()}`}</h1>}
+                    {displayMonth &&
+                      <h1 className="events-month">{month}{displayYear && ` ${momentStartIso.year()}`}</h1>}
                     <EventDisplay event={event} momentStartIso={momentStartIso}
                                   eventsCalendarFunction={eventsCalendarFunction}
-                                  drawIconLine={drawIconLine} />
+                                  drawIconLine={drawIconLine}/>
                   </section>
                 )
               })}

@@ -23,6 +23,7 @@ import EventSessionParent
 import EventCountdownMain from './components/countDown/EventCountdownMain'
 import EventsMonthCalendar
     from './components/eventsMonthCalendar/EventsMonthCalendar'
+import ImageBanner from "./components/imageBanner/ImageBanner";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -43,7 +44,8 @@ const WIDGET_TYPE = {
     COMPOSITE_CALENDAR: "COMPOSITE_CALENDAR",
     SLIDER: "SLIDER",
     TILES: "TILES",
-    EVENT_COUNT_DOWN: "EVENT_COUNT_DOWN"
+    EVENT_COUNT_DOWN: "EVENT_COUNT_DOWN",
+    IMAGE_BANNER: "IMAGE_BANNER"
 }
 
 const chooseComponent = (eventsConfig) => {
@@ -68,6 +70,8 @@ const chooseComponent = (eventsConfig) => {
             return <TilesParent />
         case WIDGET_TYPE.EVENT_COUNT_DOWN:
             return <EventCountdownMain/>
+        case WIDGET_TYPE.IMAGE_BANNER:
+            return <ImageBanner />
     }
     // Legacy configurations
     if (eventsConfig?.showForm) {
@@ -121,6 +125,9 @@ function App ({ eventsConfig }) {
                         </Route>
                         <Route path="/slider">
                             <SliderParent />
+                        </Route>
+                        <Route path="/image-banner">
+                            <ImageBanner />
                         </Route>
                         <Route path="/">
                             {chooseComponent(eventsConfig)}
