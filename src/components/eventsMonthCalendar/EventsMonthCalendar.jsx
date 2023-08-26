@@ -64,7 +64,7 @@ function EventsMonthCalendar(props) {
         <div className="row">
           <div id="t3-content" className="t3-content col-xs-12">
             <div className="events-page">
-              {events.map((event, i) => {
+              {events?.map((event, i) => {
                 moment.locale(locale)
                 const momentStartIso = moment(event.startIso)
                 const month = momentStartIso.format('MMMM')

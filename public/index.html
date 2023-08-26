@@ -60,7 +60,7 @@
         {
             useBodyHiddenOverflow: true,
             useSimpleLayout: true,
-            orgId: [845], // GCH only for now
+            orgId: [5], // GCH only for now
             eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
             language: "en-GB", // "es" for Spanish also supported now,
             showLocalTime: true,
@@ -81,7 +81,7 @@
             useAllOrgIds: true,
             // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES,
             // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR
-            widgetType: "IMAGE_BANNER",
+            widgetType: "COMPOSITE_CALENDAR",
             hideSocial: false,
             private: 'no',
             showGoogleCalendarIcon: false,
@@ -119,7 +119,11 @@
             eventsCalendarFunction: (event) =>
               `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`,
             formSuccessMessage: `<h2>Hooray! The form has been successfully submitted. Many thanks.</h2>`,
-            formShowMissingFields: true
+            formShowMissingFields: true,
+            imageBanner_selectedPositions: [0, 1, 2],
+            imageBanner_imagePosition: 3,
+            eventsCalendarFunction: (event) =>
+              `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`,
             // tags: 'women,spirituality,meditation'
         }]
 </script>

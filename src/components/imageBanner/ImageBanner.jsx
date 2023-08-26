@@ -19,7 +19,7 @@ export default function ImageBanner(props) {
       <LoadingContainer data={data} isLoading={isLoading} error={error}>
         <div className="row ems-image-banner">
           {events
-            .filter(event => !!event[`image${imagePosition}`])
+            ?.filter(event => !!event[`image${imagePosition}`])
             .filter((_, i) => !!selectedPositions.includes(i))
             .map((event, i) => {
               return (

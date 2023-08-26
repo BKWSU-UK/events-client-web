@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.61.0",
+  "version": "0.62.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -27,7 +27,7 @@
     "react-formio": "^4.2.5",
     "react-i18next": "^11.4.0",
     "react-placeholder": "^4.1.0",
-    "react-query": "^3.34.16",
+    "react-query": "^3.39.3",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
     "react-share": "^4.4.1",
