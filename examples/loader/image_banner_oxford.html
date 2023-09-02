@@ -4,22 +4,19 @@
 </head>
 <body>
 <script>
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [2], // GCH only
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        language: "en-GB", // "es" for Spanish also supported now,
-        onlyWebcast: true, // show only webcast events
-        showLocalTime: true,
-        displayWebcastButton: true, // displays the webcast button
-        eventsLimit: 10, // show only one single event,
-        singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
-        suppressBookOnly: true, // Remove the book only button
-        rootElement: 'root',
-        fetchEvents: true,
-        suppressVenue: true // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-    }]
+  window.eventsConfig = [{
+    orgId: [5], // GCH only
+    eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
+    language: 'en-GB', // "es" for Spanish also supported now,
+    widgetType: "IMAGE_BANNER",
+    eventsLimit: 200, // show only one single event
+    fetchEvents: true,
+    rootElement: 'root',
+    imageBanner_selectedPositions: [0, 1, 2, 3],
+    imageBanner_imagePosition: 3,
+    eventsCalendarFunction: (event) =>
+      `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`,
+  }]
 </script>
 <div id="root" class="container-fluid"></div>
 <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.63.0/starter.js"></script>
@@ -29,10 +26,7 @@
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
       crossorigin="anonymous">
 <style>
-    #root {
-        padding-left: 0;
-        padding-right: 0;
-    }
+
     /** Stretch search field */
     label[for=searchInput] + .col-6 {
         width: 100%;
@@ -40,11 +34,13 @@
         flex: 0 0 100%;
         padding-left: 0;
     }
+
     label[for=searchInput] {
         float: left;
         text-align: left !important;
         padding-left: 0;
     }
+
     .search-box {
         max-width: 100%;
     }

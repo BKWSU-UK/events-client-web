@@ -15,7 +15,7 @@ export default function ImageBanner(props) {
   const imagePosition = extractParameter({...eventContext}, 'imageBanner_imagePosition') || '1'
   const eventsCalendarFunction = extractEventLinkFunction(eventsConfig)
   return (
-    <div className="container">
+    <div className="ems-image-banner-cntainer">
       <LoadingContainer data={data} isLoading={isLoading} error={error}>
         <div className="row ems-image-banner">
           {events

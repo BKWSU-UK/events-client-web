@@ -176,37 +176,37 @@ export const ReadMore = () => {
   const venueEvent = venueFactory(currentEvent)
   const timeFormat = useTimeFormat()
 
+  const tags = new Set(currentEvent.tags?.split(',') ?? [])
   if (venueEvent?.venue) {
     return (
       <>
-        <h2 id="eventDisplayName">{venueEvent.name}</h2>
+        {tags.has('hide-title') ? '' : <h2 id="eventDisplayName">{venueEvent.name}</h2>}
         <div className="row">
           <div className={venueEvent.requiresRegistration
             ? 'col-md-6'
             : 'col-md-12'}>
-            <EventType eventTypeInt={venueEvent.eventTypeId}/>
-            <CalendarFirstDate dateList={dateList}
+            {tags.has('hide-type') ? '' : <EventType eventTypeInt={venueEvent.eventTypeId}/>}
+            {tags.has('hide-date') ? '' : <CalendarFirstDate dateList={dateList}
                                currentEvent={currentEvent}
-                               timeFormat={timeFormat} />
-            <ShowImage/>
-            <p dangerouslySetInnerHTML={{ __html: venueEvent.description }}/>
-            <div className="row">
+                               timeFormat={timeFormat} />}
+            {tags.has('hide-image') ? '' : <ShowImage/>}
+            {tags.has('hide-description') ? '' : <p dangerouslySetInnerHTML={{ __html: venueEvent.description }}/>}
+            {tags.has('hide-webcast') ? '' : <div className="row">
               <div className="col-md-12 webcastButton">
                 <WebcastButton original={venueEvent}/></div>
-            </div>
+            </div>}
 
-            <Venue venue={venueEvent.venue}
+            {tags.has('hide-venue') ? '' : <Venue venue={venueEvent.venue}
                    venueName={venueEvent.venue.name}
                    venueAddress={venueEvent.venue.address}
                    venuePostalCode={venueEvent.venue.postalCode}
-                   venueLocality={venueEvent.venue.locality}/>
-            {dateList && <RenderUpcomingDates dateList={dateList}
-                                              currentEvent={venueEvent}/>}
-            <ContactEmail currentEvent={venueEvent}/>
-            <SocialIcons currentEvent={currentEvent}/>
-            <RenderSimilarEvents/>
+                   venueLocality={venueEvent.venue.locality}/>}
+            {!tags.has('hide-upcoming') && dateList && <RenderUpcomingDates dateList={dateList} currentEvent={venueEvent}/>}
+            {tags.has('hide-email') ? '' : <ContactEmail currentEvent={venueEvent}/>}
+            {tags.has('hide-social') ? '' : <SocialIcons currentEvent={currentEvent}/>}
+            {tags.has('hide-similar') ? '' : <RenderSimilarEvents/>}
           </div>
-          <IncludeForm currentEvent={venueEvent}/>
+          {tags.has('hide-form') ? '' : <IncludeForm currentEvent={venueEvent}/>}
         </div>
       </>
     )
