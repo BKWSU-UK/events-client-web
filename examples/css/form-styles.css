@@ -1,0 +1,27 @@
+.field-xxsmall input {
+    max-width: 2em
+}
+
+.field-xsmall input {
+    max-width: 5em
+}
+
+.field-small {
+    max-width: 10em
+}
+
+.field-medium {
+    max-width: 20em
+}
+
+.field-large {
+    max-width: 40em
+}
+
+.field-xlarge {
+    max-width: 60em
+}
+
+.field-xxlarge {
+    max-width: 100em
+}

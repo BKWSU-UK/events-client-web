@@ -57,6 +57,7 @@ const translationsBS = {
   'Online activity': 'Aktivnost preko interneta',
   'Online State': 'Internet status',
   'Open webcast URL': 'Gledaj uživo',
+  'other-sessions': 'Ostale sesije',
   'page': 'Stranica',
   'Panel discussion': 'Panel diskusija',
   'Power and protection': 'Snaga i zaštita',

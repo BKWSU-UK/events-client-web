@@ -126,6 +126,9 @@ export const eventDateAdapter = (eventDate) => {
 }
 
 export const isSameDay = (date) => {
+    if(!date?.startIso || !date?.endIso) {
+        return true
+    }
     const startSplit = date.startIso.split('T')
     const endSplit = date.endIso.split('T')
     return startSplit[0] === endSplit[0]
