@@ -3,8 +3,7 @@ import './App.css'
 import 'react-big-calendar/lib/sass/styles.scss'
 import 'react-big-calendar/lib/addons/dragAndDrop/styles.css' // if using DnD
 // Default theme
-import '@splidejs/react-splide/dist/css/splide-core.min.css'
-import '@splidejs/react-splide/dist/css/themes/splide-default.min.css'
+import '@splidejs/react-splide/css';
 
 import EventTable from './components/EventTable'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
@@ -72,21 +71,22 @@ const chooseComponent = (eventsConfig) => {
             return <EventCountdownMain/>
         case WIDGET_TYPE.IMAGE_BANNER:
             return <ImageBanner />
+        default:
+            // Legacy configurations
+            if (eventsConfig?.showForm) {
+                return <EventForm/>
+            }
+            if (eventsConfig?.showSingleEvent) {
+                return <EventDetail/>
+            }
+            if (eventsConfig?.showCalendar) {
+                return <EventCalendar/>
+            }
+            if (eventsConfig?.showCompositeCalendar) {
+                return <DateStripCalendarParent/>
+            }
+            return <EventTable/>
     }
-    // Legacy configurations
-    if (eventsConfig?.showForm) {
-        return <EventForm/>
-    }
-    if (eventsConfig?.showSingleEvent) {
-        return <EventDetail/>
-    }
-    if (eventsConfig?.showCalendar) {
-        return <EventCalendar/>
-    }
-    if (eventsConfig?.showCompositeCalendar) {
-        return <DateStripCalendarParent/>
-    }
-    return <EventTable/>
 }
 
 function App ({ eventsConfig }) {
