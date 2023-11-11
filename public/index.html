@@ -60,7 +60,7 @@
         {
             useBodyHiddenOverflow: true,
             useSimpleLayout: true,
-            orgId: [838], // GCH only for now
+            orgId: [5], // GCH only for now
             eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
             language: "en-GB", // "es" for Spanish also supported now,
             showLocalTime: true,
@@ -81,7 +81,7 @@
             useAllOrgIds: true,
             // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES,
             // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR, IMAGE_BANNER
-            widgetType: "SINGLE_EVENT",
+            widgetType: "TABLE",
             hideSocial: false,
             private: 'no',
             showGoogleCalendarIcon: false,
@@ -124,7 +124,9 @@
             imageBanner_imagePosition: 3,
             eventsCalendarFunction: (event) =>
               `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`,
-            // tags: 'women,spirituality,meditation'
+            tags: 'celebration,christmas',
+            // Default value is 'OR' or 'AND'
+            // tagsOperator: 'AND'
         }]
 </script>
 

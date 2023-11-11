@@ -3,7 +3,7 @@ import { ALL_ORG_IDS } from '../context/EventContext'
 import { SERVER_BASE } from '../apiConstants'
 import { DISPLAY_ONLINE_FILTER } from '../context/appParams'
 import { ONLINE_STATUSES } from '../context/onlineStates'
-import {DATA_ACCESS_PARAMS, QUERY_PARAMS} from './dataAccessConstants'
+import {DATA_ACCESS_PARAMS, QUERY_PARAMS, TAGS_OPERATOR} from './dataAccessConstants'
 import { groupByDate } from './dateCounterFactory'
 import { convertDate } from '../utils/dateUtils'
 import searchAdapter from '../context/searchAdapter'
@@ -34,6 +34,11 @@ const getTagsString = (eventContext) => {
   return extractParameter({ ...eventContext }, 'tags')
 }
 
+function getTagsOperator(eventContext) {
+  const {eventsConfig} = eventContext
+  return eventsConfig.tagsOperator === TAGS_OPERATOR.AND ? TAGS_OPERATOR.AND : null
+}
+
 const appendToTargetUrl = (value, targetUrl, parameter) => {
   if (value === DATA_ACCESS_PARAMS.LOGICAL_YES) {
     targetUrl += `&${parameter}=true`
@@ -51,7 +56,15 @@ const processPrivate = (targetUrl, eventContext) => appendToTargetUrl(
 
 const processTags = (targetUrl, eventContext) => {
   const tagsString = getTagsString(eventContext)
-  return targetUrl + (!!tagsString? `&tags=${tagsString}` : '')
+  let newTargetUrl = targetUrl
+  if(!!tagsString) {
+    newTargetUrl += `&tags=${tagsString}`
+    const tagsOperator = getTagsOperator(eventContext)
+    if(!!tagsOperator) {
+      newTargetUrl += `&tagsAnd=true`
+    }
+  }
+  return newTargetUrl
 }
 
 const onlyWebcastAdapter = (isOnlyWebcast, targetUrl) => {

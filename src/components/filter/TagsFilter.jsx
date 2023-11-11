@@ -19,8 +19,10 @@ const TagsFilter = () => {
   useEffect(() => {
     const tagsStr = extractParameter(null, 'tags', [])
     if (!!tagsStr) {
-      const tags = tagsStr.split(/[,;]/)
-      filterDispatch({ type: ACTIONS.SET_TAGS, payload: { tags } })
+      if(filterState.tags.length === 0) {
+        const tags = tagsStr.split(/[,;]/)
+        filterDispatch({ type: ACTIONS.SET_TAGS, payload: { tags } })
+      }
     }
   }, [])
 
