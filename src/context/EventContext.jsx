@@ -1,6 +1,6 @@
-import React, { createContext, useReducer, useState } from 'react'
-import { extractParameter } from '../utils/paramExtraction'
-import { ONLINE_STATUSES } from './onlineStates'
+import React, {createContext, useReducer, useState} from 'react'
+import {extractParameter} from '../utils/paramExtraction'
+import {ONLINE_STATUSES} from './onlineStates'
 
 export const EVENTS_LANG = 'eventsLang'
 
@@ -38,6 +38,7 @@ export const ACTIONS = {
   CHANGE_ONLINE_STATE: 'CHANGE_ONLINE_STATE',
   SELECT_TAG: 'SELECT_TAG',
   SET_TAGS: 'SET_TAGS',
+  SET_NO_TAGS: 'SET_NO_TAGS',
   TOGGLE_TAGS: 'TOGGLE_TAGS'
 }
 
@@ -58,6 +59,11 @@ const filterReducer = (state, action) => {
         ...state,
         tags: action.payload.tags
       }
+    case ACTIONS.SET_NO_TAGS:
+      return {
+        ...state,
+        noTags: action.payload.noTags
+      }
     case ACTIONS.TOGGLE_TAGS:
       const tagState = !state.activateTags
       return {
@@ -77,6 +83,7 @@ export const EventContextProvider = (props) => {
     onlineStatus: ONLINE_STATUSES.NONE,
     selectedTag: null,
     tags: [],
+    noTags: [],
     activateTags: true
   })
 

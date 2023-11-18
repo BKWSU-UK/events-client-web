@@ -83,7 +83,7 @@
             // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR, IMAGE_BANNER
             widgetType: "TABLE",
             hideSocial: false,
-            private: 'no',
+            private: 'yes',
             showGoogleCalendarIcon: false,
             eventCountDownStyle: "animated",
             eventCountDownTimezone: "Europe/Berlin",
@@ -124,9 +124,11 @@
             imageBanner_imagePosition: 3,
             eventsCalendarFunction: (event) =>
               `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`,
-            tags: 'celebration,christmas',
+            tags: 'retreat,bk,meal',
+            // Excluding tags
+            noTags: 'meal,meals,bk',
             // Default value is 'OR' or 'AND'
-            // tagsOperator: 'AND'
+            // tagsOperator: 'AND,'
         }]
 </script>
 

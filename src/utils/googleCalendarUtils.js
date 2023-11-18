@@ -8,8 +8,7 @@ export function convertIsoToGoogleCal (dateStr) {
 export function googleCalendarLink (event, date) {
     const venue = event.venue
 
-    const renderedLocation = !!venue &&
-        `&location=${encodeURI(venue.address)}` || ''
+    const renderedLocation = !!venue ? `&location=${encodeURI(venue.address)}` : ''
 
     return `https://www.google.com/calendar/render?action=TEMPLATE&text=${encodeURI(
         event.name)}&dates=${convertIsoToGoogleCal(

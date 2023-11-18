@@ -26,6 +26,7 @@ export const eventMap = {
 
 export const QUERY_PARAMS = {
     START_DATE_LIMIT: 'startDateLimit',
+    NO_TAGS: 'noTags',
 }
 
 export const TAGS_OPERATOR = {

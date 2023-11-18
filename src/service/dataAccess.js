@@ -39,6 +39,14 @@ function getTagsOperator(eventContext) {
   return eventsConfig.tagsOperator === TAGS_OPERATOR.AND ? TAGS_OPERATOR.AND : null
 }
 
+function getNoTagsParameter(eventContext) {
+  const { activateTags } = eventContext?.filterState
+  if(!activateTags) {
+    return null
+  }
+  return extractParameter({ ...eventContext }, QUERY_PARAMS.NO_TAGS)
+}
+
 const appendToTargetUrl = (value, targetUrl, parameter) => {
   if (value === DATA_ACCESS_PARAMS.LOGICAL_YES) {
     targetUrl += `&${parameter}=true`
@@ -63,6 +71,10 @@ const processTags = (targetUrl, eventContext) => {
     if(!!tagsOperator) {
       newTargetUrl += `&tagsAnd=true`
     }
+  }
+  const noTags = getNoTagsParameter(eventContext)
+  if(!!noTags) {
+    newTargetUrl += `&noTags=${noTags}`
   }
   return newTargetUrl
 }
