@@ -3,6 +3,7 @@ import EventContext, {ACTIONS} from '../../context/EventContext'
 import {extractParameter} from '../../utils/paramExtraction'
 import {faPlay, faPowerOff,} from '@fortawesome/free-solid-svg-icons'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {EVENT_CONFIG} from "../../context/appParams";
 
 function dispatchTags(filterDispatch, tagsStr, isNoTags) {
   if (!!tagsStr) {
@@ -29,8 +30,8 @@ const TagsFilter = () => {
   const {filterState, filterDispatch} = eventContext
 
   useEffect(() => {
-    const tagsStr = extractParameter(null, 'tags', [])
-    const noTagsStr = extractParameter(null, 'noTags', [])
+    const tagsStr = extractParameter(null, EVENT_CONFIG.TAGS, [])
+    const noTagsStr = extractParameter(null, EVENT_CONFIG.NO_TAGS, [])
     if(filterState.tags.length === 0) {
       dispatchTags(filterDispatch, tagsStr, false)
     }

@@ -177,6 +177,7 @@ export const ReadMore = ({dateList: injectDateList}) => {
     return (
       <>
         {tags.has('hide-title') ? '' : <h2 id="eventDisplayName">{venueEvent.name}</h2>}
+        {tags.has('hide-subtitle') ? '' : <h3 id="eventSubTitle">{venueEvent.subTitle}</h3>}
         <div className="row">
           <div className={venueEvent.requiresRegistration
             ? 'col-md-6'

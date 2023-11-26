@@ -1,1 +1,0 @@
-export const LINK_NAME_FUNC = 'eventsCalendarFunction'

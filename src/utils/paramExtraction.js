@@ -1,5 +1,6 @@
 import {extractFromLocationQuery} from "./urlUtils";
-import {LINK_NAME_FUNC} from "../appParameters";
+
+import {LINK_NAME_FUNC} from "../context/appParams";
 
 export const extractParameterSimple = (name, defaultValue = null) => extractParameter(null, name, defaultValue);
 

@@ -7,6 +7,8 @@ import {useTranslation} from "../../i18n";
 import {extractParameter} from "../../utils/paramExtraction";
 import EventContext from '../../context/EventContext'
 
+import {EVENT_CONFIG} from "../../context/appParams";
+
 /**
  * Renders the search text field.
  * @param globalFilter
@@ -22,7 +24,7 @@ function GlobalFilter({
                       }) {
     const { t } = useTranslation();
     const eventContext = useContext(EventContext)
-    if(extractParameter({...eventContext}, 'eventsLimit', 10000) < 2) {
+    if(extractParameter({...eventContext}, EVENT_CONFIG.EVENTS_LIMIT, 10000) < 2) {
         return <></>;
     }
     return (

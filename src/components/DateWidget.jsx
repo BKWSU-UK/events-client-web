@@ -119,6 +119,9 @@ export function momentFactory(dateExpr, timezone) {
  * @param startTimeStamp The start timestamp.
  * @returns {*}
  * @constructor
+ *
+ * <span className="year">{baseMoment.format("YYYY")}</span>
+ *
  */
 export default function DateWidget({startDate, endDate, timezone}) {
     const {t} = useTranslation();
@@ -129,7 +132,7 @@ export default function DateWidget({startDate, endDate, timezone}) {
     return (
         <div className="calendarWidget">
             <div className="weekday">{baseMoment.format("dddd")}</div>
-            <div className="month">{baseMoment.format("MMM")}</div>
+            <div className="month">{baseMoment.format("MMM")}  </div>
             <div className="day">{baseMoment.format("DD")}</div>
             {displayTimes({baseMoment, baseEndMoment, timezone, t, eventContext})}
         </div>

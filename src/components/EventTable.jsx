@@ -1,32 +1,24 @@
-import React, { useContext, useState } from 'react'
-import {
-  useGlobalFilter,
-  usePagination,
-  useSortBy,
-  useTable,
-} from 'react-table'
+import React, {useContext, useState} from 'react'
+import {useGlobalFilter, usePagination, useSortBy, useTable,} from 'react-table'
 import styled from 'styled-components'
-import { Pager } from './Pager'
-import { withRouter } from 'react-router-dom'
+import {Pager} from './Pager'
+import {withRouter} from 'react-router-dom'
 import EventDisplay from './EventDisplay'
 import FormModal from './forms/FormModal'
 import ReadMoreModal from './readMore/ReadMore'
 import GlobalFilter from './filter/GlobalFilter'
-import { useTranslation } from '../i18n'
-import EventContext, {
-  extractEventListParameters,
-} from '../context/EventContext'
+import {useTranslation} from '../i18n'
+import EventContext, {extractEventListParameters,} from '../context/EventContext'
 import CenterFilter from './filter/CenterFilter'
-import {
-  extractParameter,
-} from '../utils/paramExtraction'
+import {extractParameter,} from '../utils/paramExtraction'
 import OnlineFilter from './filter/OnlineFilter'
-import { eventMap } from '../service/dataAccessConstants'
+import {eventMap} from '../service/dataAccessConstants'
 import TagsFilter from './filter/TagsFilter'
 import LoadingPlaceHolder from './loading/LoadingPlaceHolder'
 import useOrganisationEvents from '../hooks/useOrganisationEvents'
+import {EVENT_CONFIG} from "../context/appParams";
 
-function EventTableStruct ({ columns, params, show }) {
+function EventTableStruct({columns, params, show}) {
   const {events, eventContext, data, isLoading, error} = useOrganisationEvents(params)
 
   // Use the state and functions returned from useTable to build your UI
@@ -47,62 +39,63 @@ function EventTableStruct ({ columns, params, show }) {
     previousPage,
     setPageSize,
     setGlobalFilter,
-    state: { pageIndex, pageSize },
+    state: {pageIndex, pageSize},
   } = useTable({
     columns,
     data: events,
     initialState: {
       pageIndex: 0,
-      pageSize: extractParameter({ ...eventContext }, 'pageSize', 10),
+      pageSize: extractParameter({...eventContext}, 'pageSize', 10),
     },
   }, useGlobalFilter, useSortBy, usePagination)
 
   // Render the UI for your table
   const showColumns = ['description']
+  const hideSearch = extractParameter({...eventContext}, EVENT_CONFIG.HIDE_SEARCH, false)
+  const hidePager = extractParameter({...eventContext}, EVENT_CONFIG.HIDE_PAGER, false)
   return (
     <>
       <div className="row mt-1 mb-1 ml-1"
-           style={{ visibility: show ? 'visible' : 'hidden' }}>
-        <GlobalFilter
+           style={{visibility: show ? 'visible' : 'hidden'}}>
+        {!hideSearch && <GlobalFilter
           globalFilter={state.globalFilter}
           setGlobalFilter={setGlobalFilter}
           rowsLength={rows.length}
-        />
-        <Pager gotoPage={gotoPage} canPreviousPage={canPreviousPage}
-               previousPage={previousPage} nextPage={nextPage}
-               canNextPage={canNextPage} pageCount={pageCount}
-               pageOptions={pageOptions} pageIndex={pageIndex}
-               pageSize={pageSize} setPageSize={setPageSize}/>
+        />}
+        {!hidePager && <Pager gotoPage={gotoPage} canPreviousPage={canPreviousPage}
+                previousPage={previousPage} nextPage={nextPage}
+                canNextPage={canNextPage} pageCount={pageCount}
+                pageOptions={pageOptions} pageIndex={pageIndex}
+                pageSize={pageSize} setPageSize={setPageSize}/>}
       </div>
       <OnlineFilter/>
-      <TagsFilter />
+      <TagsFilter/>
       <CenterFilter/>
       <LoadingPlaceHolder data={data} isLoading={isLoading} error={error}>
         <table {...getTableProps()} className="table table-hover"
-               style={{ visibility: show ? 'visible' : 'hidden' }}>
+               style={{visibility: show ? 'visible' : 'hidden'}}>
           <thead className="thead-dark">
           {headerGroups.map(headerGroup => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.filter(
-                column => showColumns.includes(column.id)).
-                map(column => {
-                    return (
-                      // Add the sorting props to control sorting. For this example
-                      // we can add them into the header props
+                column => showColumns.includes(column.id)).map(column => {
+                  return (
+                    // Add the sorting props to control sorting. For this example
+                    // we can add them into the header props
 
-                      <th {...column.getHeaderProps(
-                        column.getSortByToggleProps())}>
-                        {column.render('Header')}
-                        {/* Add a sort direction indicator */}
-                        <span>
+                    <th {...column.getHeaderProps(
+                      column.getSortByToggleProps())}>
+                      {column.render('Header')}
+                      {/* Add a sort direction indicator */}
+                      <span>
                                     {column.isSorted ? column.isSortedDesc
                                       ? ' 🔽'
                                       : ' 🔼' : ''}
                                 </span>
-                      </th>
-                    )
-                  },
-                )}
+                    </th>
+                  )
+                },
+              )}
             </tr>
           ))}
           </thead>
@@ -126,22 +119,22 @@ function EventTableStruct ({ columns, params, show }) {
 }
 
 
-
-export function EventTable (props) {
+export function EventTable(props) {
   const Styles = styled.div`
-        padding: 0rem;
-        table {
-            width: 100%;
-        }
-        `
+    padding: 0rem;
+
+    table {
+      width: 100%;
+    }
+  `
   const eventContext = useContext(EventContext)
-  const { currentEvent, setCurrentEvent } = eventContext
-  const allParams = extractEventListParameters({ ...props, ...eventContext })
+  const {currentEvent, setCurrentEvent} = eventContext
+  const allParams = extractEventListParameters({...props, ...eventContext})
   const [eventTableVisible, setEventTableVisible] = useState(true)
   const [displayMoreAbout, setDisplayMoreAbout] = useState(false)
   const [displayForm, setDisplayForm] = useState(false)
   const [dateList, setDateList] = useState({})
-  const { t } = useTranslation()
+  const {t} = useTranslation()
 
   const eventColumns = React.useMemo(
     () => [
@@ -160,7 +153,7 @@ export function EventTable (props) {
         accessor: 'description',
         Cell: (props) => {
           const original = props.row.original
-          const useSimpleLayout = extractParameter({ ...eventContext },
+          const useSimpleLayout = extractParameter({...eventContext},
             'useSimpleLayout')
           return (
             <EventDisplay original={original}
