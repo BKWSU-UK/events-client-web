@@ -12,7 +12,7 @@ const hasWebcast = (original) => {
         && original.webcastUrl.toLowerCase().match(/.+(webcast|watchlive).*/)
 }
 
-const chooseWebcastFunction = () => window.eventsConfig.hasWebcastFunc ||
+const chooseWebcastFunction = (eventsConfig) => eventsConfig.hasWebcastFunc ||
     hasWebcast
 
 /**
@@ -25,8 +25,10 @@ const chooseWebcastFunction = () => window.eventsConfig.hasWebcastFunc ||
 export default function WebcastButton ({ original }) {
     const { t } = useTranslation()
     const eventContext = useContext(EventContext)
-    if (chooseWebcastFunction()(original) && !!original.webcastUrl &&
-        extractParameter({ ...eventContext }, 'displayWebcastButton')) {
+    const { eventsConfig } = eventContext
+    debugger
+    const displayWebcastButton = extractParameter({ ...eventContext }, 'displayWebcastButton');
+    if (chooseWebcastFunction(eventsConfig)(original) && !!original.webcastUrl && displayWebcastButton) {
         return (
             <button type="button" className="btn btn-info"
                     onClick={() => openInNewTab(original.webcastUrl)}>

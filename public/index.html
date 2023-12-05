@@ -81,11 +81,11 @@
             useAllOrgIds: true,
             // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES,
             // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR, IMAGE_BANNER
-            widgetType: "SINGLE_EVENT",
+            widgetType: "TABLE",
             hideSocial: true,
             hideSearch: true,
             hidePager: true,
-            private: 'yes',
+            // private: 'yes',
             showGoogleCalendarIcon: false,
             eventCountDownStyle: "animated",
             eventCountDownTimezone: "Europe/Berlin",
@@ -126,11 +126,12 @@
             imageBanner_imagePosition: 3,
             eventsCalendarFunction: (event) =>
               `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`,
-            tags: 'retreat,bk',
+            hasWebcastFunc: () => true,
+            // tags: 'retreat,bk',
             // Excluding tags
-            noTags: 'meals',
+            // noTags: 'meals',
             // Default value is 'OR' or 'AND'
-            tagsOperator: 'AND,'
+            // tagsOperator: 'AND,'
         }]
 </script>
 
