@@ -26,7 +26,7 @@ export default function WebcastButton ({ original }) {
     const { t } = useTranslation()
     const eventContext = useContext(EventContext)
     const { eventsConfig } = eventContext
-    debugger
+
     const displayWebcastButton = extractParameter({ ...eventContext }, 'displayWebcastButton');
     if (chooseWebcastFunction(eventsConfig)(original) && !!original.webcastUrl && displayWebcastButton) {
         return (
