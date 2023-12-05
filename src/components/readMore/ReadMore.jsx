@@ -36,7 +36,7 @@ export function RenderDate({
 
   const renderEndTimeIfSameDay = () => {
     if (isSameDay(date)) {
-      return '-' +
+      return ' - ' +
         renderTimeFromIso(date.endIso, langCode, timeFormat)
     }
     return ''
@@ -52,7 +52,7 @@ export function RenderDate({
   return (
     <div className="row" key={date.eventDateId}>
       <div className="calendar-date-info col-12">
-        {useCalendarIcon && <>&#x1f4c5;</>} {startMoment.locale(langCode).format(`${dateFormat} ${timeFormat}`)}
+        {useCalendarIcon && <span className="calendar-icon">&#x1f4c5;</span>} {startMoment.locale(langCode).format(`${dateFormat} ${timeFormat}`)}
         {renderEndTimeIfSameDay()}
         {!isSameMoment(startMoment, endMoment) &&
           <span> - {endMoment.locale(langCode).format(`${dateFormat} ${timeFormat}`)}</span>}
@@ -197,7 +197,8 @@ export const ReadMore = ({dateList: injectDateList}) => {
                                                   venueName={venueEvent.venue.name}
                                                   venueAddress={venueEvent.venue.address}
                                                   venuePostalCode={venueEvent.venue.postalCode}
-                                                  venueLocality={venueEvent.venue.locality}/>}
+                                                  venueLocality={venueEvent.venue.locality}
+                                                  currentEvent={currentEvent}/>}
             {!tags.has('hide-upcoming') && dateList &&
               <RenderUpcomingDates dateList={dateList} currentEvent={venueEvent}/>}
             {!tags.has('hide-intermediate') && dateList &&

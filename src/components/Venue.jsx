@@ -63,13 +63,13 @@ function venuePhone(venue) {
     }
 }
 
-export default function Venue({venue, venueName, venueAddress, venuePostalCode, venueLocality}) {
+export default function Venue({venue, venueName, venueAddress, venuePostalCode, venueLocality, currentEvent}) {
     return (
         <div className="card card-body bg-light venue-display">
             {venueNameDisplay(venueName)}
             <div>{venueAddress}</div>
             <VenuePostalCodeLocality venue={venue} venueLocality={venueLocality} venuePostalCode={venuePostalCode} />
-            {venueEmail(venue)}
+            {currentEvent?.requiresRegistration ? '' : venueEmail(venue)}
             {venuePhone(venue)}
         </div>
     )

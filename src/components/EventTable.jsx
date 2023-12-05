@@ -121,7 +121,7 @@ function EventTableStruct({columns, params, show}) {
 
 export function EventTable(props) {
   const Styles = styled.div`
-    padding: 0rem;
+    padding: 0;
 
     table {
       width: 100%;
