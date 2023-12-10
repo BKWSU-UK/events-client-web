@@ -1,12 +1,13 @@
 import { RenderDate } from '../../readMore/ReadMore'
 import EventExtraInfo from './EventExtraInfo'
-import React, { useMemo } from 'react'
+import React, {useContext, useMemo} from 'react'
 import { useTranslation } from '../../../i18n'
 import { imageAdapter } from '../../../utils/imgUtils'
 import OnlineNotice from './OnlineNotice'
 import EventCardTitle from './EventCardTitle'
 import EventTypeTitle from './EventTypeTitle'
 import { chooseOnlineClass } from './EventDateCard'
+import EventContext from "../../../context/EventContext";
 
 /**
  * Used to display an event date.
@@ -21,10 +22,12 @@ const EventDateImageCard = ({ ev, timeFormat, showEventDate, startAfterNow }) =>
 
     const { t } = useTranslation()
 
-    const heroImage = useMemo(() => imageAdapter(ev, window.eventsConfig[0]), [ev.id])
+    const { eventsConfig } = useContext(EventContext)
+
+    const heroImage = useMemo(() => imageAdapter(ev, eventsConfig), [ev.id])
 
     return (
-        <div className="col-12 col-sm-6 col-md-4 col-xl-4 calendar-event-card-wrapper">
+        <div className="col-12 col-sm-6 col-xl-3 calendar-event-card-wrapper">
             <div
                 className={`card ${!startAfterNow && 'calendar-date-past'}`}>
                 <div style={{

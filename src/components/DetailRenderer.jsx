@@ -2,9 +2,9 @@ import { useTranslation } from '../i18n'
 import { extractFromLocationQuery } from '../utils/urlUtils'
 import React, { useContext } from 'react'
 import EventContext from '../context/EventContext'
-import { useQuery } from 'react-query'
 import { fetchSingleEvent } from '../service/dataAccess'
 import Loader from './loading/Loader'
+import {useQuery} from "@tanstack/react-query";
 
 /**
  * Used to render directly either events or forms.
@@ -21,7 +21,7 @@ export default function DetailRenderer (props) {
     const { currentEvent, setCurrentEvent } = useContext(EventContext)
 
     const { isLoading, error, data } = useQuery(
-        [`event_${eventId}`], () => fetchSingleEvent(eventId))
+      {'queryKey': [`event_${eventId}`], 'queryFn':() => fetchSingleEvent(eventId)})
 
     if (data?.data[0]) {
         setCurrentEvent(data.data[0])

@@ -12,10 +12,11 @@ import { EventDisplayBody } from './EventDisplay'
 import WebcastButton from './WebcastButton'
 import { EventForm } from './forms/FormModal'
 import CenterFilter from './filter/CenterFilter'
-import { useQuery } from 'react-query'
+
 import LoadingContainer from './loading/LoadingContainer'
 import OnlineFilter from './filter/OnlineFilter'
 import useLanguage from '../hooks/useLanguage'
+import {useQuery} from "@tanstack/react-query";
 
 /**
  * Used to display the events in a calendar format.
@@ -35,8 +36,8 @@ const EventCalendar = (props) => {
 
     const localizer = momentLocalizer(moment)
 
-    const { isLoading, error, data } = useQuery(
-        [`eventsCalendar_${eventContext.id}`, orgId, orgIdFilter, filterState], () => {
+    const { isLoading, error, data } = useQuery({
+        'queryKey': [`eventsCalendar_${eventContext.id}`, orgId, orgIdFilter, filterState], 'queryFn': () => {
         if(!!orgIdFilter && orgIdFilter > 0) {
             return getEventList({ ...allParams, orgIdFilter, eventContext })
         }
@@ -45,7 +46,7 @@ const EventCalendar = (props) => {
         } else {
             return []
         }
-    })
+    }})
 
     setEvents(data)
 

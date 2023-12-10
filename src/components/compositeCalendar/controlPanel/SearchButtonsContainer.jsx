@@ -31,8 +31,6 @@ export const switchDateSelectionType = (stateCalendar) => {
  * @constructor
  */
 const SearchButtonsContainer = () => {
-
-    const { stateCalendar } = useContext(CompositeCalendarContext)
     const { t } = useTranslation()
 
     return (

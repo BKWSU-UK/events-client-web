@@ -42,7 +42,7 @@ function EventTableStruct({columns, params, show}) {
     state: {pageIndex, pageSize},
   } = useTable({
     columns,
-    data: events,
+    data: events ?? [],
     initialState: {
       pageIndex: 0,
       pageSize: extractParameter({...eventContext}, 'pageSize', 10),

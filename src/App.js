@@ -6,23 +6,22 @@ import 'react-big-calendar/lib/addons/dragAndDrop/styles.css' // if using DnD
 import '@splidejs/react-splide/css';
 
 import EventTable from './components/EventTable'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
 import About from './components/About'
 import EventDetail from './components/EventDetail'
-import { EventContextProvider } from './context/EventContext'
+import {EventContextProvider} from './context/EventContext'
 import EventCalendar from './components/EventCalendar'
-import { QueryClient, QueryClientProvider } from 'react-query'
 import EventForm from './components/EventForm'
-import DateStripCalendarParent
-    from './components/compositeCalendar/CompositeCalendarParent'
+import DateStripCalendarParent from './components/compositeCalendar/CompositeCalendarParent'
 import SliderParent from './components/slider/SliderParent'
 import TilesParent from './components/tiles/TilesParent'
-import EventSessionParent
-    from './components/singleEventSession/EventSessionParent'
+import EventSessionParent from './components/singleEventSession/EventSessionParent'
 import EventCountdownMain from './components/countDown/EventCountdownMain'
-import EventsMonthCalendar
-    from './components/eventsMonthCalendar/EventsMonthCalendar'
+import EventsMonthCalendar from './components/eventsMonthCalendar/EventsMonthCalendar'
 import ImageBanner from "./components/imageBanner/ImageBanner";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
+import InfiniteTiles from "./components/infiniteTiles/InfiniteTiles";
+import InfiniteTilesParent from "./components/infiniteTiles/InfiniteTilesParent";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -44,7 +43,8 @@ const WIDGET_TYPE = {
     SLIDER: "SLIDER",
     TILES: "TILES",
     EVENT_COUNT_DOWN: "EVENT_COUNT_DOWN",
-    IMAGE_BANNER: "IMAGE_BANNER"
+    IMAGE_BANNER: "IMAGE_BANNER",
+    INFINITE_TILES: "INFINITE_TILES"
 }
 
 const chooseComponent = (eventsConfig) => {
@@ -71,6 +71,8 @@ const chooseComponent = (eventsConfig) => {
             return <EventCountdownMain/>
         case WIDGET_TYPE.IMAGE_BANNER:
             return <ImageBanner />
+        case WIDGET_TYPE.INFINITE_TILES:
+            return <InfiniteTilesParent />
         default:
             // Legacy configurations
             if (eventsConfig?.showForm) {
@@ -128,6 +130,9 @@ function App ({ eventsConfig }) {
                         </Route>
                         <Route path="/image-banner">
                             <ImageBanner />
+                        </Route>
+                        <Route path="/infinite-tiles">
+                            <InfiniteTiles />
                         </Route>
                         <Route path="/">
                             {chooseComponent(eventsConfig)}

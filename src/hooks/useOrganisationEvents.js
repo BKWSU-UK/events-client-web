@@ -1,8 +1,9 @@
 import {useContext, useEffect} from 'react'
 import EventContext from '../context/EventContext'
-import {useQuery} from 'react-query'
+
 import {getEventList} from '../service/dataAccess'
 import {extractParameter} from '../utils/paramExtraction'
+import {useQuery} from "@tanstack/react-query";
 
 /**
  * Hook used to retrieve events based on the organisation id coming from a context.
@@ -26,12 +27,11 @@ export default function useOrganisationEvents(params) {
         } else {
           return []
         }
-      },
-      'onSuccess': (data) => {
-        setEvents(data)
       }
     }
   )
+
+  setEvents(data)
 
   return {events, eventContext, data, isLoading, error}
 }

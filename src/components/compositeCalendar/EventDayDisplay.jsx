@@ -1,26 +1,20 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import EventContext from '../../context/EventContext'
-import CompositeCalendarContext, {
-  CARD_TYPEUI_VIEW,
-  DATE_ACTIONS,
-} from '../../context/CompositeCalendarContext'
-import { useQuery } from 'react-query'
-import { dateToKey } from '../../utils/dateUtils'
-import {
-  getCombinedEventListWithGroupCount,
-  getEventListWithGroupCount,
-} from '../../service/dataAccess'
+import CompositeCalendarContext, {CARD_TYPEUI_VIEW, DATE_ACTIONS,} from '../../context/CompositeCalendarContext'
+import {dateToKey} from '../../utils/dateUtils'
+import {getCombinedEventListWithGroupCount, getEventListWithGroupCount,} from '../../service/dataAccess'
 import LoadingContainer from '../loading/LoadingContainer'
 import useTimeFormat from '../../hooks/useTimeFormat'
-import { useTranslation } from '../../i18n'
+import {useTranslation} from '../../i18n'
 import EventDateCard from './card/EventDateCard'
 import EventDateCardWrapper from './EventDateCardWrapper'
 import EventDateImageCard from './card/EventDateImageCard'
-import { EVENTS_LIMIT } from '../../context/appParams'
-import { updateOnlineStatus } from './adapter/onlineAdapter'
-import { eventTypeIdAdapter } from './adapter/eventTypeIdAdapter'
-import { orgIdFilterAdapter } from './adapter/orgIdAdapter'
+import {EVENTS_LIMIT} from '../../context/appParams'
+import {updateOnlineStatus} from './adapter/onlineAdapter'
+import {eventTypeIdAdapter} from './adapter/eventTypeIdAdapter'
+import {orgIdFilterAdapter} from './adapter/orgIdAdapter'
 import {QUERY_PARAMS} from "../../service/dataAccessConstants";
+import {useQuery} from "@tanstack/react-query";
 
 const onlineStatusAdapter = (stateCalendar) => `onlineStatus:${stateCalendar.onlineStatus}`
 
@@ -58,13 +52,13 @@ export class SingleDateQueryAdapter {
         searchExpression: stateCalendar.searchExpression,
       })
     }
-    return { groupedCount: {}, eventList: [] }
+    return {groupedCount: {}, eventList: []}
   }
 
   updateGroupCount = (dispatchDate, data) => {
     dispatchDate({
       type: DATE_ACTIONS.SET_EVENT_COUNT,
-      payload: { eventCount: data?.eventList?.length },
+      payload: {eventCount: data?.eventList?.length},
     })
   }
 
@@ -109,13 +103,13 @@ export class MultiDateQueryAdapter {
         searchExpression: stateCalendar.searchExpression,
       })
     }
-    return { groupedCount: {}, eventList: [] }
+    return {groupedCount: {}, eventList: []}
   }
 
   updateGroupCount = (dispatchDate, data) => {
     dispatchDate({
       type: DATE_ACTIONS.SET_DATE_COUNTS,
-      payload: { groupedCount: data?.groupedCount },
+      payload: {groupedCount: data?.groupedCount},
     })
   }
 
@@ -176,7 +170,7 @@ export class SingleDayQueryAdapter extends MultiDateQueryAdapter {
       return getCombinedEventListWithGroupCount(params1, params2,
         stateCalendar.searchExpression)
     }
-    return { groupedCount: {}, eventList: [] }
+    return {groupedCount: {}, eventList: []}
   }
 }
 
@@ -186,23 +180,24 @@ const DEFAULT_EVENT_LIMIT = 10
  * Used to display the events for a single day and for a time range.
  * @constructor
  */
-const EventDateDisplay = ({ adapter, hideMissing = false }) => {
+const EventDateDisplay = ({adapter, hideMissing = false}) => {
 
-  const { t } = useTranslation()
+  const {t} = useTranslation()
   const [eventLimit, setEventLimit] = useState(DEFAULT_EVENT_LIMIT)
   const eventContext = useContext(EventContext)
-  const { orgIdFilter } = eventContext
+  const {orgIdFilter} = eventContext
   const compositeCalendarContext = useContext(CompositeCalendarContext)
-  const { stateCalendar, dispatchDate } = compositeCalendarContext
+  const {stateCalendar, dispatchDate} = compositeCalendarContext
   const timeFormat = useTimeFormat()
 
-  const { isLoading, error, data } = useQuery(
-    [
+  const {isLoading, error, data} = useQuery({
+    'queryKey': [
       adapter.createQueryKey(stateCalendar),
       stateCalendar.cardType,
       orgIdFilter,
       stateCalendar.searchExpression],
-    () => adapter.callEventList(stateCalendar, eventContext))
+    'queryFn': () => adapter.callEventList(stateCalendar, eventContext)
+  })
 
   useEffect(() => {
     adapter.updateGroupCount(dispatchDate, data)
@@ -224,7 +219,7 @@ const EventDateDisplay = ({ adapter, hideMissing = false }) => {
   const hasLess = eventLimit > DEFAULT_EVENT_LIMIT
   eventList = eventList?.slice(0, eventLimit)
 
-  function displayMoreLess (flag, className, func, key) {
+  function displayMoreLess(flag, className, func, key) {
     if (flag) {
       return <div className={`${className}`}><a href="#" onClick={func}>{t(
         key)}</a></div>

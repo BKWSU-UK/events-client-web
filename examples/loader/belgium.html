@@ -1,0 +1,95 @@
+<html lang="en">
+<head>
+    <title>Belgium</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;1,400;1,500&family=Lato&family=Montserrat:wght@500&family=Poppins&family=Sen:wght@400;700&display=swap" rel="stylesheet">
+    <style type="text/css">
+
+        :root {
+            --main-color: #bb9068;
+            --color_17: #ffc08c;
+        }
+
+        #root h3 a {
+            font-size: xxx-large;
+            color: var(--main-color)
+        }
+
+        #root p.lead {
+            color: var(--main-color)
+        }
+
+        #root, #root .lead, #root h3 > a, #root .weekday, #root .month, #root .col-sm-12 p, #root p.lead {
+            font-family: 'Bodoni Moda', serif !important;
+            font-family: 'Lato', sans-serif !important;
+            font-family: 'Montserrat', sans-serif !important;
+            font-family: 'Poppins', sans-serif  !important;;
+            font-family: 'Sen', sans-serif !important;
+        }
+
+        #root .calendarWidget > .month, #root .calendarWidget > .day, #root .weekday {
+            background: var(--main-color);
+            color: white;
+        }
+
+        #root .calendarWidget > .day {
+            border-bottom-left-radius: 10px;
+        }
+
+        #root .dateSeparator {
+            display: none;
+        }
+
+        #root .event-buttons button, button#closeTop, button#closeBottom, #root .btn.btn-info.mb-3  {
+            background: var(--main-color);
+            border-color: var(--main-color);
+            border-radius: 10px;
+            padding: 0.5em 2em;
+            font-size: large;
+            color: white;
+        }
+
+        #root a {
+            color: var(--main-color);
+        }
+
+        .fromNow {
+            display: none;
+        }
+
+
+    </style>
+</head>
+<body>
+<script>
+  window.eventsConfig = [{
+    useBodyHiddenOverflow: true,
+    useSimpleLayout: true,
+    orgId: [334, 590, 589, 776], // Brussels, Antwerp, Halle, Gent
+    eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
+    language: 'en-GB', // "es" for Spanish also supported now,
+    showLocalTime: true,
+    showCalendar: false,
+    showSingleEvent: false,
+    hideSocial: true,
+    hideSearch: true,
+    featured: false, // Show only featured examples
+    displayWebcastButton: false, // displays the webcast button
+    eventsLimit: 200, // show 200 events
+    // singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
+    suppressBookOnly: true, // Remove the book only button
+    suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+    fetchEvents: true,
+    rootElement: 'root',
+    generateSocialMedialUrl: (e) => {
+      return `https://brahmakumaris.uk/event/?id=${e.id}`
+    }
+  }]
+</script>
+<div id="root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+
+</body>
+</html>

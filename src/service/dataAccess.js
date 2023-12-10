@@ -153,6 +153,7 @@ export const targetUrlFactory = (params) => {
   const {
     orgIdStr,
     eventTypeIds,
+    startRow = 0,
     eventsLimit,
     eventsLang,
     featured,
@@ -166,7 +167,7 @@ export const targetUrlFactory = (params) => {
   let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport${!!useMinimal
     ? 'Minimal'
     : ''}.ftl&orgId=${orgIdStr}`
-  targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=0&toIndex=${eventsLimit}&mimeType=application/json`
+  targetUrl += `&eventTypeIds=${eventTypeIds}&fromIndex=${startRow}&toIndex=${eventsLimit}&mimeType=application/json`
   if (featured) {
     targetUrl += `&featured=true`
   }
@@ -205,7 +206,7 @@ export const getEventListWithGroupCount = async (params) => {
   return { groupedCount, eventList }
 }
 
-export const getEventList = async (params) => {
+export const getEventListResponse = async (params) => {
   const { orgId, orgIdFilter, eventContext } = params
   const orgIdStr = orgIdStrFactory(
     { orgIdFilter, orgId, useAllOrgIds: eventContext.useAllOrgIds })
@@ -223,7 +224,11 @@ export const getEventList = async (params) => {
   if (json?.response?.status !== 0) {
     console.error('Error occurred whiles fetching events', json)
   }
-  const response = json.response
+  return json.response
+}
+
+export const getEventList = async (params) => {
+  const response = await getEventListResponse(params)
   let eventList = response?.data
   eventList = searchAdapter(eventList,
     params.searchExpression, params.searchFilterFunction,
