@@ -94,7 +94,7 @@ function RenderUpcomingDates({dateList, currentEvent, isIntermediate=false}) {
   }
   return (
     <>
-      <h4 className={`mt-2 ${isIntermediate && 'ml-4'}`}>
+      <h4 className={`upcoming-dates mt-2 ${isIntermediate && 'ml-4'}`}>
         {isIntermediate ? t('other-sessions') : t('upcoming-dates')}
       </h4>
       <div className={`card card-body bg-light ${isIntermediate && 'ml-4 text-muted'}`}>

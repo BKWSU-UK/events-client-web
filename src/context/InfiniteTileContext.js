@@ -3,10 +3,14 @@ import CompositeCalendarContext, {DATE_ACTIONS} from "./CompositeCalendarContext
 
 export const InfiniteTileContext = createContext()
 
+export const INFINITE_ACTIONS = {
+  DISPLAY_NOTHING_MORE: 'DISPLAY_NOTHING_MORE',
+}
+
 const infiniteTileReducer = (state, action) => {
   switch (action.type) {
-    case DATE_ACTIONS.SET_DATE:
-      return {...state, modalEventDateId: action?.payload?.modalEventDateId}
+    case INFINITE_ACTIONS.DISPLAY_NOTHING_MORE:
+      return {...state, displayNothingMore: true}
     default:
       return {...state}
   }
@@ -15,7 +19,7 @@ const infiniteTileReducer = (state, action) => {
 export const InfiniteTileContextProvider = (props) => {
   const [tileData, dispatchTileData] = useReducer(
     infiniteTileReducer, {
-      modalEventDateId: null,
+      displayNothingMore: false,
     }
   )
   return (
