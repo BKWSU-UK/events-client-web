@@ -1,37 +1,37 @@
-import { extractParameter } from '../utils/paramExtraction'
-import { ALL_ORG_IDS } from '../context/EventContext'
-import { SERVER_BASE } from '../apiConstants'
-import { DISPLAY_ONLINE_FILTER } from '../context/appParams'
-import { ONLINE_STATUSES } from '../context/onlineStates'
+import {extractParameter} from '../utils/paramExtraction'
+import {ALL_ORG_IDS} from '../context/EventContext'
+import {SERVER_BASE} from '../apiConstants'
+import {DISPLAY_ONLINE_FILTER} from '../context/appParams'
+import {ONLINE_STATUSES} from '../context/onlineStates'
 import {DATA_ACCESS_PARAMS, QUERY_PARAMS, TAGS_OPERATOR} from './dataAccessConstants'
-import { groupByDate } from './dateCounterFactory'
-import { convertDate } from '../utils/dateUtils'
+import {groupByDate} from './dateCounterFactory'
+import {convertDate} from '../utils/dateUtils'
 import searchAdapter from '../context/searchAdapter'
 
-const eventLimit = (eventContext) => extractParameter({ ...eventContext },
+const eventLimit = (eventContext) => extractParameter({...eventContext},
   'eventsLimit', 10000)
 
-const onlyWebcast = (eventContext) => extractParameter({ ...eventContext },
+const onlyWebcast = (eventContext) => extractParameter({...eventContext},
   DATA_ACCESS_PARAMS.ONLY_WEBCAST, false)
 
-const onlineOnly = (eventContext) => extractParameter({ ...eventContext },
+const onlineOnly = (eventContext) => extractParameter({...eventContext},
   DATA_ACCESS_PARAMS.ONLINE_ONLY, false)
 
-const isPrivate = (eventContext) => extractParameter({ ...eventContext },
+const isPrivate = (eventContext) => extractParameter({...eventContext},
   'private', false)
 
-const hasRegistration = (eventContext) => extractParameter({ ...eventContext },
+const hasRegistration = (eventContext) => extractParameter({...eventContext},
   'hasRegistration', false)
 
 const getTagsString = (eventContext) => {
-  const { selectedTag, activateTags } = eventContext?.filterState
-  if(!activateTags) {
+  const {selectedTag, activateTags} = eventContext?.filterState
+  if (!activateTags) {
     return null
   }
-  if(!!selectedTag) {
+  if (!!selectedTag) {
     return [selectedTag]
   }
-  return extractParameter({ ...eventContext }, 'tags')
+  return extractParameter({...eventContext}, 'tags')
 }
 
 function getTagsOperator(eventContext) {
@@ -40,11 +40,11 @@ function getTagsOperator(eventContext) {
 }
 
 function getNoTagsParameter(eventContext) {
-  const { activateTags } = eventContext?.filterState
-  if(!activateTags) {
+  const {activateTags} = eventContext?.filterState
+  if (!activateTags) {
     return null
   }
-  return extractParameter({ ...eventContext }, QUERY_PARAMS.NO_TAGS)
+  return extractParameter({...eventContext}, QUERY_PARAMS.NO_TAGS)
 }
 
 const appendToTargetUrl = (value, targetUrl, parameter) => {
@@ -59,21 +59,27 @@ const appendToTargetUrl = (value, targetUrl, parameter) => {
 const processHasRegistration = (targetUrl, eventContext) => appendToTargetUrl(
   hasRegistration(eventContext), targetUrl, 'hasRegistration')
 
-const processPrivate = (targetUrl, eventContext) => appendToTargetUrl(
-  isPrivate(eventContext), targetUrl, 'private')
+const processPrivate = (targetUrl, eventContext) => {
+  const extracted = extractParameter({...eventContext}, 'private', false)
+  if (extracted === 'all') {
+    targetUrl += `&privateAll=true`
+    return targetUrl
+  }
+  return appendToTargetUrl(extracted, targetUrl, 'private')
+}
 
 const processTags = (targetUrl, eventContext) => {
   const tagsString = getTagsString(eventContext)
   let newTargetUrl = targetUrl
-  if(!!tagsString) {
+  if (!!tagsString) {
     newTargetUrl += `&tags=${tagsString}`
     const tagsOperator = getTagsOperator(eventContext)
-    if(!!tagsOperator) {
+    if (!!tagsOperator) {
       newTargetUrl += `&tagsAnd=true`
     }
   }
   const noTags = getNoTagsParameter(eventContext)
-  if(!!noTags) {
+  if (!!noTags) {
     newTargetUrl += `&noTags=${noTags}`
   }
   return newTargetUrl
@@ -120,10 +126,10 @@ const processOnlineOnly = (targetUrl, eventContext) => {
 
 export const joinIfArray = (ids) => Array.isArray(ids) ? ids.join(',') : ids
 
-export const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
+export const orgIdStrFactory = ({orgIdFilter, orgId, useAllOrgIds}) => {
   if (parseInt(orgIdFilter) === ALL_ORG_IDS) {
     const extractParameterSimple1 = extractParameter(
-      { eventsConfig: { useAllOrgIds } }, 'useAllOrgIds', false)
+      {eventsConfig: {useAllOrgIds}}, 'useAllOrgIds', false)
     if (!extractParameterSimple1) {
       return `${ALL_ORG_IDS}`
     }
@@ -133,7 +139,7 @@ export const orgIdStrFactory = ({ orgIdFilter, orgId, useAllOrgIds }) => {
 }
 
 export const appendDates = ({targetUrl, dateStart, dateEnd, exactStartDate, startDateLimit}) => {
-  if(!!exactStartDate) {
+  if (!!exactStartDate) {
     targetUrl += `&exactStartDate=${convertDate(exactStartDate)}`
     return targetUrl
   }
@@ -196,20 +202,20 @@ export const getCombinedEventListWithGroupCount = async (
   eventList = searchAdapter(eventList, searchExpression)
   console.log('getCombinedEventListWithGroupCount')
   const groupedCount = groupByDate(eventList)
-  return { groupedCount, eventList }
+  return {groupedCount, eventList}
 }
 
 export const getEventListWithGroupCount = async (params) => {
   console.log('grouped count', params.marker)
   let eventList = await getEventList(params)
   const groupedCount = groupByDate(eventList)
-  return { groupedCount, eventList }
+  return {groupedCount, eventList}
 }
 
 export const getEventListResponse = async (params) => {
-  const { orgId, orgIdFilter, eventContext } = params
+  const {orgId, orgIdFilter, eventContext} = params
   const orgIdStr = orgIdStrFactory(
-    { orgIdFilter, orgId, useAllOrgIds: eventContext.useAllOrgIds })
+    {orgIdFilter, orgId, useAllOrgIds: eventContext.useAllOrgIds})
   if (parseInt(orgIdStr) < 1) {
     return []
   }
@@ -298,7 +304,7 @@ export const fetchEventDateWithSeats = async (eventDateId) => {
   const eventDate = await fetchEventDate(eventDateId)
   if (!!eventDate?.requiresRegistration) {
     const seatInfo = await fetchSeatInformation(eventDateId)
-    return { ...eventDate, ...seatInfo }
+    return {...eventDate, ...seatInfo}
   }
   return eventDate
 }
