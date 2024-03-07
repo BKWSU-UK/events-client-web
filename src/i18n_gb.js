@@ -58,6 +58,7 @@ const translationsGB = {
   'Online State': 'Online State',
   'Open webcast URL': 'Watch Live',
   'other-sessions': 'Other Sessions',
+  'Overbooked': 'Overbooked',
   'page': 'Page',
   'Panel discussion': 'Panel discussion',
   'Power and protection': 'Power and protection',

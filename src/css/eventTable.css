@@ -19,3 +19,23 @@
 .calendarWidget > .weekday {
     width: 100%;
 }
+
+.remaining-seats {
+    position: absolute;
+    font-weight: bold;
+    top: 0;
+    right: 0;
+    transform: rotate(45deg) translateY(-10px) translateX(56px);
+    background: #dc3545;
+    color: white;
+    width: 200px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+tr > td[role="cell"] {
+    padding-top: 0;
+}

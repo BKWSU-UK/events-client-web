@@ -72,7 +72,7 @@ function EventTableStruct({columns, params, show}) {
       <TagsFilter/>
       <CenterFilter/>
       <LoadingPlaceHolder data={data} isLoading={isLoading} error={error}>
-        <table {...getTableProps()} className="table table-hover"
+        <table {...getTableProps()} className="table"
                style={{visibility: show ? 'visible' : 'hidden'}}>
           <thead className="thead-dark">
           {headerGroups.map(headerGroup => (

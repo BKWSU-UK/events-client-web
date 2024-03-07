@@ -140,9 +140,10 @@ export const EventDisplayBody = ({ original, simple, footerInfo }) => {
     const startDate = '' + original.startTimestamp
     const endDate = '' + original.endTimestamp
     const { t } = useTranslation()
+    const { requiresRegistration, remainingSeats } = original
     return (
         <div className="row">
-            <div className="col-sm-12">
+            <div className="col-sm-12 overflow-hidden pt-4">
                 <h3 title={t(eventMap[original.eventTypeId])} data-eventdateid={original.eventDateId}><a href="#"
                                                                  onClick={async e => {
                                                                      e.preventDefault()
@@ -157,6 +158,7 @@ export const EventDisplayBody = ({ original, simple, footerInfo }) => {
                                 timezone={original.timezone}/>
                 </div>
                 {simple ? <DisplaySimple original={original} footerInfo={footerInfo} /> : <DisplayFull original={original}/>}
+                {(requiresRegistration && remainingSeats <= 0) && <div className="remaining-seats">{t("Overbooked")}</div>}
             </div>
         </div>
     )

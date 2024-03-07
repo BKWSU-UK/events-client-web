@@ -13,8 +13,8 @@ _Webform.prototype.showErrors = function showErrors (error) {
   const validationErrors = error?.validationErrors
   if (!!validationErrors) {
     const errorHtml = validationErrors.map(
-      ve => `<li class="list-group-item list-group-item-action list-group-item-danger">${ve.name}: ${ve.errorMessage}</li>`).
-      join('')
+      ve => `<li class="list-group-item list-group-item-action list-group-item-danger">${ve.name}: ${ve.errorMessage}</li>`)
+      .join('')
     let formIOContainer = window.document.querySelector(
       '#formIOContainer')
     formIOContainer.innerHTML = `<ul class="list-group">${errorHtml}</ul>`
@@ -67,8 +67,7 @@ function ShowMissingFields ({ formComponent, changeCount }) {
       {displayMissing && <a href="#" onClick={(e) => {
         setDisplayMissing(false)
         e.preventDefault()
-      }}>Hide required
-        fields</a>}
+      }}>Hide required fields</a>}
       {displayMissing && changeCount && <ul className="missing-fields">
         {requiredFields.
           map((c, i) => {
