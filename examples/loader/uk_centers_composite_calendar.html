@@ -1,76 +1,92 @@
 <html lang="en">
-<head>
+  <head>
     <title>Loader Test</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
-        #emsRoot1 .container-fluid > .row > .col-12 > h3.mt-5 {
-            margin-top: 5rem !important;
+      #emsRoot1 .container-fluid > .row > .col-12 > h3.mt-5 {
+        margin-top: 5rem !important;
+      }
+      h1 {
+        margin-left: 1rem;
+      }
+      .calendar-search-selector {
+        margin-top: 8px;
+      }
+      .splide__track {
+        max-height: 5.6rem;
+        margin-bottom: 0.5rem;
+      }
+      #emsRoot1 .btn.calendar-category-selector,
+      #emsRoot1 .btn.calendar-center-selector,
+      #emsRoot1 .btn.calendar-search-selector {
+        margin-bottom: 0.5rem;
+      }
+      .col-12 .btn.search-button {
+        margin-bottom: 0;
+      }
+      .mobile-search > div > input {
+        width: 70%;
+      }
+      @media (max-width: 768px) {
+        .calendar-center-selector,
+        .calendar-category-selector {
+          max-width: 140px !important;
         }
-        h1 {
-            margin-left: 1rem;
+        #splide01
+          > div.splide__arrows.splide__arrows--ltr
+          > button.splide__arrow.splide__arrow--next {
+          right: -3rem;
         }
-        .calendar-search-selector {
-            margin-top: 8px;
+        #splide01
+          > div.splide__arrows.splide__arrows--ltr
+          > button.splide__arrow.splide__arrow--prev {
+          left: -3rem;
         }
-        .splide__track {
-            max-height: 5.6rem;
-            margin-bottom: 0.5rem;
-        }
-        #emsRoot1 .btn.calendar-category-selector, #emsRoot1 .btn.calendar-center-selector, #emsRoot1 .btn.calendar-search-selector {
-            margin-bottom: 0.5rem;
-        }
-        .col-12 .btn.search-button {
-            margin-bottom: 0;
-        }
-        .mobile-search > div > input {
-            width: 70%;
-        }
-        @media (max-width: 768px) {
-            .calendar-center-selector, .calendar-category-selector {
-                max-width: 140px !important;
-            }
-            #splide01 > div.splide__arrows.splide__arrows--ltr > button.splide__arrow.splide__arrow--next {
-                right: -3rem;
-            }
-            #splide01 > div.splide__arrows.splide__arrows--ltr > button.splide__arrow.splide__arrow--prev {
-                left: -3rem;
-            }
-        }
-        .modal-dialog button.close:hover {
-            border-radius: 0;
-        }
+      }
+      .modal-dialog button.close:hover {
+        border-radius: 0;
+      }
     </style>
-</head>
-<body>
-
-<script>
-    window.eventsConfig = [
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
         {
-            orgId: [2,5,89,111,139,154,158,159,160,161,163,176,178,183,184,185,186,187,189,190,191,192,193,194,195,196,197,199,200,201,202,204,210,211,212,309,335,336,345,346,347,350,351,352,353,355,357,358,359,365,366,367,368,369,398,399,406,491,492,493,494,512,621,626,668,673,677,709,715,717,719,768,769,770,771,772,773,807,822,823,825,831,836,837,2705,2706,2824, 2895], // GCH, GRC only
-            eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
-            language: 'en-GB', // "de" for German
-            featured: false, // Show only featured examples
-            rootElement: 'emsRoot1',
-            displayOrgFilter: true,
-            fetchEvents: true, // Prevents initial event fetching
-            showSimilarEvents: true,
-            useAllOrgIds: true,
-            showCompositeCalendar: true,
-            singleEventUrlTemplate: "https://eventswebclient-test-gil.bkwsu.eu/v0.42.0/loader/germany_single_event_session.html?eventSessionId=@@eventDateId@@",
-            randomImages: [
-                'https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg',
-                'https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg',
-                'https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg',
-                'https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg',
-                'https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg',
-                'https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg',
-                'https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg'],
-        }]
-</script>
-<h1>Composite Calendar</h1>
-<div id="emsRoot1" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-
-</body>
+          orgId: [
+            2, 5, 89, 111, 139, 154, 158, 159, 160, 161, 163, 176, 178, 183,
+            184, 185, 186, 187, 189, 190, 191, 192, 193, 194, 195, 196, 197,
+            199, 200, 201, 202, 204, 210, 211, 212, 309, 335, 336, 345, 346,
+            347, 350, 351, 352, 353, 355, 357, 358, 359, 365, 366, 367, 368,
+            369, 398, 399, 406, 491, 492, 493, 494, 512, 621, 626, 668, 673,
+            677, 709, 715, 717, 719, 768, 769, 770, 771, 772, 773, 807, 822,
+            823, 825, 831, 836, 837, 2705, 2706, 2824, 2895,
+          ], // GCH, GRC only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          language: "en-GB", // "de" for German
+          featured: false, // Show only featured examples
+          rootElement: "emsRoot1",
+          displayOrgFilter: true,
+          fetchEvents: true, // Prevents initial event fetching
+          showSimilarEvents: true,
+          useAllOrgIds: true,
+          showCompositeCalendar: true,
+          singleEventUrlTemplate:
+            "https://eventswebclient-test-gil.bkwsu.eu/v0.42.0/loader/germany_single_event_session.html?eventSessionId=@@eventDateId@@",
+          randomImages: [
+            "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg",
+          ],
+        },
+      ];
+    </script>
+    <h1>Composite Calendar</h1>
+    <div id="emsRoot1" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+  </body>
 </html>

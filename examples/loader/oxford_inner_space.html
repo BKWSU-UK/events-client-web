@@ -1,289 +1,299 @@
 <html lang="en">
-<head>
+  <head>
     <title>Loader Test</title>
-</head>
-<body>
-<script>
+  </head>
+  <body>
+    <script>
+      // Event types
+      //    id |         name         |                                   description                                   | periodical
+      //    ----+----------------------+---------------------------------------------------------------------------------+------------
+      //    1 | lecture              | Lecture with a lecturer.                                                         | f
+      //    2 | seminar              | Seminar witch interactive participation                                          | f
+      //    3 | course               | Course with more than one lesson                                                 | t
+      //    4 | conference           | Conference with multiple participants                                            | f
+      //    5 | retreat              | Meeting of participants for an extended period of time with multiple activities  | f
+      //    6 | workshop             | Programme with active member participation                                       | f
+      //    7 | panel discussion     | Public discussion with a limited number of participants                          | f
+      //    8 | special events       | Special events                                                                   | f
+      //    9 | meditation           | Meditation programmes                                                            | t
+      //    10 | misc                 | miscellaneous events                                                            | f
+      //    11 | training             | Training for BKs or other type of training                                      | f
+      //    12 | power and protection | power and protection                                                            | f
+      //    14 | private              | Private events not to be displayed on public websites                           | f
+      //    13 | group session        | Regular get together                                                            | t
+      //    15 | online activity      | Online Activities                                                               | f
+      //    16 | internal_event       | Internal or BK Events                                                           | f
 
-// Event types
-//    id |         name         |                                   description                                   | periodical
-//    ----+----------------------+---------------------------------------------------------------------------------+------------
-//    1 | lecture              | Lecture with a lecturer.                                                         | f
-//    2 | seminar              | Seminar witch interactive participation                                          | f
-//    3 | course               | Course with more than one lesson                                                 | t
-//    4 | conference           | Conference with multiple participants                                            | f
-//    5 | retreat              | Meeting of participants for an extended period of time with multiple activities  | f
-//    6 | workshop             | Programme with active member participation                                       | f
-//    7 | panel discussion     | Public discussion with a limited number of participants                          | f
-//    8 | special events       | Special events                                                                   | f
-//    9 | meditation           | Meditation programmes                                                            | t
-//    10 | misc                 | miscellaneous events                                                            | f
-//    11 | training             | Training for BKs or other type of training                                      | f
-//    12 | power and protection | power and protection                                                            | f
-//    14 | private              | Private events not to be displayed on public websites                           | f
-//    13 | group session        | Regular get together                                                            | t
-//    15 | online activity      | Online Activities                                                               | f
-//    16 | internal_event       | Internal or BK Events                                                           | f
+      // Organisations
+      // id  |              name
+      // ------+--------------------------------
+      //     159 | Aberdeen
+      // 398 | Bath
+      // 160 | Birmingham
+      // 825 | BirminghamIS
+      // 768 | BK_JF_Events
+      // 350 | Bournemouth
+      // 194 | Bradford
+      // 161 | Brighton
+      // 822 | Bristol
+      // 673 | Brixton
+      // 365 | Bromley South
+      // 493 | Cambridge Inner Space
+      // 336 | Canterbury
+      // 195 | Cardiff
+      // 494 | Chelmsford Inner Space
+      // 309 | Clapham
+      // 192 | Colchester
+      // 178 | Coventry
+      // 771 | Crawley
+      // 183 | Dundee
+      // 770 | Eastbourne
+      // 158 | Edinburgh
+      // 773 | Enfield
+      // 359 | English Thoughts
+      // 769 | European Retreats
+      // 352 | Exeter
+      // 406 | Finchley
+      // 823 | Foundation Retreats
+      // 368 | Gillingham
+      // 2706 | Glasgow
+      // 715 | GRC_IPIP
+      // 626 | Harrow
+      // 196 | Haverhill
+      // 677 | Hertfordshire
+      // 204 | Hounslow
+      // 211 | Ilford
+      // 184 | Inverness
+      // 193 | Isle of Man
+      // 358 | Janki Foundation
+      // 668 | Janki Foundation Private
+      // 199 | Kendal
+      // 197 | Kensington
+      // 346 | Kent
+      // 154 | Leeds
+      // 200 | Leicester
+      // 2 | London - Willesden Green
+      // 212 | Loughborough
+      // 2895 | Luton
+      // 369 | Maidstone
+      // 176 | Manchester
+      // 353 | Milton Keynes
+      // 185 | Newcastle
+      // 366 | Newington
+      // 491 | Newport
+      // 2705 | North Wales
+      // 186 | Nottingham
+      // 367 | Orpington
+      // 5 | Oxford - Global Retreat Centre
+      // 335 | Oxford Inner Space
+      // 201 | Peterborough
+      // 89 | Reading
+      // 357 | Rochester
+      // 717 | Romford
+      // 492 | SAM
+      // 139 | Sheffield
+      // 807 | slough-langley
+      // 187 | slough-lotushouse
+      // 202 | Southall
+      // 407 | Special Events
+      // 819 | Special Events 2019
+      // 512 | Spirituality in Prison
+      // 399 | St Albans
+      // 347 | Stanmore
+      // 163 | Sutton Coldfield
+      // 621 | Swansea
+      // 351 | Taunton
+      // 772 | Tunbridge Wells
+      // 709 | Upton Park
+      // 189 | Wakefield
+      // 345 | Watford
+      // 191 | Wellingborough
+      // 111 | Wembley Inner Space
+      // 796 | Wembley Special Events
+      // 190 | Westbromwich
+      // 355 | Winchester
+      // 210 | Wolverhampton
+      // 2824 | Worthing
+      // 719 | York
 
-// Organisations
-// id  |              name
-// ------+--------------------------------
-//     159 | Aberdeen
-// 398 | Bath
-// 160 | Birmingham
-// 825 | BirminghamIS
-// 768 | BK_JF_Events
-// 350 | Bournemouth
-// 194 | Bradford
-// 161 | Brighton
-// 822 | Bristol
-// 673 | Brixton
-// 365 | Bromley South
-// 493 | Cambridge Inner Space
-// 336 | Canterbury
-// 195 | Cardiff
-// 494 | Chelmsford Inner Space
-// 309 | Clapham
-// 192 | Colchester
-// 178 | Coventry
-// 771 | Crawley
-// 183 | Dundee
-// 770 | Eastbourne
-// 158 | Edinburgh
-// 773 | Enfield
-// 359 | English Thoughts
-// 769 | European Retreats
-// 352 | Exeter
-// 406 | Finchley
-// 823 | Foundation Retreats
-// 368 | Gillingham
-// 2706 | Glasgow
-// 715 | GRC_IPIP
-// 626 | Harrow
-// 196 | Haverhill
-// 677 | Hertfordshire
-// 204 | Hounslow
-// 211 | Ilford
-// 184 | Inverness
-// 193 | Isle of Man
-// 358 | Janki Foundation
-// 668 | Janki Foundation Private
-// 199 | Kendal
-// 197 | Kensington
-// 346 | Kent
-// 154 | Leeds
-// 200 | Leicester
-// 2 | London - Willesden Green
-// 212 | Loughborough
-// 2895 | Luton
-// 369 | Maidstone
-// 176 | Manchester
-// 353 | Milton Keynes
-// 185 | Newcastle
-// 366 | Newington
-// 491 | Newport
-// 2705 | North Wales
-// 186 | Nottingham
-// 367 | Orpington
-// 5 | Oxford - Global Retreat Centre
-// 335 | Oxford Inner Space
-// 201 | Peterborough
-// 89 | Reading
-// 357 | Rochester
-// 717 | Romford
-// 492 | SAM
-// 139 | Sheffield
-// 807 | slough-langley
-// 187 | slough-lotushouse
-// 202 | Southall
-// 407 | Special Events
-// 819 | Special Events 2019
-// 512 | Spirituality in Prison
-// 399 | St Albans
-// 347 | Stanmore
-// 163 | Sutton Coldfield
-// 621 | Swansea
-// 351 | Taunton
-// 772 | Tunbridge Wells
-// 709 | Upton Park
-// 189 | Wakefield
-// 345 | Watford
-// 191 | Wellingborough
-// 111 | Wembley Inner Space
-// 796 | Wembley Special Events
-// 190 | Westbromwich
-// 355 | Winchester
-// 210 | Wolverhampton
-// 2824 | Worthing
-// 719 | York
-
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: false,
-        orgId: [335],
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        language: "en-GB", // "es" for Spanish also supported now
-        rootElement: 'root',
-        fetchEvents: true
-    }]
-</script>
-<div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-<!--<link rel="stylesheet" href="styles.css">-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      window.eventsConfig = [
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: false,
+          orgId: [335],
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          language: "en-GB", // "es" for Spanish also supported now
+          rootElement: "root",
+          fetchEvents: true,
+        },
+      ];
+    </script>
+    <div id="root" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+    <!--<link rel="stylesheet" href="styles.css">-->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous">
-<style>
-    #root {
+      crossorigin="anonymous"
+    />
+    <style>
+      #root {
         padding-left: 0;
         padding-right: 0;
-    }
+      }
 
-    #root h3 {
+      #root h3 {
         font-size: 1.4em;
         font-family: "Lato", Helvetica, sans-serif !important;
-    }
+      }
 
-    #eventDisplayName {
+      #eventDisplayName {
         font-size: 1.4em !important;
         margin-left: 15px;
         font-family: "Lato", Helvetica, sans-serif !important;
-    }
+      }
 
-    .col-4.text-success {
+      .col-4.text-success {
         font-size: 0.8em;
-        color: #999999 !important
-    }
+        color: #999999 !important;
+      }
 
-    .btn.btn-light {
+      .btn.btn-light {
         background-color: #999;
         padding: 0 10px;
         height: 30px;
         margin: -2px 0;
-    }
+      }
 
-    .table .btn.btn-info, .simple-overlay .btn.btn-info {
+      .table .btn.btn-info,
+      .simple-overlay .btn.btn-info {
         margin: 0 0 0px 0px;
         line-height: 7px;
-    }
+      }
 
-    .simple-overlay .btn.btn-info {
+      .simple-overlay .btn.btn-info {
         margin: -25px 0 0px 15px;
-    }
+      }
 
-    .table .col-md-6.mt-3.mb-1 {
-        padding-left: 0px
-    }
+      .table .col-md-6.mt-3.mb-1 {
+        padding-left: 0px;
+      }
 
-    .table td {
-        border: 0 !important
-    }
+      .table td {
+        border: 0 !important;
+      }
 
-    #pagerNumberField {
+      #pagerNumberField {
         height: 27px;
         font-size: 1em;
         padding: 4px 10px;
-    }
+      }
 
-    .d-none.d-lg-inline {
+      .d-none.d-lg-inline {
         padding: 4px;
         font-size: 0.9em;
-    }
+      }
 
-    span.d-none.d-lg-inline {
+      span.d-none.d-lg-inline {
         padding: 4px 0 4px 4px;
-    }
+      }
 
-    .col-md-6.col-sm-12.text-right {
+      .col-md-6.col-sm-12.text-right {
         font-size: 1em;
-    }
+      }
 
-    .weekday {
+      .weekday {
         font-size: 1.5em !important;
-    }
+      }
 
-    .simpleTimePeriod {
+      .simpleTimePeriod {
         font-size: 1em !important;
-    }
+      }
 
-    .fromNow {
+      .fromNow {
         margin-top: -2px !important;
         font-size: 0.9em !important;
-    }
+      }
 
-    .table.table-hover, .row.mt-1.mb-1.ml-1, .simple-overlay {
+      .table.table-hover,
+      .row.mt-1.mb-1.ml-1,
+      .simple-overlay {
         margin-left: -5px;
-    }
+      }
 
-    .simple-overlay {
+      .simple-overlay {
         margin-right: -17px;
-    }
+      }
 
-    /* Calendar */
+      /* Calendar */
 
-    .calendarWidget {
+      .calendarWidget {
         width: 220px;
         margin: 0 0 0 auto;
         margin: 10px 0 0 20px;
-    }
+      }
 
-    @media only screen and (max-width: 768px) {
+      @media only screen and (max-width: 768px) {
         /* For mobile phones: */
         .calendarWidget {
-            width: 150px;
+          width: 150px;
         }
-    }
+      }
 
-    .calendarWidget > .weekday {
+      .calendarWidget > .weekday {
         background: #c5bb9b;
         color: white;
         font-size: 1.5rem;
         padding: 5px 10px;
         text-align: center;
-    }
+      }
 
-    .calendarWidget > .month, .calendarWidget > .day {
+      .calendarWidget > .month,
+      .calendarWidget > .day {
         background: #a9e4f8;
         color: black;
         font-size: 3rem;
         padding: 0 10px;
         margin: 0 0 0 0;
         text-align: center;
-    }
+      }
 
-    .calendarWidget > .day {
+      .calendarWidget > .day {
         margin: -10px 0 0 0;
         padding-bottom: 10px;
         text-align: center;
         font-size: 2.5rem;
-    }
+      }
 
-    .calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod, .calendarWidget .fromNow {
-        margin-top: 3px
-    }
+      .calendarWidget > .simpleTimePeriod,
+      .calendarWidget .extendedTimePeriod,
+      .calendarWidget .fromNow {
+        margin-top: 3px;
+      }
 
-    .calendarWidget > .simpleTimePeriod, .calendarWidget .extendedTimePeriod {
+      .calendarWidget > .simpleTimePeriod,
+      .calendarWidget .extendedTimePeriod {
         font-weight: bold;
         font-family: monospace;
         font-size: 1rem;
-    }
+      }
 
-    .calendarWidget > .simpleTimePeriod, .calendarWidget > .fromNow {
+      .calendarWidget > .simpleTimePeriod,
+      .calendarWidget > .fromNow {
         text-align: center;
-    }
+      }
 
-    .calendarWidget .extendedTimePeriod {
+      .calendarWidget .extendedTimePeriod {
         text-align: center;
-    }
+      }
 
-    .calendarWidget .fromNow {
+      .calendarWidget .fromNow {
         font-size: 0.9rem;
         text-align: center;
         font-family: monospace;
-    }
-
-</style>
-
-</body>
+      }
+    </style>
+  </body>
 </html>

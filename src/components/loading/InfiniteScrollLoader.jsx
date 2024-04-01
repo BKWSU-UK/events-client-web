@@ -1,12 +1,11 @@
-
 import Loader from "./Loader";
-import {useTranslation} from "../../i18n";
+import { useTranslation } from "../../i18n";
 
 export default function InfiniteScrollLoader({
-                                               isFetchingNextPage,
-                                               hasNextPage,
-                                               displayNothingMore,
-                                             }) {
+  isFetchingNextPage,
+  hasNextPage,
+  displayNothingMore,
+}) {
   const { t } = useTranslation();
 
   if (isFetchingNextPage) {
@@ -18,10 +17,7 @@ export default function InfiniteScrollLoader({
     // Show the "Nothing more to load" message
     return (
       <div className="row">
-        <div
-          className="col-12 alert alert-info text-center mt-2"
-          role="alert"
-        >
+        <div className="col-12 alert alert-info text-center mt-2" role="alert">
           {t("Nothing more to load")}
         </div>
       </div>

@@ -1,48 +1,54 @@
-import useLanguage from '../../hooks/useLanguage'
-import {Calendar, momentLocalizer} from 'react-big-calendar'
-import moment from 'moment'
-import React, {useContext, useRef} from 'react'
-import EventContext, {extractEventListParameters} from '../../context/EventContext'
-import CompositeCalendarContext, {CARD_TYPEUI_VIEW,} from '../../context/CompositeCalendarContext'
+import useLanguage from "../../hooks/useLanguage";
+import { Calendar, momentLocalizer } from "react-big-calendar";
+import moment from "moment";
+import React, { useContext, useRef } from "react";
+import EventContext, {
+  extractEventListParameters,
+} from "../../context/EventContext";
+import CompositeCalendarContext, {
+  CARD_TYPEUI_VIEW,
+} from "../../context/CompositeCalendarContext";
 
-import {getEventList} from '../../service/dataAccess'
-import {EVENTS_LIMIT} from '../../context/appParams'
-import LoadingContainer from '../loading/LoadingContainer'
-import {convertToBigCalendar} from '../../service/calendarFactory'
-import {updateOnlineStatus} from './adapter/onlineAdapter'
-import {safeStartDate} from './controlPanel/MonthSelector'
-import {eventTypeIdAdapter} from './adapter/eventTypeIdAdapter'
-import {orgIdFilterAdapter} from './adapter/orgIdAdapter'
-import {handleShowEventDate} from '../commonActions'
-import {QUERY_PARAMS} from "../../service/dataAccessConstants";
-import {useQuery} from "@tanstack/react-query";
+import { getEventList } from "../../service/dataAccess";
+import { EVENTS_LIMIT } from "../../context/appParams";
+import LoadingContainer from "../loading/LoadingContainer";
+import { convertToBigCalendar } from "../../service/calendarFactory";
+import { updateOnlineStatus } from "./adapter/onlineAdapter";
+import { safeStartDate } from "./controlPanel/MonthSelector";
+import { eventTypeIdAdapter } from "./adapter/eventTypeIdAdapter";
+import { orgIdFilterAdapter } from "./adapter/orgIdAdapter";
+import { handleShowEventDate } from "../commonActions";
+import { QUERY_PARAMS } from "../../service/dataAccessConstants";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  * Displays a normal calendar.
  * @returns {JSX.Element}
  * @constructor
  */
-const ClassicCalendar = ({props}) => {
+const ClassicCalendar = ({ props }) => {
+  const eventContext = useContext(EventContext);
+  const { orgIdFilter } = eventContext;
+  const allParams = extractEventListParameters({ ...props, ...eventContext });
+  const { orgId } = allParams;
+  const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext);
+  const startDate = stateCalendar.visibleDateStart;
+  const endDate = stateCalendar.visibleDateEnd;
+  const selectedSingleDate = stateCalendar.selectedSingleDate;
+  const eventsConfig = eventContext.eventsConfig;
+  const eventsLang = eventsConfig.eventsLang;
+  const eventTypeIds = eventTypeIdAdapter(
+    stateCalendar,
+    eventsConfig.eventTypeIds,
+  );
 
-  const eventContext = useContext(EventContext)
-  const {orgIdFilter} = eventContext
-  const allParams = extractEventListParameters({...props, ...eventContext})
-  const {orgId} = allParams
-  const {stateCalendar, dispatchDate} = useContext(CompositeCalendarContext)
-  const startDate = stateCalendar.visibleDateStart
-  const endDate = stateCalendar.visibleDateEnd
-  const selectedSingleDate = stateCalendar.selectedSingleDate
-  const eventsConfig = eventContext.eventsConfig
-  const eventsLang = eventsConfig.eventsLang
-  const eventTypeIds = eventTypeIdAdapter(stateCalendar, eventsConfig.eventTypeIds)
+  const { t } = useLanguage();
+  const localizer = momentLocalizer(moment);
 
-  const {t} = useLanguage()
-  const localizer = momentLocalizer(moment)
+  const calendarRef = useRef({});
 
-  const calendarRef = useRef({})
-
-  const {isLoading, error, data} = useQuery({
-    'queryKey': [
+  const { isLoading, error, data } = useQuery({
+    queryKey: [
       `eventsCalendar_${eventContext.id}`,
       orgId,
       orgIdFilter,
@@ -51,8 +57,10 @@ const ClassicCalendar = ({props}) => {
       endDate,
       stateCalendar.onlineStatus,
       stateCalendar.categoryFilter,
-      stateCalendar.searchExpression], 'queryFn': () => {
-      updateOnlineStatus(stateCalendar, eventContext)
+      stateCalendar.searchExpression,
+    ],
+    queryFn: () => {
+      updateOnlineStatus(stateCalendar, eventContext);
       return getEventList({
         orgId,
         eventTypeIds,
@@ -63,23 +71,23 @@ const ClassicCalendar = ({props}) => {
         [QUERY_PARAMS.START_DATE_LIMIT]: endDate,
         useMinimal: true,
         eventsLimit: EVENTS_LIMIT,
-        searchExpression: stateCalendar.searchExpression
-      })
-    }
-  })
+        searchExpression: stateCalendar.searchExpression,
+      });
+    },
+  });
 
   function chooseView() {
     switch (stateCalendar.cardType) {
       case CARD_TYPEUI_VIEW.WEEK:
-        return "week"
+        return "week";
       default:
-        return "month"
+        return "month";
     }
   }
 
   function onSelectEvent(event) {
-    console.log('onSelectEvent', event)
-    handleShowEventDate(eventContext, event, dispatchDate)
+    console.log("onSelectEvent", event);
+    handleShowEventDate(eventContext, event, dispatchDate);
   }
 
   function onNavigate() {
@@ -98,21 +106,21 @@ const ClassicCalendar = ({props}) => {
           defaultView={chooseView()}
           onNavigate={onNavigate}
           messages={{
-            'today': t('today'),
-            'previous': t('previous'),
-            'next': t('next'),
-            'month': t('month'),
-            'week': t('week'),
-            'day': t('day'),
-            'agenda': t('agenda'),
-            'more': t('More'),
+            today: t("today"),
+            previous: t("previous"),
+            next: t("next"),
+            month: t("month"),
+            week: t("week"),
+            day: t("day"),
+            agenda: t("agenda"),
+            more: t("More"),
           }}
           onSelectEvent={onSelectEvent}
           ref={calendarRef}
         />
       </>
     </LoadingContainer>
-  )
-}
+  );
+};
 
-export default ClassicCalendar
+export default ClassicCalendar;

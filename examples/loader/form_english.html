@@ -1,50 +1,53 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <link rel="icon" href="https://eventswebclient-test-gil.bkwsu.eu/latest/favicon.ico"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="icon"
+      href="https://eventswebclient-test-gil.bkwsu.eu/latest/favicon.ico"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
-            name="description"
-            content="Web site created using create-react-app"
+      name="description"
+      content="Web site created using create-react-app"
     />
     <title>Events</title>
-</head>
-<body>
-<noscript>You need to enable JavaScript to run this app.</noscript>
-<script>
-    window.eventsConfig = [
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      window.eventsConfig = [
         {
-            language: 'en-GB', // "es" for Spanish also supported now,
-            showLocalTime: true,
-            featured: false, // Show only featured examples
-            displayWebcastButton: false, // displays the webcast button
-            suppressBookOnly: true, // Remove the book only button
-            suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-            rootElement: 'emsRoot',
-            showForm: true,
-            displayOrgFilter: false,
-            fetchEvents: false, // Prevents initial event fetching
-            showSimilarEvents: false,
-            useAllOrgIds: false,
-            formSuccessMessage: `<h2>Hooray! The form has been successfully submitted. Many thanks.</h2>`
-        }]
-</script>
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          featured: false, // Show only featured examples
+          displayWebcastButton: false, // displays the webcast button
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          rootElement: "emsRoot",
+          showForm: true,
+          displayOrgFilter: false,
+          fetchEvents: false, // Prevents initial event fetching
+          showSimilarEvents: false,
+          useAllOrgIds: false,
+          formSuccessMessage: `<h2>Hooray! The form has been successfully submitted. Many thanks.</h2>`,
+        },
+      ];
+    </script>
 
-<div id="emsRoot" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
+    <div id="emsRoot" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
 
-<style>
-    #emsRoot h2 {
+    <style>
+      #emsRoot h2 {
         font-weight: bold;
         margin-top: 2rem;
-    }
-    .formio-form h3 {
+      }
+      .formio-form h3 {
         margin-top: 5px;
-        padding: 0
-    }
-</style>
-
-</body>
+        padding: 0;
+      }
+    </style>
+  </body>
 </html>

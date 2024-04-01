@@ -1,40 +1,45 @@
 <html lang="en">
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Loader Test</title>
-</head>
-<body>
-<script>
-    window.eventsConfig = [{
-        orgId: [258,752,229,280,233,219,208,213,312,262,774,758,223,259,228,226,230,218,206,205,214,222,225,232,231,270,588,614], // GCH only
-        // eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        language: "pt-BR", // Portuguese Brasil
-        onlyWebcast: false, // show only webcast events
-        showLocalTime: true,
-        useAllOrgIds: false,
-        displayWebcastButton: true,
-        showCalendar: true, // If true displays the calendar view instead of the list view
-        eventsLimit: 60, // show only one single event
-        displayOrgFilter: true,
-        fetchEvents: false, // Prevents initial event fetching
-        rootElement: 'emsRoot',
-        suppressVenue: false
-    }]
-</script>
-<div id="emsRoot" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-<!-- Incluir CSS aqui -->
-<style>
-    /** Esconde o local do evento, que de momento nao interessa */
-    div.card.card-body.bg-light {
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
+        {
+          orgId: [
+            258, 752, 229, 280, 233, 219, 208, 213, 312, 262, 774, 758, 223,
+            259, 228, 226, 230, 218, 206, 205, 214, 222, 225, 232, 231, 270,
+            588, 614,
+          ], // GCH only
+          // eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          language: "pt-BR", // Portuguese Brasil
+          onlyWebcast: false, // show only webcast events
+          showLocalTime: true,
+          useAllOrgIds: false,
+          displayWebcastButton: true,
+          showCalendar: true, // If true displays the calendar view instead of the list view
+          eventsLimit: 60, // show only one single event
+          displayOrgFilter: true,
+          fetchEvents: false, // Prevents initial event fetching
+          rootElement: "emsRoot",
+          suppressVenue: false,
+        },
+      ];
+    </script>
+    <div id="emsRoot" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+    <!-- Incluir CSS aqui -->
+    <style>
+      /** Esconde o local do evento, que de momento nao interessa */
+      div.card.card-body.bg-light {
         display: none !important;
-    }
+      }
 
-    #emsRoot div.rbc-toolbar > span:nth-child(1) {
+      #emsRoot div.rbc-toolbar > span:nth-child(1) {
         display: flex;
-    }
-</style>
-
-</body>
+      }
+    </style>
+  </body>
 </html>

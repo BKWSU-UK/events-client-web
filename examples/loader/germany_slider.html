@@ -1,85 +1,97 @@
 <html lang="en">
-<head>
+  <head>
     <title>Loader Test</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
     <style>
-        #emsRoot1 .container-fluid > .row > .col-12 > h3.mt-5 {
-            margin-top: 5rem !important;
+      #emsRoot1 .container-fluid > .row > .col-12 > h3.mt-5 {
+        margin-top: 5rem !important;
+      }
+      h1 {
+        margin-left: 1rem;
+      }
+      .calendar-search-selector {
+        margin-top: 8px;
+      }
+      .splide__track {
+        max-height: 5.6rem;
+        margin-bottom: 0.5rem;
+      }
+      #emsRoot1 .btn.calendar-category-selector,
+      #emsRoot1 .btn.calendar-center-selector,
+      #emsRoot1 .btn.calendar-search-selector {
+        margin-bottom: 0.5rem;
+      }
+      .col-12 .btn.search-button {
+        margin-bottom: 0;
+      }
+      .mobile-search > div > input {
+        width: 70%;
+      }
+      @media (max-width: 768px) {
+        .calendar-center-selector,
+        .calendar-category-selector {
+          max-width: 140px !important;
         }
-        h1 {
-            margin-left: 1rem;
+        #splide01
+          > div.splide__arrows.splide__arrows--ltr
+          > button.splide__arrow.splide__arrow--next {
+          right: -3rem;
         }
-        .calendar-search-selector {
-            margin-top: 8px;
+        #splide01
+          > div.splide__arrows.splide__arrows--ltr
+          > button.splide__arrow.splide__arrow--prev {
+          left: -3rem;
         }
-        .splide__track {
-            max-height: 5.6rem;
-            margin-bottom: 0.5rem;
-        }
-        #emsRoot1 .btn.calendar-category-selector, #emsRoot1 .btn.calendar-center-selector, #emsRoot1 .btn.calendar-search-selector {
-            margin-bottom: 0.5rem;
-        }
-        .col-12 .btn.search-button {
-            margin-bottom: 0;
-        }
-        .mobile-search > div > input {
-            width: 70%;
-        }
-        @media (max-width: 768px) {
-            .calendar-center-selector, .calendar-category-selector {
-                max-width: 140px !important;
-            }
-            #splide01 > div.splide__arrows.splide__arrows--ltr > button.splide__arrow.splide__arrow--next {
-                right: -3rem;
-            }
-            #splide01 > div.splide__arrows.splide__arrows--ltr > button.splide__arrow.splide__arrow--prev {
-                left: -3rem;
-            }
-        }
-        .splide__track {
-            max-height: 32rem;
-        }
-        .modal-dialog button.close:hover {
-            border-radius: 0;
-        }
+      }
+      .splide__track {
+        max-height: 32rem;
+      }
+      .modal-dialog button.close:hover {
+        border-radius: 0;
+      }
     </style>
-</head>
-<body>
-
-<script>
-    window.eventsConfig = [
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
         {
-            useBodyHiddenOverflow: true,
-            useSimpleLayout: true,
-            orgId: [1, 87, 115, 140, 141, 143, 144, 146, 147, 148, 149, 166, 168, 172, 173, 174, 175, 209, 246, 256, 281, 282, 283, 284, 285, 286, 287, 311, 477, 484, 797], // GCH, GRC only
-            eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-            language: "de", // "es" for Spanish also supported now,
-            showLocalTime: true,
-            featured: false, // Show only featured examples
-            displayWebcastButton: false, // displays the webcast button
-            eventsLimit: 10, // show only one single event
-            suppressBookOnly: true, // Remove the book only button
-            suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-            // singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
-            rootElement: 'emsRoot1',
-            displayOrgFilter: true,
-            fetchEvents: true, // Prevents initial event fetching
-            showSimilarEvents: true,
-            useAllOrgIds: true,
-            widgetType: "SLIDER",
-            randomImages: ["https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg"]
-        }]
-</script>
-<h1>Simple Slider</h1>
-<div id="emsRoot1" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-
-</body>
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [
+            1, 87, 115, 140, 141, 143, 144, 146, 147, 148, 149, 166, 168, 172,
+            173, 174, 175, 209, 246, 256, 281, 282, 283, 284, 285, 286, 287,
+            311, 477, 484, 797,
+          ], // GCH, GRC only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          language: "de", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          featured: false, // Show only featured examples
+          displayWebcastButton: false, // displays the webcast button
+          eventsLimit: 10, // show only one single event
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          // singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
+          rootElement: "emsRoot1",
+          displayOrgFilter: true,
+          fetchEvents: true, // Prevents initial event fetching
+          showSimilarEvents: true,
+          useAllOrgIds: true,
+          widgetType: "SLIDER",
+          randomImages: [
+            "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg",
+          ],
+        },
+      ];
+    </script>
+    <h1>Simple Slider</h1>
+    <div id="emsRoot1" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+  </body>
 </html>

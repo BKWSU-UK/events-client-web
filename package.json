@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.69.0",
+  "version": "0.70.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -36,11 +36,15 @@
     "react-table": "^7.0.0-rc.16",
     "styled-components": "^5.0.1"
   },
+  "devDependencies": {
+    "prettier": "^3.2.5"
+  },
   "scripts": {
     "start": "set PORT=3006 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts examples",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "format": "npx prettier --write ."
   },
   "eslintConfig": {
     "extends": "react-app"

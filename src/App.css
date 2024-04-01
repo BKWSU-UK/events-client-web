@@ -57,13 +57,15 @@
   height: 3rem;
 }
 
-.emsMainImage { width: 100% }
+.emsMainImage {
+  width: 100%;
+}
 
 .copy-icon {
   position: relative;
-  top: 6px
+  top: 6px;
 }
 
 .preline-text {
-  white-space: pre-line
+  white-space: pre-line;
 }

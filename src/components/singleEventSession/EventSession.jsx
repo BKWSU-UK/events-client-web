@@ -1,36 +1,33 @@
-import React from 'react'
+import React from "react";
 
-import {fetchEventDateWithSeats} from '../../service/dataAccess'
-import LoadingContainer from '../loading/LoadingContainer'
-import HeroImage from './HeroImage'
-import EventInfoMain from './EventInfoMain'
-import SpeakerSection from './SpeakerSection'
-import FormLocationSection from './FormLocationSection'
-import VenueAndOnlineLink from './VenueAndOnlineLink'
-import {useQuery} from "@tanstack/react-query";
+import { fetchEventDateWithSeats } from "../../service/dataAccess";
+import LoadingContainer from "../loading/LoadingContainer";
+import HeroImage from "./HeroImage";
+import EventInfoMain from "./EventInfoMain";
+import SpeakerSection from "./SpeakerSection";
+import FormLocationSection from "./FormLocationSection";
+import VenueAndOnlineLink from "./VenueAndOnlineLink";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  * Event session display.
  * @constructor
  */
-const EventSession = ({eventSessionId}) => {
-
-  const {isLoading, error, data} = useQuery({
-    'queryKey': [eventSessionId],
-    'queryFn': () => fetchEventDateWithSeats(eventSessionId)
-  })
+const EventSession = ({ eventSessionId }) => {
+  const { isLoading, error, data } = useQuery({
+    queryKey: [eventSessionId],
+    queryFn: () => fetchEventDateWithSeats(eventSessionId),
+  });
 
   return (
-    <LoadingContainer data={data}
-                      isLoading={isLoading}
-                      error={error}>
-      <HeroImage ev={data}/>
-      <EventInfoMain ev={data}/>
-      <SpeakerSection ev={data}/>
-      <FormLocationSection ev={data}/>
-      <VenueAndOnlineLink ev={data}/>
+    <LoadingContainer data={data} isLoading={isLoading} error={error}>
+      <HeroImage ev={data} />
+      <EventInfoMain ev={data} />
+      <SpeakerSection ev={data} />
+      <FormLocationSection ev={data} />
+      <VenueAndOnlineLink ev={data} />
     </LoadingContainer>
-  )
-}
+  );
+};
 
-export default EventSession
+export default EventSession;

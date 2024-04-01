@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import CheckboxRenderer from "../CheckboxRenderer";
 
 /**
@@ -7,7 +7,7 @@ import CheckboxRenderer from "../CheckboxRenderer";
  * This component sets its value to the value.
  */
 export default class NewsletterRenderer extends CheckboxRenderer {
-    constructor(props) {
-        super(props);
-    }
-};
+  constructor(props) {
+    super(props);
+  }
+}

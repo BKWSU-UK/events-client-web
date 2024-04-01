@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 /**
  * Container for all event info items.
@@ -7,13 +7,11 @@ import React from 'react'
  * @constructor
  */
 const EventInfoContainer = (props) => {
-    return (
-        <li className="list-group-item">
-            <div className="calendar-flex-centre">
-                {props.children}
-            </div>
-        </li>
-    )
-}
+  return (
+    <li className="list-group-item">
+      <div className="calendar-flex-centre">{props.children}</div>
+    </li>
+  );
+};
 
-export default EventInfoContainer
+export default EventInfoContainer;

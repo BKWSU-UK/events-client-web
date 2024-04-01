@@ -1,7 +1,7 @@
-import React from 'react'
-import { CompositeCalendarContextProvider } from '../../context/CompositeCalendarContext'
-import EventSlider from './EventSlider'
-import EventDateModal from '../compositeCalendar/EventDateModal'
+import React from "react";
+import { CompositeCalendarContextProvider } from "../../context/CompositeCalendarContext";
+import EventSlider from "./EventSlider";
+import EventDateModal from "../compositeCalendar/EventDateModal";
 
 /**
  * Slider parent component used to wrap the context around the main component.
@@ -9,12 +9,12 @@ import EventDateModal from '../compositeCalendar/EventDateModal'
  * @constructor
  */
 const SliderParent = () => {
-    return (
-        <CompositeCalendarContextProvider>
-            <EventSlider />
-            <EventDateModal/>
-        </CompositeCalendarContextProvider>
-    )
-}
+  return (
+    <CompositeCalendarContextProvider>
+      <EventSlider />
+      <EventDateModal />
+    </CompositeCalendarContextProvider>
+  );
+};
 
-export default SliderParent
+export default SliderParent;

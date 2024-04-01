@@ -1,4 +1,4 @@
 export const ANIMATION = {
-    SPEED: 200,
-    ANIMATED: "animated"
-}
+  SPEED: 200,
+  ANIMATED: "animated",
+};

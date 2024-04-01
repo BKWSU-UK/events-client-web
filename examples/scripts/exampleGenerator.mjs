@@ -1,10 +1,13 @@
-import fs from 'fs'
+import fs from "fs";
 
-const files = fs.readdirSync('../loader').filter(f => f.endsWith('.html'))
+const files = fs.readdirSync("../loader").filter((f) => f.endsWith(".html"));
 
-const menuItems = files.filter(f => !f.includes('index')).map(f => {
-    return `<li><a href="${f}" target="displayIframe" class="hover:bg-gray-100 focus:underline">${f.replace(/.html$/, '')}</a></li>`
-}).join('\n')
+const menuItems = files
+  .filter((f) => !f.includes("index"))
+  .map((f) => {
+    return `<li><a href="${f}" target="displayIframe" class="hover:bg-gray-100 focus:underline">${f.replace(/.html$/, "")}</a></li>`;
+  })
+  .join("\n");
 
 const htmlOutput = `
 <html lang="en">
@@ -99,7 +102,6 @@ const htmlOutput = `
         </script>
     </body>
 </html>
-`
+`;
 
-fs.writeFileSync('../loader/index.html', htmlOutput)
-
+fs.writeFileSync("../loader/index.html", htmlOutput);

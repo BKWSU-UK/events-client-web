@@ -1,35 +1,36 @@
 <html lang="pt">
-<!-- https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html -->
-<head>
+  <!-- https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html -->
+  <head>
     <title>List de eventos com filtro</title>
-</head>
-<body>
-<script>
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [335], // GRC only
-        eventTypeIds: "1,2,4,5,6,7,8,9,10,11,12,13,14,15",
-        language: "en-GB", // "es" for Spanish also supported now,
-        showLocalTime: true,
-        featured: false, // Show only featured examples
-        displayWebcastButton: false, // displays the webcast button
-        eventsLimit: 200, // show only one single event
-        suppressBookOnly: true, // Remove the book only button
-        suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-        rootElement: 'emsRoot',
-    }]
-</script>
-<div id="emsRoot" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-<!-- Incluir CSS aqui -->
-<style>
-    /** Esconde o local do evento, que de momento nao interessa */
-    div.card.card-body.bg-light {
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [335], // GRC only
+          eventTypeIds: "1,2,4,5,6,7,8,9,10,11,12,13,14,15",
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          featured: false, // Show only featured examples
+          displayWebcastButton: false, // displays the webcast button
+          eventsLimit: 200, // show only one single event
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          rootElement: "emsRoot",
+        },
+      ];
+    </script>
+    <div id="emsRoot" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+    <!-- Incluir CSS aqui -->
+    <style>
+      /** Esconde o local do evento, que de momento nao interessa */
+      div.card.card-body.bg-light {
         display: none !important;
-    }
-</style>
-
-</body>
+      }
+    </style>
+  </body>
 </html>

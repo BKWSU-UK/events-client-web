@@ -1,110 +1,117 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
-<script type="application/javascript">
-    const NextEventLimit = 1
-    const AllEventsLimit = 8
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [335], // GRC outreach only
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10",
-        //hasRegistration: 'no',
-        //onlineOnly: 'yes',
-        language: "en-GB", // "es" for Spanish also supported now,
-        showLocalTime: true,
-        //featured: true, // Show only featured examples
-        displayWebcastButton: true, // displays the webcast button
-        suppressBookOnly: true, // Remove the book only button
-        suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-        singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
-        rootElement: 'NextEventOnly',
-        displayOrgFilter: false,
-        fetchEvents: true, // Prevents initial event fetching
-        showSimilarEvents: true,
-        useAllOrgIds: true,
-        pageSize: NextEventLimit,
-        eventsLimit: NextEventLimit
-    }, {
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [335], // GRC outreach only
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10",
-        //hasRegistration: 'no',
-        //onlineOnly: 'yes',
-        language: "en-GB", // "es" for Spanish also supported now,
-        showLocalTime: true,
-        //featured: false, // Show only featured examples
-        displayWebcastButton: true, // displays the webcast button
-        suppressBookOnly: true, // Remove the book only button
-        suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-        singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
-        displayOrgFilter: false,
-        fetchEvents: true, // Prevents initial event fetching
-        showSimilarEvents: true,
-        useAllOrgIds: true,
-        pageSize: AllEventsLimit,
-        eventsLimit: AllEventsLimit,
-        rootElement: 'AllEvents',
-    }]
-    window.eventsConfig.hasWebcastFunc = (original) => {
-        console.log('original', original);
-        return original.hasWebcast
-    }
-</script>
+  <body>
+    <script type="application/javascript">
+      const NextEventLimit = 1;
+      const AllEventsLimit = 8;
+      window.eventsConfig = [
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [335], // GRC outreach only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10",
+          //hasRegistration: 'no',
+          //onlineOnly: 'yes',
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          //featured: true, // Show only featured examples
+          displayWebcastButton: true, // displays the webcast button
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          singleEventUrlTemplate:
+            "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
+          rootElement: "NextEventOnly",
+          displayOrgFilter: false,
+          fetchEvents: true, // Prevents initial event fetching
+          showSimilarEvents: true,
+          useAllOrgIds: true,
+          pageSize: NextEventLimit,
+          eventsLimit: NextEventLimit,
+        },
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [335], // GRC outreach only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10",
+          //hasRegistration: 'no',
+          //onlineOnly: 'yes',
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          //featured: false, // Show only featured examples
+          displayWebcastButton: true, // displays the webcast button
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          singleEventUrlTemplate:
+            "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
+          displayOrgFilter: false,
+          fetchEvents: true, // Prevents initial event fetching
+          showSimilarEvents: true,
+          useAllOrgIds: true,
+          pageSize: AllEventsLimit,
+          eventsLimit: AllEventsLimit,
+          rootElement: "AllEvents",
+        },
+      ];
+      window.eventsConfig.hasWebcastFunc = (original) => {
+        console.log("original", original);
+        return original.hasWebcast;
+      };
+    </script>
 
-<h1>The Next Event Is:</h1>
-<div id="NextEventOnly" class="container-fluid"></div>
+    <h1>The Next Event Is:</h1>
+    <div id="NextEventOnly" class="container-fluid"></div>
 
-<div id="AllEvents" class="container-fluid"></div>
+    <div id="AllEvents" class="container-fluid"></div>
 
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
 
-<script>
-    /**
-     * Tries to hide the duplicate event and returns the unsuccessful trial count.
-     */
-    function hideDuplicateEvent(count = 0) {
-        console.log('hideDuplicateEvent', count)
-        let nextEventDateId = document.querySelector("#NextEventOnly h3")?.dataset['eventdateid'];
+    <script>
+      /**
+       * Tries to hide the duplicate event and returns the unsuccessful trial count.
+       */
+      function hideDuplicateEvent(count = 0) {
+        console.log("hideDuplicateEvent", count);
+        let nextEventDateId =
+          document.querySelector("#NextEventOnly h3")?.dataset["eventdateid"];
         if (!!nextEventDateId) {
-            const elementToHide = document.querySelector(`#AllEvents h3[data-eventDateId="${nextEventDateId}"]`)?.parentElement.parentElement.parentElement.parentElement
-            if(!!elementToHide) {
-                elementToHide.style.display = 'none'
-                return -1;
-            }
+          const elementToHide = document.querySelector(
+            `#AllEvents h3[data-eventDateId="${nextEventDateId}"]`,
+          )?.parentElement.parentElement.parentElement.parentElement;
+          if (!!elementToHide) {
+            elementToHide.style.display = "none";
+            return -1;
+          }
         }
-        console.log('hideDuplicateEvent result', count + 1)
+        console.log("hideDuplicateEvent result", count + 1);
         return count + 1;
-    }
+      }
 
-    const HIDE_DUP = {
+      const HIDE_DUP = {
         LOW_THRESHOLD: 0,
-        MAX_THRESHOLD: 200
-    }
+        MAX_THRESHOLD: 200,
+      };
 
-    function setTimeoutHideDuplicateEvent(count = 0) {
+      function setTimeoutHideDuplicateEvent(count = 0) {
         setTimeout(() => {
-            const counter = hideDuplicateEvent(count);
-            if(counter > HIDE_DUP.LOW_THRESHOLD && counter < HIDE_DUP.MAX_THRESHOLD) {
-                setTimeoutHideDuplicateEvent(counter);
-            }
-        }, 1000)
-    }
+          const counter = hideDuplicateEvent(count);
+          if (
+            counter > HIDE_DUP.LOW_THRESHOLD &&
+            counter < HIDE_DUP.MAX_THRESHOLD
+          ) {
+            setTimeoutHideDuplicateEvent(counter);
+          }
+        }, 1000);
+      }
 
-    setTimeoutHideDuplicateEvent();
-
-</script>
-
-</body>
-
+      setTimeoutHideDuplicateEvent();
+    </script>
+  </body>
 </html>

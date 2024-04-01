@@ -1,41 +1,48 @@
-import React, {useContext} from 'react'
-import makeModal from '../simpleModal/makeModal'
-import {useTranslation} from '../../i18n'
+import React, { useContext } from "react";
+import makeModal from "../simpleModal/makeModal";
+import { useTranslation } from "../../i18n";
 
-import {fetchSeatInformation} from '../../service/dataAccess'
-import CreateForm from './CreateForm'
-import EventContext from '../../context/EventContext'
-import {useQuery} from "@tanstack/react-query";
+import { fetchSeatInformation } from "../../service/dataAccess";
+import CreateForm from "./CreateForm";
+import EventContext from "../../context/EventContext";
+import { useQuery } from "@tanstack/react-query";
 
 export const useSeatInformation = (currentEvent) => {
-  const eventDateId = currentEvent.eventDateId ? currentEvent.eventDateId : currentEvent.dateList[0].eventDateId
-  const {isLoading, error, data} = useQuery({
-    'queryKey': [eventDateId],
-    'queryFn': () => fetchSeatInformation(eventDateId)
-  })
-  return {isLoading, error, data}
-}
+  const eventDateId = currentEvent.eventDateId
+    ? currentEvent.eventDateId
+    : currentEvent.dateList[0].eventDateId;
+  const { isLoading, error, data } = useQuery({
+    queryKey: [eventDateId],
+    queryFn: () => fetchSeatInformation(eventDateId),
+  });
+  return { isLoading, error, data };
+};
 
-const NoMoreSeats = ({cols = 6, currentEvent}) => {
+const NoMoreSeats = ({ cols = 6, currentEvent }) => {
+  const { t } = useTranslation();
+  const { eventsConfig } = useContext(EventContext);
 
-  const {t} = useTranslation()
-  const {eventsConfig} = useContext(EventContext)
-
-  const customNoMoreSeatsMessage = typeof eventsConfig.customNoMoreSeatsMessage === "function" ?
-    eventsConfig.customNoMoreSeatsMessage(currentEvent) : null
+  const customNoMoreSeatsMessage =
+    typeof eventsConfig.customNoMoreSeatsMessage === "function"
+      ? eventsConfig.customNoMoreSeatsMessage(currentEvent)
+      : null;
 
   return (
     <div className={`col-${cols}`}>
       <div className="row alert alert-warning">
-        <div className="col-12">{t('There are no more seats available for this event!')}</div>
-        {!!customNoMoreSeatsMessage &&
-          <div dangerouslySetInnerHTML={{__html: customNoMoreSeatsMessage}}/>}
+        <div className="col-12">
+          {t("There are no more seats available for this event!")}
+        </div>
+        {!!customNoMoreSeatsMessage && (
+          <div dangerouslySetInnerHTML={{ __html: customNoMoreSeatsMessage }} />
+        )}
       </div>
     </div>
-  )
-}
+  );
+};
 
-const noMoreSeatsCondition = (data) => data?.exceededMaxParticipants || data?.availableSeats === 0
+const noMoreSeatsCondition = (data) =>
+  data?.exceededMaxParticipants || data?.availableSeats === 0;
 
 /**
  * Modal used to display forms.
@@ -44,45 +51,46 @@ const noMoreSeatsCondition = (data) => data?.exceededMaxParticipants || data?.av
  * @param currentEvent The current event with all properties.
  * @constructor
  */
-export function EventForm({show, setShow, currentEvent}) {
-  const {isLoading, error, data} = useSeatInformation(currentEvent)
+export function EventForm({ show, setShow, currentEvent }) {
+  const { isLoading, error, data } = useSeatInformation(currentEvent);
   if (isLoading) {
-    return <></>
+    return <></>;
   }
   if (noMoreSeatsCondition(data)) {
-    return <NoMoreSeats cols={12} currentEvent={currentEvent}/>
+    return <NoMoreSeats cols={12} currentEvent={currentEvent} />;
   }
   return (
     <>
       <h2 id="eventDisplayName">{currentEvent.name}</h2>
       <div className="row-fluid">
         <div className="col-sd-12">
-          <CreateForm currentEvent={currentEvent}/>
+          <CreateForm currentEvent={currentEvent} />
         </div>
       </div>
     </>
-  )
+  );
 }
 
-export const IncludeForm = ({currentEvent, className = 'col-md-6'}) => {
-
-  const {isLoading, error, data} = useSeatInformation(currentEvent)
+export const IncludeForm = ({ currentEvent, className = "col-md-6" }) => {
+  const { isLoading, error, data } = useSeatInformation(currentEvent);
 
   if (isLoading) {
-    return <></>
+    return <></>;
   }
   if (noMoreSeatsCondition(data)) {
-    return <NoMoreSeats currentEvent={currentEvent}/>
+    return <NoMoreSeats currentEvent={currentEvent} />;
   }
   return (
     <>
-      {!!currentEvent.requiresRegistration && <div className={className}>
-        <CreateForm currentEvent={currentEvent}/>
-      </div>}
+      {!!currentEvent.requiresRegistration && (
+        <div className={className}>
+          <CreateForm currentEvent={currentEvent} />
+        </div>
+      )}
     </>
-  )
-}
+  );
+};
 
-const FormModal = makeModal(EventForm)
+const FormModal = makeModal(EventForm);
 
-export default FormModal
+export default FormModal;

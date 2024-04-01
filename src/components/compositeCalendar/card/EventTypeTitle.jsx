@@ -1,16 +1,17 @@
-import { eventMap } from '../../../service/dataAccessConstants'
-import React from 'react'
-import { useTranslation } from '../../../i18n'
+import { eventMap } from "../../../service/dataAccessConstants";
+import React from "react";
+import { useTranslation } from "../../../i18n";
 
 /**
  * Displays the event type.
  * @constructor
  */
-const EventTypeTitle = ({ev}) => {
+const EventTypeTitle = ({ ev }) => {
+  const { t } = useTranslation();
 
-    const { t } = useTranslation()
+  return (
+    <h6 className="calendar-event-type">{t(eventMap[ev?.eventTypeId])}</h6>
+  );
+};
 
-    return <h6 className="calendar-event-type">{t(eventMap[ev?.eventTypeId])}</h6>
-}
-
-export default EventTypeTitle
+export default EventTypeTitle;

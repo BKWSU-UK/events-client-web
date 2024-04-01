@@ -1,217 +1,227 @@
 <html lang="en">
-<head>
+  <head>
     <title>Outreach Test</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        .form-group.row.mb-0 {
-            display: none !important
-        }
+      .form-group.row.mb-0 {
+        display: none !important;
+      }
 
+      h3,
+      h4,
+      h5 {
+        font-family: "Segoe UI", "Source Sans Pro", Calibri, Candara, Arial,
+          sans-serif;
+      }
+      h3 {
+        font-size: 25px !important;
+      }
+      h4.sub-title {
+        font-size: 20px !important;
+      }
+      p.lead {
+        display: none !important;
+      }
+      div.event-buttons > button {
+        font-size: 16px !important;
+        font-family: "Open Sans", sans-serif;
+        box-shadow: none;
+        transition: all 0.21s ease;
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        background: #fff;
+        color: #767676;
+        border: 1px solid #e8e8e8;
+        padding: 0 16px;
+        line-height: 37px;
+        margin: 20px 0 0 -3px;
+        height: 38px;
+      }
 
-        h3, h4, h5 {
-            font-family: "Segoe UI","Source Sans Pro",Calibri,Candara,Arial,sans-serif;
-        }
-        h3 {
-            font-size: 25px !important;
-        }
-        h4.sub-title {
-            font-size: 20px !important;
-        }
-        p.lead {
-            display: none !important;
-        }
-        div.event-buttons > button {
-            font-size: 16px !important;
-            font-family: "Open Sans",sans-serif;
-            box-shadow: none;
-            transition: all .21s ease;
-            font-size: 11px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: #fff;
-            color: #767676;
-            border: 1px solid #e8e8e8;
-            padding: 0 16px;
-            line-height: 37px;
-            margin: 20px 0 0 -3px;
-            height: 38px;
-        }
+      .calendarWidget {
+        display: flex;
+        flex-wrap: wrap;
+        background: #eaeadc !important;
+      }
+      .weekday {
+        flex: 0 0 100%;
+        text-align: right;
+      }
+      .month {
+        padding: 15px 3px !important;
+        width: 50%;
+        text-align: right !important;
+        background: #eaeadc !important;
+      }
+      .day {
+        padding: 15px 3px !important;
+        width: 50%;
+        margin: 0 !important;
+        text-align: left !important;
+        font-size: 3rem !important;
+        background: #eaeadc !important;
+      }
 
+      .simpleTimePeriod {
+        flex: 0 0 100%;
+        font-size: 1.5rem !important;
+      }
+      .fromNow {
+        flex: 0 0 100%;
+        font-size: 1rem !important;
+        margin-bottom: 10px !important;
+      }
+
+      body {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.7;
+        font-style: normal;
+      }
+
+      h1 {
+        font-size: 45px;
+        line-height: 1.4;
+      }
+
+      h4 {
+        font-size: 18px;
+      }
+
+      .simple-overlay,
+      .simple-overlay .btn {
+        font-size: 2rem;
+      }
+
+      .simple-overlay {
+        background-color: white;
+        z-index: 100;
+      }
+
+      .simple-overlay h2 {
+        font-size: 3rem;
+      }
+
+      .pager-box {
+        display: none;
+      }
+
+      .simple-overlay h5 a,
+      .simple-overlay h6 {
+        font-size: 2rem;
+      }
+      .col-sm-12 {
+        font-size: 14px;
+        margin-block-start: 0em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        line-height: 1.25;
+      }
+      .sub-title + img {
+        max-width: 25%;
+        text-align: left;
+      }
+
+      div.event-buttons > button {
+        font-size: 16px !important;
+        font-family: "Open Sans", sans-serif;
+        box-shadow: none;
+        transition: all 0.21s ease;
+        font-size: 10px;
+        font-weight: 500;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        background: #c5bb9b;
+      }
+
+      .formio-form {
+        margin-left: 0;
+      }
+
+      @media screen and (max-width: 576px) {
+        .pull-right {
+          float: none !important;
+        }
+        .sub-title + img {
+          max-width: 100%;
+          text-align: left;
+          margin-bottom: 20px;
+        }
         .calendarWidget {
-            display: flex; flex-wrap: wrap; background: #eaeadc !important;
-        }
-        .weekday {
-            flex: 0 0 100%; text-align: right;
-        }
-        .month {
-            padding: 15px 3px !important; width: 50%; text-align: right !important;background: #eaeadc !important;
-        }
-        .day {
-            padding: 15px 3px !important; width: 50%; margin: 0 !important; text-align: left !important;font-size:3rem!important;background: #eaeadc !important;
+          width: 100%;
+          margin: 0;
         }
 
         .simpleTimePeriod {
-            flex: 0 0 100%;
-            font-size:1.5rem !important;
-
+          font-size: 2rem !important;
         }
         .fromNow {
-            flex: 0 0 100%;
-            font-size: 1rem !important;
-            margin-bottom: 10px !important;
-
+          font-size: 1.5rem !important;
         }
-
-        body {
-            font-size: 16px;
-            font-weight: 400;
-            line-height: 1.7;
-            font-style: normal;
-        }
-
-        h1 {
-            font-size: 45px;
-            line-height: 1.4;
-        }
-
-        h4 {
-            font-size: 18px;
-        }
-
-        .simple-overlay, .simple-overlay .btn {
-            font-size: 2rem;
-        }
-
-        .simple-overlay {
-            background-color: white;
-            z-index: 100;
-        }
-
-        .simple-overlay h2 {
-            font-size: 3rem;
-        }
-
-        .pager-box {
-            display: none;
-        }
-
-        .simple-overlay h5 a, .simple-overlay h6 {
-            font-size: 2rem;
-        }
-        .col-sm-12 {
-            font-size: 14px;
-            margin-block-start: 0em;
-            margin-block-end: 1em;
-            margin-inline-start: 0px;
-            margin-inline-end: 0px;
-            line-height: 1.25;
-        }
-        .sub-title + img {
-            max-width: 25%;
-            text-align: left;
-        }
-
-        div.event-buttons > button {
-            font-size: 16px !important;
-            font-family: "Open Sans",sans-serif;
-            box-shadow: none;
-            transition: all .21s ease;
-            font-size: 10px;
-            font-weight: 500;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            background: #c5bb9b;
-        }
-
-        .formio-form {
-            margin-left: 0;
-        }
-
-
-
-        @media screen and (max-width: 576px) {
-            .pull-right {
-                float: none !important;
-            }
-            .sub-title + img {
-                max-width: 100%;
-                text-align: left;
-                margin-bottom: 20px;
-            }
-            .calendarWidget {
-                width: 100%;
-                margin: 0;
-            }
-
-            .simpleTimePeriod {
-                font-size:2rem !important;
-            }
-            .fromNow {
-                font-size: 1.5rem !important;
-
-            }
-        }
-
-
+      }
     </style>
-</head>
-<body>
-<script type="application/javascript">
-    const meditationsLimit = 1
-    const normalEvents = 10
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [335], // GRC outreach only
-        eventTypeIds: "9",
-        onlineOnly: 'yes',
-        language: "en-GB", // "es" for Spanish also supported now,
-        showLocalTime: true,
-        featured: false, // Show only featured examples
-        displayWebcastButton: false, // displays the webcast button
-        suppressBookOnly: true, // Remove the book only button
-        suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-        singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
-        rootElement: 'meditationOnly',
-        displayOrgFilter: false,
-        fetchEvents: true, // Prevents initial event fetching
-        showSimilarEvents: true,
-        useAllOrgIds: true,
-        pageSize: meditationsLimit,
-        eventsLimit: meditationsLimit,
-    }, {
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [335], // GRC outreach only
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
-        language: "en-GB", // "es" for Spanish also supported now,
-        showLocalTime: true,
-        featured: false, // Show only featured examples
-        displayWebcastButton: false, // displays the webcast button
-        suppressBookOnly: true, // Remove the book only button
-        suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-        singleEventUrlTemplate: "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
-        rootElement: 'allEvents',
-        displayOrgFilter: false,
-        fetchEvents: true, // Prevents initial event fetching
-        showSimilarEvents: true,
-        useAllOrgIds: true,
-        pageSize: normalEvents,
-        eventsLimit: normalEvents,
-    }]
-</script>
+  </head>
+  <body>
+    <script type="application/javascript">
+      const meditationsLimit = 1;
+      const normalEvents = 10;
+      window.eventsConfig = [
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [335], // GRC outreach only
+          eventTypeIds: "9",
+          onlineOnly: "yes",
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          featured: false, // Show only featured examples
+          displayWebcastButton: false, // displays the webcast button
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          singleEventUrlTemplate:
+            "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
+          rootElement: "meditationOnly",
+          displayOrgFilter: false,
+          fetchEvents: true, // Prevents initial event fetching
+          showSimilarEvents: true,
+          useAllOrgIds: true,
+          pageSize: meditationsLimit,
+          eventsLimit: meditationsLimit,
+        },
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [335], // GRC outreach only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          featured: false, // Show only featured examples
+          displayWebcastButton: false, // displays the webcast button
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          singleEventUrlTemplate:
+            "https://www.globalretreatcentre.org/ems-events-page-single/?eventId=@@eventDateId@@",
+          rootElement: "allEvents",
+          displayOrgFilter: false,
+          fetchEvents: true, // Prevents initial event fetching
+          showSimilarEvents: true,
+          useAllOrgIds: true,
+          pageSize: normalEvents,
+          eventsLimit: normalEvents,
+        },
+      ];
+    </script>
 
-<h1>Meditation</h1>
-<div id="meditationOnly" class="container-fluid"></div>
+    <h1>Meditation</h1>
+    <div id="meditationOnly" class="container-fluid"></div>
 
-<h1>All Events</h1>
-<div id="allEvents" class="container-fluid"></div>
+    <h1>All Events</h1>
+    <div id="allEvents" class="container-fluid"></div>
 
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-
-
-
-</body>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+  </body>
 </html>

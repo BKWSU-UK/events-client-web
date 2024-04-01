@@ -1,10 +1,10 @@
-import { useTranslation } from '../i18n'
-import { extractFromLocationQuery } from '../utils/urlUtils'
-import React, { useContext } from 'react'
-import EventContext from '../context/EventContext'
-import { fetchSingleEvent } from '../service/dataAccess'
-import Loader from './loading/Loader'
-import {useQuery} from "@tanstack/react-query";
+import { useTranslation } from "../i18n";
+import { extractFromLocationQuery } from "../utils/urlUtils";
+import React, { useContext } from "react";
+import EventContext from "../context/EventContext";
+import { fetchSingleEvent } from "../service/dataAccess";
+import Loader from "./loading/Loader";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  * Used to render directly either events or forms.
@@ -12,33 +12,37 @@ import {useQuery} from "@tanstack/react-query";
  * @returns {JSX.Element}
  * @constructor
  */
-export default function DetailRenderer (props) {
-    const { t } = useTranslation()
+export default function DetailRenderer(props) {
+  const { t } = useTranslation();
 
-    const eventId = props?.origProps?.match?.params.eventId ||
-        extractFromLocationQuery('eventId') || extractFromLocationQuery('id')
+  const eventId =
+    props?.origProps?.match?.params.eventId ||
+    extractFromLocationQuery("eventId") ||
+    extractFromLocationQuery("id");
 
-    const { currentEvent, setCurrentEvent } = useContext(EventContext)
+  const { currentEvent, setCurrentEvent } = useContext(EventContext);
 
-    const { isLoading, error, data } = useQuery(
-      {'queryKey': [`event_${eventId}`], 'queryFn':() => fetchSingleEvent(eventId)})
+  const { isLoading, error, data } = useQuery({
+    queryKey: [`event_${eventId}`],
+    queryFn: () => fetchSingleEvent(eventId),
+  });
 
-    if (data?.data[0]) {
-        setCurrentEvent(data.data[0])
-    }
+  if (data?.data[0]) {
+    setCurrentEvent(data.data[0]);
+  }
 
-    if (isLoading) {
-        return <Loader/>
-    }
-    if(error) {
-        return <div>{t('Could not retrieve event due to an error')}</div>
-    }
-    if (!!currentEvent) {
-        return (
-            <div className={props?.origProps?.className || "container-fluid"}>
-                {props.children}
-            </div>
-        )
-    }
-    return <div>{t('No event was found')}</div>
+  if (isLoading) {
+    return <Loader />;
+  }
+  if (error) {
+    return <div>{t("Could not retrieve event due to an error")}</div>;
+  }
+  if (!!currentEvent) {
+    return (
+      <div className={props?.origProps?.className || "container-fluid"}>
+        {props.children}
+      </div>
+    );
+  }
+  return <div>{t("No event was found")}</div>;
 }

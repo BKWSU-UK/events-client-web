@@ -1,41 +1,41 @@
 .tags {
-    font-size: 1.4rem;
+  font-size: 1.4rem;
 }
 
 .tags .badge {
-    margin-right: 8px;
-    padding: 0.5rem 1rem 0.5rem 1.3rem;
+  margin-right: 8px;
+  padding: 0.5rem 1rem 0.5rem 1.3rem;
 }
 
 .tags .fa-tag {
-    position: relative;
-    top: 3px
+  position: relative;
+  top: 3px;
 }
 
 .tags .deactivated {
-    color: #5a6268;
+  color: #5a6268;
 }
 
 .calendarWidget > .weekday {
-    width: 100%;
+  width: 100%;
 }
 
 .remaining-seats {
-    position: absolute;
-    font-weight: bold;
-    top: 0;
-    right: 0;
-    transform: rotate(45deg) translateY(-10px) translateX(56px);
-    background: #dc3545;
-    color: white;
-    width: 200px;
-    height: 38px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+  position: absolute;
+  font-weight: bold;
+  top: 0;
+  right: 0;
+  transform: rotate(45deg) translateY(-10px) translateX(56px);
+  background: #dc3545;
+  color: white;
+  width: 200px;
+  height: 38px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
 tr > td[role="cell"] {
-    padding-top: 0;
+  padding-top: 0;
 }

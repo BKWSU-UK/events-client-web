@@ -1,15 +1,15 @@
-import React, { useContext } from 'react'
-import WebcastButton from './WebcastButton'
-import { EVENT_DATE_ID } from './EventDisplay'
+import React, { useContext } from "react";
+import WebcastButton from "./WebcastButton";
+import { EVENT_DATE_ID } from "./EventDisplay";
 import {
-    fetchEventDateList,
-    fetchSimilarEventList,
-} from '../service/dataAccess'
-import { topFunction } from '../utils/scrolling'
-import EventContext from '../context/EventContext'
-import { extractParameter } from '../utils/paramExtraction'
-import { EVENT_CONFIG } from '../context/appParams'
-import * as rdd from 'react-device-detect'
+  fetchEventDateList,
+  fetchSimilarEventList,
+} from "../service/dataAccess";
+import { topFunction } from "../utils/scrolling";
+import EventContext from "../context/EventContext";
+import { extractParameter } from "../utils/paramExtraction";
+import { EVENT_CONFIG } from "../context/appParams";
+import * as rdd from "react-device-detect";
 
 /**
  * Changes the state to display the read more screen.
@@ -18,21 +18,36 @@ import * as rdd from 'react-device-detect'
  * @param eventContext The event context
  * @returns {Promise<void>}
  */
-export const processReadMoreClick = async (footerInfo, setSimilarEvents, eventContext) => {
-    const { original } = footerInfo
-    const singleEventUrlTemplate = extractParameter({...eventContext}, EVENT_CONFIG.SINGLE_EVENT_URL_TEMPLATE)
-    const specialIpadLink = extractParameter({...eventContext}, EVENT_CONFIG.SPECIAL_IPAD_TEMPLATE)
-    if(rdd.isIPad13 && !!specialIpadLink) {
-        window.location.href = specialIpadLink.replace(EVENT_DATE_ID, original.id) + "&ipad=true"
+export const processReadMoreClick = async (
+  footerInfo,
+  setSimilarEvents,
+  eventContext,
+) => {
+  const { original } = footerInfo;
+  const singleEventUrlTemplate = extractParameter(
+    { ...eventContext },
+    EVENT_CONFIG.SINGLE_EVENT_URL_TEMPLATE,
+  );
+  const specialIpadLink = extractParameter(
+    { ...eventContext },
+    EVENT_CONFIG.SPECIAL_IPAD_TEMPLATE,
+  );
+  if (rdd.isIPad13 && !!specialIpadLink) {
+    window.location.href =
+      specialIpadLink.replace(EVENT_DATE_ID, original.id) + "&ipad=true";
+  } else if (!!singleEventUrlTemplate) {
+    let id = original.id;
+    if (singleEventUrlTemplate.includes("eventSessionId")) {
+      // Use the event date id if the url contains eventSessionId, else just the event id.
+      id = original.eventDateId;
     }
-    else if (!!singleEventUrlTemplate) {
-        window.location.href = singleEventUrlTemplate.replace(EVENT_DATE_ID, original.id)
-    } else {
-        const eventDateId = original.eventDateId
-        await fetchSimilarEventList(eventDateId, setSimilarEvents)
-        processReadMore(footerInfo)
-    }
-}
+    window.location.href = singleEventUrlTemplate.replace(EVENT_DATE_ID, id);
+  } else {
+    const eventDateId = original.eventDateId;
+    await fetchSimilarEventList(eventDateId, setSimilarEvents);
+    processReadMore(footerInfo);
+  }
+};
 
 /**
  * Displays the event buttons with show more, book only and webcast.
@@ -41,54 +56,66 @@ export const processReadMoreClick = async (footerInfo, setSimilarEvents, eventCo
  * @constructor
  */
 const EventButtons = ({ footerInfo }) => {
-    const eventContext = useContext(EventContext)
-    const { setSimilarEvents } = eventContext
-    const {
-        original, setCurrentEvent,
-        setDisplayForm, setEventTableVisible, t,
-    } = footerInfo
+  const eventContext = useContext(EventContext);
+  const { setSimilarEvents } = eventContext;
+  const { original, setCurrentEvent, setDisplayForm, setEventTableVisible, t } =
+    footerInfo;
 
-    return (
-        <div className="event-buttons">
-            <button type="button" className="btn btn-info"
-                    onClick={(e) => {
-                        e.stopPropagation()
-                        processReadMoreClick(footerInfo, setSimilarEvents, eventContext)
-                    }}>{t(
-                'read-more')} {original.requiresRegistration ? ' ' +
-                t('and-book') : ''}</button>
-            {' '}
-            {original.requiresRegistration &&
-            !extractParameter({...eventContext}, 'suppressBookOnly') ? (
-                <button type="button" className="btn btn-info" onClick={(e) => {
-                    e.stopPropagation()
-                    console.info('Processing read only click')
-                    setCurrentEvent(original)
-                    setDisplayForm(true)
-                    setEventTableVisible(false)
-                    gotoTop()
-                }}>{t('book-only')}
-                </button>) : ''}
-            {' '}
-            <WebcastButton original={original}/>
-        </div>
-    )
-}
+  return (
+    <div className="event-buttons">
+      <button
+        type="button"
+        className="btn btn-info"
+        onClick={(e) => {
+          e.stopPropagation();
+          processReadMoreClick(footerInfo, setSimilarEvents, eventContext);
+        }}
+      >
+        {t("read-more")}{" "}
+        {original.requiresRegistration ? " " + t("and-book") : ""}
+      </button>{" "}
+      {original.requiresRegistration &&
+      !extractParameter({ ...eventContext }, "suppressBookOnly") ? (
+        <button
+          type="button"
+          className="btn btn-info"
+          onClick={(e) => {
+            e.stopPropagation();
+            console.info("Processing read only click");
+            setCurrentEvent(original);
+            setDisplayForm(true);
+            setEventTableVisible(false);
+            gotoTop();
+          }}
+        >
+          {t("book-only")}
+        </button>
+      ) : (
+        ""
+      )}{" "}
+      <WebcastButton original={original} />
+    </div>
+  );
+};
 
 const processReadMore = (footerInfo) => {
-    const {
-        original, setDisplayMoreAbout, setCurrentEvent, setDateList,
-        setEventTableVisible, t,
-    } = footerInfo
-    setCurrentEvent(original)
-    setDisplayMoreAbout(true)
-    setEventTableVisible(false)
-    fetchEventDateList(setDateList, original.id)
-    gotoTop()
+  const {
+    original,
+    setDisplayMoreAbout,
+    setCurrentEvent,
+    setDateList,
+    setEventTableVisible,
+    t,
+  } = footerInfo;
+  setCurrentEvent(original);
+  setDisplayMoreAbout(true);
+  setEventTableVisible(false);
+  fetchEventDateList(setDateList, original.id);
+  gotoTop();
+};
+
+function gotoTop() {
+  topFunction();
 }
 
-function gotoTop () {
-    topFunction()
-}
-
-export default EventButtons
+export default EventButtons;

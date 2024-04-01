@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 
 /**
  * The event card title
@@ -7,8 +7,14 @@ import React from 'react'
  * @returns {JSX.Element}
  * @constructor
  */
-const EventCardTitle = ({ev, showEventDate}) => {
-    return <h4 className="calendar-event-title"><a href="#" onClick={showEventDate} id={ev.id}>{ev.name}</a></h4>
-}
+const EventCardTitle = ({ ev, showEventDate }) => {
+  return (
+    <h4 className="calendar-event-title">
+      <a href="#" onClick={showEventDate} id={ev.id}>
+        {ev.name}
+      </a>
+    </h4>
+  );
+};
 
-export default EventCardTitle
+export default EventCardTitle;

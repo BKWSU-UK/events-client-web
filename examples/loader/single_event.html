@@ -1,20 +1,20 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8"/>
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <meta name="theme-color" content="#000000"/>
+  <head>
+    <meta charset="utf-8" />
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#000000" />
     <meta
-            name="description"
-            content="Web site created using create-react-app"
+      name="description"
+      content="Web site created using create-react-app"
     />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
     <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
     <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
@@ -25,137 +25,143 @@
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
     <style>
+      .flexContainer {
+        display: flex;
+        flex-flow: wrap;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+      }
 
+      .half {
+        flex: 1;
+        max-width: 100%;
+      }
+
+      .third {
+        flex: 1;
+        max-width: 100%;
+      }
+
+      .fourth {
+        flex: 1;
+        max-width: 100%;
+      }
+
+      @media (min-width: 1024px) {
         .flexContainer {
-            display: flex;
-            flex-flow: wrap;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
+          flex-direction: row;
         }
-
+        .full {
+          max-width: 100%;
+        }
         .half {
-            flex: 1;
-            max-width: 100%;
+          max-width: 50%;
         }
-
         .third {
-            flex: 1;
-            max-width: 100%;
+          max-width: 33%;
         }
-
         .fourth {
-            flex: 1;
-            max-width: 100%;
+          max-width: 25%;
         }
+      }
 
-        @media (min-width: 1024px) {
-            .flexContainer {
-                flex-direction: row;
-            }
-            .full {
-                max-width: 100%;
-            }
-            .half {
-                max-width: 50%;
-            }
-            .third {
-                max-width: 33%;
-            }
-            .fourth {
-                max-width: 25%;
-            }
-        }
-
-        #emsRoot1 {
-            margin-top: 2rem
-        }
+      #emsRoot1 {
+        margin-top: 2rem;
+      }
     </style>
     <title>Events</title>
-</head>
-<body>
-<noscript>You need to enable JavaScript to run this app.</noscript>
-<script>
-    window.eventsConfig = [
+  </head>
+  <body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <script>
+      window.eventsConfig = [
         {
-            useBodyHiddenOverflow: true,
-            useSimpleLayout: true,
-            orgId: [2,87,246,141,166,149,175,115,209,140,147,146,173,143,256,148,174,168,172,144,282], // GCH, GRC only
-            eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-            language: "en-GB", // "es" for Spanish also supported now,
-            showLocalTime: true,
-            featured: false, // Show only featured examples
-            displayWebcastButton: true, // displays the webcast button
-            eventsLimit: 1000, // show only one single event
-            suppressBookOnly: true, // Remove the book only button
-            suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-            // singleEventUrlTemplate: "http://localhost:3006/single-event-session?eventSessionId=@@eventDateId@@",
-            singleEventShowImage1: true,
-            singleEventShowImage2: false,
-            singleEventShowImage3: false,
-            rootElement: 'emsRoot1',
-            displayOrgFilter: true,
-            fetchEvents: true, // Prevents initial event fetching
-            showSimilarEvents: true,
-            useAllOrgIds: true,
-            widgetType: "SINGLE_EVENT",
-            hideSocial: true,
-            showGoogleCalendarIcon: false,
-            eventCountDownStyle: "animated",
-            eventCountDownTimezone: "Europe/Berlin",
-            eventCountDownCountries: "Germany,Austria,Switzerland",
-            randomImages: ["https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
-                "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg"],
-            shivaStarImage: "https://eventswebclient-test-gil.bkwsu.eu/v0.37.0/assets/images/shiva.png",
-            searchFilterFunction: (e) => {
-                return true
-                // return !!e.hasWebcast && !e.requiresRegistration && !!e.webcastUrl && e.webcastUrl.toLowerCase().match(/.+(webcast|watchlive).*/);
-            },
-            eventSliceFunction: (eventList) => {
-                return eventList.slice(0, 1000)
-            },
-            generateSocialMedialUrl: (e) => {
-                return `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${e.id}`
-            },
-            customNoMoreSeatsMessage: (currentEvent) => {
-                const eventId = currentEvent.id
-                const eventName = currentEvent.name
-                const specialEvents = [4223791]
-                if (specialEvents.includes(eventId)) {
-                    return `
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [
+            2, 87, 246, 141, 166, 149, 175, 115, 209, 140, 147, 146, 173, 143,
+            256, 148, 174, 168, 172, 144, 282,
+          ], // GCH, GRC only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          featured: false, // Show only featured examples
+          displayWebcastButton: true, // displays the webcast button
+          eventsLimit: 1000, // show only one single event
+          suppressBookOnly: true, // Remove the book only button
+          suppressVenue: false, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+          // singleEventUrlTemplate: "http://localhost:3006/single-event-session?eventSessionId=@@eventDateId@@",
+          singleEventShowImage1: true,
+          singleEventShowImage2: false,
+          singleEventShowImage3: false,
+          rootElement: "emsRoot1",
+          displayOrgFilter: true,
+          fetchEvents: true, // Prevents initial event fetching
+          showSimilarEvents: true,
+          useAllOrgIds: true,
+          widgetType: "SINGLE_EVENT",
+          hideSocial: true,
+          showGoogleCalendarIcon: false,
+          eventCountDownStyle: "animated",
+          eventCountDownTimezone: "Europe/Berlin",
+          eventCountDownCountries: "Germany,Austria,Switzerland",
+          randomImages: [
+            "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
+            "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg",
+          ],
+          shivaStarImage:
+            "https://eventswebclient-test-gil.bkwsu.eu/v0.37.0/assets/images/shiva.png",
+          searchFilterFunction: (e) => {
+            return true;
+            // return !!e.hasWebcast && !e.requiresRegistration && !!e.webcastUrl && e.webcastUrl.toLowerCase().match(/.+(webcast|watchlive).*/);
+          },
+          eventSliceFunction: (eventList) => {
+            return eventList.slice(0, 1000);
+          },
+          generateSocialMedialUrl: (e) => {
+            return `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${e.id}`;
+          },
+          customNoMoreSeatsMessage: (currentEvent) => {
+            const eventId = currentEvent.id;
+            const eventName = currentEvent.name;
+            const specialEvents = [4223791];
+            if (specialEvents.includes(eventId)) {
+              return `
                         <div class="row">
                             <div class="col-12 ml-3">
                                 <a href="https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${4226234}">Our waiting list</a>
                             </div>
                         </div>
-                        `
-                }
-                return `
+                        `;
+            }
+            return `
                     <div class="row">
                         <div class="col-12 ml-3">
                             "${eventName}" is overbooked. But you can consider other events on our webpage.
                         </div>
                     </div>
-                `
-            }
-        }]
-</script>
+                `;
+          },
+        },
+      ];
+    </script>
 
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
 
-<div class="flexContainer">
-    <div class="container-fluid full">
+    <div class="flexContainer">
+      <div class="container-fluid full">
         <!--        <h1>Germany Composite Calendar</h1>-->
         <div id="emsRoot1"></div>
+      </div>
     </div>
-</div>
-<!--
+    <!--
   This HTML file is a template.
   If you open it directly in the browser, you will see an empty page.
 
@@ -165,5 +171,5 @@
   To begin the development, run `npm start` or `yarn start`.
   To create a production bundle, use `npm run build` or `yarn build`.
 -->
-</body>
+  </body>
 </html>

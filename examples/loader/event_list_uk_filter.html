@@ -1,51 +1,51 @@
 <html lang="pt">
-<!-- https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html -->
-<head>
+  <!-- https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html -->
+  <head>
     <title>Event List with Filter</title>
-</head>
-<body>
-<script>
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [2,5, 161], // GCH only
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
-        language: "en-GB", // Portuguese Brasil
-        onlyWebcast: false, // show only webcast events
-        showLocalTime: true,
-        displayWebcastButton: true,
-        showCalendar: false, // If true displays the calendar view instead of the list view
-        eventsLimit: 100, // show only one single event
-        displayOrgFilter: true,
-        rootElement: 'emsRoot',
-    }]
-</script>
-<div id="emsRoot" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-<!-- Incluir CSS aqui -->
-<style>
-    /** Esconde o local do evento, que de momento nao interessa */
-    div.card.card-body.bg-light {
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [2, 5, 161], // GCH only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,14,15",
+          language: "en-GB", // Portuguese Brasil
+          onlyWebcast: false, // show only webcast events
+          showLocalTime: true,
+          displayWebcastButton: true,
+          showCalendar: false, // If true displays the calendar view instead of the list view
+          eventsLimit: 100, // show only one single event
+          displayOrgFilter: true,
+          rootElement: "emsRoot",
+        },
+      ];
+    </script>
+    <div id="emsRoot" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+    <!-- Incluir CSS aqui -->
+    <style>
+      /** Esconde o local do evento, que de momento nao interessa */
+      div.card.card-body.bg-light {
         display: none !important;
-    }
-    /** Stretch search field */
-    label[for=searchInput] + .col-6 {
+      }
+      /** Stretch search field */
+      label[for="searchInput"] + .col-6 {
         width: 100%;
         max-width: 100%;
         flex: 0 0 100%;
         padding-left: 0;
-    }
-    label[for=searchInput] {
+      }
+      label[for="searchInput"] {
         float: left;
         text-align: left !important;
         padding-left: 0;
-    }
-    .search-box {
+      }
+      .search-box {
         max-width: 100%;
-    }
-
-</style>
-
-</body>
+      }
+    </style>
+  </body>
 </html>

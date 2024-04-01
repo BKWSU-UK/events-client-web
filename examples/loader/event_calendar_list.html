@@ -1,38 +1,38 @@
 <html lang="en">
-<!-- https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html -->
-<head>
-    <meta name="viewport" content="width=device-width">
+  <!-- https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html -->
+  <head>
+    <meta name="viewport" content="width=device-width" />
     <title>List de eventos com filtro</title>
-</head>
-<body>
-<script>
-  window.eventsConfig = [
-    {
-      orgId: [2, 5], // GCH only for now
-      eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
-      language: 'en-GB', // "es" for Spanish also supported now,
-      showLocalTime: true,
-      featured: false, // Show only featured examples
-      displayWebcastButton: true, // displays the webcast button
-      eventsLimit: 10000, // show only one single event
-      rootElement: 'emsRoot',
-      // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
-      widgetType: 'EVENTS_MONTH_CALENDAR',
-      private: 'no',
-      eventsCalendarFunction: (event) =>
-        `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`
-      // tags: 'women,spirituality,meditation'
-    }]
-</script>
-<div id="emsRoot" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-<!-- Incluir CSS aqui -->
-<style>
-    body {
-        padding: 10px
-    }
-</style>
-
-</body>
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
+        {
+          orgId: [2, 5], // GCH only for now
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          language: "en-GB", // "es" for Spanish also supported now,
+          showLocalTime: true,
+          featured: false, // Show only featured examples
+          displayWebcastButton: true, // displays the webcast button
+          eventsLimit: 10000, // show only one single event
+          rootElement: "emsRoot",
+          // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES, EVENT_COUNT_DOWN
+          widgetType: "EVENTS_MONTH_CALENDAR",
+          private: "no",
+          eventsCalendarFunction: (event) =>
+            `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${event.id}`,
+          // tags: 'women,spirituality,meditation'
+        },
+      ];
+    </script>
+    <div id="emsRoot" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+    <!-- Incluir CSS aqui -->
+    <style>
+      body {
+        padding: 10px;
+      }
+    </style>
+  </body>
 </html>

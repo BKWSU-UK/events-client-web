@@ -1,37 +1,41 @@
 export const removeBadStylesFromImg = (description) => {
-    return description?.replace(/(<img.+style=["'])[^"']+(["'].+>)/g, '$1width:100%$2')
-}
+  return description?.replace(
+    /(<img.+style=["'])[^"']+(["'].+>)/g,
+    "$1width:100%$2",
+  );
+};
 
 export const extractImageFromEvent = (event) => {
-    if(!event) {
-        return ""
-    }
-    let image = event.image1 || event.image2 || event.image3
-    if (!!image && image.startsWith('/')) {
-        image = `https://events.brahmakumaris.org${image}`
-    }
-    return !!image ? image : ""
-}
+  if (!event) {
+    return "";
+  }
+  let image = event.image1 || event.image2 || event.image3;
+  if (!!image && image.startsWith("/")) {
+    image = `https://events.brahmakumaris.org${image}`;
+  }
+  return !!image ? image : "";
+};
 
 export const imageAdapter = (ev, eventsConfig) => {
-    const image = extractImageFromEvent(ev)
-    if (!!image) {
-        return image
-    }
-    return extractRandomImage(eventsConfig)
-}
+  const image = extractImageFromEvent(ev);
+  if (!!image) {
+    return image;
+  }
+  return extractRandomImage(eventsConfig);
+};
 
 export const extractRandomImage = (eventsConfig) => {
-    const randomImages = eventsConfig.randomImages || eventsConfig.eventsConfig.randomImages
-    if(!!randomImages) {
-        return randomImages[Math.floor(Math.random() * randomImages.length)]
-    }
-    return null
-}
+  const randomImages =
+    eventsConfig.randomImages || eventsConfig.eventsConfig.randomImages;
+  if (!!randomImages) {
+    return randomImages[Math.floor(Math.random() * randomImages.length)];
+  }
+  return null;
+};
 
 export const correctImagePath = (image) => {
-    if (image.startsWith('/imageupload')) {
-        return 'https://events.brahmakumaris.org' + image
-    }
-    return image
-}
+  if (image.startsWith("/imageupload")) {
+    return "https://events.brahmakumaris.org" + image;
+  }
+  return image;
+};

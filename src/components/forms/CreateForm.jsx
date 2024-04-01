@@ -1,184 +1,230 @@
-import React, { useContext, useEffect, useRef, useState } from 'react'
-import EventContext from '../../context/EventContext'
-import { SERVER_BASE } from '../../apiConstants'
-import { extractParameter } from '../../utils/paramExtraction'
-import { Form } from 'react-formio'
-import { formTranslations_en_gb } from './formTranslations_en_gb'
-import { formTranslation_pt_br } from './formTranslation_pt_br'
-import { formTranslation_de_de } from './formTranslation_de_de'
+import React, { useContext, useEffect, useRef, useState } from "react";
+import EventContext from "../../context/EventContext";
+import { SERVER_BASE } from "../../apiConstants";
+import { extractParameter } from "../../utils/paramExtraction";
+import { Form } from "react-formio";
+import { formTranslations_en_gb } from "./formTranslations_en_gb";
+import { formTranslation_pt_br } from "./formTranslation_pt_br";
+import { formTranslation_de_de } from "./formTranslation_de_de";
 
-const _Webform = require('formiojs/Webform').default
+const _Webform = require("formiojs/Webform").default;
 
-_Webform.prototype.showErrors = function showErrors (error) {
-  const validationErrors = error?.validationErrors
+_Webform.prototype.showErrors = function showErrors(error) {
+  const validationErrors = error?.validationErrors;
   if (!!validationErrors) {
-    const errorHtml = validationErrors.map(
-      ve => `<li class="list-group-item list-group-item-action list-group-item-danger">${ve.name}: ${ve.errorMessage}</li>`)
-      .join('')
-    let formIOContainer = window.document.querySelector(
-      '#formIOContainer')
-    formIOContainer.innerHTML = `<ul class="list-group">${errorHtml}</ul>`
-    window.document.getElementById('formIOContainerScroller').scrollIntoView()
+    const errorHtml = validationErrors
+      .map(
+        (ve) =>
+          `<li class="list-group-item list-group-item-action list-group-item-danger">${ve.name}: ${ve.errorMessage}</li>`,
+      )
+      .join("");
+    let formIOContainer = window.document.querySelector("#formIOContainer");
+    formIOContainer.innerHTML = `<ul class="list-group">${errorHtml}</ul>`;
+    window.document.getElementById("formIOContainerScroller").scrollIntoView();
   }
-  return []
-}
+  return [];
+};
 
 export const eventDateIdAdapter = (currentEvent) => {
-  const event = currentEvent.currentEvent
-  return !!event.eventDateId ? event.eventDateId :
-    !!event.dateList && event.dateList.length > 0
+  const event = currentEvent.currentEvent;
+  return !!event.eventDateId
+    ? event.eventDateId
+    : !!event.dateList && event.dateList.length > 0
       ? event.dateList[0].eventDateId
-      : -1
-}
+      : -1;
+};
 
 /**
  * Used to display missing fields.
  * @constructor
  */
-function ShowMissingFields ({ formComponent, changeCount }) {
-  const [displayMissing, setDisplayMissing] = useState(false)
+function ShowMissingFields({ formComponent, changeCount }) {
+  const [displayMissing, setDisplayMissing] = useState(false);
   const requiredFields = formComponent?.current?.formio?.components?.filter(
-    c => c.component.validate.required)
+    (c) => c.component.validate.required,
+  );
 
-  useEffect(() => window.scrollTo(0, document.body.scrollHeight),
-    [displayMissing])
+  useEffect(
+    () => window.scrollTo(0, document.body.scrollHeight),
+    [displayMissing],
+  );
 
   const handleClick = (e, c) => {
-    const element = document.querySelector(`#${c.component.id} div[tabindex]`)
-      ?? document.querySelector(`#${c.component.id} input`)
+    const element =
+      document.querySelector(`#${c.component.id} div[tabindex]`) ??
+      document.querySelector(`#${c.component.id} input`);
     if (!!element) {
-      element.scrollIntoView(
-        { behavior: 'smooth', block: 'end', inline: 'nearest' })
-      element.focus()
+      element.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+        inline: "nearest",
+      });
+      element.focus();
     }
-    e.preventDefault()
-  }
+    e.preventDefault();
+  };
 
-  const data = !!requiredFields ? requiredFields[0]?.data : {}
+  const data = !!requiredFields ? requiredFields[0]?.data : {};
 
   return (
-
     <>
-      {!displayMissing && <a href="#" onClick={(e) => {
-        setDisplayMissing(true)
-        e.preventDefault()
-      }
-      }>Show required fields</a>}
-      {displayMissing && <a href="#" onClick={(e) => {
-        setDisplayMissing(false)
-        e.preventDefault()
-      }}>Hide required fields</a>}
-      {displayMissing && changeCount && <ul className="missing-fields">
-        {requiredFields.
-          map((c, i) => {
-            const value = !!data && !!data[c.key] ? `: ${data[c.key]}` : ''
-            return <li key={`missing_field_${i}`}>
-              <a href="#" className={`${!value ? 'text-danger' : ''}`} onClick={(e) => handleClick(e, c)}>{c.label} {value}</a>
-            </li>
+      {!displayMissing && (
+        <a
+          href="#"
+          onClick={(e) => {
+            setDisplayMissing(true);
+            e.preventDefault();
+          }}
+        >
+          Show required fields
+        </a>
+      )}
+      {displayMissing && (
+        <a
+          href="#"
+          onClick={(e) => {
+            setDisplayMissing(false);
+            e.preventDefault();
+          }}
+        >
+          Hide required fields
+        </a>
+      )}
+      {displayMissing && changeCount && (
+        <ul className="missing-fields">
+          {requiredFields.map((c, i) => {
+            const value = !!data && !!data[c.key] ? `: ${data[c.key]}` : "";
+            return (
+              <li key={`missing_field_${i}`}>
+                <a
+                  href="#"
+                  className={`${!value ? "text-danger" : ""}`}
+                  onClick={(e) => handleClick(e, c)}
+                >
+                  {c.label} {value}
+                </a>
+              </li>
+            );
           })}
-      </ul>}
+        </ul>
+      )}
     </>
-  )
+  );
 }
 
-export default function CreateForm (currentEvent) {
-  const eventContext = useContext(EventContext)
+export default function CreateForm(currentEvent) {
+  const eventContext = useContext(EventContext);
   // Used to hide the form on successful submission.
-  const [hideForm, setHideForm] = useState(false)
-  const [changeCount, setChangeCount] = useState(1)
+  const [hideForm, setHideForm] = useState(false);
+  const [changeCount, setChangeCount] = useState(1);
   const targetUrl = `${SERVER_BASE}/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(
-    currentEvent)}&addSubmit=true`
-  const formLanguage = extractParameter({ ...eventContext }, 'language') ||
-    'en-GB'
-  const formSuccessMessage = extractParameter({ ...eventContext },
-    'formSuccessMessage')
-  const showMissingFields = extractParameter({ ...eventContext },
-    'formShowMissingFields')
-  const formIOContainer = useRef()
-  const formComponent = useRef()
+    currentEvent,
+  )}&addSubmit=true`;
+  const formLanguage =
+    extractParameter({ ...eventContext }, "language") || "en-GB";
+  const formSuccessMessage = extractParameter(
+    { ...eventContext },
+    "formSuccessMessage",
+  );
+  const showMissingFields = extractParameter(
+    { ...eventContext },
+    "formShowMissingFields",
+  );
+  const formIOContainer = useRef();
+  const formComponent = useRef();
 
   const formOptions = {
     language: formLanguage,
     i18n: {
-      'en-GB': formTranslations_en_gb,
-      'pt-BR': formTranslation_pt_br,
-      'de-DE': formTranslation_de_de,
+      "en-GB": formTranslations_en_gb,
+      "pt-BR": formTranslation_pt_br,
+      "de-DE": formTranslation_de_de,
     },
-  }
+  };
 
-  const formOptionsClone = JSON.parse(JSON.stringify(formOptions))
+  const formOptionsClone = JSON.parse(JSON.stringify(formOptions));
 
   const forceTranslate = (selector, translationKey) => {
-    const el = document.querySelector(selector)
+    const el = document.querySelector(selector);
     // Hack to get the translation working.
-    if (!!el && !!formOptionsClone['i18n'][formLanguage]) {
-      el.textContent = formOptionsClone['i18n'][formLanguage]['translation'][translationKey]
+    if (!!el && !!formOptionsClone["i18n"][formLanguage]) {
+      el.textContent =
+        formOptionsClone["i18n"][formLanguage]["translation"][translationKey];
     }
-  }
+  };
 
   const onFormLoad = () => {
-    forceTranslate('button[type=\'submit\']', 'Submit')
-    console.log('formComponent', formComponent)
-    const formInstance = formComponent.current?.instance?.instance
+    forceTranslate("button[type='submit']", "Submit");
+    console.log("formComponent", formComponent);
+    const formInstance = formComponent.current?.instance?.instance;
     if (!!formInstance) {
-      formInstance.components.filter(
-        c => c.component.validate.required).forEach(c => {
-        const element = document.querySelector(`#${c.component.id} label`)
-        if (!!element && !element.classList.contains('field-required')) {
-          element.classList.add('field-required')
-        }
-      })
+      formInstance.components
+        .filter((c) => c.component.validate.required)
+        .forEach((c) => {
+          const element = document.querySelector(`#${c.component.id} label`);
+          if (!!element && !element.classList.contains("field-required")) {
+            element.classList.add("field-required");
+          }
+        });
     }
-  }
+  };
 
   const resetForm = () => {
-    const current = formComponent.current
-    current.formio.emit('resetForm')
-  }
+    const current = formComponent.current;
+    current.formio.emit("resetForm");
+  };
 
   const onSubmitDone = () => {
-    forceTranslate('div[role=\'alert\'] > p', 'complete')
+    forceTranslate("div[role='alert'] > p", "complete");
 
     setTimeout(() => {
-        forceTranslate('span[ref=\'buttonMessage\']', 'complete')
-      },
-      1000)
-    resetForm()
+      forceTranslate("span[ref='buttonMessage']", "complete");
+    }, 1000);
+    resetForm();
     if (!!formSuccessMessage) {
-      setHideForm(true)
+      setHideForm(true);
     }
-  }
+  };
 
   // The submit handler
   const onSubmit = () => {
-    formIOContainer.current.innerHTML = ''
-  }
+    formIOContainer.current.innerHTML = "";
+  };
 
   // The Form IO form with the on submit event handler
   return (
     <>
-      {!hideForm && <>
-        <div id="formIOContainerScroller"/>
-        <div id="formIOContainer" ref={formIOContainer}/>
-      </>
-      }
+      {!hideForm && (
+        <>
+          <div id="formIOContainerScroller" />
+          <div id="formIOContainer" ref={formIOContainer} />
+        </>
+      )}
 
-      {hideForm && formSuccessMessage &&
-        <div id="formSuccessMessage"
-             dangerouslySetInnerHTML={{ __html: formSuccessMessage }}/>}
+      {hideForm && formSuccessMessage && (
+        <div
+          id="formSuccessMessage"
+          dangerouslySetInnerHTML={{ __html: formSuccessMessage }}
+        />
+      )}
 
-      {!hideForm && <Form src={targetUrl}
-                          onFormLoad={onFormLoad}
-                          options={formOptions}
-                          onSubmitDone={onSubmitDone}
-                          onChange={() => setChangeCount(changeCount + 1)}
-                          onSubmit={onSubmit}
-                          ref={formComponent}
-      />}
-      {!hideForm && !!showMissingFields &&
-        <ShowMissingFields formComponent={formComponent} changeCount={changeCount}/>}
-
+      {!hideForm && (
+        <Form
+          src={targetUrl}
+          onFormLoad={onFormLoad}
+          options={formOptions}
+          onSubmitDone={onSubmitDone}
+          onChange={() => setChangeCount(changeCount + 1)}
+          onSubmit={onSubmit}
+          ref={formComponent}
+        />
+      )}
+      {!hideForm && !!showMissingFields && (
+        <ShowMissingFields
+          formComponent={formComponent}
+          changeCount={changeCount}
+        />
+      )}
     </>
-  )
-
+  );
 }

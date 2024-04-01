@@ -1,116 +1,116 @@
 .countdown {
-    justify-content: center;
+  justify-content: center;
 }
 
 .row.countdown-svg {
-    width: fit-content;
-    margin: 0 auto;
-    flex-direction: column;
+  width: fit-content;
+  margin: 0 auto;
+  flex-direction: column;
 }
 
 .countdown > .cell {
-    font-size: 2rem;
-    text-align: center;
+  font-size: 2rem;
+  text-align: center;
 }
 
 .cell-number-container-text-unit {
-    position: absolute;
-    font-size: 0.75rem;
-    padding-top: 50%;
-    color: #c1c1c1;
+  position: absolute;
+  font-size: 0.75rem;
+  padding-top: 50%;
+  color: #c1c1c1;
 }
 
 .countdown-header {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 .countdown-description-speaker {
-    margin-top: 2rem;
+  margin-top: 2rem;
 }
 
 @media (min-width: 768px) {
+  .row.countdown-svg {
+    flex-direction: row;
+  }
 
-    .row.countdown-svg {
-        flex-direction: row;
-    }
+  .countdown > .cell {
+    font-size: 3rem;
+  }
 
-    .countdown > .cell {
-        font-size: 3rem;
-    }
-
-    .cell-number-container-text-unit {
-        font-size: 1.7rem;
-    }
+  .cell-number-container-text-unit {
+    font-size: 1.7rem;
+  }
 }
 
 @media (min-width: 1024px) {
-    .countdown > .cell {
-        font-size: 3rem;
-    }
+  .countdown > .cell {
+    font-size: 3rem;
+  }
 
-    .cell-number-container-text-unit {
-        font-size: 2rem;
-    }
+  .cell-number-container-text-unit {
+    font-size: 2rem;
+  }
 }
 
 .cell-number-container {
-    background-color: #efefef;
-    width: 100%;
-    padding-top: 100%;
-    border-radius: 50%;
-    position: relative;
+  background-color: #efefef;
+  width: 100%;
+  padding-top: 100%;
+  border-radius: 50%;
+  position: relative;
 }
 
 .cell-number-container-text {
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .event-count-container {
-    min-height: 480px;
-    display: grid;
-    align-content: center;
+  min-height: 480px;
+  display: grid;
+  align-content: center;
 }
 
 .video-container {
-    position: relative;
-    padding-bottom: 56.25%;
-    padding-top: 30px;
-    height: 0;
-    overflow: hidden;
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 30px;
+  height: 0;
+  overflow: hidden;
 }
 
-.video-container iframe, .video-container object, .video-container embed {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+.video-container iframe,
+.video-container object,
+.video-container embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .countdown-header .calendar-organisation {
-    margin: 0 10px 10px 20px
+  margin: 0 10px 10px 20px;
 }
 
 @media (min-width: 768px) {
-    .countdown-info {
-        display: flex
-    }
-    .countdown-header .calendar-organisation {
-        margin: 0 10px 0 20px
-    }
+  .countdown-info {
+    display: flex;
+  }
+  .countdown-header .calendar-organisation {
+    margin: 0 10px 0 20px;
+  }
 }
 
 .countdown-info .list-group-item {
-    border: 0
+  border: 0;
 }
-
 
 /* SVG CSS */
 
@@ -118,129 +118,126 @@
 #svg-hours,
 #svg-seconds,
 #svg-minutes {
-    width: 115px;
-    height: 115px;
+  width: 115px;
+  height: 115px;
 }
 
 #svg-days circle,
 #svg-hours circle,
 #svg-seconds circle,
 #svg-minutes circle {
-    fill: #ffffffbb;
-    cx: 50%;
-    cy: 50%;
-    r: 45px
+  fill: #ffffffbb;
+  cx: 50%;
+  cy: 50%;
+  r: 45px;
 }
 
 #svg-days path,
 #svg-hours path,
 #svg-seconds path,
 #svg-minutes path {
-    stroke-width: 0.5em;
+  stroke-width: 0.5em;
 }
 
 #svg-days path {
-    stroke: rgb(255, 223, 80);
+  stroke: rgb(255, 223, 80);
 }
 
 #svg-hours path {
-    stroke: rgb(255, 200, 80);
+  stroke: rgb(255, 200, 80);
 }
 
 #svg-seconds path {
-    stroke: coral;
+  stroke: coral;
 }
 
 #svg-minutes path {
-    stroke: #e69419;
+  stroke: #e69419;
 }
 
 .small-text,
 .small-text-unit {
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 0.9rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.9rem;
 }
 
 .small-text {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 
 .small-text-unit {
-    fill: #999;
+  fill: #999;
 }
 
 @media (min-width: 768px) {
+  #svg-days,
+  #svg-hours,
+  #svg-seconds,
+  #svg-minutes {
+    width: 170px;
+    height: 170px;
+  }
 
-    #svg-days,
-    #svg-hours,
-    #svg-seconds,
-    #svg-minutes {
-        width: 170px;
-        height: 170px;
-    }
+  #svg-days circle,
+  #svg-hours circle,
+  #svg-seconds circle,
+  #svg-minutes circle {
+    r: 69px;
+  }
 
-    #svg-days circle,
-    #svg-hours circle,
-    #svg-seconds circle,
-    #svg-minutes circle {
-        r: 69px
-    }
-
-    .small-text,
-    .small-text-unit {
-        font-size: 1.4rem;
-    }
+  .small-text,
+  .small-text-unit {
+    font-size: 1.4rem;
+  }
 }
 
 @media (min-width: 1024px) {
+  #svg-days,
+  #svg-hours,
+  #svg-seconds,
+  #svg-minutes {
+    width: 230px;
+    height: 230px;
+  }
 
-    #svg-days,
-    #svg-hours,
-    #svg-seconds,
-    #svg-minutes {
-        width: 230px;
-        height: 230px;
-    }
+  .small-text,
+  .small-text-unit {
+    font-size: 2rem;
+  }
 
-    .small-text,
-    .small-text-unit {
-        font-size: 2rem;
-    }
+  #svg-days path,
+  #svg-hours path,
+  #svg-seconds path,
+  #svg-minutes path {
+    stroke-width: 1em;
+  }
 
-    #svg-days path,
-    #svg-hours path,
-    #svg-seconds path,
-    #svg-minutes path {
-        stroke-width: 1em;
-    }
-
-    #svg-days circle,
-    #svg-hours circle,
-    #svg-seconds circle,
-    #svg-minutes circle {
-        r: 89px
-    }
+  #svg-days circle,
+  #svg-hours circle,
+  #svg-seconds circle,
+  #svg-minutes circle {
+    r: 89px;
+  }
 }
 
 @media (min-width: 1440px) {
+  #svg-days,
+  #svg-hours,
+  #svg-seconds,
+  #svg-minutes {
+    width: 270px;
+    height: 270px;
+  }
 
-    #svg-days,
-    #svg-hours,
-    #svg-seconds,
-    #svg-minutes {
-        width: 270px;
-        height: 270px;
-    }
+  #svg-days circle,
+  #svg-hours circle,
+  #svg-seconds circle,
+  #svg-minutes circle {
+    r: 105px;
+  }
 
-    #svg-days circle,
-    #svg-hours circle,
-    #svg-seconds circle,
-    #svg-minutes circle {
-        r: 105px
-    }
-
-    .small-text,
-    .small-text-unit {
-        font-size: 2.5rem;
-    }
+  .small-text,
+  .small-text-unit {
+    font-size: 2.5rem;
+  }
 }

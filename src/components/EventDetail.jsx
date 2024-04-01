@@ -1,8 +1,8 @@
-import React from 'react'
-import { withRouter } from 'react-router-dom'
-import { ReadMore } from './readMore/ReadMore'
-import DetailRenderer from './DetailRenderer'
-import '../css/singleEvent.css'
+import React from "react";
+import { withRouter } from "react-router-dom";
+import { ReadMore } from "./readMore/ReadMore";
+import DetailRenderer from "./DetailRenderer";
+import "../css/singleEvent.css";
 
 /**
  * Displays an event using the event identifier.
@@ -10,13 +10,12 @@ import '../css/singleEvent.css'
  * @returns {JSX.Element}
  * @constructor
  */
-function EventDetail (props) {
-
-    return (
-        <DetailRenderer origProps={props}>
-            <ReadMore />
-        </DetailRenderer>
-    )
+function EventDetail(props) {
+  return (
+    <DetailRenderer origProps={props}>
+      <ReadMore />
+    </DetailRenderer>
+  );
 }
 
-export default withRouter(EventDetail)
+export default withRouter(EventDetail);

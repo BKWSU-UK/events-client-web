@@ -5,7 +5,7 @@
  * @returns {*|number[]}
  */
 export const eventTypeIdAdapter = (stateCalendar, eventTypeIds) => {
-    return stateCalendar.categoryFilter === 0
-        ? eventTypeIds
-        : [stateCalendar.categoryFilter]
-}
+  return stateCalendar.categoryFilter === 0
+    ? eventTypeIds
+    : [stateCalendar.categoryFilter];
+};

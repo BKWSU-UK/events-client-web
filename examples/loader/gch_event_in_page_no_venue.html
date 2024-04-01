@@ -1,54 +1,59 @@
 <html lang="en">
-<head>
+  <head>
     <title>Loader Test</title>
-</head>
-<body>
-<script>
-    window.eventsConfig = [{
-        useBodyHiddenOverflow: true,
-        useSimpleLayout: true,
-        orgId: [2], // GCH only
-        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-        language: "en-GB", // "es" for Spanish also supported now,
-        onlyWebcast: true, // show only webcast events
-        showLocalTime: true,
-        displayWebcastButton: true, // displays the webcast button
-        eventsLimit: 10, // show only one single event,
-        singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
-        suppressBookOnly: true, // Remove the book only button
-        rootElement: 'root',
-        fetchEvents: true,
-        suppressVenue: true // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-    }]
-</script>
-<div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.69.0/loader.js"></script>
-<!--<link rel="stylesheet" href="styles.css">-->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
+        {
+          useBodyHiddenOverflow: true,
+          useSimpleLayout: true,
+          orgId: [2], // GCH only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          language: "en-GB", // "es" for Spanish also supported now,
+          onlyWebcast: true, // show only webcast events
+          showLocalTime: true,
+          displayWebcastButton: true, // displays the webcast button
+          eventsLimit: 10, // show only one single event,
+          singleEventUrlTemplate:
+            "https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@",
+          suppressBookOnly: true, // Remove the book only button
+          rootElement: "root",
+          fetchEvents: true,
+          suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+        },
+      ];
+    </script>
+    <div id="root" class="container-fluid"></div>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.70.0/loader.js"></script>
+    <!--<link rel="stylesheet" href="styles.css">-->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
       integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous">
-<style>
-    #root {
+      crossorigin="anonymous"
+    />
+    <style>
+      #root {
         padding-left: 0;
         padding-right: 0;
-    }
-    /** Stretch search field */
-    label[for=searchInput] + .col-6 {
+      }
+      /** Stretch search field */
+      label[for="searchInput"] + .col-6 {
         width: 100%;
         max-width: 100%;
         flex: 0 0 100%;
         padding-left: 0;
-    }
-    label[for=searchInput] {
+      }
+      label[for="searchInput"] {
         float: left;
         text-align: left !important;
         padding-left: 0;
-    }
-    .search-box {
+      }
+      .search-box {
         max-width: 100%;
-    }
-</style>
-
-</body>
+      }
+    </style>
+  </body>
 </html>
