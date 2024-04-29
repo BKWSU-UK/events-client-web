@@ -93,7 +93,6 @@ export function weekStartAndEnd(date) {
   }
 
   let weekStart = dateDiff(date, 0);
-  const weekDay = -1;
   while (weekStart.getDay() !== MONDAY) {
     weekStart = dateDiff(weekStart, -1);
   }

@@ -137,8 +137,9 @@ const processOnlineOnly = (targetUrl, eventContext) => {
       }
       case ONLINE_STATUSES.HAS_WEBCAST:
         return onlyWebcastAdapter(true, targetUrl);
+      default:
+        return targetUrl;
     }
-    return targetUrl;
   }
 };
 

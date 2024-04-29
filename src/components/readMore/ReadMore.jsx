@@ -144,6 +144,9 @@ function RenderUpcomingDates({
 }
 
 export const venueFactory = (currentEvent) => {
+  if (!currentEvent) {
+    return {};
+  }
   if (currentEvent.venue) {
     return { ...currentEvent };
   }
@@ -214,7 +217,9 @@ export const ReadMore = ({ dateList: injectDateList }) => {
   const venueEvent = venueFactory(currentEvent);
   const timeFormat = useTimeFormat();
 
-  const tags = new Set(currentEvent.tags?.split(",") ?? []);
+  const tags = !currentEvent
+    ? new Set()
+    : new Set(currentEvent.tags?.split(",") ?? []);
   if (venueEvent?.venue) {
     return (
       <>

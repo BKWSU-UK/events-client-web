@@ -1,5 +1,4 @@
 import moment from "moment-timezone";
-import React from "react";
 
 export function convertIsoToGoogleCal(dateStr) {
   return moment(dateStr, "YYYY-MM-DD'T'hh:mm:ss").format("YYYYMMDDTHHmmss");

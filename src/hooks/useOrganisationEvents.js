@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import EventContext from "../context/EventContext";
 
 import { getEventList } from "../service/dataAccess";

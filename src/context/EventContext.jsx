@@ -78,7 +78,7 @@ const filterReducer = (state, action) => {
   }
 };
 
-export const EventContextProvider = (props) => {
+export const EventContextProvider = ({ children, eventsConfig }) => {
   const [events, setEvents] = useState([]);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [similarEvents, setSimilarEvents] = useState([]);
@@ -102,12 +102,12 @@ export const EventContextProvider = (props) => {
         setSimilarEvents,
         orgIdFilter,
         setOrgIdFilter,
-        eventsConfig: props.eventsConfig,
+        eventsConfig,
         filterState,
         filterDispatch,
       }}
     >
-      {props.children}
+      {children}
     </EventContext.Provider>
   );
 };

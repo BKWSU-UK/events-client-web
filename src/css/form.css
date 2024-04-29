@@ -1,0 +1,23 @@
+.formio-form {
+    background-color: #dde8f5;
+    padding: 20px;
+}
+
+.formio-form .card {
+    margin: 1.5rem 0 1.5rem 0;
+}
+
+.formio-form input.formio-day-component-day, .formio-form input.formio-day-component-year {
+    width: 100%
+}
+
+.formio-form input.form-control {
+    border-radius: 0;
+}
+
+.formio-form button[type="submit"] {
+    max-width: 640px;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+}

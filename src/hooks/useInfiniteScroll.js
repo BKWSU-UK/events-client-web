@@ -28,5 +28,5 @@ export default function useInfiniteScroll(onBottomReached, debounceWait = 500) {
     window.addEventListener("scroll", debouncedHandleScroll);
     console.info("added scroll listener");
     return () => window.removeEventListener("scroll", debouncedHandleScroll);
-  }, [onBottomReached]);
+  }, [onBottomReached, debounceWait]);
 }

@@ -8,16 +8,14 @@ import SpeakerSection from "./SpeakerSection";
 import FormLocationSection from "./FormLocationSection";
 import VenueAndOnlineLink from "./VenueAndOnlineLink";
 import { useQuery } from "@tanstack/react-query";
+import useEventSessionQuery from "../../hooks/useEventSessionQuery";
 
 /**
  * Event session display.
  * @constructor
  */
 const EventSession = ({ eventSessionId }) => {
-  const { isLoading, error, data } = useQuery({
-    queryKey: [eventSessionId],
-    queryFn: () => fetchEventDateWithSeats(eventSessionId),
-  });
+  const { isLoading, error, data } = useEventSessionQuery(eventSessionId);
 
   return (
     <LoadingContainer data={data} isLoading={isLoading} error={error}>

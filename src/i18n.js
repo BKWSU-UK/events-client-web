@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import EventContext from "./context/EventContext";
 import { extractParameter } from "./utils/paramExtraction";
 import { translationsGB } from "./i18n_gb";

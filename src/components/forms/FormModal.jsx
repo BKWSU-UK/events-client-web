@@ -8,9 +8,13 @@ import EventContext from "../../context/EventContext";
 import { useQuery } from "@tanstack/react-query";
 
 export const useSeatInformation = (currentEvent) => {
-  const eventDateId = currentEvent.eventDateId
+  const eventDateId = currentEvent
     ? currentEvent.eventDateId
-    : currentEvent.dateList[0].eventDateId;
+      ? currentEvent.eventDateId
+      : currentEvent.dateList
+        ? currentEvent.dateList[0].eventDateId
+        : -1
+    : -1;
   const { isLoading, error, data } = useQuery({
     queryKey: [eventDateId],
     queryFn: () => fetchSeatInformation(eventDateId),

@@ -37,12 +37,6 @@ code {
   overflow-y: auto;
 }
 
-.formio-form {
-  background-color: #dde8f5;
-  padding: 20px;
-  border-radius: 10px;
-}
-
 @media (min-width: 576px) {
   .modal-dialog {
     max-width: none !important;

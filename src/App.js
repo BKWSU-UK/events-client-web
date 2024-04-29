@@ -23,6 +23,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import InfiniteTiles from "./components/infiniteTiles/InfiniteTiles";
 import InfiniteTilesParent from "./components/infiniteTiles/InfiniteTilesParent";
 import EventSession from "./components/singleEventSession/EventSession";
+import ExtendedSingleEventSession from "./components/singleEventSession/ExtendedSingleEventSession";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -62,7 +63,11 @@ const chooseComponent = (eventsConfig) => {
     case WIDGET_TYPE.SINGLE_EVENT_SESSION:
       return <EventSessionParent EventSessionComponent={EventSession} />;
     case WIDGET_TYPE.EXTENDED_SINGLE_EVENT_SESSION:
-      return <EventSessionParent EventSessionComponent={EventSession} />;
+      return (
+        <EventSessionParent
+          EventSessionComponent={ExtendedSingleEventSession}
+        />
+      );
     case WIDGET_TYPE.FORM:
       return <EventForm />;
     case WIDGET_TYPE.COMPOSITE_CALENDAR:
