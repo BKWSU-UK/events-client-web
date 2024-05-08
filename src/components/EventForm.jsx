@@ -7,6 +7,8 @@ import { RenderDate, venueFactory } from "./readMore/ReadMore";
 import useTimeFormat from "../hooks/useTimeFormat";
 import useLanguage from "../hooks/useLanguage";
 import { extractParameter } from "../utils/paramExtraction";
+import {convertToSet} from "../utils/tagsAdapter";
+import {TAGS} from "../context/appParams";
 
 function EventDisplay({ currentEvent }) {
   const timeFormat = useTimeFormat();
@@ -24,6 +26,7 @@ function EventDisplay({ currentEvent }) {
       currentEvent.dateList && currentEvent.dateList.length > 0
         ? currentEvent.dateList[0]
         : null;
+    const tags = convertToSet(currentEvent)
     if (!!date) {
       return (
         <>
@@ -34,7 +37,7 @@ function EventDisplay({ currentEvent }) {
               <div className="col-12">{currentEvent.shortDescription}</div>
             </div>
           )}
-          {!hideEventDate && (
+          {(!hideEventDate && !tags.has(TAGS.HIDE_DATE)) && (
             <div className="row mb-3 mt-3">
               <div className="col-12">
                 <RenderDate

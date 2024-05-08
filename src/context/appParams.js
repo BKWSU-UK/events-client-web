@@ -17,3 +17,7 @@ export const EVENT_CONFIG = {
   NO_TAGS: "noTags",
 };
 export const LINK_NAME_FUNC = "eventsCalendarFunction";
+
+export const TAGS = {
+  HIDE_DATE: "hide-date"
+}
