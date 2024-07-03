@@ -15,3 +15,8 @@ cd ..
 
 call examples.bat
 
+SET DIST_DIR=.\dist
+md %DIST_DIR%
+move build.zip %DIST_DIR%
+move examples.zip %DIST_DIR%
+

@@ -370,3 +370,14 @@ Please feel free to contact us in case you find bugs or need help integrating th
 This is the contact of the main developer:
 
 <a href="mailto:gil.fernandes@bkconnect.net">gil.fernandes@bkconnect.net</a>
+
+### Compiling the bundle
+
+To compile the bundle, please run the following command:
+
+```
+compile.bat
+```
+
+This will produce the bundle in the `dist` folder and the examples in the `examples` folder.
+

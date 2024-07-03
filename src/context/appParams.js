@@ -19,5 +19,14 @@ export const EVENT_CONFIG = {
 export const LINK_NAME_FUNC = "eventsCalendarFunction";
 
 export const TAGS = {
-  HIDE_DATE: "hide-date"
+  HIDE_SUBTITLE: "hide-subtitle",
+  HIDE_TYPE: "hide-type",
+  HIDE_TITLE: "hide-title",
+  HIDE_DATE: "hide-date",
+  HIDE_IMAGE: "hide-image",
+  SHOW_IMAGE_1: "show-image1",
+  SHOW_IMAGE_2: "show-image2",
+  SHOW_IMAGE_3: "show-image3",
+  HIDE_DESCRIPTION: "hide-description",
+  HIDE_WEBCAST: "hide-webcast",
 }

@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.72.0",
+  "version": "0.75.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -21,11 +21,11 @@
     "lodash.debounce": "^4.0.8",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.31",
-    "react": "^18.2.0",
+    "react": "^18.3.1",
     "react-big-calendar": "^0.32.0",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-device-detect": "^2.2.2",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.1",
     "react-formio": "^4.2.5",
     "react-i18next": "^11.4.0",
     "react-placeholder": "^4.1.0",

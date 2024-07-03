@@ -223,12 +223,12 @@ export const ReadMore = ({ dateList: injectDateList }) => {
   if (venueEvent?.venue) {
     return (
       <>
-        {tags.has("hide-title") ? (
+        {tags.has(TAGS.HIDE_TITLE) ? (
           ""
         ) : (
           <h2 id="eventDisplayName">{venueEvent.name}</h2>
         )}
-        {tags.has("hide-subtitle") ? (
+        {tags.has(TAGS.HIDE_SUBTITLE) ? (
           ""
         ) : (
           <h3 id="eventSubTitle">{venueEvent.subTitle}</h3>
@@ -239,7 +239,7 @@ export const ReadMore = ({ dateList: injectDateList }) => {
               venueEvent.requiresRegistration ? "col-md-6" : "col-md-12"
             }
           >
-            {tags.has("hide-type") ? (
+            {tags.has(TAGS.HIDE_TYPE) ? (
               ""
             ) : (
               <EventType eventTypeInt={venueEvent.eventTypeId} />
@@ -253,8 +253,8 @@ export const ReadMore = ({ dateList: injectDateList }) => {
                 timeFormat={timeFormat}
               />
             )}
-            {tags.has("hide-image") ? "" : <ShowImage />}
-            {tags.has("hide-description") ? (
+            {tags.has(TAGS.HIDE_IMAGE) ? "" : <ShowImage />}
+            {tags.has(TAGS.HIDE_DESCRIPTION) ? (
               ""
             ) : (
               <p dangerouslySetInnerHTML={{ __html: venueEvent.description }} />

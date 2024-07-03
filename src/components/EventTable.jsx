@@ -112,16 +112,17 @@ function EventTableStruct({ columns, params, show }) {
           style={{ visibility: show ? "visible" : "hidden" }}
         >
           <thead className="thead-dark">
-            {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroups.map((headerGroup, i) => (
+              <tr key={`event_table_row_${i}`} {...headerGroup.getHeaderGroupProps()}>
                 {headerGroup.headers
                   .filter((column) => showColumns.includes(column.id))
-                  .map((column) => {
+                  .map((column, j) => {
                     return (
                       // Add the sorting props to control sorting. For this example
                       // we can add them into the header props
 
                       <th
+                        key={`event_table_header_${j}`}
                         {...column.getHeaderProps(
                           column.getSortByToggleProps(),
                         )}
@@ -148,9 +149,9 @@ function EventTableStruct({ columns, params, show }) {
                 <tr {...row.getRowProps()} key={`event_table_${i}`}>
                   {row.cells
                     .filter((cell) => showColumns.includes(cell.column.id))
-                    .map((cell) => {
+                    .map((cell, k) => {
                       return (
-                        <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                        <td key={`body_division_${k}`} {...cell.getCellProps()}>{cell.render("Cell")}</td>
                       );
                     })}
                 </tr>

@@ -4,7 +4,6 @@ const searchAdapter = (
   searchFilterFunction,
   eventSliceFunction,
 ) => {
-  console.log("searchAdapter", eventList);
   if (!eventList) {
     return [];
   }

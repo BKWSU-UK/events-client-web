@@ -148,7 +148,7 @@ function MyMapComponent({ center, zoom, children }) {
   );
 }
 
-const Marker = (options) => {
+function Marker (options) {
   const [marker, setMarker] = React.useState();
 
   React.useEffect(() => {
@@ -169,9 +169,9 @@ const Marker = (options) => {
     }
   }, [marker, options]);
   return null;
-};
+}
 
-export const GoogleMapsDisplay = ({ event, useWrapper = true }) => {
+export const GoogleMapsDisplay = ({ event }) => {
   const latitude = event?.simpleVenue.latitude;
   const longitude = event?.simpleVenue.longitude;
 
