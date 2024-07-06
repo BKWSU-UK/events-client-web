@@ -1,7 +1,4 @@
-import React, { createContext, useReducer } from "react";
-import CompositeCalendarContext, {
-  DATE_ACTIONS,
-} from "./CompositeCalendarContext";
+import React, {createContext, useReducer} from "react";
 
 export const InfiniteTileContext = createContext();
 

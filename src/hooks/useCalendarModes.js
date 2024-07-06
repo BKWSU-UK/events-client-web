@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo } from "react";
+import {useCallback, useContext, useEffect, useMemo} from "react";
 import CompositeCalendarContext, {
   CARD_TYPEUI_VIEW,
   DATE_ACTIONS,
@@ -12,6 +12,8 @@ import {
   faCalendarDay,
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
+import {extractParameter} from "../utils/paramExtraction";
+import EventContext from "../context/EventContext";
 
 const CARD_TYPE_KEY = "cardType";
 
@@ -21,15 +23,20 @@ const CARD_TYPE_KEY = "cardType";
  */
 const useCalendarModes = () => {
   const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext);
+  const eventContext = useContext(EventContext);
+  const showWeek =
+    extractParameter({ ...eventContext }, "compositeCalendar_showWeek");
+  const showDay =
+    extractParameter({ ...eventContext }, "compositeCalendar_showDay");
   const { t } = useTranslation();
 
-  const setCardType = (cardType) => {
+  const setCardType = useCallback((cardType) => {
     dispatchDate({
       type: DATE_ACTIONS.CHANGE_CARD_TYPE,
       payload: { cardType },
     });
     window.localStorage.setItem(CARD_TYPE_KEY, cardType);
-  };
+  }, [dispatchDate]);
 
   useEffect(() => {
     const cardType = window.localStorage.getItem(CARD_TYPE_KEY);
@@ -105,18 +112,18 @@ const useCalendarModes = () => {
         label: "month",
         icon: faCalendarDays,
       },
-      {
+      ...showWeek ? [{
         cardType: CARD_TYPEUI_VIEW.WEEK,
         func: activateWeek,
         label: "week",
         icon: faCalendarWeek,
-      },
-      {
+      }] : [],
+      ...showDay ? [{
         cardType: CARD_TYPEUI_VIEW.DAY,
         func: activateDay,
         label: "day",
         icon: faCalendarDay,
-      },
+      }] : [],
       {
         cardType: CARD_TYPEUI_VIEW.IMAGE_CARD,
         func: activateTable,
