@@ -1,31 +1,36 @@
-import { useContext } from "react";
-import EventContext, {
-  extractEventListParameters,
-} from "../../context/EventContext";
-import { getEventListResponse } from "../../service/dataAccess";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import LoadingPlaceHolder from "../loading/LoadingPlaceHolder";
+import React, {useContext} from "react";
+import EventContext, {extractEventListParameters,} from "../../context/EventContext";
+import {getEventList, getEventListResponse} from "../../service/dataAccess";
+import {useInfiniteQuery} from "@tanstack/react-query";
 import EventDateImageCard from "../compositeCalendar/card/EventDateImageCard";
-import { handleShowEventDate } from "../commonActions";
-import {
-  INFINITE_ACTIONS,
-  InfiniteTileContext,
-} from "../../context/InfiniteTileContext";
+import {handleShowEventDate} from "../commonActions";
+import {INFINITE_ACTIONS, InfiniteTileContext,} from "../../context/InfiniteTileContext";
 import useTimeFormat from "../../hooks/useTimeFormat";
 import useInfiniteScroll from "../../hooks/useInfiniteScroll";
 import InfiniteScrollLoader from "../loading/InfiniteScrollLoader";
 import CompositeCalendarContext from "../../context/CompositeCalendarContext";
+import LoaderCircles from "../loading/LoaderCircles";
+import {eventTypeIdAdapter} from "../compositeCalendar/adapter/eventTypeIdAdapter";
+import {updateOnlineStatus} from "../compositeCalendar/adapter/onlineAdapter";
+import {useTranslation} from "../../i18n";
+import {faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 const INITIAL_PAGE_SIZE = 14;
 
+function adaptEventList(data) {
+  const flat = data?.pages?.map((page) => page.data ?? page.eventList).flat();
+  return flat ?? [];
+}
+
 export default function InfiniteTiles(props) {
+  const { t } = useTranslation();
   const eventContext = useContext(EventContext);
-  const { tileData, dispatchTileData } = useContext(InfiniteTileContext);
-  const { dispatchDate } = useContext(CompositeCalendarContext);
+  const {tileData, dispatchTileData} = useContext(InfiniteTileContext);
+  const {stateCalendar, dispatchDate} = useContext(CompositeCalendarContext);
   const timeFormat = useTimeFormat();
-  const allParams = extractEventListParameters({ ...props, ...eventContext });
-  const { setEvents, eventsConfig } = eventContext;
-  const { orgId } = allParams;
+  const allParams = extractEventListParameters({...props, ...eventContext});
+  const {orgId} = allParams;
 
   const {
     fetchNextPage,
@@ -36,8 +41,8 @@ export default function InfiniteTiles(props) {
     isFetchingPreviousPage,
     ...result
   } = useInfiniteQuery({
-    queryKey: [orgId],
-    queryFn: ({ pageParam }) => {
+    queryKey: [orgId, stateCalendar],
+    queryFn: ({pageParam}) => {
       if (!pageParam) {
         allParams.eventsLimit = INITIAL_PAGE_SIZE;
         allParams.startRow = 0;
@@ -45,12 +50,14 @@ export default function InfiniteTiles(props) {
         allParams.eventsLimit = pageParam + INITIAL_PAGE_SIZE;
         allParams.startRow = pageParam;
       }
-      console.log(
-        "startRow, eventsLimit",
-        allParams.startRow,
-        allParams.eventsLimit,
+      const { eventsConfig } = eventContext;
+      const eventTypeIds = eventTypeIdAdapter(
+        stateCalendar,
+        eventsConfig.eventTypeIds,
       );
-      return getEventListResponse({ ...allParams, eventContext });
+      updateOnlineStatus(stateCalendar, eventContext);
+      const {searchExpression} = stateCalendar
+      return getEventListResponse({...allParams, eventTypeIds, eventContext, stateCalendar, searchExpression});
     },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage?.endRow >= lastPage?.totalRows) {
@@ -67,24 +74,32 @@ export default function InfiniteTiles(props) {
     if (hasNextPage) {
       fetchNextPage();
     } else {
-      dispatchTileData({ type: INFINITE_ACTIONS.DISPLAY_NOTHING_MORE });
+      dispatchTileData({type: INFINITE_ACTIONS.DISPLAY_NOTHING_MORE});
     }
   });
 
-  const { data, isLoading, error } = result;
+  const {data, isLoading, error} = result;
 
   const showEventDate = (e, event) => {
     e.preventDefault();
     handleShowEventDate(eventContext, event, dispatchDate);
   };
 
+  const eventList = adaptEventList(data);
+
+  const hasData = eventList?.length > 0;
+
   return (
-    // <LoadingPlaceHolder data={data} isLoading={isLoading} error={error}>
-    <div className="container-fluid flex-wrap">
-      <div className="row">
-        {data?.pages?.map((page) => {
-          const { data: eventList } = page;
-          return eventList.map((event, i) => {
+    <>
+      {isLoading && <LoaderCircles/>}
+      {!isLoading && !hasData && <div className="container-fluid flex-wrap"><FontAwesomeIcon
+        icon={faCircleExclamation}
+        className="fa-1x"
+        style={{color: "#aaaabb"}}
+      />{' '}{t("No events found")}</div>}
+      {!isLoading && hasData && <div className="container-fluid flex-wrap">
+        <div className="row">
+          {eventList?.map((event, i) => {
             return (
               <EventDateImageCard
                 key={`${event.id}_${i}`}
@@ -94,15 +109,15 @@ export default function InfiniteTiles(props) {
                 startAfterNow={true}
               />
             );
-          });
-        })}
-      </div>
-      <InfiniteScrollLoader
-        displayNothingMore={tileData.displayNothingMore}
-        isFetchingNextPage={isFetchingNextPage}
-        hasNextPage={hasNextPage}
-      />
-    </div>
-    // </LoadingPlaceHolder>
+          })}
+        </div>
+        {hasData && <InfiniteScrollLoader
+          displayNothingMore={tileData.displayNothingMore}
+          isFetchingNextPage={isFetchingNextPage}
+          hasNextPage={hasNextPage}
+          pages = {data?.pages?.length}
+        />}
+      </div>}
+    </>
   );
 }

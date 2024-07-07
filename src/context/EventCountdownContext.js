@@ -1,5 +1,4 @@
-import React, { createContext, useReducer } from "react";
-import CompositeCalendarContext from "./CompositeCalendarContext";
+import React, {createContext, useReducer} from "react";
 
 /**
  * The context used to keep track of the expansion of the customer and product tables.
@@ -16,6 +15,8 @@ const reducer = (state, action) => {
     case EVENT_COUNTDOWN_ACTIONS.SET_DATA:
       return { ...state, data: action.data };
     case EVENT_COUNTDOWN_ACTIONS.START_EVENT:
+      return { ...state, started: true };
+    default:
       return { ...state, started: true };
   }
 };

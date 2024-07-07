@@ -1,12 +1,11 @@
-import React, { useContext } from "react";
+import React, {useContext} from "react";
 import useGetEventList from "../../hooks/useGetEventList";
 import LoadingContainer from "../loading/LoadingContainer";
-import useLanguage from "../../hooks/useLanguage";
 import HeroTile from "./HeroTile";
 import CompositeCalendarContext from "../../context/CompositeCalendarContext";
 import SmallTile from "./SmallTile";
 import EventContext from "../../context/EventContext";
-import { handleShowEventDate } from "../commonActions";
+import {handleShowEventDate} from "../commonActions";
 
 const EVENTS_LIMIT = 10;
 
@@ -26,7 +25,6 @@ const Tiles = () => {
   };
 
   const { isLoading, error, data } = useGetEventList(EVENTS_LIMIT);
-  const { t } = useLanguage();
 
   return (
     <LoadingContainer data={data} isLoading={isLoading} error={error}>

@@ -5,6 +5,7 @@ export default function InfiniteScrollLoader({
   isFetchingNextPage,
   hasNextPage,
   displayNothingMore,
+  pages
 }) {
   const { t } = useTranslation();
 
@@ -13,7 +14,7 @@ export default function InfiniteScrollLoader({
     return <Loader />;
   }
 
-  if (!hasNextPage && displayNothingMore) {
+  if (!hasNextPage && displayNothingMore && pages > 1) {
     // Show the "Nothing more to load" message
     return (
       <div className="row">

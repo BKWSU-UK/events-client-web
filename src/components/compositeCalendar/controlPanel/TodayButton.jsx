@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import CompositeCalendarContext, {
+  CARD_TYPEUI_VIEW,
   DATE_ACTIONS,
 } from "../../../context/CompositeCalendarContext";
 import { useTranslation } from "../../../i18n";
@@ -10,7 +11,7 @@ import { useTranslation } from "../../../i18n";
  * @constructor
  */
 const TodayButton = () => {
-  const { dispatchDate } = useContext(CompositeCalendarContext);
+  const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext);
   const { t } = useTranslation();
 
   const setToday = () => {
@@ -20,6 +21,9 @@ const TodayButton = () => {
     });
   };
 
+  if(stateCalendar.cardType === CARD_TYPEUI_VIEW.INFINITE_TILES) {
+    return null;
+  }
   return (
     <button
       type="button"

@@ -22,6 +22,7 @@ export const eventMap = {
   14: "Private",
   15: "Online activity",
   16: "BK Event",
+  17: "Festivals",
 };
 
 export const QUERY_PARAMS = {

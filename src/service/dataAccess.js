@@ -197,6 +197,7 @@ export const targetUrlFactory = (params) => {
     dateEnd,
     eventContext,
     useMinimal,
+    searchExpression,
   } = params;
   let targetUrl = `${SERVER_BASE}/organisationEventReportController.do?orgEventTemplate=jsonEventExport${
     !!useMinimal ? "Minimal" : ""
@@ -209,6 +210,9 @@ export const targetUrlFactory = (params) => {
   targetUrl = onlyWebcastAdapter(isOnlyWebcast, targetUrl);
   if (eventsLang) {
     targetUrl += `&lang=${eventsLang}`;
+  }
+  if(!!searchExpression) {
+    targetUrl += `&search=${encodeURIComponent(searchExpression)}`;
   }
   const appendFunctions = [
     processOnlineOnly,
@@ -274,7 +278,7 @@ export const getEventListResponse = async (params) => {
     eventsLimit,
     featured: params.featured,
   });
-  console.log("target url", targetUrl);
+
   const fetchResponse = await fetch(targetUrl);
   const json = await fetchResponse.json();
   if (json?.response?.status !== 0) {

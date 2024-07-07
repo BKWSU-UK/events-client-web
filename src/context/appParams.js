@@ -30,3 +30,9 @@ export const TAGS = {
   HIDE_DESCRIPTION: "hide-description",
   HIDE_WEBCAST: "hide-webcast",
 }
+
+export const COMPOSITE_CALENDAR_PARAMS = {
+  SHOW_WEEK: "compositeCalendar_showWeek",
+  SHOW_DAY: "compositeCalendar_showDay",
+  SHOW_IMAGE_CARDS: "compositeCalendar_showImageCards",
+}

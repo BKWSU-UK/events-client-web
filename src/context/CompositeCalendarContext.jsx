@@ -28,6 +28,7 @@ export const CARD_TYPEUI_VIEW = {
   MONTH: 2,
   WEEK: 3,
   DAY: 4,
+  INFINITE_TILES: 5,
 };
 
 export const ACTION_CARD_MAP = {

@@ -28,6 +28,7 @@
     "react-dom": "^18.3.1",
     "react-formio": "^4.2.5",
     "react-i18next": "^11.4.0",
+    "react-loader-spinner": "^6.1.6",
     "react-placeholder": "^4.1.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^5.0.1",
@@ -59,8 +60,8 @@
     ]
   },
   "devDependencies": {
-    "sass": "^1.53.0",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "prettier": "^3.2.5",
-    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
+    "sass": "^1.53.0"
   }
 }

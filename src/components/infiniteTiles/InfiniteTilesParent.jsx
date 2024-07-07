@@ -1,16 +1,11 @@
-import { InfiniteTileContextProvider } from "../../context/InfiniteTileContext";
-import InfiniteTiles from "./InfiniteTiles";
-import { CompositeCalendarContextProvider } from "../../context/CompositeCalendarContext";
-import EventDateModal from "../compositeCalendar/EventDateModal";
+import {CompositeCalendarContextProvider} from "../../context/CompositeCalendarContext";
 import React from "react";
+import InfiniteTilesComponent from "./InfiniteTilesComponent";
 
 export default function InfiniteTilesParent(props) {
   return (
     <CompositeCalendarContextProvider>
-      <InfiniteTileContextProvider>
-        <InfiniteTiles props={props} />
-        <EventDateModal />
-      </InfiniteTileContextProvider>
+      <InfiniteTilesComponent props={props}/>
     </CompositeCalendarContextProvider>
   );
 }

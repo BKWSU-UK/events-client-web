@@ -14,6 +14,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import {extractParameter} from "../utils/paramExtraction";
 import EventContext from "../context/EventContext";
+import {COMPOSITE_CALENDAR_PARAMS} from "../context/appParams";
 
 const CARD_TYPE_KEY = "cardType";
 
@@ -25,9 +26,11 @@ const useCalendarModes = () => {
   const { stateCalendar, dispatchDate } = useContext(CompositeCalendarContext);
   const eventContext = useContext(EventContext);
   const showWeek =
-    extractParameter({ ...eventContext }, "compositeCalendar_showWeek");
+    extractParameter({ ...eventContext }, COMPOSITE_CALENDAR_PARAMS.SHOW_WEEK);
   const showDay =
-    extractParameter({ ...eventContext }, "compositeCalendar_showDay");
+    extractParameter({ ...eventContext }, COMPOSITE_CALENDAR_PARAMS.SHOW_DAY);
+  const showImageCards =
+    extractParameter({ ...eventContext }, COMPOSITE_CALENDAR_PARAMS.SHOW_IMAGE_CARDS);
   const { t } = useTranslation();
 
   const setCardType = useCallback((cardType) => {
@@ -45,11 +48,11 @@ const useCalendarModes = () => {
     }
   }, []);
 
-  const activateTable = () => setCardType(CARD_TYPEUI_VIEW.IMAGE_CARD);
+  const activateTable = useCallback(() => setCardType(CARD_TYPEUI_VIEW.IMAGE_CARD), [setCardType]);
 
-  const activateAgenda = () => setCardType(CARD_TYPEUI_VIEW.LONG_CARD);
+  const activateAgenda = useCallback(() => setCardType(CARD_TYPEUI_VIEW.LONG_CARD), [setCardType]);
 
-  const activateMonth = () => {
+  const activateMonth = useCallback(() => {
     const { monthStart, monthEnd } = monthStartAndEnd(
       stateCalendar.selectedSingleDate,
     );
@@ -62,9 +65,9 @@ const useCalendarModes = () => {
       },
     });
     window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.MONTH);
-  };
+  }, [dispatchDate, stateCalendar.selectedSingleDate]);
 
-  const activateWeek = () => {
+  const activateWeek = useCallback(() => {
     const { weekStart, weenEnd } = weekStartAndEnd(
       stateCalendar.selectedSingleDate,
     );
@@ -77,9 +80,9 @@ const useCalendarModes = () => {
       },
     });
     window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.WEEK);
-  };
+  }, [dispatchDate, stateCalendar.selectedSingleDate]);
 
-  const activateDay = () => {
+  const activateDay = useCallback(() => {
     const uniqueDate =
       stateCalendar.selectedSingleDate ||
       stateCalendar.visibleDateStart ||
@@ -93,7 +96,9 @@ const useCalendarModes = () => {
       },
     });
     window.localStorage.setItem(CARD_TYPE_KEY, CARD_TYPEUI_VIEW.DAY);
-  };
+  }, [dispatchDate, stateCalendar.selectedSingleDate, stateCalendar.visibleDateStart])
+
+  const activateInfiniteTiles = useCallback(() => setCardType(CARD_TYPEUI_VIEW.INFINITE_TILES), [setCardType]);
 
   const activeOnType = (cardType) =>
     stateCalendar.cardType === cardType && "active";
@@ -124,14 +129,20 @@ const useCalendarModes = () => {
         label: "day",
         icon: faCalendarDay,
       }] : [],
-      {
+      ...showImageCards ? [{
         cardType: CARD_TYPEUI_VIEW.IMAGE_CARD,
         func: activateTable,
+        label: "Image cards",
+        icon: faTable,
+      }] : [],
+      {
+        cardType: CARD_TYPEUI_VIEW.INFINITE_TILES,
+        func: activateInfiniteTiles,
         label: "Table",
         icon: faTable,
-      },
+      }
     ],
-    [],
+    [activateAgenda, activateDay, activateMonth, activateTable, activateWeek, showDay, showWeek]
   );
 
   return [calendarModes, activeOnType, t];

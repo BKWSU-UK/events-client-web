@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import CompositeCalendarContext, {
+  CARD_TYPEUI_VIEW,
   DATE_ACTIONS,
 } from "../../../context/CompositeCalendarContext";
 import { convertDate } from "../../../utils/dateUtils";
@@ -32,6 +33,10 @@ const DateSelector = () => {
     }
     return convertDate(date);
   };
+
+  if(stateCalendar.cardType === CARD_TYPEUI_VIEW.INFINITE_TILES) {
+    return null;
+  }
 
   return (
     <input

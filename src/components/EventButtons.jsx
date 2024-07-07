@@ -105,7 +105,6 @@ const processReadMore = (footerInfo) => {
     setCurrentEvent,
     setDateList,
     setEventTableVisible,
-    t,
   } = footerInfo;
   setCurrentEvent(original);
   setDisplayMoreAbout(true);
