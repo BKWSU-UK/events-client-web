@@ -24,7 +24,7 @@ const EventSlide = ({ event, i, eventsConfig }) => {
 
   const heroImage = useMemo(
     () => imageAdapter(event, eventsConfig),
-    [event.id],
+    [event, eventsConfig],
   );
 
   return (

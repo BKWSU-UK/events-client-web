@@ -1,6 +1,6 @@
 import React, {useContext} from "react";
 import EventContext, {extractEventListParameters,} from "../../context/EventContext";
-import {getEventList, getEventListResponse} from "../../service/dataAccess";
+import {getEventListResponse} from "../../service/dataAccess";
 import {useInfiniteQuery} from "@tanstack/react-query";
 import EventDateImageCard from "../compositeCalendar/card/EventDateImageCard";
 import {handleShowEventDate} from "../commonActions";
@@ -24,14 +24,14 @@ function adaptEventList(data) {
 }
 
 export default function InfiniteTiles(props) {
-  const { t } = useTranslation();
+  const {t} = useTranslation();
   const eventContext = useContext(EventContext);
   const {tileData, dispatchTileData} = useContext(InfiniteTileContext);
   const {stateCalendar, dispatchDate} = useContext(CompositeCalendarContext);
   const timeFormat = useTimeFormat();
   const allParams = extractEventListParameters({...props, ...eventContext});
   const {orgId} = allParams;
-  const { orgIdFilter, eventsConfig } = eventContext;
+  const {orgIdFilter, eventsConfig} = eventContext;
 
   const {
     fetchNextPage,
@@ -57,8 +57,10 @@ export default function InfiniteTiles(props) {
       );
       updateOnlineStatus(stateCalendar, eventContext);
       const {searchExpression} = stateCalendar
-      return getEventListResponse({...allParams,
-        eventTypeIds, eventContext, stateCalendar, searchExpression, ...orgIdFilter > 0 ? {orgIdFilter} : {}});
+      return getEventListResponse({
+        ...allParams,
+        eventTypeIds, eventContext, stateCalendar, searchExpression, ...orgIdFilter > 0 ? {orgIdFilter} : {}
+      });
     },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage?.endRow >= lastPage?.totalRows) {
@@ -90,6 +92,14 @@ export default function InfiniteTiles(props) {
 
   const hasData = eventList?.length > 0;
 
+  if (!!error) {
+    return <div><FontAwesomeIcon
+      icon={faCircleExclamation}
+      className="fa-1x"
+      style={{color: "#aaaabb"}}
+    />{' '}{t("No events found")}</div>
+  }
+
   return (
     <>
       {isLoading && <LoaderCircles/>}
@@ -116,7 +126,7 @@ export default function InfiniteTiles(props) {
           displayNothingMore={tileData.displayNothingMore}
           isFetchingNextPage={isFetchingNextPage}
           hasNextPage={hasNextPage}
-          pages = {data?.pages?.length}
+          pages={data?.pages?.length}
         />}
       </div>}
     </>
