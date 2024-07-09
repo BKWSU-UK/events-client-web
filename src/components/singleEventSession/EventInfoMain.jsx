@@ -1,12 +1,10 @@
-import React, { useContext } from "react";
-import EventContext from "../../context/EventContext";
-import { DescriptionDisplay } from "../compositeCalendar/EventDateModal";
+import React from "react";
+import {DescriptionDisplay} from "../compositeCalendar/EventDateModal";
 import EventInfoDate from "./eventInfoSection/EventInfoDate";
 import EventInfoTime from "./eventInfoSection/EventInfoTime";
 import EventInfoType from "./eventInfoSection/EVentInfoType";
 import EventInfoSocialMedia from "./eventInfoSection/EventInfoSocialMedia";
 import GoogleCalendarImportButton from "./GoogleCalendrImportButton";
-import EventLocation from "../compositeCalendar/card/EventLocation";
 import EventOrganisation from "./EventOrganisation";
 
 /**
@@ -15,7 +13,6 @@ import EventOrganisation from "./EventOrganisation";
  * @constructor
  */
 const EventInfoMain = ({ ev }) => {
-  const { eventsConfig } = useContext(EventContext);
 
   return (
     <div className="row">

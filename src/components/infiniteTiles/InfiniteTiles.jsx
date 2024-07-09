@@ -31,6 +31,7 @@ export default function InfiniteTiles(props) {
   const timeFormat = useTimeFormat();
   const allParams = extractEventListParameters({...props, ...eventContext});
   const {orgId} = allParams;
+  const { orgIdFilter, eventsConfig } = eventContext;
 
   const {
     fetchNextPage,
@@ -41,7 +42,7 @@ export default function InfiniteTiles(props) {
     isFetchingPreviousPage,
     ...result
   } = useInfiniteQuery({
-    queryKey: [orgId, stateCalendar],
+    queryKey: [orgId, stateCalendar, orgIdFilter, eventsConfig],
     queryFn: ({pageParam}) => {
       if (!pageParam) {
         allParams.eventsLimit = INITIAL_PAGE_SIZE;
@@ -50,14 +51,14 @@ export default function InfiniteTiles(props) {
         allParams.eventsLimit = pageParam + INITIAL_PAGE_SIZE;
         allParams.startRow = pageParam;
       }
-      const { eventsConfig } = eventContext;
       const eventTypeIds = eventTypeIdAdapter(
         stateCalendar,
         eventsConfig.eventTypeIds,
       );
       updateOnlineStatus(stateCalendar, eventContext);
       const {searchExpression} = stateCalendar
-      return getEventListResponse({...allParams, eventTypeIds, eventContext, stateCalendar, searchExpression});
+      return getEventListResponse({...allParams,
+        eventTypeIds, eventContext, stateCalendar, searchExpression, ...orgIdFilter > 0 ? {orgIdFilter} : {}});
     },
     getNextPageParam: (lastPage, allPages) => {
       if (lastPage?.endRow >= lastPage?.totalRows) {

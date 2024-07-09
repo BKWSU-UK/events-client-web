@@ -13,6 +13,10 @@ import ClassicCalendar from "./ClassicCalendar";
 import {MultiDateQueryAdapter} from "./adapter/multidateQueryAdapter";
 import InfiniteTilesComponent from "../infiniteTiles/InfiniteTilesComponent";
 
+function InfiniteTilesWrapper() {
+  return <div className="mt-4"><InfiniteTilesComponent /></div>;
+}
+
 const renderDateComponents = (adapter) => {
   return (
     <>
@@ -49,7 +53,9 @@ const renderSwitch = (stateCalendar) => {
     case CARD_TYPEUI_VIEW.DAY:
       return renderDateComponents(new SingleDayQueryAdapter());
     case CARD_TYPEUI_VIEW.INFINITE_TILES:
-      return <div className="mt-4"><InfiniteTilesComponent /></div>;
+      return <InfiniteTilesWrapper />;
+    default:
+      return <InfiniteTilesWrapper />;
   }
 };
 
