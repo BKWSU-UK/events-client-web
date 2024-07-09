@@ -177,6 +177,8 @@ const dateReducer = (state, action) => {
         ...state,
         searchExpression: action.payload.searchExpression,
       };
+    default:
+      return state;
   }
 };
 

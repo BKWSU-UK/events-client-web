@@ -11,7 +11,7 @@ import useTimeFormat from "../../hooks/useTimeFormat";
 const SmallTile = ({ ev, showEventDate }) => {
   const heroImage = useMemo(
     () => imageAdapter(ev, window.eventsConfig[0]),
-    [ev.id],
+    [ev],
   );
   const timeFormat = useTimeFormat();
 

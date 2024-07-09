@@ -75,6 +75,8 @@ const filterReducer = (state, action) => {
         selectedTag: tagState ? state.selectedTag : null,
         activateTags: tagState,
       };
+    default:
+      return state;
   }
 };
 

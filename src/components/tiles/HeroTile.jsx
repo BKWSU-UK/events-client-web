@@ -1,15 +1,12 @@
-import React, { useContext, useMemo } from "react";
-import { imageAdapter } from "../../utils/imgUtils";
+import React, {useMemo} from "react";
+import {imageAdapter} from "../../utils/imgUtils";
 import EventTypeTitle from "../compositeCalendar/card/EventTypeTitle";
 import EventCardTitle from "../compositeCalendar/card/EventCardTitle";
 import EventExtraInfo from "../compositeCalendar/card/EventExtraInfo";
-import { RenderDate } from "../readMore/ReadMore";
+import {RenderDate} from "../readMore/ReadMore";
 import useTimeFormat from "../../hooks/useTimeFormat";
-import CompositeCalendarContext, {
-  DATE_ACTIONS,
-} from "../../context/CompositeCalendarContext";
 import EventLocation from "../compositeCalendar/card/EventLocation";
-import { useTranslation } from "../../i18n";
+import {useTranslation} from "../../i18n";
 
 const EXTRA_INFO_LIMIT = 250;
 
@@ -22,7 +19,7 @@ const HeroTile = ({ data, showEventDate }) => {
   const ev = data[0];
   const heroImage = useMemo(
     () => imageAdapter(ev, window.eventsConfig[0]),
-    [ev.id],
+    [ev],
   );
   const timeFormat = useTimeFormat();
 

@@ -142,7 +142,7 @@ const useCalendarModes = () => {
         icon: faTable,
       }
     ],
-    [activateAgenda, activateDay, activateMonth, activateTable, activateWeek, showDay, showWeek]
+    [activateAgenda, activateDay, activateMonth, activateTable, activateWeek, showDay, showWeek, activateInfiniteTiles, showImageCards]
   );
 
   return [calendarModes, activeOnType, t];
