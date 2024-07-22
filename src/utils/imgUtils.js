@@ -5,19 +5,22 @@ export const removeBadStylesFromImg = (description) => {
   );
 };
 
-export const extractImageFromEvent = (event) => {
+export const extractImageFromEvent = (event, useImage4= false) => {
   if (!event) {
     return "";
   }
   let image = event.image1 || event.image2 || event.image3;
+  if (useImage4) {
+    image = event.image4 || image;
+  }
   if (!!image && image.startsWith("/")) {
     image = `https://events.brahmakumaris.org${image}`;
   }
   return !!image ? image : "";
 };
 
-export const imageAdapter = (ev, eventsConfig) => {
-  const image = extractImageFromEvent(ev);
+export const imageAdapter = (ev, eventsConfig, useImage4 = false) => {
+  const image = extractImageFromEvent(ev, useImage4);
   if (!!image) {
     return image;
   }

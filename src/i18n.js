@@ -98,6 +98,7 @@ export const langResources = {
       "Similar Events": "Ähnliche Veranstaltungen",
       "Special event": "Besondere Veranstaltung",
       Table: "Tabelle",
+      "Time": "Zeit",
       "To get started, edit <1>src/App.js</1> and save to reload.":
         "Para comenzar, edite <1>src/App.js</1> y guarde para recargar",
       today: "Heute",
@@ -209,6 +210,7 @@ export const langResources = {
       "Similar Events": "Similar Events",
       "Special event": "Special event",
       Table: "Table",
+      "Time": "Time",
       to: "to",
       "To get started, edit <1>src/App.js</1> and save to reload.":
         "To get started, edit <1>src/App.js</1> and save to reload.",
@@ -317,6 +319,7 @@ export const langResources = {
       "Similar Events": "Eventos similares",
       "Special event": "Evento especial",
       Table: "Mesa",
+      "Time": "Hora",
       to: "a",
       "To get started, edit <1>src/App.js</1> and save to reload.":
         "Para comenzar, edite <1>src/App.js</1> y guarde para recargar",
@@ -426,6 +429,7 @@ export const langResources = {
       "To get started, edit <1>src/App.js</1> and save to reload.":
         "Para começar, edite <1>src/App.js</1> e salve para recarregar.",
       today: "Hoje",
+      "Time": "Hora",
       Training: "Treinamento",
       "upcoming-dates": "Próximas Datas",
       week: "Semana",
