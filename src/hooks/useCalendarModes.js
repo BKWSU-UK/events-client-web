@@ -42,9 +42,13 @@ const useCalendarModes = () => {
   }, [dispatchDate]);
 
   useEffect(() => {
-    const cardType = window.localStorage.getItem(CARD_TYPE_KEY);
+    let cardType = parseInt(window.localStorage.getItem(CARD_TYPE_KEY));
+    if(![CARD_TYPEUI_VIEW.LONG_CARD, CARD_TYPEUI_VIEW.MONTH, CARD_TYPEUI_VIEW.INFINITE_TILES].includes(cardType)) {
+      // In case an old value is stored in the local storage, we need to reset it to the default value.
+      cardType = CARD_TYPEUI_VIEW.INFINITE_TILES
+    }
     if (!!cardType) {
-      setCardType(parseInt(cardType));
+      setCardType(cardType);
     }
   }, []);
 

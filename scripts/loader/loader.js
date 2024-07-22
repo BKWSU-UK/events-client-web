@@ -55,9 +55,9 @@ if (typeof bk === "undefined") {
     "css",
   );
   bk.loader.loadFile(server + "css/formio.css", "css");
-  if (!(location.href.indexOf("oxford") > -1)) {
-    bk.loader.loadFile(server + "css/weebly_support.css", "css");
-  }
+  // if (!(location.href.indexOf("oxford") > -1)) {
+  //   bk.loader.loadFile(server + "css/weebly_support.css", "css");
+  // }
   if (location.href.indexOf("agendas.lam") > -1) {
     bk.loader.loadFile(server + "css/agendas_lam.css", "css");
   }

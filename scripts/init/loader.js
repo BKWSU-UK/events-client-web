@@ -69,12 +69,12 @@ if (typeof bk === "undefined") {
     "https://eventswebclient-test-gil.bkwsu.eu/css/formio.css",
     "css",
   );
-  if (!(location.href.indexOf("oxford") > -1)) {
-    bk.loader.loadFile(
-      "https://eventswebclient-test-gil.bkwsu.eu/css/weebly_support.css",
-      "css",
-    );
-  }
+  // if (!(location.href.indexOf("oxford") > -1)) {
+  //   bk.loader.loadFile(
+  //     "https://eventswebclient-test-gil.bkwsu.eu/css/weebly_support.css",
+  //     "css",
+  //   );
+  // }
   if (location.href.indexOf("agendas.lam") > -1) {
     bk.loader.loadFile(
       "https://eventswebclient-test-gil.bkwsu.eu/css/agendas_lam.css",
