@@ -27,6 +27,9 @@
       .mobile-search > div > input {
         width: 70%;
       }
+      .btn.btn-primary.calendar-search-selector {
+        margin-top: 0;
+      }
       @media (max-width: 768px) {
         .calendar-center-selector,
         .calendar-category-selector {
@@ -43,9 +46,6 @@
           left: -3rem;
         }
       }
-      .splide__track {
-        max-height: 32rem;
-      }
       .modal-dialog button.close:hover {
         border-radius: 0;
       }
@@ -55,13 +55,9 @@
     <script>
       window.eventsConfig = [
         {
-          orgId: [
-            1, 87, 115, 140, 141, 143, 144, 146, 147, 148, 149, 166, 168, 172,
-            173, 174, 175, 209, 246, 256, 281, 282, 283, 284, 285, 286, 287,
-            311, 477, 484, 797,
-          ], // Only German idsy
+          orgId: [5,335], // GCH, GRC only
           eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-          language: "de", // "es" for Spanish also supported now,
+          language: "en-GB", // "de" for German
           showLocalTime: true,
           featured: false, // Show only featured examples
           displayWebcastButton: false, // displays the webcast button
@@ -72,11 +68,10 @@
           rootElement: "emsRoot1",
           displayOrgFilter: true,
           fetchEvents: true, // Prevents initial event fetching
-          showSimilarEvents: true,
           useAllOrgIds: true,
-          widgetType: "SLIDER",
+          showCompositeCalendar: true,
           singleEventUrlTemplate:
-            "https://eventswebclient-test-gil.bkwsu.eu/v0.65.0/loader/germany_single_event_session.html?eventSessionId=@@eventDateId@@",
+            "https://www.globalretreatcentre.org/ems-events-session/?eventSessionId=@@eventDateId@@",
           randomImages: [
             "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
             "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
@@ -89,7 +84,7 @@
         },
       ];
     </script>
-    <h1>Simple Slider</h1>
+    <h1>Composite Calendar</h1>
     <div id="emsRoot1" class="container-fluid"></div>
     <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.79.0/starter.js"></script>
     <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.79.0/loader.js"></script>
