@@ -15,6 +15,8 @@ export const EVENT_CONFIG = {
   HIDE_PAGER: "hidePager",
   TAGS: "tags",
   NO_TAGS: "noTags",
+  EVENT_TYPE_IDS: "eventTypeIds",
+  INITIAL_PAGE_SIZE: "initialPageSize",
 };
 export const LINK_NAME_FUNC = "eventsCalendarFunction";
 

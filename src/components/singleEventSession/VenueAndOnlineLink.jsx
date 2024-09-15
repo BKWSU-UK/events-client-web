@@ -14,7 +14,7 @@ const VenueAndOnlineLink = ({ ev }) => {
   const { webcastUrl } = ev;
 
   return (
-    <>
+    <div>
       {inperson && <VenueDisplay event={ev} />}
       {online && (
         <div className="row calendar-detail-onlinelink">
@@ -32,7 +32,7 @@ const VenueAndOnlineLink = ({ ev }) => {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 };
 

@@ -16,8 +16,6 @@ import {useTranslation} from "../../i18n";
 import {faCircleExclamation} from "@fortawesome/free-solid-svg-icons";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
-const INITIAL_PAGE_SIZE = 14;
-
 function adaptEventList(data) {
   const flat = data?.pages?.map((page) => page.data ?? page.eventList).flat();
   return flat ?? [];
@@ -45,10 +43,10 @@ export default function InfiniteTiles(props) {
     queryKey: [orgId, stateCalendar, orgIdFilter, eventsConfig],
     queryFn: ({pageParam}) => {
       if (!pageParam) {
-        allParams.eventsLimit = INITIAL_PAGE_SIZE;
+        allParams.eventsLimit = allParams.initialPageSize;
         allParams.startRow = 0;
       } else {
-        allParams.eventsLimit = pageParam + INITIAL_PAGE_SIZE;
+        allParams.eventsLimit = pageParam + allParams.initialPageSize;
         allParams.startRow = pageParam;
       }
       const eventTypeIds = eventTypeIdAdapter(

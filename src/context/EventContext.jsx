@@ -1,10 +1,13 @@
-import React, { createContext, useReducer, useState } from "react";
-import { extractParameter } from "../utils/paramExtraction";
-import { ONLINE_STATUSES } from "./onlineStates";
+import React, {createContext, useReducer, useState} from "react";
+import {extractParameter} from "../utils/paramExtraction";
+import {ONLINE_STATUSES} from "./onlineStates";
+import {EVENT_CONFIG} from "./appParams";
 
 export const EVENTS_LANG = "eventsLang";
 
 export const ALL_ORG_IDS = -1;
+
+const INITIAL_PAGE_SIZE = 14;
 
 /**
  * Extracts the filters for the event list
@@ -15,11 +18,12 @@ export const extractEventListParameters = (props) => {
   const orgId = extractParameter(props, "orgId", 2);
   const eventTypeIds = extractParameter(
     props,
-    "eventTypeIds",
+    EVENT_CONFIG.EVENT_TYPE_IDS,
     "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
   );
   const featured = extractParameter(props, "featured", null);
   const eventsLang = extractParameter(props, EVENTS_LANG, null);
+  const initialPageSize = extractParameter(props, EVENT_CONFIG.INITIAL_PAGE_SIZE, INITIAL_PAGE_SIZE);
 
   const searchFilterFunction = props.eventsConfig["searchFilterFunction"];
   const eventSliceFunction = props.eventsConfig["eventSliceFunction"];
@@ -30,6 +34,7 @@ export const extractEventListParameters = (props) => {
     eventsLang,
     searchFilterFunction,
     eventSliceFunction,
+    initialPageSize
   };
 };
 
@@ -80,7 +85,7 @@ const filterReducer = (state, action) => {
   }
 };
 
-export const EventContextProvider = ({ children, eventsConfig }) => {
+export const EventContextProvider = ({children, eventsConfig}) => {
   const [events, setEvents] = useState([]);
   const [currentEvent, setCurrentEvent] = useState(null);
   const [similarEvents, setSimilarEvents] = useState([]);

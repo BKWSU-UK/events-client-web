@@ -20,7 +20,7 @@ const SpeakerSection = ({ ev }) => {
   }
 
   if (!speaker || !speakerImage) {
-    return <></>;
+    return <div></div>;
   }
 
   return (

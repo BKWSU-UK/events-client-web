@@ -9,11 +9,8 @@ import { missesCoordinates } from "../../utils/googleCalendarUtils";
  * @constructor
  */
 const FormLocationSection = ({ ev }) => {
-  const { t } = useTranslation();
   const hasRegistration = ev.requiresRegistration;
   const hasCoordinates = !missesCoordinates(ev);
-
-  console.log("hasCoordinates", hasCoordinates);
 
   const applyHalfCol = () =>
     hasRegistration && hasCoordinates ? "col-sm-6" : "";

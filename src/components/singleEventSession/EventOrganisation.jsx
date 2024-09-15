@@ -13,7 +13,7 @@ const EventOrganisation = ({ ev }) => {
   const shivImage = eventsConfig.shivaStarImage || "/assets/images/shiva.png";
 
   if (!ev.organisations || ev.organisations.length === 0) {
-    return <></>;
+    return <div></div>;
   }
 
   return (
