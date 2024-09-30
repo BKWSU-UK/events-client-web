@@ -21,3 +21,7 @@
     margin: 0 auto;
     display: block;
 }
+
+.formio-form label.field-required {
+    font-weight: bold;
+}
