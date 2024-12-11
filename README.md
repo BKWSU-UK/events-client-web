@@ -380,4 +380,3 @@ compile.bat
 ```
 
 This will produce the bundle in the `dist` folder and the examples in the `examples` folder.
-

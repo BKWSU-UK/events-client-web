@@ -1,9 +1,9 @@
-import React, {useCallback} from "react";
+import React, { useCallback } from "react";
 import useEventDateHook from "../useEventDateHook";
 import { isSameDay, renderTimeFromIso } from "../../../utils/dateUtils";
 import useTimeFormat from "../../../hooks/useTimeFormat";
 import EventInfoContainer from "./EventInfoContainer";
-import {useTranslation} from "../../../i18n";
+import { useTranslation } from "../../../i18n";
 
 /**
  * Displays th time
@@ -35,8 +35,7 @@ const EventInfoTime = ({ ev }) => {
       </div>
       <div>
         {startTimeExpr}
-        {renderEndTime()}
-        {" "}{ev.timeZoneInfo ? `(${ev.timeZoneInfo})` : ""}
+        {renderEndTime()} {ev.timeZoneInfo ? `(${ev.timeZoneInfo})` : ""}
       </div>
     </EventInfoContainer>
   );

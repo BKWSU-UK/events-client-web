@@ -1,4 +1,4 @@
-import React, {createContext, useReducer} from "react";
+import React, { createContext, useReducer } from "react";
 
 /**
  * The context used to keep track of the expansion of the customer and product tables.

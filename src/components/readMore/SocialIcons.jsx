@@ -26,15 +26,25 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { copyToClipboardModern } from "../../utils/copyClipboard";
 
 const generateMessage = (currentEvent, langCode, dateTimeFormat, eventType) => {
-  const dateStr =
-    currentEvent.dateList?.length > 0
-      ? renderDateTimeFromIso(
-          currentEvent.dateList[0].startIso,
-          langCode,
-          dateTimeFormat,
-        )
-      : "";
-  return `${currentEvent.name}\n${eventType}\n${dateStr}\n`;
+  let dateStr = ""
+  if(!!currentEvent.startDate && !!currentEvent.startTime) {
+    debugger
+    dateStr = renderDateTimeFromIso(currentEvent.startDate + "T" + currentEvent.startTime, langCode, dateTimeFormat)
+  } else {
+    dateStr =
+        currentEvent.dateList?.length > 0
+            ? renderDateTimeFromIso(
+                currentEvent.dateList[0].startIso,
+                langCode,
+                dateTimeFormat,
+            )
+            : "";
+  }
+  let venueName = ""
+  if(currentEvent?.simpleVenue?.name) {
+    venueName = ` - ${currentEvent?.simpleVenue?.name}`
+  }
+  return `${currentEvent.name}\n${eventType}${venueName}\n${dateStr}\n`;
 };
 
 const generateImage = (currentEvent) => extractImageFromEvent(currentEvent);
@@ -77,7 +87,7 @@ const SocialIcons = ({ currentEvent, buttonSize = 32 }) => {
   const generateHashtag =
     eventsConfig.generateHashtag ?? ((_) => "brahmakumaris");
 
-  const shareUrl = generateUrl(currentEvent);
+  const shareUrl = currentUrl ?? generateUrl(currentEvent);
   const eventTypeId = currentEvent.eventTypeId;
   const message = useMemo(
     () =>

@@ -21,11 +21,13 @@ export default function ImageBanner(props) {
   ) || [0];
   const imagePosition =
     extractParameter({ ...eventContext }, "imageBanner_imagePosition") || "1";
-  const imagePositionMobile =
-    extractParameter({ ...eventContext }, "imageBanner_imagePosition_mobile");
+  const imagePositionMobile = extractParameter(
+    { ...eventContext },
+    "imageBanner_imagePosition_mobile",
+  );
   const eventsCalendarFunction = extractEventLinkFunction(eventsConfig);
-  const lowResClasses = imagePositionMobile ? "d-block d-md-none" : ""
-  const highResClasses = imagePositionMobile ? "d-none d-md-block" : ""
+  const lowResClasses = imagePositionMobile ? "d-block d-md-none" : "";
+  const highResClasses = imagePositionMobile ? "d-none d-md-block" : "";
   return (
     <div className="ems-image-banner-cntainer">
       <LoadingContainer data={data} isLoading={isLoading} error={error}>
@@ -40,12 +42,14 @@ export default function ImageBanner(props) {
                   className={`col-12 ems-image-banner-item`}
                 >
                   <a href={eventsCalendarFunction(event)}>
-                    {imagePositionMobile && <img
-                      className={`ems-image-banner-image ${lowResClasses}`}
-                      src={event[`image${imagePositionMobile}`]}
-                      alt={event.name}
-                      title={event.name}
-                    />}
+                    {imagePositionMobile && (
+                      <img
+                        className={`ems-image-banner-image ${lowResClasses}`}
+                        src={event[`image${imagePositionMobile}`]}
+                        alt={event.name}
+                        title={event.name}
+                      />
+                    )}
                     <img
                       className={`ems-image-banner-image ${highResClasses}`}
                       src={event[`image${imagePosition}`]}

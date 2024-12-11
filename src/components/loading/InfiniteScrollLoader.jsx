@@ -5,7 +5,7 @@ export default function InfiniteScrollLoader({
   isFetchingNextPage,
   hasNextPage,
   displayNothingMore,
-  pages
+  pages,
 }) {
   const { t } = useTranslation();
 

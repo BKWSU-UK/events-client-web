@@ -5,7 +5,7 @@ export const removeBadStylesFromImg = (description) => {
   );
 };
 
-export const extractImageFromEvent = (event, useImage4= false) => {
+export const extractImageFromEvent = (event, useImage4 = false) => {
   if (!event) {
     return "";
   }

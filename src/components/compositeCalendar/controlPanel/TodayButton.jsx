@@ -21,7 +21,7 @@ const TodayButton = () => {
     });
   };
 
-  if(stateCalendar.cardType === CARD_TYPEUI_VIEW.INFINITE_TILES) {
+  if (stateCalendar.cardType === CARD_TYPEUI_VIEW.INFINITE_TILES) {
     return null;
   }
   return (

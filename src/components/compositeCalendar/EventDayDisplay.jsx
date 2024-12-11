@@ -21,8 +21,10 @@ import { eventTypeIdAdapter } from "./adapter/eventTypeIdAdapter";
 import { orgIdFilterAdapter } from "./adapter/orgIdAdapter";
 import { QUERY_PARAMS } from "../../service/dataAccessConstants";
 import { useQuery } from "@tanstack/react-query";
-import {MultiDateQueryAdapter, onlineStatusAdapter} from "./adapter/multidateQueryAdapter";
-
+import {
+  MultiDateQueryAdapter,
+  onlineStatusAdapter,
+} from "./adapter/multidateQueryAdapter";
 
 /**
  * Used to retrieve a single day of data.

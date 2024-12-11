@@ -19,8 +19,8 @@ import {
 } from "../../utils/dateUtils";
 import { googleCalendarLink } from "../../utils/googleCalendarUtils";
 import SocialIcons from "./SocialIcons";
-import {convertToSet} from "../../utils/tagsAdapter";
-import {TAGS} from "../../context/appParams";
+import { convertToSet } from "../../utils/tagsAdapter";
+import { TAGS } from "../../context/appParams";
 
 function renderAddToGoogleCalendar(
   event,
@@ -219,7 +219,7 @@ export const ReadMore = ({ dateList: injectDateList }) => {
   const venueEvent = venueFactory(currentEvent);
   const timeFormat = useTimeFormat();
 
-  const tags = convertToSet(currentEvent)
+  const tags = convertToSet(currentEvent);
   if (venueEvent?.venue) {
     return (
       <>

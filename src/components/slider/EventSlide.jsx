@@ -1,12 +1,12 @@
-import {SplideSlide} from "@splidejs/react-splide";
-import React, {useContext, useMemo} from "react";
-import {imageAdapter} from "../../utils/imgUtils";
+import { SplideSlide } from "@splidejs/react-splide";
+import React, { useContext, useMemo } from "react";
+import { imageAdapter } from "../../utils/imgUtils";
 import EventTypeTitle from "../compositeCalendar/card/EventTypeTitle";
 import EventCardTitle from "../compositeCalendar/card/EventCardTitle";
 import EventExtraInfo from "../compositeCalendar/card/EventExtraInfo";
-import {RenderDate} from "../readMore/ReadMore";
+import { RenderDate } from "../readMore/ReadMore";
 import CompositeCalendarContext from "../../context/CompositeCalendarContext";
-import {handleShowEventDate} from "../commonActions";
+import { handleShowEventDate } from "../commonActions";
 import EventContext from "../../context/EventContext";
 
 /**

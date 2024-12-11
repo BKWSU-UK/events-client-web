@@ -1,6 +1,6 @@
 import { useTranslation } from "../i18n";
 import { extractFromLocationQuery } from "../utils/urlUtils";
-import React, {useContext, useEffect} from "react";
+import React, { useContext, useEffect } from "react";
 import EventContext from "../context/EventContext";
 import { fetchSingleEvent } from "../service/dataAccess";
 import Loader from "./loading/Loader";
@@ -28,11 +28,10 @@ export default function DetailRenderer(props) {
   });
 
   useEffect(() => {
-    if(data?.data[0]) {
+    if (data?.data[0]) {
       setCurrentEvent(data.data[0]);
     }
-  }, [data?.data[0]])
-
+  }, [data?.data[0]]);
 
   if (isLoading) {
     return <Loader />;

@@ -148,7 +148,7 @@ function MyMapComponent({ center, zoom, children }) {
   );
 }
 
-function Marker (options) {
+function Marker(options) {
   const [marker, setMarker] = React.useState();
 
   React.useEffect(() => {

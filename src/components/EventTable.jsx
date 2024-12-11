@@ -113,7 +113,10 @@ function EventTableStruct({ columns, params, show }) {
         >
           <thead className="thead-dark">
             {headerGroups.map((headerGroup, i) => (
-              <tr key={`event_table_row_${i}`} {...headerGroup.getHeaderGroupProps()}>
+              <tr
+                key={`event_table_row_${i}`}
+                {...headerGroup.getHeaderGroupProps()}
+              >
                 {headerGroup.headers
                   .filter((column) => showColumns.includes(column.id))
                   .map((column, j) => {
@@ -151,7 +154,9 @@ function EventTableStruct({ columns, params, show }) {
                     .filter((cell) => showColumns.includes(cell.column.id))
                     .map((cell, k) => {
                       return (
-                        <td key={`body_division_${k}`} {...cell.getCellProps()}>{cell.render("Cell")}</td>
+                        <td key={`body_division_${k}`} {...cell.getCellProps()}>
+                          {cell.render("Cell")}
+                        </td>
                       );
                     })}
                 </tr>

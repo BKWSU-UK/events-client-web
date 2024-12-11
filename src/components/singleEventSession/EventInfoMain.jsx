@@ -1,5 +1,5 @@
 import React from "react";
-import {DescriptionDisplay} from "../compositeCalendar/EventDateModal";
+import { DescriptionDisplay } from "../compositeCalendar/EventDateModal";
 import EventInfoDate from "./eventInfoSection/EventInfoDate";
 import EventInfoTime from "./eventInfoSection/EventInfoTime";
 import EventInfoType from "./eventInfoSection/EVentInfoType";
@@ -13,7 +13,6 @@ import EventOrganisation from "./EventOrganisation";
  * @constructor
  */
 const EventInfoMain = ({ ev }) => {
-
   return (
     <div className="row">
       <div className="col-12 col-sm-6 calendar-detail-title">

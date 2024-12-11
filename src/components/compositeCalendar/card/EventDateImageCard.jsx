@@ -28,7 +28,10 @@ const EventDateImageCard = ({
 
   const { eventsConfig } = useContext(EventContext);
 
-  const heroImage = useMemo(() => imageAdapter(ev, eventsConfig, true), [ev.id]);
+  const heroImage = useMemo(
+    () => imageAdapter(ev, eventsConfig, true),
+    [ev.id],
+  );
 
   return (
     <div className="col-12 col-sm-6 col-xl-3 calendar-event-card-wrapper">

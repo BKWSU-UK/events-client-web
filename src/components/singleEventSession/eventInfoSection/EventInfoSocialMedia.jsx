@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import EventInfoContainer from "./EventInfoContainer";
 import { useTranslation } from "../../../i18n";
 import EventContext from "../../../context/EventContext";
+import FacebookShareLink from "../FacebookShareLink";
 
 /**
  * Social Media buttons.
@@ -26,13 +27,11 @@ const EventInfoSocialMedia = ({ ev }) => {
   return (
     <EventInfoContainer>
       <div className="calendar-flex-icon">
-        <a href={`http://www.facebook.com/sharer.php?u=${encodedURL}`}>
-          <img src={facebookShareImage} alt={t("Share on Facebook")} />
-        </a>
+        <FacebookShareLink encodedURL={encodedURL} />
       </div>
       <div className="calendar-flex-icon">
         <a
-          href={`http://twitter.com/share?text=${encodeURI(
+          href={`https://twitter.com/share?text=${encodeURI(
             eventName,
           )}&url=${encodedURL}`}
         >

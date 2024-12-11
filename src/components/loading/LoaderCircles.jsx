@@ -8,7 +8,7 @@ const DEFAULT_SPINNER_SIZE = 50;
  * @returns {JSX.Element}
  * @constructor
  */
-export default function LoaderCircles({spinnerSize = DEFAULT_SPINNER_SIZE}) {
+export default function LoaderCircles({ spinnerSize = DEFAULT_SPINNER_SIZE }) {
   return (
     <div
       style={{ display: "flex", justifyContent: "center", padding: "10px 0" }}

@@ -34,7 +34,7 @@ const DateSelector = () => {
     return convertDate(date);
   };
 
-  if(stateCalendar.cardType === CARD_TYPEUI_VIEW.INFINITE_TILES) {
+  if (stateCalendar.cardType === CARD_TYPEUI_VIEW.INFINITE_TILES) {
     return null;
   }
 

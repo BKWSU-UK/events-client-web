@@ -7,7 +7,10 @@ import {
 } from "../service/dataAccess";
 import { topFunction } from "../utils/scrolling";
 import EventContext from "../context/EventContext";
-import { extractParameter } from "../utils/paramExtraction";
+import {
+  extractEventLinkFunction,
+  extractParameter,
+} from "../utils/paramExtraction";
 import { EVENT_CONFIG } from "../context/appParams";
 import * as rdd from "react-device-detect";
 
@@ -23,10 +26,14 @@ export const processReadMoreClick = async (
   setSimilarEvents,
   eventContext,
 ) => {
+  debugger;
   const { original } = footerInfo;
   const singleEventUrlTemplate = extractParameter(
     { ...eventContext },
     EVENT_CONFIG.SINGLE_EVENT_URL_TEMPLATE,
+  );
+  const eventsCalendarFunction = extractEventLinkFunction(
+    eventContext.eventsConfig,
   );
   const specialIpadLink = extractParameter(
     { ...eventContext },
@@ -35,6 +42,9 @@ export const processReadMoreClick = async (
   if (rdd.isIPad13 && !!specialIpadLink) {
     window.location.href =
       specialIpadLink.replace(EVENT_DATE_ID, original.id) + "&ipad=true";
+  } else if (!!eventsCalendarFunction) {
+    debugger;
+    window.location.href = eventsCalendarFunction(original);
   } else if (!!singleEventUrlTemplate) {
     let id = original.id;
     if (singleEventUrlTemplate.includes("eventSessionId")) {

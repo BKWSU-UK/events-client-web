@@ -1,9 +1,9 @@
-import {useContext, useEffect} from "react";
+import { useContext, useEffect } from "react";
 import EventContext from "../context/EventContext";
 
-import {getEventList} from "../service/dataAccess";
-import {extractParameter} from "../utils/paramExtraction";
-import {useQuery} from "@tanstack/react-query";
+import { getEventList } from "../service/dataAccess";
+import { extractParameter } from "../utils/paramExtraction";
+import { useQuery } from "@tanstack/react-query";
 
 /**
  * Hook used to retrieve events based on the organisation id coming from a context.
@@ -11,9 +11,9 @@ import {useQuery} from "@tanstack/react-query";
  */
 export default function useOrganisationEvents(params) {
   const eventContext = useContext(EventContext);
-  const {events, setEvents, orgIdFilter, filterState} = eventContext;
+  const { events, setEvents, orgIdFilter, filterState } = eventContext;
 
-  const {isLoading, error, data} = useQuery({
+  const { isLoading, error, data } = useQuery({
     queryKey: [
       `eventsTable_${eventContext["eventsConfig"]["id"]}`,
       orgIdFilter,
@@ -21,9 +21,9 @@ export default function useOrganisationEvents(params) {
     ],
     queryFn: () => {
       if (!!orgIdFilter && orgIdFilter > 0) {
-        return getEventList({...params, orgIdFilter, eventContext});
-      } else if (extractParameter({...eventContext}, "fetchEvents")) {
-        return getEventList({...params, eventContext});
+        return getEventList({ ...params, orgIdFilter, eventContext });
+      } else if (extractParameter({ ...eventContext }, "fetchEvents")) {
+        return getEventList({ ...params, eventContext });
       } else {
         return [];
       }
@@ -31,9 +31,8 @@ export default function useOrganisationEvents(params) {
   });
 
   useEffect(() => {
-    if((!events || events.length === 0) && data?.length > 0)
-      setEvents(data);
+    if ((!events || events.length === 0) && data?.length > 0) setEvents(data);
   }, [data]);
 
-  return {events, eventContext, data, isLoading, error};
+  return { events, eventContext, data, isLoading, error };
 }

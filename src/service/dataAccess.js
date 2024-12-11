@@ -211,7 +211,7 @@ export const targetUrlFactory = (params) => {
   if (eventsLang) {
     targetUrl += `&lang=${eventsLang}`;
   }
-  if(!!searchExpression) {
+  if (!!searchExpression) {
     targetUrl += `&search=${encodeURIComponent(searchExpression)}`;
   }
   const appendFunctions = [

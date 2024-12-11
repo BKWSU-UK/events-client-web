@@ -1,11 +1,11 @@
-import {dateToKey} from "../../../utils/dateUtils";
-import {eventTypeIdAdapter} from "./eventTypeIdAdapter";
-import {updateOnlineStatus} from "./onlineAdapter";
-import {getEventListWithGroupCount} from "../../../service/dataAccess";
-import {orgIdFilterAdapter} from "./orgIdAdapter";
-import {QUERY_PARAMS} from "../../../service/dataAccessConstants";
-import {EVENTS_LIMIT} from "../../../context/appParams";
-import {DATE_ACTIONS} from "../../../context/CompositeCalendarContext";
+import { dateToKey } from "../../../utils/dateUtils";
+import { eventTypeIdAdapter } from "./eventTypeIdAdapter";
+import { updateOnlineStatus } from "./onlineAdapter";
+import { getEventListWithGroupCount } from "../../../service/dataAccess";
+import { orgIdFilterAdapter } from "./orgIdAdapter";
+import { QUERY_PARAMS } from "../../../service/dataAccessConstants";
+import { EVENTS_LIMIT } from "../../../context/appParams";
+import { DATE_ACTIONS } from "../../../context/CompositeCalendarContext";
 
 export const onlineStatusAdapter = (stateCalendar) =>
   `onlineStatus:${stateCalendar.onlineStatus}`;
