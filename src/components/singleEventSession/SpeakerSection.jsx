@@ -1,6 +1,5 @@
 import React from "react";
 import { useTranslation } from "../../i18n";
-import linkifyHtml from "linkifyjs/html";
 import { correctImagePath } from "../../utils/imgUtils";
 import SpeakerDescription from "./SpeakerDescription";
 

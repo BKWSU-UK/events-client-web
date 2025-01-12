@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.84.0",
+  "version": "0.87.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -42,7 +42,8 @@
     "build": "react-scripts build",
     "test": "react-scripts examples",
     "eject": "react-scripts eject",
-    "format": "npx prettier --write ."
+    "format": "npx prettier --write .",
+    "pretty": "yarn prettier . --write"
   },
   "eslintConfig": {
     "extends": "react-app"

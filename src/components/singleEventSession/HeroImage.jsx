@@ -9,7 +9,10 @@ import EventContext from "../../context/EventContext";
  */
 const HeroImage = ({ ev }) => {
   const eventsConfig = useContext(EventContext);
-  const heroImage = useMemo(() => imageAdapter(ev, eventsConfig), [ev.id]);
+  const heroImage = useMemo(
+    () => imageAdapter(ev, eventsConfig),
+    [ev, eventsConfig],
+  );
   return (
     <div className="row">
       <div className="col-12">

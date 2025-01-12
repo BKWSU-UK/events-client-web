@@ -27,6 +27,9 @@ export const extractParameter = (props, name, defaultValue) => {
 };
 
 export function extractEventLinkFunction(eventsConfig) {
+  if (eventsConfig[LINK_NAME_FUNC] === null) {
+    return null;
+  }
   return typeof eventsConfig[LINK_NAME_FUNC] === "function"
     ? eventsConfig[LINK_NAME_FUNC]
     : (event) =>

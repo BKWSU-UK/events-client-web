@@ -26,23 +26,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { copyToClipboardModern } from "../../utils/copyClipboard";
 
 const generateMessage = (currentEvent, langCode, dateTimeFormat, eventType) => {
-  let dateStr = ""
-  if(!!currentEvent.startDate && !!currentEvent.startTime) {
-    debugger
-    dateStr = renderDateTimeFromIso(currentEvent.startDate + "T" + currentEvent.startTime, langCode, dateTimeFormat)
+  let dateStr = "";
+  if (!!currentEvent.startDate && !!currentEvent.startTime) {
+    dateStr = renderDateTimeFromIso(
+      currentEvent.startDate + "T" + currentEvent.startTime,
+      langCode,
+      dateTimeFormat,
+    );
   } else {
     dateStr =
-        currentEvent.dateList?.length > 0
-            ? renderDateTimeFromIso(
-                currentEvent.dateList[0].startIso,
-                langCode,
-                dateTimeFormat,
-            )
-            : "";
+      currentEvent.dateList?.length > 0
+        ? renderDateTimeFromIso(
+            currentEvent.dateList[0].startIso,
+            langCode,
+            dateTimeFormat,
+          )
+        : "";
   }
-  let venueName = ""
-  if(currentEvent?.simpleVenue?.name) {
-    venueName = ` - ${currentEvent?.simpleVenue?.name}`
+  let venueName = "";
+  if (currentEvent?.simpleVenue?.name) {
+    venueName = ` - ${currentEvent?.simpleVenue?.name}`;
   }
   return `${currentEvent.name}\n${eventType}${venueName}\n${dateStr}\n`;
 };

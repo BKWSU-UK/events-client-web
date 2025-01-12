@@ -9,10 +9,10 @@ import { useQuery } from "@tanstack/react-query";
 
 export const useSeatInformation = (currentEvent) => {
   const eventDateId = currentEvent
-    ? currentEvent.eventDateId
-      ? currentEvent.eventDateId
-      : currentEvent.dateList
-        ? currentEvent.dateList[0].eventDateId
+    ? currentEvent?.eventDateId
+      ? currentEvent?.eventDateId
+      : currentEvent?.dateList && currentEvent?.dateList.length
+        ? currentEvent?.dateList[0].eventDateId
         : -1
     : -1;
   const { isLoading, error, data } = useQuery({
@@ -22,7 +22,7 @@ export const useSeatInformation = (currentEvent) => {
   return { isLoading, error, data };
 };
 
-const NoMoreSeats = ({ cols = 6, currentEvent }) => {
+const NoMoreSeats = ({ cols = 12, currentEvent }) => {
   const { t } = useTranslation();
   const { eventsConfig } = useContext(EventContext);
 
@@ -31,12 +31,15 @@ const NoMoreSeats = ({ cols = 6, currentEvent }) => {
       ? eventsConfig.customNoMoreSeatsMessage(currentEvent)
       : null;
 
+  const errorMessage =
+    !currentEvent.dateList || !currentEvent.dateList.length
+      ? t("This event is not any longer available.")
+      : t("There are no more seats available for this event!");
+
   return (
-    <div className={`col-${cols}`}>
+    <div className={`col-${cols} pt-4`}>
       <div className="row alert alert-warning">
-        <div className="col-12">
-          {t("There are no more seats available for this event!")}
-        </div>
+        <div className="col-12">{errorMessage}</div>
         {!!customNoMoreSeatsMessage && (
           <div dangerouslySetInnerHTML={{ __html: customNoMoreSeatsMessage }} />
         )}

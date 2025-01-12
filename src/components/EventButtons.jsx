@@ -26,7 +26,6 @@ export const processReadMoreClick = async (
   setSimilarEvents,
   eventContext,
 ) => {
-  debugger;
   const { original } = footerInfo;
   const singleEventUrlTemplate = extractParameter(
     { ...eventContext },
@@ -43,7 +42,6 @@ export const processReadMoreClick = async (
     window.location.href =
       specialIpadLink.replace(EVENT_DATE_ID, original.id) + "&ipad=true";
   } else if (!!eventsCalendarFunction) {
-    debugger;
     window.location.href = eventsCalendarFunction(original);
   } else if (!!singleEventUrlTemplate) {
     let id = original.id;

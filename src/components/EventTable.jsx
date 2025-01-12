@@ -6,7 +6,7 @@ import {
   useTable,
 } from "react-table";
 import styled from "styled-components";
-import { Pager } from "./Pager";
+import { Pager } from "./table/Pager";
 import { withRouter } from "react-router-dom";
 import EventDisplay from "./EventDisplay";
 import FormModal from "./forms/FormModal";
@@ -24,31 +24,14 @@ import TagsFilter from "./filter/TagsFilter";
 import LoadingPlaceHolder from "./loading/LoadingPlaceHolder";
 import useOrganisationEvents from "../hooks/useOrganisationEvents";
 import { EVENT_CONFIG } from "../context/appParams";
+import TableFilterPager from "./table/TableFilterPager";
 
 function EventTableStruct({ columns, params, show }) {
   const { events, eventContext, data, isLoading, error } =
     useOrganisationEvents(params);
 
   // Use the state and functions returned from useTable to build your UI
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    prepareRow,
-    state,
-    page,
-    canPreviousPage,
-    canNextPage,
-    pageOptions,
-    pageCount,
-    rows,
-    gotoPage,
-    nextPage,
-    previousPage,
-    setPageSize,
-    setGlobalFilter,
-    state: { pageIndex, pageSize },
-  } = useTable(
+  const table = useTable(
     {
       columns,
       data: events ?? [],
@@ -62,46 +45,14 @@ function EventTableStruct({ columns, params, show }) {
     usePagination,
   );
 
+  const { getTableProps, getTableBodyProps, headerGroups, prepareRow, page } =
+    table;
+
   // Render the UI for your table
   const showColumns = ["description"];
-  const hideSearch = extractParameter(
-    { ...eventContext },
-    EVENT_CONFIG.HIDE_SEARCH,
-    false,
-  );
-  const hidePager = extractParameter(
-    { ...eventContext },
-    EVENT_CONFIG.HIDE_PAGER,
-    false,
-  );
   return (
     <>
-      <div
-        className="row mt-1 mb-1 ml-1"
-        style={{ visibility: show ? "visible" : "hidden" }}
-      >
-        {!hideSearch && (
-          <GlobalFilter
-            globalFilter={state.globalFilter}
-            setGlobalFilter={setGlobalFilter}
-            rowsLength={rows.length}
-          />
-        )}
-        {!hidePager && (
-          <Pager
-            gotoPage={gotoPage}
-            canPreviousPage={canPreviousPage}
-            previousPage={previousPage}
-            nextPage={nextPage}
-            canNextPage={canNextPage}
-            pageCount={pageCount}
-            pageOptions={pageOptions}
-            pageIndex={pageIndex}
-            pageSize={pageSize}
-            setPageSize={setPageSize}
-          />
-        )}
-      </div>
+      <TableFilterPager show={show} params={params} table={table} />
       <OnlineFilter />
       <TagsFilter />
       <CenterFilter />
@@ -164,6 +115,12 @@ function EventTableStruct({ columns, params, show }) {
             })}
           </tbody>
         </table>
+        <TableFilterPager
+          show={show}
+          params={params}
+          table={table}
+          showSearch={false}
+        />
       </LoadingPlaceHolder>
     </>
   );

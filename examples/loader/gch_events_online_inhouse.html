@@ -1,117 +1,121 @@
 <html lang="en">
-<link>
+  <head>
     <title>Multiple Plugins in one page</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
     <style>
+      .flexContainer {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+      }
 
+      .half {
+        flex: 1;
+        max-width: 100%;
+      }
+
+      @media (min-width: 1024px) {
         .flexContainer {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-            justify-content: center;
+          flex-direction: row;
         }
-
         .half {
-            flex: 1;
-            max-width: 100%;
+          max-width: 50%;
         }
-
-        @media (min-width: 1024px) {
-            .flexContainer {
-                flex-direction: row;
-            }
-            .half {
-                max-width: 50%;
-            }
-        }
+      }
     </style>
-</head>
-<body>
-<script>
-    window.eventsConfig = [
+  </head>
+  <body>
+    <script>
+      window.eventsConfig = [
         {
-            id: 0,
-            useBodyHiddenOverflow: false,
-            useSimpleLayout: true,
-            orgId: [2],
-            eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
-            // onlyWebcast: true,
-            // onlineOnly: "no",
-            language: 'en-GB',
-            showLocalTime: true,
-            displayWebcastButton: true,
-            eventsLimit: 10,
-            showCalendar: false,
-            showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
-            // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
-            // singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
-            suppressBookOnly: false,
-            suppressVenue: true,
-            showSimilarEvents: true,
-            onlineOnly: 'yes',
-            // eventsLang: "en", // Language filter,
-            rootElement: 'emsRoot1',
-            displayOrgFilter: false,
-            fetchEvents: true, // Prevents initial event fetching
-            useAllOrgIds: false, // If true does never display all events for all organisations
-            // upcomingDateLimit: 5
-        }, {
-            id: 1,
-            useBodyHiddenOverflow: false,
-            useSimpleLayout: true,
-            orgId: [2],
-            eventTypeIds: '1,2,3,4,5,6,7,8,9,10,11,12,13,15',
-            // onlyWebcast: true,
-            // onlineOnly: "no",
-            language: 'en-GB',
-            showLocalTime: true,
-            displayWebcastButton: true,
-            eventsLimit: 10,
-            showCalendar: false,
-            showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
-            // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
-            singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
-            suppressBookOnly: false,
-            suppressVenue: true,
-            showSimilarEvents: true,
-            // eventsLang: "en", // Language filter,
-            rootElement: 'emsRoot2',
-            onlineOnly: 'no',
-            displayOrgFilter: false,
-            fetchEvents: true, // Prevents initial event fetching
-            useAllOrgIds: true, // If true does never display all events for all organisations
-            // upcomingDateLimit: 5
-        }]
-</script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.84.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.84.0/loader.js"></script>
-<style>
-    /** Stretch search field */
-    label[for=searchInput] + .col-6 {
+          id: 0,
+          useBodyHiddenOverflow: false,
+          useSimpleLayout: true,
+          orgId: [2],
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          // onlyWebcast: true,
+          // onlineOnly: "no",
+          language: "en-GB",
+          showLocalTime: true,
+          displayWebcastButton: true,
+          eventsLimit: 10,
+          showCalendar: false,
+          showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
+          // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
+          // singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@',
+          suppressBookOnly: false,
+          suppressVenue: true,
+          showSimilarEvents: true,
+          onlineOnly: "yes",
+          // eventsLang: "en", // Language filter,
+          rootElement: "emsRoot1",
+          displayOrgFilter: false,
+          fetchEvents: true, // Prevents initial event fetching
+          useAllOrgIds: false, // If true does never display all events for all organisations
+          // upcomingDateLimit: 5
+        },
+        {
+          id: 1,
+          useBodyHiddenOverflow: false,
+          useSimpleLayout: true,
+          orgId: [2],
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          // onlyWebcast: true,
+          // onlineOnly: "no",
+          language: "en-GB",
+          showLocalTime: true,
+          displayWebcastButton: true,
+          eventsLimit: 10,
+          showCalendar: false,
+          showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
+          // singleEventUrlTemplate: 'https://brahmakumaris.uk/events/singleevent/@@eventDateId@@',
+          singleEventUrlTemplate:
+            "https://globalcooperationhouse.org/whatson-full/singleevent/3540614-where-is-god-in-all-this/@@eventDateId@@",
+          suppressBookOnly: false,
+          suppressVenue: true,
+          showSimilarEvents: true,
+          // eventsLang: "en", // Language filter,
+          rootElement: "emsRoot2",
+          onlineOnly: "no",
+          displayOrgFilter: false,
+          fetchEvents: true, // Prevents initial event fetching
+          useAllOrgIds: true, // If true does never display all events for all organisations
+          // upcomingDateLimit: 5
+        },
+      ];
+    </script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.87.0/starter.js"></script>
+    <script src="https://eventswebclient-test-gil.bkwsu.eu/v0.87.0/loader.js"></script>
+    <style>
+      /** Stretch search field */
+      label[for="searchInput"] + .col-6 {
         width: 100%;
         max-width: 100%;
         flex: 0 0 100%;
         padding-left: 0;
-    }
-    label[for=searchInput] {
+      }
+      label[for="searchInput"] {
         float: left;
         text-align: left !important;
         padding-left: 0;
-    }
-    .search-box {
+      }
+      .search-box {
         max-width: 100%;
-    }
-</style>
-<div class="flexContainer">
-    <div class="container-fluid half">
+      }
+    </style>
+    <div class="flexContainer">
+      <div class="container-fluid half">
         <h1>Online</h1>
         <div id="emsRoot1"></div>
-    </div>
-    <div class="container-fluid half">
+      </div>
+      <div class="container-fluid half">
         <h1>In Person</h1>
-        <div id="emsRoot2" ></div>
+        <div id="emsRoot2"></div>
+      </div>
     </div>
-</div>
-
-</body>
+  </body>
 </html>

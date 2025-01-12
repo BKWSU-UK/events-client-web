@@ -98,6 +98,8 @@ export const langResources = {
       "Similar Events": "Ähnliche Veranstaltungen",
       "Special event": "Besondere Veranstaltung",
       Table: "Tabelle",
+      "This event is not any longer available.":
+        "Diese Veranstaltung ist nicht mehr verfügbar.",
       Time: "Zeit",
       "To get started, edit <1>src/App.js</1> and save to reload.":
         "Para comenzar, edite <1>src/App.js</1> y guarde para recargar",
@@ -210,6 +212,8 @@ export const langResources = {
       "Similar Events": "Similar Events",
       "Special event": "Special event",
       Table: "Table",
+      "This event is not any longer available.":
+        "This event is not any longer available.",
       Time: "Time",
       to: "to",
       "To get started, edit <1>src/App.js</1> and save to reload.":
@@ -319,6 +323,8 @@ export const langResources = {
       "Similar Events": "Eventos similares",
       "Special event": "Evento especial",
       Table: "Mesa",
+      "This event is not any longer available.":
+        "This event is not any longer available.",
       Time: "Hora",
       to: "a",
       "To get started, edit <1>src/App.js</1> and save to reload.":
@@ -429,6 +435,8 @@ export const langResources = {
       "To get started, edit <1>src/App.js</1> and save to reload.":
         "Para começar, edite <1>src/App.js</1> e salve para recarregar.",
       today: "Hoje",
+      "This event is not any longer available.":
+        "Este evento não está mais disponível.",
       Time: "Hora",
       Training: "Treinamento",
       "upcoming-dates": "Próximas Datas",

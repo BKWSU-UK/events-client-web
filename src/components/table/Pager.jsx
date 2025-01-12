@@ -1,5 +1,5 @@
 import React from "react";
-import { useTranslation } from "../i18n";
+import { useTranslation } from "../../i18n";
 
 const gotoPageElement = (pageIndex, gotoPage, pageCount, t) => {
   if (pageCount > 1) {

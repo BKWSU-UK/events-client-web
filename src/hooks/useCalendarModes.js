@@ -65,7 +65,7 @@ const useCalendarModes = () => {
     if (!!cardType) {
       setCardType(cardType);
     }
-  }, []);
+  }, [setCardType]);
 
   const activateTable = useCallback(
     () => setCardType(CARD_TYPEUI_VIEW.IMAGE_CARD),

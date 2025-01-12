@@ -31,8 +31,10 @@ export default function useOrganisationEvents(params) {
   });
 
   useEffect(() => {
-    if ((!events || events.length === 0) && data?.length > 0) setEvents(data);
-  }, [data]);
+    if (data) {
+      setEvents(data);
+    }
+  }, [data, setEvents]);
 
   return { events, eventContext, data, isLoading, error };
 }

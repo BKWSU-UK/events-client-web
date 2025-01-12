@@ -11,8 +11,8 @@ import FacebookShareLink from "../FacebookShareLink";
 const EventInfoSocialMedia = ({ ev }) => {
   const { t } = useTranslation();
   const { eventsConfig } = useContext(EventContext);
-  const facebookShareImage =
-    eventsConfig.facebookShareImage || "/assets/images/calendar_facebook.png";
+  // const facebookShareImage =
+  //   eventsConfig.facebookShareImage || "/assets/images/calendar_facebook.png";
   const twitterShareImage =
     eventsConfig.twitterShareImage || "/assets/images/calendar_twitter.png";
   const mailShareImage =

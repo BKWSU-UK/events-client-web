@@ -36,26 +36,26 @@ export const eventDateIdAdapter = (currentEvent) => {
 
 export function injectParameters(components) {
   const url = new URL(window.location.href);
-  const searchParams = url.searchParams
-  const booleanComponents = ["newsletter", "checkbox"]
-  if(searchParams) {
-    components.forEach(component => {
-      console.info("component", component)
-      const key = component?.component?.key
-      if(key) {
-        const value = searchParams.get(key)
-        if(value) {
-          const type = component.type
+  const searchParams = url.searchParams;
+  const booleanComponents = ["newsletter", "checkbox"];
+  if (searchParams) {
+    components.forEach((component) => {
+      console.info("component", component);
+      const key = component?.component?.key;
+      if (key) {
+        const value = searchParams.get(key);
+        if (value) {
+          const type = component.type;
           if (booleanComponents.includes(type)) {
-            if("true" === value) {
-              component.setValue(true)
+            if ("true" === value) {
+              component.setValue(true);
             }
           } else {
-            component.setValue(value)
+            component.setValue(value);
           }
         }
       }
-    })
+    });
   }
 }
 
@@ -190,7 +190,7 @@ export default function CreateForm(currentEvent) {
             element.classList.add("field-required");
           }
         });
-      injectParameters(formInstance.components)
+      injectParameters(formInstance.components);
     }
   };
 

@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import useEventDateHook from "../useEventDateHook";
-import { isSameDay, renderTimeFromIso } from "../../../utils/dateUtils";
+import { renderTimeFromIso } from "../../../utils/dateUtils";
 import useTimeFormat from "../../../hooks/useTimeFormat";
 import EventInfoContainer from "./EventInfoContainer";
 import { useTranslation } from "../../../i18n";
