@@ -6,6 +6,8 @@ import CompositeCalendarContext from "../../context/CompositeCalendarContext";
 import SmallTile from "./SmallTile";
 import EventContext from "../../context/EventContext";
 import { handleShowEventDate } from "../commonActions";
+import ErrorMessage from "../common/ErrorMessage";
+import {useTranslation} from "../../i18n";
 
 const EVENTS_LIMIT = 10;
 
@@ -16,6 +18,7 @@ const LIMIT = 5;
  * @constructor
  */
 const Tiles = () => {
+  const { t } = useTranslation();
   const { dispatchDate } = useContext(CompositeCalendarContext);
   const eventContext = useContext(EventContext);
 
@@ -25,6 +28,10 @@ const Tiles = () => {
   };
 
   const { isLoading, error, data } = useGetEventList(EVENTS_LIMIT);
+
+  if(!isLoading && (!data || data.length === 0)) {
+    return <ErrorMessage errorMessage={t("No events found")} />
+  }
 
   return (
     <LoadingContainer data={data} isLoading={isLoading} error={error}>

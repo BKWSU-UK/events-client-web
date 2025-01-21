@@ -51,6 +51,7 @@ const translationsBS = {
   "More informations about this event on": "Više informacija o ovom događaju",
   next: "Slijedeće",
   "No events found": "Nije pronađen događaj ...",
+  "no event id": "Nema ID-a događaja. Molimo dodajte ID događaja (?eventId=<id>) u URL.",
   of: "od",
   "online_state_In Person": "Lično",
   online_state_Mixed: "Preko interneta i lično",

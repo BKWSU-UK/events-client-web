@@ -35,3 +35,9 @@ export function extractEventLinkFunction(eventsConfig) {
     : (event) =>
         `https://globalcooperationhouse.org/whatson-full/singleevent/${event.id}`;
 }
+
+export function extractEventId(props) {
+  return props?.origProps?.match?.params?.eventId ||
+      extractFromLocationQuery("eventId") ||
+      extractFromLocationQuery("id");
+}

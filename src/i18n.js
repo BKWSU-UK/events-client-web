@@ -67,6 +67,7 @@ export const langResources = {
         "Weitere Informationen zu dieser Veranstaltung auf",
       next: "nächste",
       "No events found": "Keine Events gefunden ...",
+      "no event id": "Keine Ereignis-ID. Bitte fügen Sie der URL die Ereignis-ID (?eventId=<id>) hinzu.",
       "Nothing more to load": "Nichts mehr zu laden",
       of: "von",
       "online_state_In Person": "Vor Ort",
@@ -98,7 +99,7 @@ export const langResources = {
       "Similar Events": "Ähnliche Veranstaltungen",
       "Special event": "Besondere Veranstaltung",
       Table: "Tabelle",
-      "This event is not any longer available.":
+      "This event is no longer available.":
         "Diese Veranstaltung ist nicht mehr verfügbar.",
       Time: "Zeit",
       "To get started, edit <1>src/App.js</1> and save to reload.":
@@ -181,6 +182,7 @@ export const langResources = {
         "More informations about this event on",
       next: "Next",
       "No events found": "No events found ...",
+      "no event id": "No event id. Please add the event id (?eventId=<id>) to the URL.",
       "Nothing more to load": "Nothing more to load",
       of: "of",
       "online_state_In Person": "In Person",
@@ -212,8 +214,8 @@ export const langResources = {
       "Similar Events": "Similar Events",
       "Special event": "Special event",
       Table: "Table",
-      "This event is not any longer available.":
-        "This event is not any longer available.",
+      "This event is no longer available.":
+        "This event is no longer available.",
       Time: "Time",
       to: "to",
       "To get started, edit <1>src/App.js</1> and save to reload.":
@@ -292,6 +294,7 @@ export const langResources = {
         "Más información sobre este evento en",
       next: "Seguinte",
       "No events found": "No se encontraron eventos...",
+      "no event id": "Sin identificación de evento. Agregue la identificación del evento (?eventId=<id>) a la URL.",
       "Nothing more to load": "Nada más para cargar",
       of: "de",
       "online_state_In Person": "En persona",
@@ -323,8 +326,8 @@ export const langResources = {
       "Similar Events": "Eventos similares",
       "Special event": "Evento especial",
       Table: "Mesa",
-      "This event is not any longer available.":
-        "This event is not any longer available.",
+      "This event is no longer available.":
+        "Este evento ya no está disponible.",
       Time: "Hora",
       to: "a",
       "To get started, edit <1>src/App.js</1> and save to reload.":
@@ -401,6 +404,7 @@ export const langResources = {
         "Mais informações sobre este evento em",
       next: "Seguinte",
       "No events found": "Nenhum evento encontrado...",
+      "no event id": "Nenhum ID de evento. Adicione o ID do evento (?eventId=<id>) ao URL.",
       "Nothing more to load": "Nada mais para carregar",
       of: "de",
       "online_state_In Person": "Em pessoa",
@@ -435,7 +439,7 @@ export const langResources = {
       "To get started, edit <1>src/App.js</1> and save to reload.":
         "Para começar, edite <1>src/App.js</1> e salve para recarregar.",
       today: "Hoje",
-      "This event is not any longer available.":
+      "This event is no longer available.":
         "Este evento não está mais disponível.",
       Time: "Hora",
       Training: "Treinamento",

@@ -24,7 +24,7 @@ const useGetEventList = ({ defaultEventLimit }) => {
         eventsLang: eventsConfig.eventsLang,
         orgIdFilter,
         eventContext,
-        useMinimal: true,
+        useMinimal: false,
         eventsLimit,
       });
     },

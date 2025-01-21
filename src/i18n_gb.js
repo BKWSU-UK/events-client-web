@@ -52,6 +52,7 @@ const translationsGB = {
     "More informations about this event on",
   next: "Next",
   "No events found": "No events found ...",
+  "no event id": "No event id. Please add the event id (?eventId=<id>) to the URL.",
   of: "of",
   "online_state_In Person": "In Person",
   online_state_Mixed: "Online and In Person",

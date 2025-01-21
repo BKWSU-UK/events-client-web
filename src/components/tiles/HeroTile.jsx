@@ -18,7 +18,7 @@ const HeroTile = ({ data, showEventDate }) => {
   const { t } = useTranslation();
   const ev = data[0];
   const heroImage = useMemo(
-    () => imageAdapter(ev, window.eventsConfig[0]),
+    () => imageAdapter(ev, window.eventsConfig[0], true),
     [ev],
   );
   const timeFormat = useTimeFormat();

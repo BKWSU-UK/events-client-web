@@ -33,7 +33,7 @@ const NoMoreSeats = ({ cols = 12, currentEvent }) => {
 
   const errorMessage =
     !currentEvent.dateList || !currentEvent.dateList.length
-      ? t("This event is not any longer available.")
+      ? t("This event is no longer available.")
       : t("There are no more seats available for this event!");
 
   return (
@@ -53,15 +53,17 @@ const noMoreSeatsCondition = (data) =>
 
 /**
  * Modal used to display forms.
- * @param show Determines, if the form is displayed or not.
- * @param setShow The function invoked when the modal is closed.
  * @param currentEvent The current event with all properties.
  * @constructor
  */
-export function EventForm({ show, setShow, currentEvent }) {
+export function EventForm({ currentEvent }) {
+  const { t } = useTranslation();
   const { isLoading, error, data } = useSeatInformation(currentEvent);
   if (isLoading) {
     return <></>;
+  }
+  if(error) {
+    return <div>{t("Could not retrieve event due to an error")}<br />{error}</div>
   }
   if (noMoreSeatsCondition(data)) {
     return <NoMoreSeats cols={12} currentEvent={currentEvent} />;
