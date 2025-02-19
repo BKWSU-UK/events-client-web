@@ -3,10 +3,8 @@ import LoadingContainer from "../loading/LoadingContainer";
 import React, { useContext, useEffect, useMemo } from "react";
 import {
   dateListAdapter,
-  tagsAdapter,
   venueEventAdapter,
 } from "../../utils/singleEventSessionAdapters";
-import useTimeFormat from "../../hooks/useTimeFormat";
 import { ReadMore } from "../readMore/ReadMore";
 import EventContext from "../../context/EventContext";
 

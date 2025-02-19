@@ -20,7 +20,7 @@ import {
 import { googleCalendarLink } from "../../utils/googleCalendarUtils";
 import SocialIcons from "./SocialIcons";
 import { convertToSet } from "../../utils/tagsAdapter";
-import { TAGS } from "../../context/appParams";
+import {EVENT_CONFIG, TAGS} from "../../context/appParams";
 
 function renderAddToGoogleCalendar(
   event,
@@ -46,7 +46,14 @@ export function RenderDate({
   useCalendarIcon = true,
   addGoogleCalendar = true,
 }) {
-  const { eventsConfig } = useContext(EventContext);
+  const eventContext = useContext(EventContext);
+  const { eventsConfig } = eventContext;
+  // &dateFormat=ddd,%20MMM%20Do%20YYYY for American date
+  const dateFormat = extractParameter(
+      { ...eventContext },
+      EVENT_CONFIG.EVENT_DATE_FORMAT,
+      "ddd, Do MMM YYYY",
+  );
   const { t, langCode } = useTranslation();
 
   const renderEndTimeIfSameDay = () => {
@@ -57,8 +64,6 @@ export function RenderDate({
   };
 
   const startAfterNow = !!timeAfterNow(date.startIso);
-
-  const dateFormat = "ddd, Do MMM YYYY";
 
   const startMoment = moment(date.startIso, "YYYY-MM-DD'T'hh:mm:ss");
   const endMoment = moment(date.endIso, "YYYY-MM-DD'T'hh:mm:ss");

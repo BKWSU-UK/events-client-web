@@ -1,5 +1,4 @@
 import React from "react";
-import { useTranslation } from "../../i18n";
 import CreateForm from "../forms/CreateForm";
 import { GoogleMapsDisplay } from "../compositeCalendar/EventDateModal";
 import { missesCoordinates } from "../../utils/googleCalendarUtils";

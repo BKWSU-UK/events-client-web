@@ -20,7 +20,7 @@ const GoogleCalendarImportButton = ({ ev }) => {
 
   return (
     <div className="col-12 calendar-detail-buttons">
-      <a href={googleCalendarLink(ev, adaptedEventDate)} target="_blank">
+      <a href={googleCalendarLink(ev, adaptedEventDate)} target="_blank" rel="noreferrer">
         {t("Import on Google Calendar")}
       </a>
     </div>

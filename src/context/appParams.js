@@ -17,6 +17,7 @@ export const EVENT_CONFIG = {
   NO_TAGS: "noTags",
   EVENT_TYPE_IDS: "eventTypeIds",
   INITIAL_PAGE_SIZE: "initialPageSize",
+  EVENT_DATE_FORMAT: "dateFormat"
 };
 
 export const LINK_NAME_FUNC = "eventsCalendarFunction";
