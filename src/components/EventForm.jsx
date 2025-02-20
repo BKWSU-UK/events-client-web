@@ -6,11 +6,11 @@ import EventContext from "../context/EventContext";
 import { RenderDate, venueFactory } from "./readMore/ReadMore";
 import useTimeFormat from "../hooks/useTimeFormat";
 import useLanguage from "../hooks/useLanguage";
-import {extractEventId, extractParameter} from "../utils/paramExtraction";
-import { convertToSet } from "../utils/tagsAdapter";
+import { extractEventId, extractParameter } from "../utils/paramExtraction";
+import { convertTagsToSet } from "../utils/tagsAdapter";
 import { TAGS } from "../context/appParams";
 import ErrorMessage from "./common/ErrorMessage";
-import {useTranslation} from "../i18n";
+import { useTranslation } from "../i18n";
 
 function ImageDisplay({ tags, tag, image, eventName }) {
   if (tags.has(tag) && image) {
@@ -43,7 +43,7 @@ function EventDisplay({ currentEvent }) {
       currentEvent.dateList && currentEvent.dateList.length > 0
         ? currentEvent.dateList[0]
         : null;
-    const tags = convertToSet(currentEvent);
+    const tags = convertTagsToSet(currentEvent);
     const eventName = currentEvent.name;
     if (!!date) {
       return (
@@ -98,12 +98,12 @@ function EventDisplay({ currentEvent }) {
  * @constructor
  */
 function EventForm(props) {
-    const { t } = useTranslation();
+  const { t } = useTranslation();
   const { currentEvent } = useContext(EventContext);
-  const eventId = extractEventId(props)
-    if(!eventId) {
-     return <ErrorMessage errorMessage={t("no event id")} />
-    }
+  const eventId = extractEventId(props);
+  if (!eventId) {
+    return <ErrorMessage errorMessage={t("no event id")} />;
+  }
   return (
     <DetailRenderer origProps={{ ...props }}>
       <EventDisplay currentEvent={currentEvent} />

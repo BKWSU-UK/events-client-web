@@ -17,7 +17,7 @@ export const EVENT_CONFIG = {
   NO_TAGS: "noTags",
   EVENT_TYPE_IDS: "eventTypeIds",
   INITIAL_PAGE_SIZE: "initialPageSize",
-  EVENT_DATE_FORMAT: "dateFormat"
+  EVENT_DATE_FORMAT: "dateFormat",
 };
 
 export const LINK_NAME_FUNC = "eventsCalendarFunction";
@@ -33,6 +33,7 @@ export const TAGS = {
   SHOW_IMAGE_3: "show-image3",
   HIDE_DESCRIPTION: "hide-description",
   HIDE_WEBCAST: "hide-webcast",
+  US_DATE: "us-date",
 };
 
 export const COMPOSITE_CALENDAR_PARAMS = {

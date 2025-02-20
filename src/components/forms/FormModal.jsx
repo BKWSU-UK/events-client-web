@@ -62,8 +62,14 @@ export function EventForm({ currentEvent }) {
   if (isLoading) {
     return <></>;
   }
-  if(error) {
-    return <div>{t("Could not retrieve event due to an error")}<br />{error}</div>
+  if (error) {
+    return (
+      <div>
+        {t("Could not retrieve event due to an error")}
+        <br />
+        {error}
+      </div>
+    );
   }
   if (noMoreSeatsCondition(data)) {
     return <NoMoreSeats cols={12} currentEvent={currentEvent} />;

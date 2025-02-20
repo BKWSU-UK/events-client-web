@@ -59,9 +59,7 @@
         {
           useBodyHiddenOverflow: false,
           useSimpleLayout: true,
-          orgId: [
-            5
-          ], // GCH only
+          orgId: [5], // GCH only
           // eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
           // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, EXTENDED_SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES,
           // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR, IMAGE_BANNER, INFINITE_TILES
@@ -76,7 +74,7 @@
           displayOrgFilter: true,
           rootElement: "emsRoot",
           eventsCalendarFunction: (event) => {
-            return `https://www.globalretreatcentre.org/ems-events-session?eventSessionId=${event.eventDateId}&title=${encodeURIComponent(event.name)}&image=${encodeURIComponent(event.image2 ?? event.image1)}&startDateTime=${event.startIso}&endDateTime=${event.endIso}`
+            return `https://www.globalretreatcentre.org/ems-events-session?eventSessionId=${event.eventDateId}&title=${encodeURIComponent(event.name)}&image=${encodeURIComponent(event.image2 ?? event.image1)}&startDateTime=${event.startIso}&endDateTime=${event.endIso}`;
           },
           randomImages: [
             "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
@@ -86,7 +84,7 @@
             "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
             "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
             "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg",
-          ]
+          ],
         },
       ];
     </script>

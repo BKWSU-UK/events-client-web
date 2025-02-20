@@ -67,7 +67,8 @@ export const langResources = {
         "Weitere Informationen zu dieser Veranstaltung auf",
       next: "nächste",
       "No events found": "Keine Events gefunden ...",
-      "no event id": "Keine Ereignis-ID. Bitte fügen Sie der URL die Ereignis-ID (?eventId=<id>) hinzu.",
+      "no event id":
+        "Keine Ereignis-ID. Bitte fügen Sie der URL die Ereignis-ID (?eventId=<id>) hinzu.",
       "Nothing more to load": "Nichts mehr zu laden",
       of: "von",
       "online_state_In Person": "Vor Ort",
@@ -182,7 +183,8 @@ export const langResources = {
         "More informations about this event on",
       next: "Next",
       "No events found": "No events found ...",
-      "no event id": "No event id. Please add the event id (?eventId=<id>) to the URL.",
+      "no event id":
+        "No event id. Please add the event id (?eventId=<id>) to the URL.",
       "Nothing more to load": "Nothing more to load",
       of: "of",
       "online_state_In Person": "In Person",
@@ -294,7 +296,8 @@ export const langResources = {
         "Más información sobre este evento en",
       next: "Seguinte",
       "No events found": "No se encontraron eventos...",
-      "no event id": "Sin identificación de evento. Agregue la identificación del evento (?eventId=<id>) a la URL.",
+      "no event id":
+        "Sin identificación de evento. Agregue la identificación del evento (?eventId=<id>) a la URL.",
       "Nothing more to load": "Nada más para cargar",
       of: "de",
       "online_state_In Person": "En persona",
@@ -404,7 +407,8 @@ export const langResources = {
         "Mais informações sobre este evento em",
       next: "Seguinte",
       "No events found": "Nenhum evento encontrado...",
-      "no event id": "Nenhum ID de evento. Adicione o ID do evento (?eventId=<id>) ao URL.",
+      "no event id":
+        "Nenhum ID de evento. Adicione o ID do evento (?eventId=<id>) ao URL.",
       "Nothing more to load": "Nada mais para carregar",
       of: "de",
       "online_state_In Person": "Em pessoa",

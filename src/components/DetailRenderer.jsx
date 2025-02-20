@@ -5,7 +5,7 @@ import EventContext from "../context/EventContext";
 import { fetchSingleEvent } from "../service/dataAccess";
 import Loader from "./loading/Loader";
 import { useQuery } from "@tanstack/react-query";
-import {extractEventId} from "../utils/paramExtraction";
+import { extractEventId } from "../utils/paramExtraction";
 
 /**
  * Used to render directly either events or forms.
@@ -16,7 +16,7 @@ import {extractEventId} from "../utils/paramExtraction";
 export default function DetailRenderer(props) {
   const { t } = useTranslation();
 
-  const eventId = extractEventId(props)
+  const eventId = extractEventId(props);
 
   const { currentEvent, setCurrentEvent } = useContext(EventContext);
 

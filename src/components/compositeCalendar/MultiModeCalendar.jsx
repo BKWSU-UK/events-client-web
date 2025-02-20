@@ -73,7 +73,7 @@ const renderSwitch = (stateCalendar) => {
  * @returns {JSX.Element}
  * @constructor
  */
-const   MultiModeCalendar = () => {
+const MultiModeCalendar = () => {
   const compositeCalendarContext = useContext(CompositeCalendarContext);
   const { stateCalendar } = compositeCalendarContext;
 

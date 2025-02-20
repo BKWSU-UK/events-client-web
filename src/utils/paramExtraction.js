@@ -37,7 +37,9 @@ export function extractEventLinkFunction(eventsConfig) {
 }
 
 export function extractEventId(props) {
-  return props?.origProps?.match?.params?.eventId ||
-      extractFromLocationQuery("eventId") ||
-      extractFromLocationQuery("id");
+  return (
+    props?.origProps?.match?.params?.eventId ||
+    extractFromLocationQuery("eventId") ||
+    extractFromLocationQuery("id")
+  );
 }

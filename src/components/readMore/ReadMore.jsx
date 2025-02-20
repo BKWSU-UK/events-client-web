@@ -19,8 +19,8 @@ import {
 } from "../../utils/dateUtils";
 import { googleCalendarLink } from "../../utils/googleCalendarUtils";
 import SocialIcons from "./SocialIcons";
-import { convertToSet } from "../../utils/tagsAdapter";
-import {EVENT_CONFIG, TAGS} from "../../context/appParams";
+import { convertTagsToSet } from "../../utils/tagsAdapter";
+import { EVENT_CONFIG, TAGS } from "../../context/appParams";
 
 function renderAddToGoogleCalendar(
   event,
@@ -30,7 +30,7 @@ function renderAddToGoogleCalendar(
   linkText = "add-google-calendar",
 ) {
   return (
-    <a href={googleCalendarLink(event, date)} target="_blank" rel="nofollow">
+    <a href={googleCalendarLink(event, date)} target="_blank" rel="noreferrer">
       {(!useIcon && t(linkText)) || <span>&#128276;</span>}{" "}
     </a>
   );
@@ -48,12 +48,17 @@ export function RenderDate({
 }) {
   const eventContext = useContext(EventContext);
   const { eventsConfig } = eventContext;
+
   // &dateFormat=ddd,%20MMM%20Do%20YYYY for American date
-  const dateFormat = extractParameter(
-      { ...eventContext },
-      EVENT_CONFIG.EVENT_DATE_FORMAT,
-      "ddd, Do MMM YYYY",
+  let dateFormat = extractParameter(
+    { ...eventContext },
+    EVENT_CONFIG.EVENT_DATE_FORMAT,
+    "ddd, Do MMM YYYY",
   );
+  const tags = convertTagsToSet(currentEvent);
+  if (tags.has(TAGS.US_DATE)) {
+    dateFormat = "ddd, MMM Do YYYY";
+  }
   const { t, langCode } = useTranslation();
 
   const renderEndTimeIfSameDay = () => {
@@ -174,11 +179,14 @@ export const ShowImage = () => {
   const images = [1, 2, 3];
   return (
     <>
-      {images.map((imageIndex) => {
-        if (
-          !!eventsConfig[`singleEventShowImage${imageIndex}`] &&
-          !!currentEvent[`image${imageIndex}`]
-        ) {
+      {images
+        .filter((imageIndex) => {
+          return (
+            !!eventsConfig[`singleEventShowImage${imageIndex}`] &&
+            !!currentEvent[`image${imageIndex}`]
+          );
+        })
+        .map((imageIndex) => {
           return (
             <img
               key={`show_image_${imageIndex}`}
@@ -187,8 +195,7 @@ export const ShowImage = () => {
               alt={currentEvent.name}
             />
           );
-        }
-      })}
+        })}
     </>
   );
 };
@@ -224,7 +231,7 @@ export const ReadMore = ({ dateList: injectDateList }) => {
   const venueEvent = venueFactory(currentEvent);
   const timeFormat = useTimeFormat();
 
-  const tags = convertToSet(currentEvent);
+  const tags = convertTagsToSet(currentEvent);
   if (venueEvent?.venue) {
     return (
       <>

@@ -7,7 +7,7 @@ import SmallTile from "./SmallTile";
 import EventContext from "../../context/EventContext";
 import { handleShowEventDate } from "../commonActions";
 import ErrorMessage from "../common/ErrorMessage";
-import {useTranslation} from "../../i18n";
+import { useTranslation } from "../../i18n";
 
 const EVENTS_LIMIT = 10;
 
@@ -29,8 +29,8 @@ const Tiles = () => {
 
   const { isLoading, error, data } = useGetEventList(EVENTS_LIMIT);
 
-  if(!isLoading && (!data || data.length === 0)) {
-    return <ErrorMessage errorMessage={t("No events found")} />
+  if (!isLoading && (!data || data.length === 0)) {
+    return <ErrorMessage errorMessage={t("No events found")} />;
   }
 
   return (
