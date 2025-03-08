@@ -59,11 +59,11 @@
         {
           useBodyHiddenOverflow: false,
           useSimpleLayout: true,
-          orgId: [5], // GCH only
-          // eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+          orgId: [2], // GCH only
+          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15,17",
           // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, EXTENDED_SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES,
           // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR, IMAGE_BANNER, INFINITE_TILES
-          widgetType: "FORM",
+          widgetType: "IMAGE_BANNER",
           hideSocial: true,
           language: "en-GB", // Portuguese Brasil "pt-BR"
           onlyWebcast: false, // show only webcast events
@@ -71,11 +71,15 @@
           displayWebcastButton: true,
           showCalendar: false, // If true displays the calendar view instead of the list view
           eventsLimit: 100, // show only one single event
-          displayOrgFilter: true,
+          fetchEvents: true,
+          displayOrgFilter: false,
           rootElement: "emsRoot",
           eventsCalendarFunction: (event) => {
             return `https://www.globalretreatcentre.org/ems-events-session?eventSessionId=${event.eventDateId}&title=${encodeURIComponent(event.name)}&image=${encodeURIComponent(event.image2 ?? event.image1)}&startDateTime=${event.startIso}&endDateTime=${event.endIso}`;
           },
+          imageBanner_selectedPositions: [0, 1, 2, 3],
+          imageBanner_imagePosition_mobile: 1,
+          imageBanner_imagePosition: 4,
           randomImages: [
             "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
             "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",

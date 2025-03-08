@@ -7,6 +7,19 @@ import {
 } from "../../utils/paramExtraction";
 import LoadingContainer from "../loading/LoadingContainer";
 
+
+function eventsAdapter(events, imagePosition, selectedPositions) {
+  // Deduplicate any banners.
+  const filtered = events?.filter((event) => !!event[`image${imagePosition}`])
+      .filter((_, i) => !!selectedPositions.includes(i));
+  return Object.values(
+      filtered.reduce((a , e) => {
+        return a[e[`image${imagePosition}`]] ? a : {...a, [e[`image${imagePosition}`]]: e}
+      }, {})
+  )
+}
+
+
 /**
  * Used to display one ore more images with a link to a specific page.
  * @param props
@@ -32,9 +45,7 @@ export default function ImageBanner(props) {
     <div className="ems-image-banner-cntainer">
       <LoadingContainer data={data} isLoading={isLoading} error={error}>
         <div className="row ems-image-banner">
-          {events
-            ?.filter((event) => !!event[`image${imagePosition}`])
-            .filter((_, i) => !!selectedPositions.includes(i))
+          {eventsAdapter(events, imagePosition, selectedPositions)
             .map((event, i) => {
               return (
                 <div
