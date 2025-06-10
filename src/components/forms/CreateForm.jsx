@@ -6,6 +6,7 @@ import { Form } from "react-formio";
 import { formTranslations_en_gb } from "./formTranslations_en_gb";
 import { formTranslation_pt_br } from "./formTranslation_pt_br";
 import { formTranslation_de_de } from "./formTranslation_de_de";
+import {fetchEventFormResponse} from "../../service/dataAccess";
 
 const _Webform = require("formiojs/Webform").default;
 
@@ -142,6 +143,7 @@ export default function CreateForm(currentEvent) {
   // Used to hide the form on successful submission.
   const [hideForm, setHideForm] = useState(false);
   const [changeCount, setChangeCount] = useState(1);
+  const formResponse = useRef({formResponseHtml: ""})
   const targetUrl = `${SERVER_BASE}/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(
     currentEvent,
   )}&addSubmit=true`;
@@ -191,6 +193,11 @@ export default function CreateForm(currentEvent) {
           }
         });
       injectParameters(formInstance.components);
+      fetchEventFormResponse(currentEvent.currentEvent.id)
+          .then(res => {
+            formResponse.current = res
+            console.info("formResponse.current", formResponse.current)
+          })
     }
   };
 
@@ -208,6 +215,10 @@ export default function CreateForm(currentEvent) {
     resetForm();
     if (!!formSuccessMessage) {
       setHideForm(true);
+    }
+    const formResponseRedirect = formResponse.current?.formResponseRedirect
+    if(formResponseRedirect && ["https://", "http://"].some(prefix => formResponseRedirect.startsWith(prefix))) {
+      window.location.href=formResponseRedirect
     }
   };
 
@@ -227,11 +238,16 @@ export default function CreateForm(currentEvent) {
       )}
 
       {hideForm && formSuccessMessage && (
-        <div
-          id="formSuccessMessage"
-          dangerouslySetInnerHTML={{ __html: formSuccessMessage }}
-        />
+          <>
+            <div
+              id="formSuccessMessage"
+              dangerouslySetInnerHTML={{ __html: formSuccessMessage }}
+            />
+          </>
       )}
+
+      {hideForm && formResponse.current?.formResponseHtml && <div id="formResponseHtml"
+                                                     dangerouslySetInnerHTML={{ __html: formResponse.current.formResponseHtml }} />}
 
       {!hideForm && (
         <Form

@@ -377,3 +377,12 @@ export const fetchNextListEvents = async (countries, timezone) => {
   const response = await fetch(targetUrl);
   return await response.json();
 };
+
+export async function fetchEventFormResponse(eventId){
+  if(!eventId) {
+    return {}
+  }
+  const targetUrl = `${SERVER_BASE}/events/formredirect-event?eventId=${eventId}`;
+  const response = await fetch(targetUrl);
+  return await response.json();
+}
