@@ -58,5 +58,6 @@ export const formTranslation_pt_br = {
     saveDraftAuthError: "Cannot save draft unless a user is authenticated.",
     restoreDraftInstanceError:
       "Cannot restore draft because there is no formio instance.",
+    "Registration successful": "Inscrição realizada com sucesso",
   },
 };

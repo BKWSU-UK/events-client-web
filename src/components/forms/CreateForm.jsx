@@ -6,7 +6,7 @@ import { Form } from "react-formio";
 import { formTranslations_en_gb } from "./formTranslations_en_gb";
 import { formTranslation_pt_br } from "./formTranslation_pt_br";
 import { formTranslation_de_de } from "./formTranslation_de_de";
-import {fetchEventFormResponse} from "../../service/dataAccess";
+import { fetchEventFormResponse } from "../../service/dataAccess";
 
 const _Webform = require("formiojs/Webform").default;
 
@@ -138,12 +138,16 @@ function ShowMissingFields({ formComponent, changeCount }) {
   );
 }
 
+function getGlobalThis() {
+  return typeof globalThis !== 'undefined' ? globalThis : window;
+}
+
 export default function CreateForm(currentEvent) {
   const eventContext = useContext(EventContext);
   // Used to hide the form on successful submission.
   const [hideForm, setHideForm] = useState(false);
   const [changeCount, setChangeCount] = useState(1);
-  const formResponse = useRef({formResponseHtml: ""})
+  const formResponse = useRef({ formResponseHtml: "" })
   const targetUrl = `${SERVER_BASE}/FormIOGeneration.do?eventDateId=${eventDateIdAdapter(
     currentEvent,
   )}&addSubmit=true`;
@@ -166,17 +170,38 @@ export default function CreateForm(currentEvent) {
       "en-GB": formTranslations_en_gb,
       "pt-BR": formTranslation_pt_br,
       "de-DE": formTranslation_de_de,
+      "de": formTranslation_de_de,
+      "en": formTranslations_en_gb,
+      "pt": formTranslation_pt_br,
     },
   };
 
+  useEffect(() => {
+    hideButtonMessage()
+  }, [])
+
   const formOptionsClone = JSON.parse(JSON.stringify(formOptions));
 
+  function showButtonMessage() {
+    const el = getGlobalThis().document.querySelector("span[ref='buttonMessage']");
+    if (!!el) {
+      el.style.display = "block";
+    }
+  }
+
+  function hideButtonMessage() {
+    const el = getGlobalThis().document.querySelector("span[ref='buttonMessage']");
+    if (!!el) {
+      el.style.display = "none";
+    }
+  }
+
   const forceTranslate = (selector, translationKey) => {
-    const el = document.querySelector(selector);
+    const el = getGlobalThis().document.querySelector(selector);
     // Hack to get the translation working.
-    if (!!el && !!formOptionsClone["i18n"][formLanguage]) {
-      el.textContent =
-        formOptionsClone["i18n"][formLanguage]["translation"][translationKey];
+    if (!!el && !!formOptionsClone["i18n"]) {
+      const language = Object.keys(formOptionsClone["i18n"]).includes(formLanguage) ? formLanguage : "en-GB"
+      el.textContent = formOptionsClone["i18n"][language]["translation"][translationKey];
     }
   };
 
@@ -194,31 +219,35 @@ export default function CreateForm(currentEvent) {
         });
       injectParameters(formInstance.components);
       fetchEventFormResponse(currentEvent.currentEvent.id)
-          .then(res => {
-            formResponse.current = res
-            console.info("formResponse.current", formResponse.current)
-          })
+        .then(res => {
+          formResponse.current = res
+          console.info("formResponse.current", formResponse.current)
+        })
     }
   };
 
   const resetForm = () => {
     const current = formComponent.current;
+    hideButtonMessage()
     current.formio.emit("resetForm");
   };
 
   const onSubmitDone = () => {
-    forceTranslate("div[role='alert'] > p", "complete");
+    debugger
+    const translationKey = "Registration successful";
+    forceTranslate("div[role='alert'] > p", translationKey);
 
     setTimeout(() => {
-      forceTranslate("span[ref='buttonMessage']", "complete");
-    }, 1000);
+      showButtonMessage()
+      forceTranslate("span[ref='buttonMessage']", translationKey);
+    }, 200);
     resetForm();
     if (!!formSuccessMessage) {
       setHideForm(true);
     }
     const formResponseRedirect = formResponse.current?.formResponseRedirect
-    if(formResponseRedirect && ["https://", "http://"].some(prefix => formResponseRedirect.startsWith(prefix))) {
-      window.location.href=formResponseRedirect
+    if (formResponseRedirect && ["https://", "http://"].some(prefix => formResponseRedirect.startsWith(prefix))) {
+      window.location.href = formResponseRedirect
     }
   };
 
@@ -238,16 +267,16 @@ export default function CreateForm(currentEvent) {
       )}
 
       {hideForm && formSuccessMessage && (
-          <>
-            <div
-              id="formSuccessMessage"
-              dangerouslySetInnerHTML={{ __html: formSuccessMessage }}
-            />
-          </>
+        <>
+          <div
+            id="formSuccessMessage"
+            dangerouslySetInnerHTML={{ __html: formSuccessMessage }}
+          />
+        </>
       )}
 
       {hideForm && formResponse.current?.formResponseHtml && <div id="formResponseHtml"
-                                                     dangerouslySetInnerHTML={{ __html: formResponse.current.formResponseHtml }} />}
+        dangerouslySetInnerHTML={{ __html: formResponse.current.formResponseHtml }} />}
 
       {!hideForm && (
         <Form

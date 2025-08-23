@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.93.0",
+  "version": "0.94.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.4.1",
     "bootswatch": "^4.4.1",
+    "caniuse-lite": "^1.0.30001737",
     "font-awesome": "^4.7.0",
     "i18next-browser-languagedetector": "2.2.0",
     "linkifyjs": "^2.1.9",
@@ -46,7 +47,10 @@
     "pretty": "yarn prettier . --write"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": "react-app",
+    "globals": {
+      "globalThis": "readonly"
+    }
   },
   "browserslist": {
     "production": [
