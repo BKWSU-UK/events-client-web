@@ -25,7 +25,7 @@ Typically the number for an organisation is an integer like e.g:
 
     2 - London Willesden Green
 
-#### <a name="event_types">Event Types
+#### <a name="event_types">Event Types</a>
 
 Then you must be also know which event types you want to display, like e.g: _course_, _lecture_, etc. The available
 event types on the system are:
@@ -63,25 +63,31 @@ centres of the Brahma Kumaris:
 
 ```html
 <script>
-  window.eventsConfig = {
-    useBodyHiddenOverflow: true,
-    useSimpleLayout: true,
-    orgId: [2], // GCH only
-    eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-    language: "en-GB", // "es" for Spanish also supported now,
-    onlyWebcast: true, // show only webcast events
-    showLocalTime: true,
-    displayWebcastButton: true, // displays the webcast button
-    eventsLimit: 10, // show only one single event,
-    singleEventUrlTemplate:
-      "https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@",
-    suppressBookOnly: true, // Remove the book only button
-    suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-  };
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [2], // This is the organisation ID from EMS
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB", // "es" for Spanish also supported now,
+      showLocalTime: true,
+      showCalendar: false, // whether to show the calendar widget, instead of the list
+      showSingleEvent: false,
+      featured: false, // Show only featured examples
+      displayWebcastButton: false, // displays the webcast button
+      eventsLimit: 200, // show only one single event
+      singleEventUrlTemplate:
+        "https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@",
+      suppressBookOnly: true, // Remove the book only button
+      suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+      fetchEvents: true,
+      rootElement: "my-root", // Corresponds to the element where the widget is going to be injected.
+    },
+  ];
 </script>
-<div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.18.0/loader.js"></script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
 ```
 
 ### Configuration parameters and static parts
@@ -90,35 +96,37 @@ The above script has some parts that cannot be changed and some other parts wher
 Let us start with the **static parts**:
 
 ```html
-<div id="root" class="container-fluid"></div>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/starter.js"></script>
-<script src="https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/loader.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
 ```
 
-Typically you will not need to configure the above HTML. The only thing that might change is the version of
-the plugin which is embedded in the URL of the Javascript files, i.e. _v0.3.0_. If there is a plugin upgrade
-the authors of the plugin might ask you to change this part of the URL.
+Typically you will not need to configure the above HTML. 
 
 The configuration parameters of this plugin are contained in the initial script of the HTML pasted above:
 
 ```html
 <script>
-  window.eventsConfig = {
-    useBodyHiddenOverflow: true,
-    useSimpleLayout: true,
-    orgId: [2], // GCH only
-    eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-    language: "en-GB", // "es" for Spanish also supported now,
-    onlyWebcast: true, // show only webcast events
-    showLocalTime: true,
-    displayWebcastButton: true, // displays the webcast button
-    eventsLimit: 10, // show only 10 events,
-    singleEventUrlTemplate:
-      "https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@",
-    suppressBookOnly: true, // Remove the book only button
-    suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
-    showCalendar: true, // If true displays the calendar view instead of the list view
-  };
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [2], // This is the organisation ID from EMS
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB", // "es" for Spanish also supported now. "en-US" is also available.
+      showLocalTime: true,
+      showCalendar: false, // whether to show the calendar widget, instead of the list
+      showSingleEvent: false,
+      featured: false, // Show only featured examples
+      displayWebcastButton: false, // displays the webcast button
+      eventsLimit: 200, // show only one single event
+      singleEventUrlTemplate:
+        "https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@",
+      suppressBookOnly: true, // Remove the book only button
+      suppressVenue: true, // Hides the venue and add the buttons just right after the text. Works well in simple mode.
+      fetchEvents: true,
+      rootElement: "my-root", // Corresponds to the element where the widget is going to be injected.
+    },
+  ];
 </script>
 ```
 
