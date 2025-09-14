@@ -3,7 +3,7 @@ import EventContext, { ALL_ORG_IDS } from "../../context/EventContext";
 import { useTranslation } from "../../i18n";
 import { extractParameter } from "../../utils/paramExtraction";
 import { fetchOrganisations } from "../../service/dataAccess";
-import { DISPLAY_ORG_FILTER } from "../../context/appParams";
+import { DISPLAY_ORG_FILTER, EVENT_CONFIG } from "../../context/appParams";
 import useLocalStorage from "../../hooks/useLocalStorage";
 
 const KEY_ORG_FILTER = "eventsOrgFilter";
@@ -19,8 +19,9 @@ const CenterFilter = ({
   firstOptionText = "-- Select option --",
 }) => {
   const [orgInfo, setOrgInfo] = useState([]);
-  const [storedValue, setStoredValue] = useLocalStorage(KEY_ORG_FILTER, "");
   const eventContext = useContext(EventContext);
+  const defaultEventsOrgFilter = extractParameter({ ...eventContext }, EVENT_CONFIG.DEFAULT_EVENTS_ORG_FILTER, "");
+  const [storedValue, setStoredValue] = useLocalStorage(KEY_ORG_FILTER, defaultEventsOrgFilter);
   const { orgIdFilter, setOrgIdFilter } = eventContext;
   const { t } = useTranslation();
 

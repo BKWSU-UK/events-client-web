@@ -149,6 +149,7 @@ Please note that the code depicted above is Javascript and so must be syntactica
 |           showCalendar | boolean value which determines, whether the calendar view (_true_) is displayed or not                                                                 |
 |             eventsLang | Code used to filter events by language. Example _en_, _hi_, _es_. The codes follow the ISO 639-1 standard                                              |
 |       displayOrgFilter | If _true_ then the organisation filter is visible otherwise not                                                                                        |
+| defaultEventsOrgFilter | Useful when using the calendar widget to set the initial organisation. See calendar_brasil.html for more options.                                      |
 
 ### CSS Styling
 

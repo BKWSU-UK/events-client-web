@@ -18,6 +18,7 @@ export const EVENT_CONFIG = {
   EVENT_TYPE_IDS: "eventTypeIds",
   INITIAL_PAGE_SIZE: "initialPageSize",
   EVENT_DATE_FORMAT: "dateFormat",
+  DEFAULT_EVENTS_ORG_FILTER: "defaultEventsOrgFilter",
 };
 
 export const LINK_NAME_FUNC = "eventsCalendarFunction";
