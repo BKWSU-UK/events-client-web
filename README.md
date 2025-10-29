@@ -346,31 +346,31 @@ Here are some links which allow to display events using different filters:
 
 - All events in Global Co-operation House:
 
-https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/?orgId=2
+https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2
 
 - All events in Global Co-operation House in English:
 
-https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/?orgId=2&eventsLang=en
+https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=en
 
 - All events in Global Co-operation House in Portuguese:
 
-https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/?orgId=2&eventsLang=pt
+https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=pt
 
 - All events in Global Co-operation House in Hindi:
 
-https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/?orgId=2&eventsLang=hi
+https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=hi
 
 - All events in Global Co-operation House in Spanish:
 
-https://eventswebclient-test-gil.bkwsu.eu/v0.19.0/?orgId=2&eventsLang=es
+https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=es
 
 - Organisation Filter for multiple example (English)
 
-https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_uk_filter.html
+https://eventswebclient-test-gil.bkwsu.eu/latest/examples/event_list_uk_filter.html
 
 - Organisation Filter for multiple example (Portuguese)
 
-https://eventswebclient-test-gil.bkwsu.eu/v0.21.0/examples/event_list_brasil_filter.html
+https://eventswebclient-test-gil.bkwsu.eu/latest/examples/event_list_brasil_filter.html
 
 ### Contacting for support
 
