@@ -340,6 +340,10 @@ https://globalcooperationhouse.org/
 
 https://www.agendas.lam.brahmakumaris.org/agenda-regional-latina/
 
+Here are a good number of examples of how you can use the plugins:
+
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader
+
 ### Live demos
 
 Here are some links which allow to display events using different filters:
