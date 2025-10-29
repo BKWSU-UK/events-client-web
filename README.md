@@ -346,31 +346,31 @@ Here are some links which allow to display events using different filters:
 
 - All events in Global Co-operation House:
 
-https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader/gch.html
 
-- All events in Global Co-operation House in English:
+- All events in Global Co-operation House in house and online:
 
-https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=en
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader/gch_2_col_full.html
 
-- All events in Global Co-operation House in Portuguese:
+- All events in Global Co-operation House in English and Hindi:
 
-https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=pt
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader/gch_events_english_hindi.html
 
-- All events in Global Co-operation House in Hindi:
+- Composite calendar for Germany:
 
-https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=hi
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader/gch_events_english_hindi.html
 
-- All events in Global Co-operation House in Spanish:
+- German events as tiles:
 
-https://eventswebclient-test-gil.bkwsu.eu/latest/?orgId=2&eventsLang=es
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader/germany_tiles.html
 
-- Organisation Filter for multiple example (English)
+- GRC / GCH Infinite Tiles:
 
-https://eventswebclient-test-gil.bkwsu.eu/latest/examples/event_list_uk_filter.html
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader/grc_gch_infinite_tiles.html
 
-- Organisation Filter for multiple example (Portuguese)
+- Events Slider
 
-https://eventswebclient-test-gil.bkwsu.eu/latest/examples/event_list_brasil_filter.html
+https://eventswebclient-test-gil.bkwsu.eu/latest/loader/germany_slider.html
 
 ### Contacting for support
 
