@@ -47,7 +47,7 @@ export default function LanguageDropDown(props) {
             }}>
                 <option value={DEFAULT_LANGUAGE}>{t("lang_All")}</option>
                 {data.map((language) => (
-                    <option key={`language_${language.iso_639_1_code}`} value={language.iso_639_1_code}>{t(`lang_${language.name}`)}</option>
+                    <option key={`language_${language.iso_639_1_code}`} value={language.iso_639_1_code}>{t(`lang_${language.name}`)} ({language.count})</option>
                 ))}
             </select>
         </LoadingPlaceHolder>
