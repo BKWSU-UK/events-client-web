@@ -156,7 +156,7 @@ li > .splide__pagination__page.is-active {
 }
 
 div.rbc-toolbar > span:nth-child(1) {
-  display: none;
+  display: flex;
 }
 
 .btn.calendar-category-selector {

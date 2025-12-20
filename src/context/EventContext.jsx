@@ -9,6 +9,8 @@ export const ALL_ORG_IDS = -1;
 
 const INITIAL_PAGE_SIZE = 14;
 
+export const DEFAULT_LANGUAGE = "All";
+
 /**
  * Extracts the filters for the event list
  * @param props Used also for parameter extraction
@@ -53,6 +55,7 @@ export const ACTIONS = {
   SET_TAGS: "SET_TAGS",
   SET_NO_TAGS: "SET_NO_TAGS",
   TOGGLE_TAGS: "TOGGLE_TAGS",
+  SET_LANGUAGE_CODE: "SET_LANGUAGE_CODE",
 };
 
 const filterReducer = (state, action) => {
@@ -84,6 +87,11 @@ const filterReducer = (state, action) => {
         selectedTag: tagState ? state.selectedTag : null,
         activateTags: tagState,
       };
+    case ACTIONS.SET_LANGUAGE_CODE:
+      return {
+        ...state,
+        languageCode: action.payload.languageCode,
+      };
     default:
       return state;
   }
@@ -100,6 +108,7 @@ export const EventContextProvider = ({ children, eventsConfig }) => {
     tags: [],
     noTags: [],
     activateTags: true,
+    languageCode: DEFAULT_LANGUAGE
   });
 
   return (

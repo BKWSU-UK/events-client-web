@@ -1,6 +1,6 @@
 {
   "name": "events-client-web",
-  "version": "0.95.0",
+  "version": "0.97.0",
   "private": true,
   "homepage": "./",
   "dependencies": {
@@ -23,7 +23,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.31",
     "react": "^18.3.1",
-    "react-big-calendar": "^0.32.0",
+    "react-big-calendar": "^0.40.8",
     "react-bootstrap": "^1.0.0-beta.16",
     "react-device-detect": "^2.2.2",
     "react-dom": "^18.3.1",

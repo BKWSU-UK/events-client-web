@@ -6,12 +6,10 @@ import {
   useTable,
 } from "react-table";
 import styled from "styled-components";
-import { Pager } from "./table/Pager";
 import { withRouter } from "react-router-dom";
 import EventDisplay from "./EventDisplay";
 import FormModal from "./forms/FormModal";
 import ReadMoreModal from "./readMore/ReadMore";
-import GlobalFilter from "./filter/GlobalFilter";
 import { useTranslation } from "../i18n";
 import EventContext, {
   extractEventListParameters,
@@ -23,8 +21,8 @@ import { eventMap } from "../service/dataAccessConstants";
 import TagsFilter from "./filter/TagsFilter";
 import LoadingPlaceHolder from "./loading/LoadingPlaceHolder";
 import useOrganisationEvents from "../hooks/useOrganisationEvents";
-import { EVENT_CONFIG } from "../context/appParams";
 import TableFilterPager from "./table/TableFilterPager";
+import LanguageDropDown from "./languageFilter/LanguageDropDown";
 
 function EventTableStruct({ columns, params, show }) {
   const { events, eventContext, data, isLoading, error } =
@@ -56,6 +54,7 @@ function EventTableStruct({ columns, params, show }) {
       <OnlineFilter />
       <TagsFilter />
       <CenterFilter />
+      <LanguageDropDown props={params} />
       <LoadingPlaceHolder data={data} isLoading={isLoading} error={error}>
         <table
           {...getTableProps()}

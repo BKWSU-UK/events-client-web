@@ -1,5 +1,5 @@
 import { extractParameter } from "../utils/paramExtraction";
-import { ALL_ORG_IDS } from "../context/EventContext";
+import { ALL_ORG_IDS, DEFAULT_LANGUAGE } from "../context/EventContext";
 import { SERVER_BASE } from "../apiConstants";
 import { DISPLAY_ONLINE_FILTER } from "../context/appParams";
 import { ONLINE_STATUSES } from "../context/onlineStates";
@@ -183,6 +183,14 @@ export const appendDates = ({
   return targetUrl;
 };
 
+function processSelectedLanguage(targetUrl, eventContext) {
+  const languageCode = eventContext?.filterState?.languageCode;
+  if (languageCode && languageCode !== DEFAULT_LANGUAGE) {
+    targetUrl += `&lang=${languageCode}`;
+  }
+  return targetUrl;
+}
+
 export const targetUrlFactory = (params) => {
   const {
     orgIdStr,
@@ -230,6 +238,7 @@ export const targetUrlFactory = (params) => {
     exactStartDate,
     startDateLimit,
   });
+  targetUrl = processSelectedLanguage(targetUrl, eventContext);
   return targetUrl;
 };
 
@@ -383,6 +392,15 @@ export async function fetchEventFormResponse(eventId){
     return {}
   }
   const targetUrl = `${SERVER_BASE}/events/formredirect-event?eventId=${eventId}`;
+  const response = await fetch(targetUrl);
+  return await response.json();
+}
+
+export async function fetchLanguages(orgId) {
+  if(!orgId) {
+    return [];
+  }
+  const targetUrl = `${SERVER_BASE}/events/used-languages/${orgId}`;
   const response = await fetch(targetUrl);
   return await response.json();
 }
