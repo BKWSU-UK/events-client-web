@@ -400,6 +400,12 @@ export async function fetchLanguages(orgId) {
   if(!orgId) {
     return [];
   }
+  if(Array.isArray(orgId) && orgId.length > 0) {
+    orgId = orgId[0];
+  }
+  else {
+    return []
+  }
   const targetUrl = `${SERVER_BASE}/events/used-languages/${orgId}`;
   const response = await fetch(targetUrl);
   return await response.json();

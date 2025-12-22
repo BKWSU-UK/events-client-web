@@ -393,3 +393,9 @@ compile.bat
 ```
 
 This will produce the bundle in the `dist` folder and the examples in the `examples` folder.
+
+### Compiling the project
+
+If you want to compile the project you can run the compile.bat file on the root folder of the project.
+
+This will produce two files in the dist folder: build.zip and examples.dist which you can use for deployment.

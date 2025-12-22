@@ -22,10 +22,11 @@ export default function LanguageDropDown(props) {
             orgIdFilter
         ],
         queryFn: () => {
+            console.info("fetchLanguages", orgIdFilter, orgId);
             if (!!orgIdFilter && orgIdFilter > 0) {
                 return fetchLanguages(orgIdFilter);
             } else if (orgId) {
-                return fetchLanguages(orgIdFilter);
+                return fetchLanguages(orgId);
             } else {
                 return [];
             }
