@@ -24,6 +24,7 @@ import InfiniteTiles from "./components/infiniteTiles/InfiniteTiles";
 import InfiniteTilesParent from "./components/infiniteTiles/InfiniteTilesParent";
 import EventSession from "./components/singleEventSession/EventSession";
 import ExtendedSingleEventSession from "./components/singleEventSession/ExtendedSingleEventSession";
+import GlobalLanguageSwitch from "./components/languageFilter/GlobalLanguageSwitch";
 
 // Create a client
 const queryClient = new QueryClient({
@@ -48,6 +49,7 @@ const WIDGET_TYPE = {
   EVENT_COUNT_DOWN: "EVENT_COUNT_DOWN",
   IMAGE_BANNER: "IMAGE_BANNER",
   INFINITE_TILES: "INFINITE_TILES",
+  GLOBAL_LANGUAGE_FILTER: "GLOBAL_LANGUAGE_FILTER",
 };
 
 const chooseComponent = (eventsConfig) => {
@@ -82,6 +84,8 @@ const chooseComponent = (eventsConfig) => {
       return <ImageBanner />;
     case WIDGET_TYPE.INFINITE_TILES:
       return <InfiniteTilesParent />;
+    case WIDGET_TYPE.GLOBAL_LANGUAGE_FILTER:
+      return <GlobalLanguageSwitch />;
     default:
       // Legacy configurations
       if (eventsConfig?.showForm) {
@@ -141,6 +145,9 @@ function App({ eventsConfig }) {
             </Route>
             <Route path="/infinite-tiles">
               <InfiniteTiles />
+            </Route>
+            <Route path="/global-language-filter">
+              <GlobalLanguageSwitch />
             </Route>
             <Route path="/">{chooseComponent(eventsConfig)}</Route>
           </Switch>

@@ -1,11 +1,10 @@
-import { useQuery } from "@tanstack/react-query";
 import { useContext } from "react";
 import EventContext, { ACTIONS, extractEventListParameters } from "../../context/EventContext";
-import { fetchLanguages } from "../../service/dataAccess";
 import LoadingPlaceHolder from "../loading/LoadingPlaceHolder";
 import { useTranslation } from "../../i18n";
 
 import { DEFAULT_LANGUAGE } from "../../context/EventContext";
+import useFetchLanguage from "../../hooks/useFetchLanguage";
 
 export default function LanguageDropDown(props) {
 
@@ -15,24 +14,7 @@ export default function LanguageDropDown(props) {
     const { orgIdFilter, eventsConfig } = eventContext;
     const { t } = useTranslation();
 
-    const { isLoading, error, data } = useQuery({
-        queryKey: [
-            `language`,
-            orgId,
-            orgIdFilter
-        ],
-        queryFn: () => {
-            console.info("fetchLanguages", orgIdFilter, orgId);
-            if (!!orgIdFilter && orgIdFilter > 0) {
-                return fetchLanguages(orgIdFilter);
-            } else if (orgId) {
-                return fetchLanguages(orgId);
-            } else {
-                return [];
-            }
-        },
-    });
-
+    const { isLoading, error, data } = useFetchLanguage({ orgId, orgIdFilter });
 
     if(!eventsConfig?.showLanguageFilter || !data) {
         return null;
