@@ -1,8 +1,10 @@
 import useLocalStorage from "./useLocalStorage";
 
-const GLOBAL_LANGUAGE_KEY = "ems_global_language";
+export const GLOBAL_LANGUAGE_KEY = "ems_global_language";
+
+export const DEFAULT_LANGUAGE = "en";
 
 export default function useGlobalLanguage() {
-    const [globalLanguage, setGlobalLanguage] = useLocalStorage(GLOBAL_LANGUAGE_KEY, "en");
-    return { globalLanguage: globalLanguage || "en", setGlobalLanguage };
+    const [globalLanguage, setGlobalLanguage] = useLocalStorage(GLOBAL_LANGUAGE_KEY, DEFAULT_LANGUAGE);
+    return { globalLanguage: globalLanguage || DEFAULT_LANGUAGE, setGlobalLanguage };
 }

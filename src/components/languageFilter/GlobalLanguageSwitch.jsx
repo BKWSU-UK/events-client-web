@@ -35,7 +35,7 @@ function LanguageButton({languageCode, language, currentLanguage}) {
     const isActive = currentLanguage === languageCode;
     return (
         <button
-            className={`ems-language-button btn btn-primary mb-2 w-100 ${isActive ? "btn-danger" : ""}`}
+            className={`ems-language-button btn btn-primary mb-1 w-100 ${isActive ? "btn-danger" : ""}`}
             onClick={() => {
                 if (window.eventsConfig) window.eventsConfig.languageCode = languageCode;
             }}
@@ -64,15 +64,10 @@ export default function GlobalLanguageSwitch() {
     }, []);
 
     return (
-    <div className="language-switch-container container w-100">
+    <div className="language-switch-container w-100 mt-2 mb-3">
         <LanguageButton 
             languageCode="en"
             language="English"
-            currentLanguage={globalLanguage}
-        />
-        <LanguageButton 
-            languageCode="hi"
-            language="Hindi"
             currentLanguage={globalLanguage}
         />
         <label htmlFor="language-dropdown" style={{ fontWeight: "bold", marginBottom: "8px", display: "block" }}>

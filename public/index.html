@@ -1,21 +1,19 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
+
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="Web site created using create-react-app" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <!--
       manifest.json provides metadata used when your web app is installed on a
       user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
     -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
+  <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!--
       Notice the use of %PUBLIC_URL% in the tags above.
       It will be replaced with the URL of the `public` folder during the build.
       Only files inside the `public` folder can be referenced from the HTML.
@@ -24,84 +22,130 @@
       work correctly both with client-side routing and a non-root public URL.
       Learn how to configure a non-root public URL by running `npm run build`.
     -->
-    <style>
+  <style>
+    .flexContainer {
+      display: flex;
+      flex-flow: wrap;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+    }
+
+    @media (min-width: 1024px) {
       .flexContainer {
-        display: flex;
-        flex-flow: wrap;
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: center;
+        flex-direction: row;
       }
 
-      @media (min-width: 1024px) {
-        .flexContainer {
-          flex-direction: row;
-        }
-        .full {
-          max-width: 100%;
-        }
+      .full {
+        max-width: 100%;
       }
+    }
 
-      #emsRoot1 {
-        margin-top: 2rem;
+    #emsRoot1 {
+      margin-top: 2rem;
+    }
+
+    #emsRoot1 div.rbc-toolbar>span:nth-child(1) {
+      display: flex;
+    }
+  </style>
+  <title>Events</title>
+</head>
+
+<body>
+  <noscript>You need to enable JavaScript to run this app.</noscript>
+  <script>
+    const generateSocialMedialUrl = (e) => `https://globalcooperationhouse.org/whatson-full/singleevent/${e.id}`
+    window.eventsConfig = [
+      {
+        // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, EXTENDED_SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES,
+        // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR, IMAGE_BANNER, INFINITE_TILES
+        widgetType: "GLOBAL_LANGUAGE_FILTER",
+        orgId: [2], // GCH only
+        eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15,17",
+        hideSocial: true,
+        language: "en-GB", // Portuguese Brasil "pt-BR"
+        onlyWebcast: false, // show only webcast events
+        rootElement: "langRoot"
+      },
+      {
+        id: 1,
+        widgetType: "TABLE",
+        useBodyHiddenOverflow: false,
+        useSimpleLayout: true,
+        orgId: [2],
+        eventTypeIds: '1,2,4,5,6,7,8,9,10',
+        // onlyWebcast: true,
+        // onlineOnly: "no",
+        language: 'en-GB',
+        showLocalTime: true,
+        displayWebcastButton: true,
+        eventsLimit: 7,
+        showCalendar: false,
+        showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
+        specialIpadLink: "https://eventswebclient-test-gil.bkwsu.eu/v0.50.0/loader/single_event.html?eventId=@@eventDateId@@",
+        singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
+        suppressBookOnly: true,
+        suppressVenue: true,
+        hideSocial: true,
+        showSimilarEvents: true,
+        onlineOnly: 'yes',
+        // eventsLang: "en", // Language filter,
+        rootElement: 'emsRoot1',
+        displayOrgFilter: false,
+        fetchEvents: true, // Prevents initial event fetching
+        useAllOrgIds: false, // If true does never display all events for all organisations
+        generateSocialMedialUrl
+      },
+      {
+        id: 2,
+        widgetType: "TABLE",
+        useBodyHiddenOverflow: false,
+        useSimpleLayout: true,
+        orgId: [2],
+        eventTypeIds: '1,2,4,5,6,7,8,9,10',
+        // onlyWebcast: true,
+        // onlineOnly: "no",
+        language: 'en-GB',
+        showLocalTime: true,
+        displayWebcastButton: true,
+        eventsLimit: 7,
+        showCalendar: false,
+        showSingleEvent: false, // Displays just a single event which needs to be specified in the URL
+        specialIpadLink: "https://eventswebclient-test-gil.bkwsu.eu/v0.50.0/loader/single_event.html?eventId=@@eventDateId@@",
+        singleEventUrlTemplate: 'https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@',
+        suppressBookOnly: true,
+        suppressVenue: true,
+        hideSocial: true,
+        showSimilarEvents: true,
+        // eventsLang: "en", // Language filter,
+        rootElement: 'emsRoot2',
+        onlyWebcast: false,
+        onlineOnly: 'no',
+        displayOrgFilter: false,
+        fetchEvents: true, // Prevents initial event fetching
+        useAllOrgIds: true, // If true does never display all events for all organisations
+        generateSocialMedialUrl
       }
+    ];
+  </script>
 
-      #emsRoot1 div.rbc-toolbar > span:nth-child(1) {
-        display: flex;
-      }
-    </style>
-    <title>Events</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <script>
-      window.eventsConfig = [
-        {
-          useBodyHiddenOverflow: false,
-          useSimpleLayout: true,
-          orgId: [2], // GCH only
-          defaultEventsOrgFilter: "231",
-          eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15,17",
-          // Possible values: TABLE, CALENDAR, SINGLE_EVENT, SINGLE_EVENT_SESSION, EXTENDED_SINGLE_EVENT_SESSION, FORM, COMPOSITE_CALENDAR, SLIDER, TILES,
-          // EVENT_COUNT_DOWN, EVENTS_MONTH_CALENDAR, IMAGE_BANNER, INFINITE_TILES
-          widgetType: "TABLE",
-          hideSocial: true,
-          language: "en-GB", // Portuguese Brasil "pt-BR"
-          onlyWebcast: false, // show only webcast events
-          showLocalTime: true,
-          displayWebcastButton: true,
-          showCalendar: false, // If true displays the calendar view instead of the list view
-          eventsLimit: 100, // show only one single event
-          fetchEvents: true,
-          displayOrgFilter: true,
-          rootElement: "emsRoot",
-          eventsCalendarFunction: (event) => {
-            return `https://www.globalretreatcentre.org/ems-events-session?eventSessionId=${event.eventDateId}&title=${encodeURIComponent(event.name)}&image=${encodeURIComponent(event.image2 ?? event.image1)}&startDateTime=${event.startIso}&endDateTime=${event.endIso}`;
-          },
-          imageBanner_selectedPositions: [0, 1, 2, 3],
-          imageBanner_imagePosition_mobile: 1,
-          imageBanner_imagePosition: 4,
-          formSuccessMessage: `<h2>The form has been successfully submitted. Many thanks.</h2>`,
-          showLanguageFilter: true,
-          randomImages: [
-            "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
-            "https://res.cloudinary.com/gilf/image/upload/v1653062227/daria_nepriakhina_t_H7e_Yi6p23s_unsplash_1_20e3643aa9.jpg",
-            "https://res.cloudinary.com/gilf/image/upload/v1650267257/2_Header_Supreme_Soul_d61f1cf34d.jpg",
-            "https://res.cloudinary.com/gilf/image/upload/v1652704232/marcos_paulo_prado_6_N_Dg_L_Cd_Rjd_U_unsplash_46692efb30.jpg",
-            "https://res.cloudinary.com/gilf/image/upload/v1651234118/Gift_Peace_Header_5bdd7ff68d.jpg",
-            "https://res.cloudinary.com/gilf/image/upload/v1651129852/Outside_In_Inside_Out_Header_05a9836680.jpg",
-            "https://res.cloudinary.com/gilf/image/upload/v1648836367/dingzeyu_li_ie8_WW_5_K_Ux3o_unsplash_a7c1e0a55d.jpg",
-          ],
-        },
-      ];
-    </script>
-
-    <div class="flexContainer">
-      <div class="container-fluid full">
-        <div id="emsRoot"></div>
+  <div class="flexContainer">
+    <div class="container-fluid full">
+      <div id="langRoot"></div>
+      <div class="row">
+        <div class="col-12 col-lg-6">
+          <h1>Online</h1>
+          <div id="emsRoot1"></div>
+        </div>
+        <div class="col-12 col-lg-6">
+          <h1>In House</h1>
+          <div id="emsRoot2"></div>
+        </div>
       </div>
     </div>
-    <!--
+  </div>
+  <!--
   This HTML file is a template.
   If you open it directly in the browser, you will see an empty page.
 
@@ -111,5 +155,6 @@
   To begin the development, run `npm start` or `yarn start`.
   To create a production bundle, use `npm run build` or `yarn build`.
 -->
-  </body>
+</body>
+
 </html>

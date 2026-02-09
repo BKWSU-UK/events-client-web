@@ -2,6 +2,7 @@ import React, { createContext, useReducer, useState } from "react";
 import { extractParameter } from "../utils/paramExtraction";
 import { ONLINE_STATUSES } from "./onlineStates";
 import { EVENT_CONFIG } from "./appParams";
+import { GLOBAL_LANGUAGE_KEY } from "../hooks/useGlobalLanguage";
 
 export const EVENTS_LANG = "eventsLang";
 
@@ -108,7 +109,7 @@ export const EventContextProvider = ({ children, eventsConfig }) => {
     tags: [],
     noTags: [],
     activateTags: true,
-    languageCode: DEFAULT_LANGUAGE
+    languageCode: JSON.parse(localStorage.getItem(GLOBAL_LANGUAGE_KEY)) ?? DEFAULT_LANGUAGE
   });
 
   return (
