@@ -83,6 +83,7 @@ export default function GlobalLanguageSwitch() {
                     if (window.eventsConfig) window.eventsConfig.languageCode = e.target.value;
                 }}
             >
+                <option key="all" value={null}>{t("lang_All")}</option>
                 {data?.map((language) => (
                     <option key={`language_${language.iso_639_1_code}`} value={language.iso_639_1_code}>{t(`lang_${language.name}`)} ({language.count})</option>
                 ))}

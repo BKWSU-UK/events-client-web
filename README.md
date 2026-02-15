@@ -132,24 +132,148 @@ The configuration parameters of this plugin are contained in the initial script 
 
 Please note that the code depicted above is Javascript and so must be syntactically correct.
 
-|                   name | description                                                                                                                                            |
-| ---------------------: | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-|  useBodyHiddenOverflow | boolean value that switches off or on the vertical scrollbar when the event detail or registration form are displayed. Default is _false_              |
-|        useSimpleLayout | boolean value which determines if the event description contains HTML or is simple text. _false_ means HTML is used                                    |
-|                  orgId | The organisation ID as a Javascript array. You must have at least one. Please see the [Organisation Id](#org_ids) chapter on this page                 |
-|           eventTypeIds | The id's of the event types you want to display. Please see the [Event Types](#event_types) chapter on this page                                       |
-|               language | The language of the user interface. Currently only three codes are supported: _en-GB_ (British English), _en-US_ (American English) and _es_ (Spanish) |
-|            onlyWebcast | boolean value that allows to display only webcast events in case it is _true_. Else it displays all events                                             |
-|          showLocalTime | boolean value that controls whether the date is displayed in local time (_true_) or not (_false_)                                                      |
-|   displayWebcastButton | boolean value that controls whether webcast button is displayed (_true_) or not (_false_)                                                              |
-|            eventsLimit | integer value with the number of events which are to be displayed                                                                                      |
-| singleEventUrlTemplate | URL with the link template of the external single event page. This is an optional parameter, but must include the _@@eventDateId@@_ token              |
-|       suppressBookOnly | boolean value which determines, whether the booking only value is hidden or not                                                                        |
-|          suppressVenue | boolean value which determines, whether the venue of the events is displayed or not                                                                    |
-|           showCalendar | boolean value which determines, whether the calendar view (_true_) is displayed or not                                                                 |
-|             eventsLang | Code used to filter events by language. Example _en_, _hi_, _es_. The codes follow the ISO 639-1 standard                                              |
-|       displayOrgFilter | If _true_ then the organisation filter is visible otherwise not                                                                                        |
-| defaultEventsOrgFilter | Useful when using the calendar widget to set the initial organisation. See calendar_brasil.html for more options.                                      |
+### eventsConfig Parameters Reference
+
+This section documents all parameters that can be used in the `eventsConfig` object (or each object in the `window.eventsConfig` array when using multiple widgets on one page).
+
+#### Core Parameters
+
+| Parameter     | Type        | Default | Description                                                                                                                                                    |
+| :------------ | :---------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `rootElement` | string      | —       | **Required.** The DOM element ID where the widget will be injected. Must correspond to an existing element, e.g. `<div id="my-root">`.                          |
+| `orgId`       | number[]    | —       | **Required.** Array of organisation IDs from EMS. See [Organisation Id](#org_ids).                                                                              |
+| `eventTypeIds`| string      | —       | Comma-separated event type IDs to display. See [Event Types](#event_types).                                                                                     |
+| `id`          | number      | auto    | Unique identifier for the config when using multiple widgets. Auto-assigned from array index if omitted.                                                        |
+
+#### Widget Selection
+
+| Parameter                | Type    | Default | Description                                                                                                                                                    |
+| :----------------------- | :------ | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `widgetType`             | string  | TABLE   | Widget to display. Values: `TABLE`, `CALENDAR`, `EVENTS_MONTH_CALENDAR`, `SINGLE_EVENT`, `SINGLE_EVENT_SESSION`, `EXTENDED_SINGLE_EVENT_SESSION`, `FORM`, `COMPOSITE_CALENDAR`, `SLIDER`, `TILES`, `EVENT_COUNT_DOWN`, `IMAGE_BANNER`, `INFINITE_TILES`, `GLOBAL_LANGUAGE_FILTER`. |
+| `showCalendar`           | boolean | false   | (Legacy) If true, displays calendar view instead of list.                                                                                                      |
+| `showSingleEvent`        | boolean | false   | (Legacy) Displays a single event (requires URL parameter).                                                                                                     |
+| `showCompositeCalendar`  | boolean | false   | (Legacy) Displays the composite calendar widget.                                                                                                               |
+| `showForm`               | boolean | false   | (Legacy) Displays the registration form widget.                                                                                                                |
+
+#### Layout & Display
+
+| Parameter              | Type    | Default | Description                                                                                                                                                    |
+| :--------------------- | :------ | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `useBodyHiddenOverflow`| boolean | false   | Hides the vertical scrollbar when the event detail or registration form overlay is displayed.                                                                  |
+| `useSimpleLayout`      | boolean | —       | If true, event descriptions use simple text. If false, HTML is used.                                                                                           |
+| `showLocalTime`        | boolean | —       | If true, dates and times are displayed in the user's local timezone.                                                                                           |
+| `suppressVenue`        | boolean | —       | If true, hides the venue. Buttons appear right after the text (works well in simple mode).                                                                     |
+| `suppressBookOnly`     | boolean | —       | If true, hides the "book only" button.                                                                                                                         |
+| `displayWebcastButton` | boolean | —       | If true, displays the webcast button for events that support it.                                                                                               |
+| `hideSearch`           | boolean | —       | If true, hides the search box.                                                                                                                                 |
+| `hidePager`            | boolean | —       | If true, hides the pager.                                                                                                                                      |
+| `hideTime`             | boolean | false   | If true, hides the time in the date widget.                                                                                                                    |
+| `hideSocial`           | boolean | —       | If true, hides social media share icons.                                                                                                                       |
+| `showSimilarEvents`    | boolean | —       | If true, shows similar events section.                                                                                                                         |
+| `showGoogleCalendarIcon` | boolean | —     | If true, shows the Google Calendar icon.                                                                                                                       |
+| `showYear`             | boolean | —       | If true, shows the year in the events month calendar.                                                                                                          |
+| `pageSize`             | number  | 10      | Number of events per page in the table view.                                                                                                                   |
+| `initialPageSize`      | number  | 14      | Initial page size for event lists.                                                                                                                             |
+| `dateFormat`           | string  | —       | Custom date format string.                                                                                                                                     |
+| `tileMaxLinkLength`    | number  | —       | Maximum length for links in composite calendar tiles.                                                                                                          |
+
+#### Data Fetching & Filtering
+
+| Parameter              | Type            | Default | Description                                                                                                                                                    |
+| :--------------------- | :-------------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `fetchEvents`          | boolean         | —       | If true, fetches events on load.                                                                                                                               |
+| `eventsLimit`          | number          | 10000   | Maximum number of events to fetch and display.                                                                                                                 |
+| `featured`             | boolean         | null    | If true, shows only featured events.                                                                                                                           |
+| `eventsLang`           | string          | null    | Filters events by language (ISO 639-1), e.g. `en`, `hi`, `es`.                                                                                                 |
+| `onlyWebcast`          | boolean         | false   | If true, shows only webcast events.                                                                                                                            |
+| `onlineOnly`           | boolean         | false   | If true, shows only online events.                                                                                                                             |
+| `hasRegistration`      | boolean         | false   | Filters events by registration availability.                                                                                                                   |
+| `private`              | boolean/string  | false   | Include private events. Use `"all"` to show all private events.                                                                                                |
+| `tags`                 | string[]        | —       | Filter events by tags.                                                                                                                                         |
+| `noTags`               | string[]        | —       | Exclude events with these tags.                                                                                                                                |
+| `tagsOperator`         | string          | —       | Use `"AND"` to require all tags to match.                                                                                                                      |
+| `displayOnlineFilter`  | boolean         | —       | If true, shows the online/in-person filter. (Set automatically by composite calendar adapter.)                                                                 |
+| `displayOrgFilter`     | boolean         | —       | If true, shows the organisation filter dropdown.                                                                                                               |
+| `defaultEventsOrgFilter` | string        | —       | Default organisation ID for the calendar widget when multiple orgs are configured.                                                                             |
+| `useAllOrgIds`         | boolean         | false   | If true, fetches and displays events from all organisations in `orgId` when no specific filter is selected.                                                    |
+
+#### Single Event & Links
+
+| Parameter                | Type     | Default | Description                                                                                                                                                    |
+| :----------------------- | :------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `singleEventUrlTemplate` | string   | —       | URL template for single event pages. Must include `@@eventDateId@@` placeholder.                                                                               |
+| `specialIpadLink`        | string   | —       | Special link for iPad.                                                                                                                                         |
+| `eventsCalendarFunction` | function | —       | Custom function `(event) => url` to generate event detail links. Pass `null` to disable links.                                                                 |
+| `upcomingDateLimit`      | number   | —       | Limit for upcoming dates shown.                                                                                                                                |
+
+#### Language
+
+| Parameter           | Type    | Default | Description                                                                                                                                                    |
+| :------------------ | :------ | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `language`          | string  | "All"   | UI language. Supported: `en-GB`, `en-US`, `es`, `pt-BR`, `de`, etc.                                                                                            |
+| `staticLanguageCode`| boolean | —       | If true, uses the configured language and ignores localStorage (no user language switching).                                                                   |
+| `showLanguageFilter`| boolean | —       | If true, shows the language filter dropdown (for filtering events by language).                                                                                |
+
+#### Images
+
+| Parameter                | Type   | Default | Description                                                                                                                                                    |
+| :----------------------- | :----- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `randomImages`           | string[] | —     | Array of image URLs used as fallback when an event has no image.                                                                                               |
+| `calendarDayImage`       | string | —       | Custom image for the calendar day icon.                                                                                                                        |
+| `calendarTimeImage`      | string | —       | Custom image for the calendar time icon.                                                                                                                       |
+| `calendarEventTypeImage` | string | —       | Custom image for the event type icon.                                                                                                                          |
+| `facebookShareImage`     | string | —       | Custom image for Facebook share button.                                                                                                                        |
+| `twitterShareImage`      | string | —       | Custom image for Twitter share button.                                                                                                                         |
+| `mailShareImage`         | string | —       | Custom image for email share button.                                                                                                                           |
+| `shivaStarImage`         | string | —       | Custom Shiva star image.                                                                                                                                       |
+| `singleEventShowImage1`  | boolean | —     | Show image 1 in single event view.                                                                                                                             |
+| `singleEventShowImage2`  | boolean | —     | Show image 2 in single event view.                                                                                                                             |
+| `singleEventShowImage3`  | boolean | —     | Show image 3 in single event view.                                                                                                                             |
+| `singleEventShowImage4`  | boolean | —     | Show image 4 in single event view.                                                                                                                             |
+
+#### Image Banner Widget
+
+| Parameter                       | Type    | Default | Description                                                                                                                                                    |
+| :------------------------------ | :------ | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `imageBanner_selectedPositions` | number[]| —       | Indices of which events (0–4, etc.) to display in the banner.                                                                                                  |
+| `imageBanner_imagePosition`     | number  | 1       | Which event image (1–4) to use for the banner on desktop.                                                                                                      |
+| `imageBanner_imagePosition_mobile` | number | —    | Which event image to use for the banner on mobile.                                                                                                             |
+
+#### Event Countdown Widget
+
+| Parameter                  | Type   | Default | Description                                                                                                                                                    |
+| :------------------------- | :----- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `eventCountDownTimezone`   | string | —       | Timezone for the countdown (e.g. `Europe/Berlin`).                                                                                                             |
+| `eventCountDownCountries`  | string | —       | Comma-separated country names for finding next events.                                                                                                         |
+| `eventCountDownStyle`      | string | —       | Use `"ANIMATED"` for animated countdown style.                                                                                                                 |
+
+#### Composite Calendar
+
+| Parameter                      | Type    | Default | Description                                                                                                                                                    |
+| :----------------------------- | :------ | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `compositeCalendar_showWeek`   | boolean | —       | If true, shows the week view.                                                                                                                                  |
+| `compositeCalendar_showDay`    | boolean | —       | If true, shows the day view.                                                                                                                                   |
+| `compositeCalendar_showImageCards` | boolean | —  | If true, shows image cards.                                                                                                                                    |
+
+#### Forms
+
+| Parameter                 | Type     | Default | Description                                                                                                                                                    |
+| :------------------------ | :------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `formSuccessMessage`      | string   | —       | Custom success message after form submission.                                                                                                                  |
+| `showMissingFields`       | boolean  | —       | If true, shows missing required fields.                                                                                                                        |
+| `hideEventDate`           | boolean  | false   | If true, hides the event date in the form.                                                                                                                     |
+| `showShortDescription`    | boolean  | —       | If true, shows a short description in the form.                                                                                                                |
+| `customNoMoreSeatsMessage`| function | —       | Custom function `(currentEvent) => htmlString` for overbooked/sold-out message.                                                                                |
+
+#### Social & Custom Functions
+
+| Parameter               | Type     | Default | Description                                                                                                                                                    |
+| :---------------------- | :------- | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `generateSocialMedialUrl` | function | —     | Function `(event) => url` to generate the URL used for social sharing.                                                                                         |
+| `generateHashtag`       | function | —       | Function to generate hashtag for social sharing. Default: `"brahmakumaris"`.                                                                                    |
+| `hasWebcastFunc`        | function | —       | Custom function `(event) => boolean` to determine if an event has webcast. Overrides default `hasWebcast` logic.                                                |
+| `searchFilterFunction`  | function | —       | Custom function to filter events in search results.                                                                                                            |
+| `eventSliceFunction`    | function | —       | Custom function to slice/limit the event list.                                                                                                                 |
 
 ### CSS Styling
 

@@ -233,7 +233,6 @@ export default function CreateForm(currentEvent) {
   };
 
   const onSubmitDone = () => {
-    debugger
     const translationKey = "Registration successful";
     forceTranslate("div[role='alert'] > p", translationKey);
 

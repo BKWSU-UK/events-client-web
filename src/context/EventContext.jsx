@@ -89,6 +89,9 @@ const filterReducer = (state, action) => {
         activateTags: tagState,
       };
     case ACTIONS.SET_LANGUAGE_CODE:
+      if(state.staticLanguageCode) {
+        return state;
+      }
       return {
         ...state,
         languageCode: action.payload.languageCode,
@@ -97,6 +100,14 @@ const filterReducer = (state, action) => {
       return state;
   }
 };
+
+function chooseLanguageCode(eventsConfig) {
+  const language = eventsConfig.language || DEFAULT_LANGUAGE;
+  if(eventsConfig.staticLanguageCode) {
+    return language;
+  }
+  return JSON.parse(localStorage.getItem(GLOBAL_LANGUAGE_KEY)) ?? language;
+}
 
 export const EventContextProvider = ({ children, eventsConfig }) => {
   const [events, setEvents] = useState([]);
@@ -109,7 +120,8 @@ export const EventContextProvider = ({ children, eventsConfig }) => {
     tags: [],
     noTags: [],
     activateTags: true,
-    languageCode: JSON.parse(localStorage.getItem(GLOBAL_LANGUAGE_KEY)) ?? DEFAULT_LANGUAGE
+    languageCode: chooseLanguageCode(eventsConfig),
+    staticLanguageCode: eventsConfig.staticLanguageCode,
   });
 
   return (
