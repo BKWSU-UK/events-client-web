@@ -208,11 +208,12 @@ This section documents all parameters that can be used in the `eventsConfig` obj
 
 #### Language
 
-| Parameter           | Type    | Default | Description                                                                                                                                                    |
-| :------------------ | :------ | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `language`          | string  | "All"   | UI language. Supported: `en-GB`, `en-US`, `es`, `pt-BR`, `de`, etc.                                                                                            |
-| `staticLanguageCode`| boolean | —       | If true, uses the configured language and ignores localStorage (no user language switching).                                                                   |
-| `showLanguageFilter`| boolean | —       | If true, shows the language filter dropdown (for filtering events by language).                                                                                |
+| Parameter            | Type    | Default | Description                                                                                                                                                    |
+| :------------------- | :------ | :------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `language`           | string  | "All"   | UI language. Supported: `en-GB`, `en-US`, `es`, `pt-BR`, `de`, etc.                                                                                            |
+| `staticLanguageCode` | boolean | —       | If true, uses the configured language and ignores localStorage (no user language switching).                                                                   |
+| `showLanguageFilter` | boolean | —       | If true, shows the language filter dropdown (for filtering events by language).                                                                                |
+| `showLanguageButtons`| boolean | false   | If true, shows language shortcut buttons (e.g. English) in the Global Language Switch widget. Used with `widgetType: "GLOBAL_LANGUAGE_FILTER"`.              |
 
 #### Images
 

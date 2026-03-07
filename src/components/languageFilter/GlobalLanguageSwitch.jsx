@@ -2,8 +2,9 @@ import useFetchLanguage from "../../hooks/useFetchLanguage";
 import LoadingPlaceHolder from "../loading/LoadingPlaceHolder";
 import { useTranslation } from "../../i18n";
 import { useContext, useEffect } from "react";
-import EventContext, { extractEventListParameters } from "../../context/EventContext";
+import EventContext, { DEFAULT_LANGUAGE, extractEventListParameters } from "../../context/EventContext";
 import useGlobalLanguage from "../../hooks/useGlobalLanguage";
+
 
 if (window.eventsConfig) {
 
@@ -65,11 +66,11 @@ export default function GlobalLanguageSwitch() {
 
     return (
     <div className="language-switch-container w-100 mt-2 mb-3">
-        <LanguageButton 
+        {window.eventsConfig.showLanguageButtons && <LanguageButton 
             languageCode="en"
             language="English"
             currentLanguage={globalLanguage}
-        />
+        />}
         <label htmlFor="language-dropdown" style={{ fontWeight: "bold", marginBottom: "8px", display: "block" }}>
             {t("Select Language")}
         </label>
@@ -80,10 +81,12 @@ export default function GlobalLanguageSwitch() {
                 className="form-control mb-2 w-100"
                 value={globalLanguage}
                 onChange={e => {
-                    if (window.eventsConfig) window.eventsConfig.languageCode = e.target.value;
+                    if (window.eventsConfig) {
+                        window.eventsConfig.languageCode = e.target.value;
+                    }
                 }}
             >
-                <option key="all" value={null}>{t("lang_All")}</option>
+                <option key="all" value={DEFAULT_LANGUAGE}>{t("lang_All")}</option>
                 {data?.map((language) => (
                     <option key={`language_${language.iso_639_1_code}`} value={language.iso_639_1_code}>{t(`lang_${language.name}`)} ({language.count})</option>
                 ))}

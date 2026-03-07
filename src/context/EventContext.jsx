@@ -102,7 +102,7 @@ const filterReducer = (state, action) => {
 };
 
 function chooseLanguageCode(eventsConfig) {
-  const language = eventsConfig.language || DEFAULT_LANGUAGE;
+  const language = eventsConfig.language;
   if(eventsConfig.staticLanguageCode) {
     return language;
   }

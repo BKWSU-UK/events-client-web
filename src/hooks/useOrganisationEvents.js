@@ -4,7 +4,6 @@ import EventContext, { ACTIONS } from "../context/EventContext";
 import { getEventList } from "../service/dataAccess";
 import { extractParameter } from "../utils/paramExtraction";
 import { useQuery } from "@tanstack/react-query";
-import { DEFAULT_LANGUAGE, GLOBAL_LANGUAGE_KEY } from "./useGlobalLanguage";
 
 /**
  * Hook used to retrieve events based on the organisation id coming from a context.
