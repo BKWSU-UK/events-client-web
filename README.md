@@ -267,9 +267,9 @@ Combines a horizontal date-strip carousel with a filterable event list. Supports
     {
       useBodyHiddenOverflow: true,
       useSimpleLayout: true,
-      orgId: [1, 87, 115, 140, 141, 143],
+      orgId: [1, 2, 87, 115, 140, 141, 143],
       eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
-      language: "de",
+      language: "en",
       widgetType: "COMPOSITE_CALENDAR",
       showLocalTime: true,
       eventsLimit: 10,
