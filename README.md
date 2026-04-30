@@ -15,10 +15,6 @@ so that you can render an event list with this plugin.
 In order to list events for a Brahma Kumaris organisation you will need to know its id. This information is available
 here:
 
-[Organisation Browser](https://events.brahmakumaris.org/bkregistration/templateChooser/eventBrowser.html)
-
-or
-
 [Organisation List](http://events.brahmakumaris.org/bkregistration_legacy/jsp/orgs.jsp)
 
 Typically the number for an organisation is an integer like e.g:
@@ -50,6 +46,424 @@ event types on the system are:
 |   6 |             workshop | Programme with active member participation                                      |
 
 Please note: that the event types _14_ and _16_ are typically not to be used by this plugin.
+
+## Available Widgets
+
+The plugin provides several widget types configured via the `widgetType` parameter in `eventsConfig`. The table below summarises each widget and its purpose.
+
+| Widget Type | Description |
+| :--- | :--- |
+| `TABLE` | Default paginated table/list view of events with search and filtering. Does not require an explicit `widgetType`. |
+| `CALENDAR` | Interactive monthly calendar view where events appear on their respective days and can be clicked to see details. |
+| `EVENTS_MONTH_CALENDAR` | Chronological list of events grouped by month with collapsible month sections and optional year display. |
+| `SINGLE_EVENT` | Full detail page for a single event. The event ID must be supplied as a URL query parameter (`eventDateId`). |
+| `SINGLE_EVENT_SESSION` | Detail and booking page for a single event session. Requires `eventSessionId` in the URL query string. |
+| `EXTENDED_SINGLE_EVENT_SESSION` | Extended version of `SINGLE_EVENT_SESSION` with additional layout choices and multi-image support. Requires `eventSessionId` in the URL. |
+| `FORM` | Renders the registration/booking form for a specific event session. Requires `eventSessionId` in the URL. |
+| `COMPOSITE_CALENDAR` | Combines a date-strip carousel with a filtered event list and centre/category dropdowns — suited for multi-centre portals. |
+| `SLIDER` | Horizontal image slider showing upcoming events as swipeable slides. |
+| `TILES` | Displays upcoming events as image tiles in a responsive grid layout. |
+| `EVENT_COUNT_DOWN` | Countdown timer to the next upcoming event, optionally filtered by country and timezone. |
+| `IMAGE_BANNER` | Full-width banner built from the images of selected upcoming events, with separate desktop and mobile image positions. |
+| `INFINITE_TILES` | Image-tile view with infinite scroll — new events load automatically as the user scrolls down. |
+| `GLOBAL_LANGUAGE_FILTER` | Language selector that filters events across all other plugin widgets on the same page by the chosen language. |
+
+### Widget Examples
+
+#### TABLE
+
+Displays a paginated, searchable list of events. `widgetType` can be omitted as `TABLE` is the default.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [2],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      showLocalTime: true,
+      displayWebcastButton: false,
+      eventsLimit: 200,
+      singleEventUrlTemplate:
+        "https://globalcooperationhouse.org/whatson-full/singleevent/@@eventDateId@@",
+      suppressBookOnly: true,
+      suppressVenue: true,
+      fetchEvents: true,
+      rootElement: "my-root",
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### CALENDAR
+
+Interactive monthly calendar. Events appear on their respective days and open a detail overlay when clicked.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [2],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      showLocalTime: true,
+      displayWebcastButton: true,
+      widgetType: "CALENDAR",
+      eventsLimit: 100,
+      fetchEvents: true,
+      rootElement: "my-root",
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### EVENTS_MONTH_CALENDAR
+
+Events listed chronologically, grouped under collapsible month headings. Use `showYear: true` to include the year in each heading. `eventsCalendarFunction` generates the link opened when an event is clicked.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      orgId: [2],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      widgetType: "EVENTS_MONTH_CALENDAR",
+      showLocalTime: true,
+      showYear: true,
+      eventsLimit: 1000,
+      fetchEvents: true,
+      rootElement: "my-root",
+      eventsCalendarFunction: (event) =>
+        `https://globalcooperationhouse.org/whatson-full/singleevent/${event.id}`,
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### SINGLE_EVENT
+
+Displays the full detail page of a single event. The event date ID is read from the `eventDateId` URL query parameter at runtime.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [2],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      showLocalTime: true,
+      displayWebcastButton: true,
+      widgetType: "SINGLE_EVENT",
+      eventsLimit: 1000,
+      fetchEvents: true,
+      useAllOrgIds: true,
+      showSimilarEvents: true,
+      rootElement: "my-root",
+      generateSocialMedialUrl: (e) =>
+        `https://globalcooperationhouse.org/whatson-full/singleevent/${e.id}`,
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### SINGLE_EVENT_SESSION
+
+Detail and booking page for one event session. The session to display is determined by the `eventSessionId` URL query parameter (e.g. `?eventSessionId=6791175`).
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      language: "de",
+      showLocalTime: true,
+      widgetType: "SINGLE_EVENT_SESSION",
+      rootElement: "my-root",
+      calendarDayImage:
+        "https://eventswebclient-test-gil.bkwsu.eu/v0.65.0/assets/images/calendar_day.png",
+      calendarTimeImage:
+        "https://eventswebclient-test-gil.bkwsu.eu/v0.65.0/assets/images/calendar_time.png",
+      calendarEventTypeImage:
+        "https://eventswebclient-test-gil.bkwsu.eu/v0.65.0/assets/images/calendar_event_type.png",
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### EXTENDED_SINGLE_EVENT_SESSION
+
+Extended session detail page with additional image slots and layout options. Like `SINGLE_EVENT_SESSION` it requires `eventSessionId` in the URL. Use `singleEventShowImage2` (or `Image3` / `Image4`) to pick which event image is displayed prominently.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      language: "en-GB",
+      showLocalTime: true,
+      displayWebcastButton: true,
+      widgetType: "EXTENDED_SINGLE_EVENT_SESSION",
+      rootElement: "my-root",
+      singleEventShowImage2: true,
+      generateSocialMedialUrl: (e) =>
+        `https://www.globalretreatcentre.org/ems-events-page-single/?eventId=${e.id}`,
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### FORM
+
+Renders the registration/booking form for the event session identified by `eventSessionId` in the URL. Use `formSuccessMessage` to customise the confirmation HTML shown after a successful submission.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      language: "en-GB",
+      showLocalTime: true,
+      widgetType: "FORM",
+      rootElement: "my-root",
+      fetchEvents: false,
+      formSuccessMessage: "<h2>The form has been successfully submitted. Many thanks.</h2>",
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### COMPOSITE_CALENDAR
+
+Combines a horizontal date-strip carousel with a filterable event list. Supports centre and category dropdowns via `displayOrgFilter`. Suited for multi-centre portals. Use `randomImages` to supply fallback images when an event has none.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [1, 87, 115, 140, 141, 143],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "de",
+      widgetType: "COMPOSITE_CALENDAR",
+      showLocalTime: true,
+      eventsLimit: 10,
+      suppressBookOnly: true,
+      displayOrgFilter: true,
+      fetchEvents: true,
+      showSimilarEvents: true,
+      useAllOrgIds: true,
+      rootElement: "my-root",
+      randomImages: [
+        "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+      ],
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### SLIDER
+
+Horizontal image slider. Each slide represents one upcoming event and links to its detail page via `singleEventUrlTemplate` or `eventsCalendarFunction`.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [1, 87, 115, 140, 141, 143],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "de",
+      widgetType: "SLIDER",
+      showLocalTime: true,
+      eventsLimit: 10,
+      suppressBookOnly: true,
+      displayOrgFilter: true,
+      fetchEvents: true,
+      useAllOrgIds: true,
+      rootElement: "my-root",
+      randomImages: [
+        "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+      ],
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### TILES
+
+Responsive image-tile grid. Each tile shows the event image, title, and date, and links to its detail page.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      useBodyHiddenOverflow: true,
+      useSimpleLayout: true,
+      orgId: [1, 87, 115, 140, 141, 143],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "de",
+      widgetType: "TILES",
+      showLocalTime: true,
+      eventsLimit: 10,
+      suppressBookOnly: true,
+      displayOrgFilter: true,
+      fetchEvents: true,
+      useAllOrgIds: true,
+      rootElement: "my-root",
+      randomImages: [
+        "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+      ],
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### EVENT_COUNT_DOWN
+
+Countdown timer showing days, hours, minutes, and seconds until the next upcoming event. Filter the source events by country via `eventCountDownCountries` and set the reference timezone with `eventCountDownTimezone`. Use `eventCountDownStyle: "ANIMATED"` for an animated display.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      showLocalTime: true,
+      language: "de",
+      widgetType: "EVENT_COUNT_DOWN",
+      eventCountDownTimezone: "Europe/Berlin",
+      eventCountDownCountries: "Germany,Austria,Switzerland",
+      rootElement: "my-root",
+      randomImages: [
+        "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+      ],
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### IMAGE_BANNER
+
+Full-width image banner composed from the images of upcoming events. `imageBanner_selectedPositions` controls which events (by index) contribute a slide. `imageBanner_imagePosition` / `imageBanner_imagePosition_mobile` select which image slot (1–4) from each event is used on desktop and mobile respectively.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      orgId: [2],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      widgetType: "IMAGE_BANNER",
+      eventsLimit: 200,
+      fetchEvents: true,
+      rootElement: "my-root",
+      imageBanner_selectedPositions: [0, 1, 2],
+      imageBanner_imagePosition: 4,
+      imageBanner_imagePosition_mobile: 1,
+      eventsCalendarFunction: (event) =>
+        `https://globalcooperationhouse.org/whatson-full/singleevent/${event.id}`,
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### INFINITE_TILES
+
+Tile grid with infinite scroll. Events load in batches as the user scrolls to the bottom of the page. Use `initialPageSize` to control the size of each batch.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      orgId: [2, 5],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      widgetType: "INFINITE_TILES",
+      initialPageSize: 100,
+      showLocalTime: true,
+      rootElement: "my-root",
+      randomImages: [
+        "https://res.cloudinary.com/gilf/image/upload/v1654363027/i_Stock_1128894742_920c18c741.jpg",
+      ],
+    },
+  ];
+</script>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
+
+#### GLOBAL_LANGUAGE_FILTER
+
+A language selector that, when placed alongside other widgets on the same page, filters all widget event lists to the chosen language. Set `showLanguageButtons: true` to render individual language shortcut buttons in addition to the dropdown.
+
+```html
+<script>
+  window.eventsConfig = [
+    {
+      widgetType: "GLOBAL_LANGUAGE_FILTER",
+      orgId: [2],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      rootElement: "lang-root",
+      showLanguageButtons: false,
+    },
+    {
+      id: 1,
+      widgetType: "TABLE",
+      orgId: [2],
+      eventTypeIds: "1,2,3,4,5,6,7,8,9,10,11,12,13,15",
+      language: "en-GB",
+      fetchEvents: true,
+      rootElement: "my-root",
+    },
+  ];
+</script>
+<div id="lang-root"></div>
+<div id="my-root" class="container-fluid"></div>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/starter.js"></script>
+<script src="https://eventswebclient-test-gil.bkwsu.eu/latest/loader.js"></script>
+```
 
 ## Webpage Integration
 
